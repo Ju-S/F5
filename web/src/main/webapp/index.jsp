@@ -4,218 +4,238 @@
 <head>
     <jsp:include page="/common/Head.jsp"/>
 
-<style>
-    @font-face {
-        font-family: 'Pretendard';
-        src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Thin.woff') format('woff');
-        font-weight: 100;
-        font-display: swap;
-    }
-
-    @font-face {
-        font-family: 'Pretendard';
-        src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-ExtraLight.woff') format('woff');
-        font-weight: 200;
-        font-display: swap;
-    }
-
-    @font-face {
-        font-family: 'Pretendard';
-        src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Light.woff') format('woff');
-        font-weight: 300;
-        font-display: swap;
-    }
-
-    @font-face {
-        font-family: 'Pretendard';
-        src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
-        font-weight: 400;
-        font-display: swap;
-    }
-
-    @font-face {
-        font-family: 'Pretendard';
-        src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Medium.woff') format('woff');
-        font-weight: 500;
-        font-display: swap;
-    }
-
-    @font-face {
-        font-family: 'Pretendard';
-        src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-SemiBold.woff') format('woff');
-        font-weight: 600;
-        font-display: swap;
-    }
-
-    @font-face {
-        font-family: 'Pretendard';
-        src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Bold.woff') format('woff');
-        font-weight: 700;
-        font-display: swap;
-    }
-
-    @font-face {
-        font-family: 'Pretendard';
-        src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-ExtraBold.woff') format('woff');
-        font-weight: 800;
-        font-display: swap;
-    }
-
-    @font-face {
-        font-family: 'Pretendard';
-        src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Black.woff') format('woff');
-        font-weight: 900;
-        font-display: swap;
-    }
-
-
-
-
-    * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-    }
-    body {
-        background-color: #101012;
-        padding: 1%;
-        height: 100%;
-        position: relative;
-        overflow: hidden;
-    }
-    #container1{
-        position: absolute;
-        width: 100%; /* 화면 가로 전체 */
-        height: 90%; /* 화면 세로 전체 */
-        bottom: 0;
-    }
-
-    #left {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 20%; /* 원하는 너비 */
-        height: 100%;
-        z-index: 10; /* 오른쪽보다 위에 있도록 */
-    }
-    .game {
-        position: relative; /* 기준 요소 */
-        z-index: 4; /* 여기서 z-index 작동 */
-
-        height: 17%;
-        width: 100%;
-        border: 1px solid #989898;
-        margin-left: 12px;
-        margin-bottom: 12px;
-    }
-    .game img{
-        width: auto;
-        height: 100%;
-    }
-
-
-    #right {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%; /* 화면 전체 너비 */
-        height: 100%;
-        z-index: 5; /* 왼쪽 네비보다 아래 */
-        overflow: hidden;
-    }
-
-    .mainGame {
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-        transition: transform 0.3s ease;
-        border: 1px solid #989898;
-        position: relative; /* 기준 요소 */
-
-    }
-
-    .mainGame img{
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        position: relative; /* 기준 요소 */
-        z-index: 2; /* 여기서 z-index 작동 */
-    }
-
-
-
-    .mainGameTitle {
-        position:absolute;
-        top:400px;
-        left: 650px;
-
-        font-size: 24px;
-        font-weight: bold;
-        color: white;
-
-        z-index: 3; /* 여기서 z-index 작동 */
-    }
-    .mainGameContent {
-        position:absolute;
-        top:450px;
-        left: 650px;
-        margin-right:30px;
-
-        font-size: 16px;
-        color: white;
-        z-index: 3; /* 여기서 z-index 작동 */
-    }
-    .mainGameBtn{
-        position:absolute;
-        top:520px;
-        left: 970px;
-        margin-right:30px;
-
-        font-size: 16px;
-        z-index: 3; /* 여기서 z-index 작동 */
-    }
-    .mainGameImg {
-        transition: transform 0.2s ease-in-out;
-        transform: scale(1.05);
-    }
-
-
-
-    /* 제목/내용: 오른쪽에서 왼쪽으로 들어오기 */
-    @keyframes slideInRight {
-        from {
-            opacity: 0;
-            transform: translateX(50px);
+    <style>
+        @font-face {
+            font-family: 'Pretendard';
+            src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Thin.woff') format('woff');
+            font-weight: 100;
+            font-display: swap;
         }
-        to {
-            opacity: 1;
-            transform: translateX(0);
+        @font-face {
+            font-family: 'Pretendard';
+            src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-ExtraLight.woff') format('woff');
+            font-weight: 200;
+            font-display: swap;
         }
-    }
-    .slide-right {
-        animation: slideInRight 0.5s ease forwards;
-    }
-
-    /* 제목/내용: 왼쪽에서 오른쪽으로 나가기 */
-    @keyframes slideOutLeft {
-        from {
-            opacity: 1;
-            transform: translateX(0);
+        @font-face {
+            font-family: 'Pretendard';
+            src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Light.woff') format('woff');
+            font-weight: 300;
+            font-display: swap;
         }
-        to {
-            opacity: 0;
-            transform: translateX(-100px);
+        @font-face {
+            font-family: 'Pretendard';
+            src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+            font-weight: 400;
+            font-display: swap;
         }
-    }
-    .slide-left {
-        animation: slideOutLeft 0.5s ease forwards;
-    }
+        @font-face {
+            font-family: 'Pretendard';
+            src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Medium.woff') format('woff');
+            font-weight: 500;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Pretendard';
+            src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-SemiBold.woff') format('woff');
+            font-weight: 600;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Pretendard';
+            src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Bold.woff') format('woff');
+            font-weight: 700;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Pretendard';
+            src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-ExtraBold.woff') format('woff');
+            font-weight: 800;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Pretendard';
+            src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Black.woff') format('woff');
+            font-weight: 900;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Taenada';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-2@1.0/Tenada.woff2') format('woff2');
+            font-weight: normal;
+            font-display: swap;
+        }
 
 
-</style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background-color: #101012;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+        #container1{
+            position: absolute;
+            width: 100%; /* 화면 가로 전체 */
+            height: 90%; /* 화면 세로 전체 */
+            bottom: 0;
+        }
+
+
+        #left {
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* 세로 중앙 정렬 */
+            align-items: center;     /* 가로 중앙 정렬 (필요 시) */
+
+            position: absolute;
+            bottom: 0;
+            left: 5%;
+            width: 20%; /* 원하는 너비 */
+            height: 100%;
+            z-index: 10; /* 오른쪽보다 위에 있도록 */
+        }
+        .game {
+            position: relative; /* 기준 요소 */
+            z-index: 4; /* 여기서 z-index 작동 */
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* 세로 중앙 정렬 */
+            align-items: center;     /* 가로 중앙 정렬 (필요 시) */
+
+            margin-top:2.6%;
+            height: 18%;
+            width: 100%;
+            border: 1px solid #989898;
+
+            background-color: rgba(16, 16, 18, 0.8);
+            border-radius: 15px;
+        }
+        .game img{
+            width: auto;
+            height: 100%;
+        }
+
+
+        #right {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%; /* 화면 전체 너비 */
+            height: 100%;
+            z-index: 5; /* 왼쪽 네비보다 아래 */
+            overflow: hidden;
+        }
+        .mainGame {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            border: 1px solid #989898;
+            position: relative; /* 기준 요소 */
+        }
+        .mainGame img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: relative; /* 기준 요소 */
+            z-index: 2; /* 여기서 z-index 작동 */
+        }
 
 
 
+        .mainGameTitle {
+            position:absolute;
+            top:60%;
+            right: 8%;
+
+            font-family: 'Taenada', sans-serif;
+            font-size: 60px;
+            font-weight: 600;
+
+            color: #EC6333 ;
+
+            z-index: 3; /* 여기서 z-index 작동 */
+        }
+        .mainGameContent {
+            position:absolute;
+            top: 70%;
+            right: 8%;
+            max-width: 20%;
+
+            font-family: 'Pretendard', sans-serif;
+            font-weight: 300;
+            font-size: 16px;
+            color: white;
+            z-index: 3; /* 여기서 z-index 작동 */
+        }
+        .mainGameBtn{
+            position:absolute;
+            top:83%;
+            right: 8%;
+
+            width: 20%;
+
+            font-family: 'Pretendard', sans-serif;
+            font-weight: 300;
+            font-size: 16px;
+            z-index: 3; /* 여기서 z-index 작동 */
+
+            background-color: #EC6333 ;
+            border: 1px solid #EC6333 ;
+        }
+        .mainGameBtn:hover{
+            background-color: white;
+            border: 1px solid #EC6333 ;
+            color:#EC6333 ;
+        }
+        .mainGameBtn.clicked {
+            background-color: white;
+            border: 1px solid #EC6333;
+            color: #EC6333;
+        }
+        .mainGameImg {
+            transition: transform 0.2s ease-in-out;
+            transform: scale(1.05);
+        }
+
+
+
+        /* 제목/내용: 오른쪽에서 왼쪽으로 들어오기 */
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        .slide-right {
+            animation: slideInRight 0.5s ease forwards;
+        }
+
+        /* 제목/내용: 왼쪽에서 오른쪽으로 나가기 */
+        @keyframes slideOutLeft {
+            from {
+                opacity: 1;
+                transform: translateX(0);
+            }
+            to {
+                opacity: 0;
+                transform: translateX(-100px);
+            }
+        }
+        .slide-left {
+            animation: slideOutLeft 0.5s ease forwards;
+        }
+    </style>
 </head>
 
 
@@ -238,7 +258,12 @@
 
     <%--오른쪽 메인게임--%>
     <div id="right">
-        <div class="mainGame game1 default"><img src="img1.jpg"/></div>
+        <div class="mainGame game1 default">
+            <img src="img1.jpg"/>
+            <div class="mainGameTitle slide-right">게임 1 타이틀</div>
+            <div class="mainGameContent slide-right">게임 1에 대한 설명, 게임 1에 대한 설명 게임1에대한 설명 게임 1에대한 설명</div>
+            <button class="mainGameBtn btn btn-primary slide-right">game1로 이동</button>
+        </div>
     </div>
 </div>
 
@@ -258,7 +283,7 @@
         const $img = $("<img>").addClass("mainGameImg").attr("src", imgSrc).css("transform", "scale(1.05)");
         const $title = $("<div>").addClass("mainGameTitle").html(titleText);
         const $content = $("<div>").addClass("mainGameContent").html(contentText);
-        const $button = $("<button>").addClass("mainGameBtn").html(buttonText+`로 이동`);
+        const $button = $("<button>").addClass("mainGameBtn btn btn-primary").html(buttonText+`로 이동`);
 
         $container1.append($img, $title, $content, $button);
         return $container1;
@@ -330,6 +355,7 @@
 
 
 
+
     //마우스 올리기
     $(".game").on("mouseover", function(){
         isMOverClicked = false;
@@ -345,17 +371,17 @@
 
 
         setTimeout(() => { //2초 딜레이
-                const $newView = gameViews[target].clone(); // 복사본으로 mainGame의 jqeury 가져오기
-                $("#right").html("").append($newView); // 화면에 뿌리기
+            const $newView = gameViews[target].clone(); // 복사본으로 mainGame의 jqeury 가져오기
+            $("#right").html("").append($newView); // 화면에 뿌리기
 
 
-                // 화면에 뿌린 것 중, mainGameImg찾아서 1초 딜레이로 트랜지션 발동
-                setTimeout(() => {
-                    $newView.find(".mainGameImg").css("transform", "scale(1)");
-                }, 20);
+            // 화면에 뿌린 것 중, mainGameImg찾아서 1초 딜레이로 트랜지션 발동
+            setTimeout(() => {
+                $newView.find(".mainGameImg").css("transform", "scale(1)");
+            }, 20);
 
-                //화면에 뿌린 것 중 타이틀, 컨텐츠, 버튼
-                slideIn( $newView.find(".mainGameTitle, .mainGameContent, .mainGameBtn") , true);
+            //화면에 뿌린 것 중 타이틀, 컨텐츠, 버튼
+            slideIn( $newView.find(".mainGameTitle, .mainGameContent, .mainGameBtn") , true);
 
         }, 200);
     })
