@@ -3,6 +3,7 @@ package dao.game;
 import util.DataUtil;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 
 public class GameScoreDAO {
     private static GameScoreDAO instance;
@@ -18,12 +19,11 @@ public class GameScoreDAO {
     }
 
     public int insert_score(int score) throws Exception{
-        String sql = "INSERT INTO game_score (id,game_id, member_id, score) VALUES (15,2, 'one', ?)";
+        String sql = "INSERT INTO game_score (id,game_id, member_id, score) VALUES (16,2, 'one', ?)";
 
-        try (Connection red = DataUtil.getConnection();
-             PreparedStatement pstat = red.prepareStatement(sql))
-        {
-            pstat.setInt(1, score);
+        try (Connection con = DataUtil.getConnection();
+             PreparedStatement pstat = con.prepareStatement(sql))
+        {   pstat.setInt(1, score);
             return pstat.executeUpdate();
         }
 

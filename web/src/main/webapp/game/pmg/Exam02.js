@@ -41,8 +41,8 @@ class Exam02 extends Phaser.Scene{
         this.me = this.physics.add.sprite(250,1000,'player');
 
         this.physics.add.overlap(this.me,this.boxes,(me,box)=>{  // 충돌시 , 점수보내기 + gameover
-
-        $.ajax({
+            this.me.disableBody(true, true); // 충돌 후 플레이어 비활성화
+            $.ajax({
             url: "/gameover.game" ,
             type : "get",
             data : {

@@ -1,6 +1,6 @@
 <Context>
     <Resource
-            name="study"
+            name="jdbc/study"
             auth="Container"
             type="javax.sql.DataSource"
             username="study"
@@ -8,4 +8,4 @@
             driverClassName="oracle.jdbc.driver.OracleDriver"
             url="jdbc:oracle:thin:@10.5.5.3:1521:xe"
     />
-</Context>
+</Context>  
