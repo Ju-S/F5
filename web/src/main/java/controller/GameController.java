@@ -1,5 +1,6 @@
 package controller;
 
+import com.google.gson.Gson;
 import dao.board.BoardCategoryDAO;
 import dao.board.BoardDAO;
 import dao.board.BoardFileDAO;
@@ -23,24 +24,23 @@ import java.io.IOException;
 public class GameController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        try {
-            //region 임시적 모든 dao 선언
-            BoardCategoryDAO boardCategoryDAO = BoardCategoryDAO.getInstance();
-            BoardDAO boardDAO = BoardDAO.getInstance();
-            BoardFileDAO boardFileDAO = BoardFileDAO.getInstance();
-            ReplyDAO replyDAO = ReplyDAO.getInstance();
-            GameDAO gameDAO = GameDAO.getInstance();
-            GameReplyDAO gameReplyDAO = GameReplyDAO.getInstance();
-            GameScoreDAO gameScoreDAO = GameScoreDAO.getInstance();
-            BlackListDAO blackListDAO = BlackListDAO.getInstance();
-            MemberDAO memberDAO = MemberDAO.getInstance();
-            MemberGameTierDAO memberGameTierDAO = MemberGameTierDAO.getInstance();
-            MemberProfileFileDAO memberProfileFileDAO = MemberProfileFileDAO.getInstance();
-            //endregion
 
-            String cmd = request.getRequestURI();
+
+        try {
+
+           String cmd = request.getRequestURI();
+
 
             switch (cmd) {
+
+                case "/gameover.game":
+
+
+                   int score = Integer.parseInt(request.getParameter("score"));
+                    System.out.println("cmd : " + cmd);
+                   /*gameScoreDAO.insert_score(score);*/
+
+                    break;
                 // 행위 + 자원 (e.g, /getMemberList.member로 작성 요망)
                 //TODO: 게임 관련 기능
             }
