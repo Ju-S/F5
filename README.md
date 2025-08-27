@@ -6,6 +6,7 @@
 - **[1. 요구사항 정의서](https://docs.google.com/spreadsheets/d/1ahWepoCayDJ5XrUp2FLt1lsOSSY-aj6o4qnHbF8Rusc)**
 - **[2. 요구사항 명세서](https://docs.google.com/spreadsheets/d/1efOPRSfEhhDyHO4KDAJj_WZoIR8ASWskb0GQBm5FC08)**
 - **[3. ERD](https://www.erdcloud.com/d/frfp7FXRHMmLrErGH)**
+- **[4. 회의록](https://www.notion.so/24e7ad5c63f7807ebd19f3e58502fdf1?v=24e7ad5c63f781d9ac91000c0023811c)**
 
 ---
 
