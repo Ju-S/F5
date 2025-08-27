@@ -133,7 +133,7 @@
             width: 100%;
             height: 10%;
         }
-
+  /*수정중*/
         #namerow {
             border: 1px solid red;
 
