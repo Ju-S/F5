@@ -3,11 +3,9 @@ package dao.game;
 import util.DataUtil;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 
 public class GameScoreDAO {
     private static GameScoreDAO instance;
-
 
     public static synchronized GameScoreDAO getInstance() throws Exception {
         if (instance == null) {
@@ -17,7 +15,6 @@ public class GameScoreDAO {
     }
 
     private GameScoreDAO() throws Exception {
-
     }
 
     public int insert_score(int score) throws Exception{

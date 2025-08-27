@@ -6,7 +6,6 @@ import java.sql.Connection;
 
 public class GameReplyDAO {
     private static GameReplyDAO instance;
-    private static Connection con;
 
     public static synchronized GameReplyDAO getInstance() throws Exception {
         if (instance == null) {
@@ -16,7 +15,6 @@ public class GameReplyDAO {
     }
 
     private GameReplyDAO() throws Exception {
-        con = DataUtil.getConnection();
     }
 
     //region create
