@@ -10,6 +10,11 @@
 
 ---
 
+## **규칙**
+- **이름**
+  - Controller의 cmd는 `행위_자원.도메인`으로 작성한다. ex)`get_memberlist.member`
+  - session에 저장될 member의 id는 `loginId`키값을 통해 저장. ex)`request.getSession().setAttribute("loginId", "ID")`
+
 ## **공통CSS사용법**
 
 - **📁 구조**
