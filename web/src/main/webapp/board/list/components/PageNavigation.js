@@ -1,9 +1,4 @@
-function createPageNavigation(maxPage, curPage, naviPerPage) {
-    let params = new URLSearchParams(window.location.search);
-
-    let searchOpt = params.get("searchOpt");
-    let search = params.get("search");
-
+function createPageNavigation(maxPage, curPage, naviPerPage, filter) {
     if (maxPage > 1) {
         let nav = $("<nav>");
         let ul = $("<ul>").addClass("pagination");
@@ -22,17 +17,17 @@ function createPageNavigation(maxPage, curPage, naviPerPage) {
             nextArrow.addClass("disabled");
         }
 
-        let searchParams = "";
-        if (search != null) {
-            params += "&searchOpt=" + searchOpt;
-            params += "&search=" + search;
+        if (filter !== -1) {
+            filter += "&filter=" + filter;
+        } else {
+            filter = "";
         }
 
         let prevPageLast = Math.floor((curPage - 1) / naviPerPage) * naviPerPage;
         let nextPageFirst = prevPageLast + naviPerPage + 1;
 
-        prevArrowLink.attr("href", "?page=" + prevPageLast + searchParams).html("&laquo;");
-        nextArrowLink.attr("href", "?page=" + nextPageFirst + searchParams).html("&raquo;");
+        prevArrowLink.attr("href", "?page=" + prevPageLast + filter).html("&laquo;");
+        nextArrowLink.attr("href", "?page=" + nextPageFirst + filter).html("&raquo;");
 
         prevArrow.append(prevArrowLink);
         nextArrow.append(nextArrowLink);
@@ -45,7 +40,7 @@ function createPageNavigation(maxPage, curPage, naviPerPage) {
                 let navItem = $("<li>").addClass("page-item");
                 let navLink = $("<a>").addClass("page-link");
 
-                navLink.attr("href", "?page=" + i + searchParams).html(i);
+                navLink.attr("href", "?page=" + i + filter).html(i);
                 if (i === curPage) {
                     navLink.addClass("active");
                 }
@@ -58,7 +53,7 @@ function createPageNavigation(maxPage, curPage, naviPerPage) {
         ul.append(nextArrow);
 
         nav.append(ul);
-
+        $("#navPos").html("");
         $("#navPos").append(nav);
     }
 }

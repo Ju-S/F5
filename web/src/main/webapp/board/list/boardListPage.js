@@ -12,6 +12,7 @@ function createBoardList(postList, itemPerPage) {
             $(".item-list-view").append($("<tr>").append(emptyItemTd.append(emptyItem)));
         }
     } else {
+        $(".item-list-view").html("");
         for (let post of postList) {
             createBoardItem(post);
         }

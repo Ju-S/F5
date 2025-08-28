@@ -1,7 +1,6 @@
 package controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.google.gson.Gson;
 import dao.board.BoardCategoryDAO;
 import dao.board.BoardDAO;
 import dao.board.BoardFileDAO;
@@ -42,30 +41,36 @@ public class BoardController extends HttpServlet {
             MemberProfileFileDAO memberProfileFileDAO = MemberProfileFileDAO.getInstance();
             //endregion
 
-            ObjectMapper mapper = new ObjectMapper();
-            mapper.registerModule(new JavaTimeModule());
             String cmd = request.getRequestURI();
+            Gson gson = new Gson();
 
             switch (cmd) {
                 // 행위 + 자원 (e.g, /getMemberList.member로 작성 요망)
                 //TODO: 게시글 관련 기능
 
                 // 게시글 목록 확인.(pagination)
-                case "/getBoardList.board" : {
+                case "/get_board_list.board" : {
                     int naviPerPage = 10;
                     int itemPerPage = 10;
                     int curPage = 1;
                     try {
                         curPage = Integer.parseInt(request.getParameter("page"));
                     } catch (Exception ignored) {}
-                    List<BoardDTO> boardDTOList = boardDAO.getBoardPage(curPage, itemPerPage);
 
-                    request.setAttribute("list", mapper.writeValueAsString(boardDTOList));
+                    int filter = -1;
+                    try {
+                        filter = Integer.parseInt(request.getParameter("filter"));
+                    } catch (Exception ignored) {}
+
+                    List<BoardDTO> boardDTOList = boardDAO.getBoardPage(curPage, itemPerPage, filter);
+
+                    request.setAttribute("list", gson.toJson(boardDTOList));
                     request.setAttribute("itemPerPage", itemPerPage);
 
                     request.setAttribute("maxPage", boardDAO.getMaxPage(itemPerPage));
                     request.setAttribute("curPage", curPage);
                     request.setAttribute("naviPerPage", naviPerPage);
+                    request.setAttribute("filter", filter);
 
                     request.getRequestDispatcher("/board/list/boardListPage.jsp").forward(request, response);
                 }

@@ -46,8 +46,9 @@
                             let maxPage = ${maxPage};
                             let curPage = ${curPage};
                             let naviPerPage = ${naviPerPage};
+                            let filter = ${filter};
 
-                            createPageNavigation(maxPage, curPage, naviPerPage);
+                            createPageNavigation(maxPage, curPage, naviPerPage, filter);
                         </script>
                     </div>
                 </div>

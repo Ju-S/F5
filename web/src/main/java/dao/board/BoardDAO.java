@@ -29,12 +29,16 @@ public class BoardDAO {
 
     //region read
     //TODO: 게시글 목록 조회(title, writer 등 대표항목)
-    public List<BoardDTO> getBoardPage(int curPage, int itemPerPage) throws Exception {
+    public List<BoardDTO> getBoardPage(int curPage, int itemPerPage, int filter) throws Exception {
         String sql = "SELECT * FROM (SELECT board.*, ROW_NUMBER() OVER(ORDER BY id DESC) rn FROM board) WHERE rn BETWEEN ? AND ?";
+        sql = filter == -1 ? sql : sql + "AND board_category = ?";
 
         try (Connection con = DataUtil.getConnection(); PreparedStatement pstat = con.prepareStatement(sql)) {
             pstat.setInt(1, curPage * itemPerPage - (itemPerPage - 1));
             pstat.setInt(2, curPage * itemPerPage);
+            if(filter != -1) {
+                pstat.setInt(3, filter);
+            }
             try (ResultSet rs = pstat.executeQuery()) {
                 return getBoardListByResultSet(rs);
             }
