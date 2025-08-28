@@ -6,7 +6,6 @@ import java.sql.Connection;
 
 public class ReplyDAO {
     private static ReplyDAO instance;
-    private static Connection con;
 
     public static synchronized ReplyDAO getInstance() throws Exception {
         if (instance == null) {
@@ -16,7 +15,6 @@ public class ReplyDAO {
     }
 
     private ReplyDAO() throws Exception {
-        con = DataUtil.getConnection();
     }
 
     //region create
