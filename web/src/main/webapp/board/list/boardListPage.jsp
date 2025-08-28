@@ -8,6 +8,7 @@
     <script src="/board/list/components/BoardItem.js"></script>
     <script src="/board/list/components/PageNavigation.js"></script>
     <script src="/board/list/boardListPage.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 </head>
 <body>
 <jsp:include page="/common/Header.jsp"/>
@@ -15,15 +16,15 @@
 <div class="container">
     <div class="row">
         <div class="col-1"><!-- 네비게이션 --></div>
-        <div class="col-11">
-            <div class="row">
+        <div class="col-11 vh-100">
+            <div class="row toolbar">
                 <div class="col-2 filter p-0">
                     <!-- 필터 -->
                     <jsp:include page="/board/list/components/FilterSelect.jsp"/>
                 </div>
                 <div class="col search p-0">
                     <!-- 검색어 -->
-                    <input class="form-control" type="text" placeholder="검색어 입력...">
+                    <input class="form-control h-100" type="text" placeholder="검색어 입력...">
                 </div>
                 <div class="col-2 p-0 write">
                     <!-- 글 작성 버튼 -->

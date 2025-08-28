@@ -11,7 +11,24 @@
     --bs-btn-active-border-color: #a14323;
     --bs-btn-active-shadow: #fff;
 
-    width: 60%;
+    width: 50%;
+    height: 100%;
+}
+
+.modifyBtn {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: var(--secondary-color);
+    --bs-btn-border-color: var(--secondary-color);
+    --bs-btn-hover-color: #b5b5b5;
+    --bs-btn-hover-bg: #383f8e;
+    --bs-btn-hover-border-color: #383f8e;
+    --bs-btn-focus-shadow-rgb: #fff;
+    --bs-btn-active-color: var(--sub-btn-color);
+    --bs-btn-active-bg: #31387e;
+    --bs-btn-active-border-color: #31387e;
+    --bs-btn-active-shadow: #fff;
+    width: 100px;
+    height: 100%;
 }
 
 .pagination {
@@ -19,7 +36,7 @@
     --bs-pagination-padding-y: 0.375rem;
     --bs-pagination-font-size: 1rem;
     --bs-pagination-color: #fff;
-    --bs-pagination-bg: var(--primary-color);
+    --bs-pagination-bg: #1e1e1e;
     --bs-pagination-border-width: 0;
     --bs-pagination-hover-color: #dcdcdc;
     --bs-pagination-hover-bg: var(--secondary-color);
@@ -34,6 +51,8 @@
     --bs-pagination-disabled-bg: none;
     --bs-pagination-disabled-border-color: none;
     display: flex;
+    justify-content: center;
+    align-items: center;
     padding-left: 0;
     list-style: none;
 }
@@ -46,13 +65,16 @@
     border-radius: 7px;
 }
 
-.page-link.arrow {
-    border-radius: 0;
+.arrow {
+    width: 100%;
+    height: 100%;
 }
 
 .write,
 .filter,
-.search {
+.search,
+.filter select,
+.arrow {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -64,11 +86,19 @@
 }
 
 .filter select {
-    width: 70%;
+    width: 60%;
     height: 100%;
 
     background-color: var(--sub-btn-color);
     border-color: var(--sub-btn-color);
+
+    text-align: center;
+
+    --bs-form-select-bg-img: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='black' class='bi bi-sliders' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M11.5 2a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3M9.05 3a2.5 2.5 0 0 1 4.9 0H16v1h-2.05a2.5 2.5 0 0 1-4.9 0H0V3zM4.5 7a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3M2.05 8a2.5 2.5 0 0 1 4.9 0H16v1H6.95a2.5 2.5 0 0 1-4.9 0H0V8zm9.45 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3m-2.45 1a2.5 2.5 0 0 1 4.9 0H16v1h-2.05a2.5 2.5 0 0 1-4.9 0H0v-1z'/%3E%3C/svg%3E");
+}
+
+.filter select option:hover {
+    background-color: #717171
 }
 
 .filter select:focus {
@@ -83,8 +113,39 @@
     align-items: center;
 }
 
-.item-list-view {
+.item-list-view tr{
+    height: 60px;
+    border-bottom: 1px solid var(--primary-color);
+}
 
+.item-list-view {
+    width: 100%;
+}
+
+.item-list-view tr td a:nth-child(1) {
+    text-decoration: none;
+    color: #fff;
+
+    display: flex;
+    justify-content: left;
+    align-items: center;
+
+    margin-left: 50px;
+}
+
+.item-list-view tr td .modify{
+    display: flex;
+    justify-content: right;
+    align-items: center;
+}
+
+.boardList {
+    background-color: #1e1e1e;
+    border-radius: 20px;
+}
+
+.toolbar {
+    height: 40px;
 }
 
 * {

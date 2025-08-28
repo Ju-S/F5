@@ -31,8 +31,8 @@ function createPageNavigation(maxPage, curPage, naviPerPage, filter) {
             nextPageFirst += filterOpt;
         }
 
-        prevArrowLink.html("&laquo;");
-        nextArrowLink.html("&raquo;");
+        prevArrowLink.html("<i class='bi bi-arrow-left'></i>");
+        nextArrowLink.html("<i class='bi bi-arrow-right'></i>");
 
         prevArrowLink.on("click", () => {
             setBoardListAndNav(filter, prevPageLast);

@@ -36,14 +36,18 @@ function createBoardItem(post) {
         }).html(post.title));
     // let writer = $("<td>").attr("width", "15%").html(post.writer);
     // let writerDate = $("<td>").attr("width", "30%").html(milliToDate(post.writeDate));
-    let viewCount = $("<td>").attr("width", "20%").html(post.viewCount);
+    // let viewCount = $("<td>").attr("width", "20%").html(post.viewCount);
+    let modifyBtn = $("<td>").attr("width", "30%").addClass("modify")
+        .append($("<button>").addClass("btn btn-primary modifyBtn").html("수정"));
 
     $(".item-list-view").append(tr
         // .append(id)
         .append(title)
         // .append(writer)
         // .append(writerDate)
-        .append(viewCount));
+        // .append(viewCount)
+        .append(modifyBtn)
+    );
 }
 
 function milliToDate(millis) {

@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <select class="form-select" id="filterSelect">
-    <option value="-1">filter</option>
+    <option value="-1">Filter</option>
     <option value="1">정보/공략</option>
     <option value="2">질문</option>
     <option value="3">후기</option>
