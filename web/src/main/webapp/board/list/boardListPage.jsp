@@ -41,7 +41,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div id="navPost" class="col">
+                    <div id="navPos" class="col">
                         <script>
                             let maxPage = ${maxPage};
                             let curPage = ${curPage};

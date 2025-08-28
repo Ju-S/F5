@@ -56,7 +56,7 @@ public class BoardDAO {
                             .writer(writer)
                             .title(title)
                             .contents(contents)
-                            .writeDate(writeDate.toLocalDateTime())
+                            .writeDate(writeDate)
                             .viewCount(viewCount)
                             .build());
         }
