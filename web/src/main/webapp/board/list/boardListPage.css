@@ -1,0 +1,93 @@
+#writeBtn {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: var(--danger-color);
+    --bs-btn-border-color: var(--danger-color);
+    --bs-btn-hover-color: #b5b5b5;
+    --bs-btn-hover-bg: #b84c27;
+    --bs-btn-hover-border-color: #b84c27;
+    --bs-btn-focus-shadow-rgb: #fff;
+    --bs-btn-active-color: var(--sub-btn-color);
+    --bs-btn-active-bg: #a14323;
+    --bs-btn-active-border-color: #a14323;
+    --bs-btn-active-shadow: #fff;
+
+    width: 60%;
+}
+
+.pagination {
+    --bs-pagination-padding-x: 0.75rem;
+    --bs-pagination-padding-y: 0.375rem;
+    --bs-pagination-font-size: 1rem;
+    --bs-pagination-color: #fff;
+    --bs-pagination-bg: var(--primary-color);
+    --bs-pagination-border-width: 0;
+    --bs-pagination-hover-color: #dcdcdc;
+    --bs-pagination-hover-bg: var(--secondary-color);
+    --bs-pagination-hover-border-color: none;
+    --bs-pagination-focus-color: none;
+    --bs-pagination-focus-bg: none;
+    --bs-pagination-focus-box-shadow: none;
+    --bs-pagination-active-color: #fff;
+    --bs-pagination-active-bg: var(--secondary-color);
+    --bs-pagination-active-border-color: none;
+    --bs-pagination-disabled-color: var(--sub-btn-color);
+    --bs-pagination-disabled-bg: none;
+    --bs-pagination-disabled-border-color: none;
+    display: flex;
+    padding-left: 0;
+    list-style: none;
+}
+
+.page-item {
+    padding: 3px;
+}
+
+.page-link {
+    border-radius: 7px;
+}
+
+.page-link.arrow {
+    border-radius: 0;
+}
+
+.write,
+.filter,
+.search {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.search input:focus {
+    box-shadow: none;
+    border-color: var(--sub-btn-color);
+}
+
+.filter select {
+    width: 70%;
+    height: 100%;
+
+    background-color: var(--sub-btn-color);
+    border-color: var(--sub-btn-color);
+}
+
+.filter select:focus {
+    background-color: var(--sub-btn-color);
+    border-color: var(--sub-btn-color);
+    box-shadow: none;
+}
+
+#navPos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.item-list-view {
+
+}
+
+* {
+    font-family: var(--sub-font);
+    font-size: 14px;
+}

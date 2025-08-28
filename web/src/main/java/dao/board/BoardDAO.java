@@ -13,14 +13,14 @@ import java.util.List;
 public class BoardDAO {
     private static BoardDAO instance;
 
+    private BoardDAO() throws Exception {
+    }
+
     public static synchronized BoardDAO getInstance() throws Exception {
         if (instance == null) {
             instance = new BoardDAO();
         }
         return instance;
-    }
-
-    private BoardDAO() throws Exception {
     }
 
     //region create
@@ -30,15 +30,18 @@ public class BoardDAO {
     //region read
     //TODO: 게시글 목록 조회(title, writer 등 대표항목)
     public List<BoardDTO> getBoardPage(int curPage, int itemPerPage, int filter) throws Exception {
-        String sql = "SELECT * FROM (SELECT board.*, ROW_NUMBER() OVER(ORDER BY id DESC) rn FROM board) WHERE rn BETWEEN ? AND ?";
-        sql = filter == -1 ? sql : sql + "AND board_category = ?";
+        String sql = "SELECT * FROM (SELECT board.*, ROW_NUMBER() OVER(ORDER BY id DESC) rn FROM board";
+        sql = filter == -1 ? sql : sql + " WHERE board_category = ?";
+        sql += ") WHERE rn BETWEEN ? AND ?";
 
         try (Connection con = DataUtil.getConnection(); PreparedStatement pstat = con.prepareStatement(sql)) {
-            pstat.setInt(1, curPage * itemPerPage - (itemPerPage - 1));
-            pstat.setInt(2, curPage * itemPerPage);
-            if(filter != -1) {
-                pstat.setInt(3, filter);
+            int parameterIndex = 1;
+            if (filter != -1) {
+                pstat.setInt(parameterIndex++, filter);
             }
+            pstat.setInt(parameterIndex++, curPage * itemPerPage - (itemPerPage - 1));
+            pstat.setInt(parameterIndex, curPage * itemPerPage);
+
             try (ResultSet rs = pstat.executeQuery()) {
                 return getBoardListByResultSet(rs);
             }
@@ -56,27 +59,32 @@ public class BoardDAO {
             Timestamp writeDate = rs.getTimestamp("write_date");
             int viewCount = rs.getInt("view_count");
             posts.add(BoardDTO.builder()
-                            .id(id)
-                            .writer(writer)
-                            .title(title)
-                            .contents(contents)
-                            .writeDate(writeDate)
-                            .viewCount(viewCount)
-                            .build());
+                    .id(id)
+                    .writer(writer)
+                    .title(title)
+                    .contents(contents)
+                    .writeDate(writeDate)
+                    .viewCount(viewCount)
+                    .build());
         }
         return posts;
     }
 
-    public int getMaxPage(int itemPerPage) throws Exception {
+    public int getMaxPage(int itemPerPage, int filter) throws Exception {
         String sql = "SELECT count(*) FROM board";
+        sql = filter == -1 ? sql : sql + " WHERE board_category = ?";
 
         try (Connection con = DataUtil.getConnection();
-             PreparedStatement pstat = con.prepareStatement(sql);
-             ResultSet rs = pstat.executeQuery()) {
-            if (rs.next()) {
-                return (rs.getInt(1) - 1) / itemPerPage + 1;
+             PreparedStatement pstat = con.prepareStatement(sql)) {
+            if (filter != -1) {
+                pstat.setInt(1, filter);
             }
-            return 0;
+            try (ResultSet rs = pstat.executeQuery()) {
+                if (rs.next()) {
+                    return (rs.getInt(1) - 1) / itemPerPage + 1;
+                }
+                return 0;
+            }
         }
     }
 

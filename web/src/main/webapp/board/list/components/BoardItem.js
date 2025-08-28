@@ -1,20 +1,48 @@
+function createBoardList(postList, itemPerPage) {
+    if (postList.length === 0) {
+        let emptyAlert = $("<td>").attr({
+            "colspan": "5",
+            "align": "center"
+        }).html("표시할 내용이 없습니다.");
+
+        $(".item-list-view").append($("<tr>").append(emptyAlert));
+        for (let i = 0; i < itemPerPage - 1; i++) {
+            let emptyItem = $("<p>").css("color", "transparent");
+            let emptyItemTd = $("<td>").attr("colspan", "5");
+            $(".item-list-view").append($("<tr>").append(emptyItemTd.append(emptyItem)));
+        }
+    } else {
+        $(".item-list-view").html("");
+        for (let post of postList) {
+            createBoardItem(post);
+        }
+        if (postList.length % itemPerPage !== 0) {
+            for (let i = 0; i < itemPerPage - postList.length % itemPerPage; i++) {
+                let emptyItem = $("<p>").css("color", "transparent");
+                let emptyItemTd = $("<td>").attr("colspan", "5");
+                $(".item-list-view").append($("<tr>").append(emptyItemTd.append(emptyItem)));
+            }
+        }
+    }
+}
+
 function createBoardItem(post) {
     let tr = $("<tr>").attr("align", "center");
-    let id = $("<td>").attr("width", "5%").html(post.id);
+    // let id = $("<td>").attr("width", "5%").html(post.id);
     let title = $("<td>").attr("width", "30%").addClass("title")
         .append($("<a>").attr({
             "title": post.title,
             "href": "/item.board?seq=" + post.id
         }).html(post.title));
-    let writer = $("<td>").attr("width", "15%").html(post.writer);
-    let writerDate = $("<td>").attr("width", "30%").html(milliToDate(post.writeDate));
+    // let writer = $("<td>").attr("width", "15%").html(post.writer);
+    // let writerDate = $("<td>").attr("width", "30%").html(milliToDate(post.writeDate));
     let viewCount = $("<td>").attr("width", "20%").html(post.viewCount);
 
     $(".item-list-view").append(tr
-        .append(id)
+        // .append(id)
         .append(title)
-        .append(writer)
-        .append(writerDate)
+        // .append(writer)
+        // .append(writerDate)
         .append(viewCount));
 }
 

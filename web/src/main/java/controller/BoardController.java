@@ -20,7 +20,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.ServletException;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @WebServlet("*.board")
 public class BoardController extends HttpServlet {
@@ -64,15 +66,18 @@ public class BoardController extends HttpServlet {
 
                     List<BoardDTO> boardDTOList = boardDAO.getBoardPage(curPage, itemPerPage, filter);
 
-                    request.setAttribute("list", gson.toJson(boardDTOList));
-                    request.setAttribute("itemPerPage", itemPerPage);
+                    Map<String, Object> data = new HashMap<>();
 
-                    request.setAttribute("maxPage", boardDAO.getMaxPage(itemPerPage));
-                    request.setAttribute("curPage", curPage);
-                    request.setAttribute("naviPerPage", naviPerPage);
-                    request.setAttribute("filter", filter);
+                    data.put("list", boardDTOList);
+                    data.put("itemPerPage", itemPerPage);
 
-                    request.getRequestDispatcher("/board/list/boardListPage.jsp").forward(request, response);
+                    data.put("maxPage", boardDAO.getMaxPage(itemPerPage, filter));
+                    data.put("curPage", curPage);
+                    data.put("naviPerPage", naviPerPage);
+                    data.put("filter", filter);
+
+                    response.setCharacterEncoding("UTF-8");
+                    response.getWriter().write(gson.toJson(data));
                 }
             }
         } catch(Exception e) {

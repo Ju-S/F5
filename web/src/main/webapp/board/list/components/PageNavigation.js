@@ -4,10 +4,10 @@ function createPageNavigation(maxPage, curPage, naviPerPage, filter) {
         let ul = $("<ul>").addClass("pagination");
 
         let prevArrow = $("<li>").addClass("page-item");
-        let prevArrowLink = $("<a>").addClass("page-link");
+        let prevArrowLink = $("<a>").addClass("page-link", "arrow");
 
         let nextArrow = $("<li>").addClass("page-item");
-        let nextArrowLink = $("<a>").addClass("page-link");
+        let nextArrowLink = $("<a>").addClass("page-link", "arrow");
 
         if (curPage <= naviPerPage) {
             prevArrow.addClass("disabled");
@@ -18,16 +18,28 @@ function createPageNavigation(maxPage, curPage, naviPerPage, filter) {
         }
 
         if (filter !== -1) {
-            filter += "&filter=" + filter;
+            filterOpt = "&filter=" + filter;
         } else {
-            filter = "";
+            filterOpt = "";
         }
 
         let prevPageLast = Math.floor((curPage - 1) / naviPerPage) * naviPerPage;
         let nextPageFirst = prevPageLast + naviPerPage + 1;
 
-        prevArrowLink.attr("href", "?page=" + prevPageLast + filter).html("&laquo;");
-        nextArrowLink.attr("href", "?page=" + nextPageFirst + filter).html("&raquo;");
+        if (filter !== -1) {
+            prevPageLast += filterOpt;
+            nextPageFirst += filterOpt;
+        }
+
+        prevArrowLink.html("&laquo;");
+        nextArrowLink.html("&raquo;");
+
+        prevArrowLink.on("click", () => {
+            setBoardListAndNav(filter, prevPageLast);
+        })
+        nextArrowLink.on("click", () => {
+            setBoardListAndNav(filter, nextPageFirst);
+        })
 
         prevArrow.append(prevArrowLink);
         nextArrow.append(nextArrowLink);
@@ -40,7 +52,10 @@ function createPageNavigation(maxPage, curPage, naviPerPage, filter) {
                 let navItem = $("<li>").addClass("page-item");
                 let navLink = $("<a>").addClass("page-link");
 
-                navLink.attr("href", "?page=" + i + filter).html(i);
+                navLink.on("click", () => {
+                    setBoardListAndNav(filter, i);
+                })
+                navLink.html(i);
                 if (i === curPage) {
                     navLink.addClass("active");
                 }

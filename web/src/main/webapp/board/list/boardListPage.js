@@ -1,27 +1,23 @@
-function createBoardList(postList, itemPerPage) {
-    if (postList.length === 0) {
-        let emptyAlert = $("<td>").attr({
-            "colspan": "5",
-            "align": "center"
-        }).html("표시할 내용이 없습니다.");
-
-        $(".item-list-view").append($("<tr>").append(emptyAlert));
-        for (let i = 0; i < itemPerPage - 1; i++) {
-            let emptyItem = $("<p>").css("color", "transparent");
-            let emptyItemTd = $("<td>").attr("colspan", "5");
-            $(".item-list-view").append($("<tr>").append(emptyItemTd.append(emptyItem)));
-        }
-    } else {
-        $(".item-list-view").html("");
-        for (let post of postList) {
-            createBoardItem(post);
-        }
-        if (postList.length % itemPerPage !== 0) {
-            for (let i = 0; i < itemPerPage - postList.length % itemPerPage; i++) {
-                let emptyItem = $("<p>").css("color", "transparent");
-                let emptyItemTd = $("<td>").attr("colspan", "5");
-                $(".item-list-view").append($("<tr>").append(emptyItemTd.append(emptyItem)));
-            }
-        }
+function setBoardListAndNav(filter, page=1) {
+    let url = "/get_board_list.board";
+    url += page ? "?page=" + page : "";
+    if (filter) {
+        url += page ? "&" : "?";
+        url += "filter=" + filter;
     }
+
+    $.ajax({
+        url: url,
+        dataType: "json"
+    }).done((data) => {
+        let postList = data.list;
+        let itemPerPage = data.itemPerPage;
+        createBoardList(postList, itemPerPage);
+
+        let maxPage = data.maxPage;
+        let curPage = data.curPage;
+        let naviPerPage = data.naviPerPage;
+        let filter = data.filter;
+        createPageNavigation(maxPage, curPage, naviPerPage, filter);
+    });
 }
