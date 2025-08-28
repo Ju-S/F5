@@ -19,7 +19,7 @@ public class GameScoreDAO {
     }
 
     public int insert_score(int score) throws Exception{
-        String sql = "INSERT INTO game_score (id,game_id, member_id, score) VALUES (16,2, 'one', ?)";
+        String sql = "INSERT INTO game_score (id,game_id, member_id, score) VALUES (GAME_SCORE_SEQ.nextval,2, 'one', ?)";
 
         try (Connection con = DataUtil.getConnection();
              PreparedStatement pstat = con.prepareStatement(sql))

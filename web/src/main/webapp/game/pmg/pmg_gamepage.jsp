@@ -1,12 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%>
-<meta charset="UTF-8">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isELIgnored="false" %>
+
 <html>
 <head>
     <meta charset="UTF-8">
     <title>Insert title here</title>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
+    <link rel = "stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
     <style>
         * {
             box-sizing: border-box;
@@ -275,7 +276,7 @@
                     <div class="ranking_number">1등</div>
                     <div class="ranking_name">가나다라</div>
                     <div class="ranking_score">233,100점</div>
-                    <div clss="ranking_tier">GOLD</div>
+                    <div class="ranking_tier">GOLD</div>
                 </div>
                 <div class="ranking_bar">
                     <div class="ranking_number">1등</div>
@@ -328,32 +329,21 @@
         <div class="main_bottom">
 
 
-            <div class="reply_bar">
+
+
+<c:forEach var= "i" items = "${list}">
+
+            <div class= "reply_bar">
                 <div class="reply_profile"><i class="fa-solid fa-user"></i></div>
                 <div class="reply_main">
-                    <div class="reply_center">
-                        member
-                    </div>
-                    <div class="reply_center">
-                        Subhead
-                    </div>
+                    <div class="reply_center"> member ${i.writer}</div>
+                    <div class="reply_center">subhead <input type = "text" value = "${i.contents}" /></div>
                 </div>
-                <button class="reply_bar_btn">신고 <i class="fa-solid fa-triangle-exclamation" style="color: #f3127e;"></i></button>
+                <button class="reply_bar_btn"> 신고 <i class="fa-solid fa-triangle-exclamation" style="color: #f3127e;"></i></button>
             </div>
 
 
-            <div class="reply_bar">
-                <div class="reply_profile"><i class="fa-solid fa-user"></i></div>
-                <div class="reply_main">
-                    <div class="reply_center">
-                        member
-                    </div>
-                    <div class="reply_center">
-                        Subhead
-                    </div>
-                </div>
-                <button class="reply_bar_btn">신고 <i class="fa-solid fa-triangle-exclamation" style="color: #f3127e;"></i></button>
-            </div>
+</c:forEach>
 
 
             <form action="/write_reply.game" method="post">
@@ -364,6 +354,11 @@
                 <button class="reply_btn"><i class="fa-solid fa-keyboard" style="color: #ffffff;"></i></button>
             </div>
             </form>
+
+            <form action="/go_gamepage1.game" method="get">
+                <button type="submit"> 버튼</button>
+            </form>
+
         </div> <!-- main_bottom -->
 
     </div> <!-- main -->

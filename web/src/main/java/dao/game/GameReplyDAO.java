@@ -53,7 +53,7 @@ public class GameReplyDAO {
         //region read
         //TODO: 댓글 목록 조회
         //endregion
-        String sql = "select * from game_reply order by seq desc";
+        String sql = "select * from game_reply order by id desc";
 
         try(Connection con = DataUtil.getConnection();
             PreparedStatement pstat = con.prepareStatement(sql);
@@ -62,11 +62,11 @@ public class GameReplyDAO {
             try(ResultSet rs = pstat.executeQuery()){
                 List<GameReplyDTO> list = new ArrayList<>();
                 while(rs.next()){
-                     int id = rs.getInt(1);
-                     int game_id = rs.getInt(2);
-                     String writer = rs.getString(3);
-                     String contents = rs.getString(4);
-                    LocalDateTime write_date = rs.getTimestamp(5).toLocalDateTime();
+                    int id = rs.getInt("id");
+                    int game_id = rs.getInt("game_id");
+                    String writer = rs.getString("writer");
+                    String contents = rs.getString("contents");
+                    LocalDateTime write_date = rs.getTimestamp("write_date").toLocalDateTime();
 
                     GameReplyDTO dto = new GameReplyDTO(id,game_id,writer,contents,write_date);
                     list.add(dto);

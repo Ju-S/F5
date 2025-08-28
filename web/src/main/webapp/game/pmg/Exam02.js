@@ -48,7 +48,6 @@ class Exam02 extends Phaser.Scene{
             data : {
                 //score : this.currentTime
                 score: Math.floor(this.currentTime)
-
             },
             success: (response) => {
                 console.log("서버 응답:", response);

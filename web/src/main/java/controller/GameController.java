@@ -2,6 +2,7 @@ package controller;
 
 import dao.game.GameReplyDAO;
 import dao.game.GameScoreDAO;
+import dto.game.GameReplyDTO;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,13 +10,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet("*.game")
 public class GameController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-
+        request.setCharacterEncoding("UTF-8");
 
         try {
             GameScoreDAO dao_gamescore = GameScoreDAO.getInstance();
@@ -35,9 +36,21 @@ public class GameController extends HttpServlet {
                     response.setContentType("application/json; charset=utf-8");
                     response.getWriter().write("{\"result\": " + result + "}");
                     break;
+
                 // 행위 + 자원 (e.g, /getMemberList.member로 작성 요망)
                 //TODO: 게임오버 시 sql game_score 테이블에 스코어 insert
                 //TODO: sql 값 score만 넣은상태
+
+
+
+                case "/go_gamepage1.game" :
+
+                   List<GameReplyDTO> list = dao_reply.selectAll();
+
+                   request.setAttribute("list", list);
+                    System.out.println("댓글 개수: " + list.size());
+                    request.getRequestDispatcher("/game/pmg/pmg_gamepage.jsp").forward(request, response);
+                    break;
 
                 case "/write_reply.game" :
 
@@ -48,8 +61,12 @@ public class GameController extends HttpServlet {
 
                     dao_reply.insert_reply(game_id,writer,contents);
                     response.sendRedirect("/game/pmg/pmg_gamepage.jsp");
-                   //request.getRequestDispatcher("/game/pmg/pmg_gamepage.jsp").forward(request, response);
+
                     break;
+
+
+
+
                 //TODO : 댓글 작성
             }
         } catch(Exception e) {
@@ -60,7 +77,7 @@ public class GameController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        request.setCharacterEncoding("UTF-8");
         doGet(request, response);
     }
 }
