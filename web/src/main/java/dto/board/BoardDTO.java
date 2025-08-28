@@ -2,7 +2,7 @@ package dto.board;
 
 import lombok.*;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 @Getter
 @Setter
@@ -18,6 +18,6 @@ public class BoardDTO {
     private String contents;
     private long viewCount;
     private long like_count;
-    private LocalDateTime writeDate;
+    private Timestamp writeDate;
     private long reportCount;
 }

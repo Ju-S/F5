@@ -2,7 +2,7 @@ package dto.member;
 
 import lombok.*;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 @Getter
 @Setter
@@ -14,5 +14,5 @@ public class MemberProfileFileDTO {
     private String memberId;
     private String oriName;
     private String sysName;
-    private LocalDateTime uploadDate;
+    private Timestamp uploadDate;
 }
