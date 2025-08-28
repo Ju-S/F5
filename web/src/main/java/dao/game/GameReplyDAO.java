@@ -66,7 +66,7 @@ public class GameReplyDAO {
                     int game_id = rs.getInt("game_id");
                     String writer = rs.getString("writer");
                     String contents = rs.getString("contents");
-                    LocalDateTime write_date = rs.getTimestamp("write_date").toLocalDateTime();
+                    Timestamp write_date = rs.getTimestamp("write_date");
 
                     GameReplyDTO dto = new GameReplyDTO(id,game_id,writer,contents,write_date);
                     list.add(dto);

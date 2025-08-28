@@ -16,11 +16,15 @@
         }
 
         body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
             background-color: #101012;
-            color:white;
+            color:#fff;
         }
 
 
@@ -63,7 +67,7 @@
         }
 
         .navi:hover {
-            cursor: pointer
+            cursor: pointer;
         ;
         }
 
@@ -80,40 +84,69 @@
         }
 
         .game_box{
+
+            font: var(--title-font);
             width: 62%;
             height: 90%;
             float: left;
             margin-top: 20px;
-            background-color: lightgrey;
+            background-color: #2a2a2a;
+            /*var(--primary-subcolor);*/
             font-size : 50px;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             color:#EC6333;
             border-radius: 30px;
+
+
+        }
+
+        .play_btn{
+            width: 150px;
+            height: 50px;
+            font-size : 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--primary-color);
+            color:#fff;
+            border-radius: 10px;
+            margin-top: 30px;
+
+        }
+
+        .play_btn:hover{
+
+            cursor: pointer;
         }
 
         .ranking_box{
+
             width : 35%;
             height: 90%;
             float: right;
             margin-top: 20px;
-            background-color: #2a2a2a;
+            background-color:  #2a2a2a;
+            /*var(--primary-subcolor);*/
             overflow-y: auto;
             border-radius: 30px;
         }
 
         .ranking_title{
+            font: var(--title-font);
             width: 100%;
             height: 10%;
             display: flex;
             justify-content: center;
             align-items: center;
             font-size: 30px;
-            border-color: black;
+            border-color: var(--primary-color);
         }
 
         .ranking_bar{
+            font: var(--sub-font);
             width: 100%;
             height: 10%;
             display: flex;
@@ -137,8 +170,9 @@
             height: 40%;
             float: left;
             overflow-y : auto;
-            border-color: white;
-            background-color: #2a2a2a;
+            border-color: #fff;
+            background-color:  #2a2a2a;
+            /*var(--primary-subcolor);*/
             border-radius: 15px;
         }
 
@@ -147,7 +181,7 @@
             height: 20%;
             display: flex;
             border-radius: 15px;
-            border-color: white;
+            border-color: #fff;
             margin-bottom : auto;
         }
 
@@ -156,10 +190,11 @@
             height: 100%;
             font-size: 40px;
             border-radius: 15px;
-
+            font: var(--sub-font);
         }
 
         .reply_area::placeholder {
+            font: var(--title-font);
             font-size: 40px;
             text-align: center;
         }
@@ -172,7 +207,7 @@
             margin-right: 10px;
             margin-left : 10px;
             background-color: #3E459D;
-            color:white;
+            color:#fff;
         }
 
         .reply_btn:hover{
@@ -180,6 +215,7 @@
         }
 
         .reply_bar{
+            font: var(--title-font);
             width: 100%;
             height: 100px;
             background-color: #2a2a2a;
@@ -214,13 +250,14 @@
             padding: 10px 20px;
             border-radius: 10px;
             font-size: 15px;
-            background-color: black;
-            color:white;
+            background-color: var(--primary-color);
+            color:#fff;
 
             align-items: center;
         }
 
         .reply_bar_btn:hover{
+            font: var(--sub-font);
             cursor: pointer;
         }
 
@@ -252,7 +289,12 @@
 
         <div class="main_top">
 
-            <div class="game_box">Play Game!</div>
+            <div class="game_box">
+
+                Play Game! <br>
+             <button class = "play_btn"> play </button>
+
+            </div>
 
             <div class="ranking_box">
 
@@ -328,35 +370,31 @@
 
         <div class="main_bottom">
 
+            <c:forEach var= "i" items = "${list}">
 
-
-
-<c:forEach var= "i" items = "${list}">
-
-            <div class= "reply_bar">
-                <div class="reply_profile"><i class="fa-solid fa-user"></i></div>
-                <div class="reply_main">
-                    <div class="reply_center"> member ${i.writer}</div>
-                    <div class="reply_center">subhead <input type = "text" value = "${i.contents}" /></div>
+                <div class= "reply_bar">
+                    <div class="reply_profile"><i class="fa-solid fa-user"></i></div>
+                    <div class="reply_main">
+                        <div class="reply_center"> member ${i.writer}</div>
+                        <div class="reply_center">subhead <input type = "text" value = "${i.contents}" /></div>
+                    </div>
+                    <button class="reply_bar_btn"> 신고 <i class="fa-solid fa-triangle-exclamation" style="color: #f3127e;"></i></button>
                 </div>
-                <button class="reply_bar_btn"> 신고 <i class="fa-solid fa-triangle-exclamation" style="color: #f3127e;"></i></button>
-            </div>
 
 
-</c:forEach>
-
+            </c:forEach>
 
             <form action="/write_reply.game" method="post">
-            <div class="text_reply">
-                <input type="hidden" name="writer" value="writer">
-                <input type="hidden" name="game_id" value="1">
-                <input type="text" class="reply_area" placeholder="write your comment!" name="contents">
-                <button class="reply_btn"><i class="fa-solid fa-keyboard" style="color: #ffffff;"></i></button>
-            </div>
+                <div class="text_reply">
+                    <input type="hidden" name="writer" value="writer">
+                    <input type="hidden" name="game_id" value="1">
+                    <input type="text" class="reply_area" placeholder="write your comment!" name="contents">
+                    <button class="reply_btn"><i class="fa-solid fa-keyboard" style="color: #ffffff;"></i></button>
+                </div>
             </form>
 
             <form action="/go_gamepage1.game" method="get">
-                <button type="submit"> 버튼</button>
+                <button type = "submit"> 버튼</button>
             </form>
 
         </div> <!-- main_bottom -->

@@ -6,11 +6,18 @@ class Exam02 extends Phaser.Scene{
 
     constructor() {
         super({key:"Exam02"}); // 키 값 = Exam02
+
         this.frame = 0;
         this.boxes = [];
 
+
     }
 
+    init(){ // scene이 시작되기전 점수 초기화 과정
+
+        this.currentTime = 0;
+        this.isGameOver = false;
+    }
 
     preload() {
 
@@ -41,21 +48,27 @@ class Exam02 extends Phaser.Scene{
         this.me = this.physics.add.sprite(250,1000,'player');
 
         this.physics.add.overlap(this.me,this.boxes,(me,box)=>{  // 충돌시 , 점수보내기 + gameover
+
+            this.isGameOver = true;
             this.me.disableBody(true, true); // 충돌 후 플레이어 비활성화
             $.ajax({
             url: "/gameover.game" ,
             type : "get",
             data : {
-                //score : this.currentTime
+
                 score: Math.floor(this.currentTime)
             },
             success: (response) => {
                 console.log("서버 응답:", response);
+
                 this.scene.start("Gameover");
+
             },
             error: (err) => {
                 console.error("점수 전송 실패", err);
+
                 this.scene.start("Gameover");
+
             }
         });
 
@@ -70,11 +83,16 @@ class Exam02 extends Phaser.Scene{
 
     }
 
-    update(time) {
+    update(time,delta ) { // time 시간값 / delta 매 프레임마다 경과한시간
         this.frame++;
 
+        if (!this.isGameOver) { // 게임오버가 아니라면
+            this.currentTime += delta; // 점수값 초기화
+        }
+
+
         document.getElementById("timebox").innerHTML = (time/1000).toFixed(2);
-        document.getElementById("scorebox").innerHTML = time;
+        document.getElementById("scorebox").innerHTML = Math.floor(this.currentTime);
 
         if(this.frame% 60 == 0){
             let box =
@@ -97,18 +115,17 @@ class Exam02 extends Phaser.Scene{
             this.me.setVelocityX(0); // 내가 누르지 않으면 멈춤
         }
 
-        if(this.cursor.up.isDown){ // 만약 위쪽 방향키 누르면
-            this.me.setVelocityY(-this.speed); // y좌표를 5만큼 감소
+        // if(this.cursor.up.isDown){ // 만약 위쪽 방향키 누르면
+        //     this.me.setVelocityY(-this.speed); // y좌표를 5만큼 감소
+        //
+        // }else if(this.cursor.down.isDown){ // 만약 아래쪽 방향키 누르면
+        //     this.me.setVelocityY(this.speed);  // y좌표를 5만큼 증가
 
-        }else if(this.cursor.down.isDown){ // 만약 아래쪽 방향키 누르면
-            this.me.setVelocityY(this.speed);  // y좌표를 5만큼 증가
 
+        // }else {
+        //     this.me.setVelocityY(0); // 내가 누르지 않으면 멈춤
+        // }
 
-        }else {
-            this.me.setVelocityY(0); // 내가 누르지 않으면 멈춤
-        }
-
-        this.currentTime = time;
 
 
     }
