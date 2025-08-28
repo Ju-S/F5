@@ -117,3 +117,11 @@
 
     moveLeftMenu($(this),false); // 왼쪽 원래 자리로 이동하게
 })
+
+    $("#signinBtn").on("click",function(){
+        location.href = "/member/signin/signin.jsp";
+    })
+
+    $("#loginBtn").on("click",function(){
+        location.href = "/member/login/login.jsp";
+    })
