@@ -2,7 +2,7 @@ package dto.game;
 
 import lombok.*;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 @Getter
 @Setter
@@ -14,7 +14,7 @@ public class GameReplyDTO {
     private long gameId;
     private String writer;
     private String contents;
-    private LocalDateTime writeDate;
+    private Timestamp writeDate;
 }
 
 

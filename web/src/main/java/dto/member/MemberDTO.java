@@ -3,6 +3,8 @@ package dto.member;
 import enums.Authority;
 import lombok.*;
 
+import java.sql.Timestamp;
+
 @Getter
 @Setter
 @Builder
@@ -14,11 +16,10 @@ public class MemberDTO {
     private String name;
     private String nickname;
     private String email;
-    private String phone;
-    private long zipcode;
-    private String address1;
-    private String address2;
     // enums/Authority에서 권한 정의(ADMIN, MEMBER 등)
     private Authority authority;
-    private String ip;
+    private int birthyear;
+    // 0 or 1로 성별 구분.
+    private int sex;
+    private Timestamp joinDate;
 }
