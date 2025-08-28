@@ -1,5 +1,17 @@
 package controller;
 
+import dao.board.BoardCategoryDAO;
+import dao.board.BoardDAO;
+import dao.board.BoardFileDAO;
+import dao.board.ReplyDAO;
+import dao.game.GameDAO;
+import dao.game.GameReplyDAO;
+import dao.game.GameScoreDAO;
+import dao.member.BlackListDAO;
+import dao.member.MemberDAO;
+import dao.member.MemberGameTierDAO;
+import dao.member.MemberProfileFileDAO;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -34,7 +46,7 @@ public class AdminController extends HttpServlet {
             String cmd = request.getRequestURI();
 
             switch (cmd) {
-                // 행위 + 자원 (e.g, /getMemberList.member로 작성 요망)
+                // 행위 + 자원 (e.g, /get_memberList.member로 작성 요망)
                 //TODO: admin 관련 기능
             }
         } catch(Exception e) {

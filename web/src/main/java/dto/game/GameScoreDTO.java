@@ -2,7 +2,7 @@ package dto.game;
 
 import lombok.*;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 @Getter
 @Setter
@@ -14,5 +14,5 @@ public class GameScoreDTO {
     private long gameId;
     private String memberId;
     private long score;
-    private LocalDateTime recdDate;
+    private Timestamp recdDate;
 }
