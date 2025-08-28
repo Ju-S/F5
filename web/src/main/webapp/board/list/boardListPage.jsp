@@ -31,6 +31,7 @@
             <div class="boardList">
                 <div class="row">
                     <div class="col">
+                        <table class="item-list-view"></table>
                         <script>
                             let postList = ${list};
                             let itemPerPage = ${itemPerPage};

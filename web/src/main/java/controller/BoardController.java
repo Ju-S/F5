@@ -1,5 +1,7 @@
 package controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import dao.board.BoardCategoryDAO;
 import dao.board.BoardDAO;
 import dao.board.BoardFileDAO;
@@ -40,6 +42,8 @@ public class BoardController extends HttpServlet {
             MemberProfileFileDAO memberProfileFileDAO = MemberProfileFileDAO.getInstance();
             //endregion
 
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.registerModule(new JavaTimeModule());
             String cmd = request.getRequestURI();
 
             switch (cmd) {
@@ -47,17 +51,23 @@ public class BoardController extends HttpServlet {
                 //TODO: 게시글 관련 기능
 
                 // 게시글 목록 확인.(pagination)
-                case "getBoardList" : {
+                case "/getBoardList.board" : {
+                    int naviPerPage = 10;
                     int itemPerPage = 10;
-                    int curPage = Integer.parseInt(request.getParameter("curPage"));
+                    int curPage = 1;
+                    try {
+                        curPage = Integer.parseInt(request.getParameter("page"));
+                    } catch (Exception ignored) {}
                     List<BoardDTO> boardDTOList = boardDAO.getBoardPage(curPage, itemPerPage);
 
-                    request.setAttribute("list", boardDTOList);
+                    request.setAttribute("list", mapper.writeValueAsString(boardDTOList));
                     request.setAttribute("itemPerPage", itemPerPage);
 
-//                    request.setAttribute("maxPage", );
+                    request.setAttribute("maxPage", boardDAO.getMaxPage(itemPerPage));
                     request.setAttribute("curPage", curPage);
-//                    request.setAttribute("naviPerPage", );
+                    request.setAttribute("naviPerPage", naviPerPage);
+
+                    request.getRequestDispatcher("/board/list/boardListPage.jsp").forward(request, response);
                 }
             }
         } catch(Exception e) {
