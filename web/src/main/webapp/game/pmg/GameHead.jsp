@@ -15,20 +15,7 @@
         border: 1px solid black;
         margin: auto;
     }
-    #mygoal{
-        width: 100px;
-        height: 100px;
-        background-color: red;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        text-align: center;
-        line-height: 100px;
-        font-size: 20px;
-        color: white;
 
-    }
 
 
 

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8" %>
-<!DOCTYPE html>
+         pageEncoding="UTF-8"%>
+<meta charset="UTF-8">
 <html>
 <head>
     <meta charset="UTF-8">
@@ -241,7 +241,7 @@
 
 
         <div class="navi"> <i class="fa-solid fa-house" style="font-size: 50px"></i></div>
-        <div class="navi"> <i class="fa-solid fa-gamepad" style="color: #74C0FC; font-size: 50px;"></i></i></div>
+        <div class="navi"> <i class="fa-solid fa-gamepad" style="color: #74C0FC; font-size: 50px;"></i></div>
         <div class="navi"> <i class="fa-solid fa-comment-dots" style="font-size: 50px"></i></div>
         <div class="navi"> <i class="fa-solid fa-id-card-clip" style="font-size: 50px"></i></div>
 
@@ -355,80 +355,15 @@
                 <button class="reply_bar_btn">신고 <i class="fa-solid fa-triangle-exclamation" style="color: #f3127e;"></i></button>
             </div>
 
-            <div class="reply_bar">
-                <div class="reply_profile"><i class="fa-solid fa-user"></i></div>
-                <div class="reply_main">
-                    <div class="reply_center">
-                        member
-                    </div>
-                    <div class="reply_center">
-                        Subhead
-                    </div>
-                </div>
-                <button class="reply_bar_btn">신고 <i class="fa-solid fa-triangle-exclamation" style="color: #f3127e;"></i></button>
-            </div>
 
-            <div class="reply_bar">
-                <div class="reply_profile"><i class="fa-solid fa-user"></i></div>
-                <div class="reply_main">
-                    <div class="reply_center">
-                        member
-                    </div>
-                    <div class="reply_center">
-                        Subhead
-                    </div>
-                </div>
-                <button class="reply_bar_btn">신고 <i class="fa-solid fa-triangle-exclamation" style="color: #f3127e;"></i></button>
-            </div>
-
-            <div class="reply_bar">
-                <div class="reply_profile"><i class="fa-solid fa-user"></i></div>
-                <div class="reply_main">
-                    <div class="reply_center">
-                        member
-                    </div>
-                    <div class="reply_center">
-                        Subhead
-                    </div>
-                </div>
-                <button class="reply_bar_btn">신고 <i class="fa-solid fa-triangle-exclamation" style="color: #f3127e;"></i></button>
-            </div>
-
-            <div class="reply_bar">
-                <div class="reply_profile"><i class="fa-solid fa-user"></i></div>
-                <div class="reply_main">
-                    <div class="reply_center">
-                        member
-                    </div>
-                    <div class="reply_center">
-                        Subhead
-                    </div>
-                </div>
-                <button class="reply_bar_btn">신고 <i class="fa-solid fa-triangle-exclamation" style="color: #f3127e;"></i></button>
-            </div>
-
-            <div class="reply_bar">
-                <div class="reply_profile"><i class="fa-solid fa-user"></i></div>
-                <div class="reply_main">
-                    <div class="reply_center">
-                        member
-                    </div>
-                    <div class="reply_center">
-                        Subhead
-                    </div>
-                </div>
-                <button class="reply_bar_btn">신고 <i class="fa-solid fa-triangle-exclamation" style="color: #f3127e;"></i></button>
-            </div>
-
-
-
-
-
+            <form action="/write_reply.game" method="post">
             <div class="text_reply">
-                <input type="text" class="reply_area" placeholder="write your comment!">
+                <input type="hidden" name="writer" value="writer">
+                <input type="hidden" name="game_id" value="1">
+                <input type="text" class="reply_area" placeholder="write your comment!" name="contents">
                 <button class="reply_btn"><i class="fa-solid fa-keyboard" style="color: #ffffff;"></i></button>
             </div>
-
+            </form>
         </div> <!-- main_bottom -->
 
     </div> <!-- main -->

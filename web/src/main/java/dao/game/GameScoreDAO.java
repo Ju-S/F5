@@ -29,7 +29,15 @@ public class GameScoreDAO {
 
     }
 
+    public int select_ranking() throws Exception{ // 랭킹출력
+        String sql = "select * from game_score";
+        try (Connection con = DataUtil.getConnection();
+             PreparedStatement pstat = con.prepareStatement(sql))
+        {
+            return pstat.executeUpdate();
+        }
 
+    }
 
 
 
