@@ -11,7 +11,9 @@
             crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
             integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    <link href="css/mypage-style.css">
+    <link href="css/main-style.css">
+    <link href="css/edit-content.css">
+    <link href="css/ranking-content.css">
 </head>
 <body>
 <!-- Header -->
@@ -19,7 +21,7 @@
     <nav class="navbar bg-body-tertiary">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
-                <img src="/mypage/img/log.svg" alt="Logo" width="32" class="d-inline-block align-text-top"/>
+                <img src="img/log.svg" alt="Logo" width="32" class="d-inline-block align-text-top"/>
             </a>
         </div>
     </nav>
@@ -32,9 +34,9 @@
         <!-- Sidebar -->
         <aside class="sidebar">
             <div style="position: relative;">
-                <img src="/mypage/img/profil.svg" alt="Profile" class="profile-image"/>
+                <img src="img/profil.svg" alt="Profile" class="profile-image"/>
                 <button class="edit-icon" aria-label="Edit profile">
-                    <img src="/mypage/img/edit.svg" alt="edit" class="edit-image"/>
+                    <img src="img/edit.svg" alt="edit" class="edit-image"/>
                 </button>
             </div>
             <div class="textMember">
@@ -44,21 +46,21 @@
 
             <!-- 버튼 -->
             <div class="btn">
-                <button class="menu-button active" data-target="profile" data-img-default="/mypage/img/mypage_color.svg"
-                        data-img-active="/mypage/img/mypage.svg" type="button">
-                    <img src="/mypage/img/mypage.svg" alt="mypage" class="menu-img">
+                <button class="menu-button active" data-target="profile" data-img-default="img/mypage_color.svg"
+                        data-img-active="img/mypage.svg" type="button">
+                    <img src="img/mypage.svg" alt="mypage" class="menu-img">
                     개인 정보 수정
                 </button>
 
-                <button class="menu-button" data-target="ranking" data-img-default="/mypage/img/ranking_color.svg"
-                        data-img-active="/mypage/img/ranking.svg" type="button">
-                    <img src="/mypage/img/ranking.svg" alt="ranking" class="menu-img">
+                <button class="menu-button" data-target="ranking" data-img-default="img/ranking_color.svg"
+                        data-img-active="img/ranking.svg" type="button">
+                    <img src="img/ranking.svg" alt="ranking" class="menu-img">
                     게임 랭킹
                 </button>
 
-                <button class="menu-button" data-target="logout" data-img-default="/mypage/img/logout_color.svg"
-                        data-img-active="/mypage/img/logout.svg" type="button">
-                    <img src="/mypage/img/logout.svg" alt="logout" class="menu-img">
+                <button class="menu-button" data-target="logout" data-img-default="img/logout_color.svg"
+                        data-img-active="img/logout.svg" type="button">
+                    <img src="img/logout.svg" alt="logout" class="menu-img">
                     로그아웃
                 </button>
             </div>
@@ -189,6 +191,6 @@
 </div>
 
 <!-- 스크립트 연결 -->
-<script src="js/mypage-move.js"></script>
+<script src="js/move.js"></script>
 </body>
 </html>
