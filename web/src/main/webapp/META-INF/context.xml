@@ -1,6 +1,6 @@
 <Context>
     <Resource
-            name="jdbc/F5"
+            name="jdbc/f5"
             auth="Container"
             type="javax.sql.DataSource"
             username="F5"
