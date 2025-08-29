@@ -40,10 +40,6 @@ public class GameController extends HttpServlet {
             MemberGameTierDAO memberGameTierDAO = MemberGameTierDAO.getInstance();
             MemberProfileFileDAO memberProfileFileDAO = MemberProfileFileDAO.getInstance();
 
-
-            GameScoreDAO dao_gamescore = GameScoreDAO.getInstance();
-
-            GameReplyDAO dao_reply = GameReplyDAO.getInstance();
             String cmd = request.getRequestURI();
 
 
@@ -54,18 +50,18 @@ public class GameController extends HttpServlet {
                     int score = Integer.parseInt(request.getParameter("score"));
                     System.out.println("cmd : " + cmd);
                     System.out.println("score:" + score);
-                    int result =  dao_gamescore.insert_score(score);
+                    int result =  gameScoreDAO.insert_score(score);
 
 
                     if(0 < score && score < 10000){ //TODO 점수를 받아서 알맞는 tier 구분
                         String tier = "BRONZE";
-                        dao_gamescore.insert_tier(tier);
+                        gameScoreDAO.insert_tier(tier);
                     }else if(10000 < score && score < 20000){
                     String tier = "SILVER";
-                        dao_gamescore.insert_tier(tier);
+                        gameScoreDAO.insert_tier(tier);
                     }else if(20000 < score ){
                         String tier = "GOLD";
-                        dao_gamescore.insert_tier(tier);
+                        gameScoreDAO.insert_tier(tier);
                     }
 
 
@@ -85,7 +81,7 @@ public class GameController extends HttpServlet {
 
                 case "/go_gamepage1.game" :
 
-                    List<GameReplyDTO> list = dao_reply.selectAll();
+                    List<GameReplyDTO> list = gameReplyDAO.selectAll();
 
                     request.setAttribute("list", list);
                     System.out.println("댓글 개수: " + list.size());
@@ -102,7 +98,7 @@ public class GameController extends HttpServlet {
                     int game_id = Integer.parseInt(request.getParameter("game_id"));
                     String contents = request.getParameter("contents");
 
-                    dao_reply.insert_reply(game_id,writer,contents);
+                    gameReplyDAO.insert_reply(game_id,writer,contents);
                     response.sendRedirect("/game/pmg/pmg_gamepage.jsp");
 
                     break;
