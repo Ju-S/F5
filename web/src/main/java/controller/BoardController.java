@@ -101,7 +101,7 @@ public class BoardController extends HttpServlet {
                             .build();
 
                     int write = boardDAO.write(boardDTO);
-                    response.sendRedirect("/board/reply/reply.jsp");
+                    response.sendRedirect("/board/reply/detailBoard.jsp");
                     break;
                 }
             }

@@ -20,8 +20,12 @@ public class RouteController extends HttpServlet {
                     request.getRequestDispatcher("/board/list/boardListPage.jsp").forward(request, response);
                     break;
                 }
+                case "/write_board.page": {
+                    request.getRequestDispatcher("/board/detailBoard/writeBoard.jsp").forward(request, response);
+                    break;
+                }
             }
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             response.sendRedirect("/error.jsp");
         }
