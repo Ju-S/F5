@@ -6,7 +6,6 @@ import java.sql.Connection;
 
 public class MemberGameTierDAO {
     private static MemberGameTierDAO instance;
-    private static Connection con;
 
     public static synchronized MemberGameTierDAO getInstance() throws Exception {
         if (instance == null) {
@@ -16,7 +15,6 @@ public class MemberGameTierDAO {
     }
 
     private MemberGameTierDAO() throws Exception {
-        con = DataUtil.getConnection();
     }
 
     //region create

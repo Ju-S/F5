@@ -6,7 +6,6 @@ import java.sql.Connection;
 
 public class BoardCategoryDAO {
     private static BoardCategoryDAO instance;
-    private static Connection con;
 
     public static synchronized BoardCategoryDAO getInstance() throws Exception {
         if (instance == null) {
@@ -16,7 +15,6 @@ public class BoardCategoryDAO {
     }
 
     private BoardCategoryDAO() throws Exception {
-        con = DataUtil.getConnection();
     }
 
     //region read

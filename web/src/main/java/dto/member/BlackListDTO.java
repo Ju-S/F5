@@ -2,7 +2,7 @@ package dto.member;
 
 import lombok.*;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 @Getter
 @Setter
@@ -12,6 +12,6 @@ import java.time.LocalDateTime;
 public class BlackListDTO {
     private long id;
     private String memberId;
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
+    private Timestamp startDate;
+    private Timestamp endDate;
 }
