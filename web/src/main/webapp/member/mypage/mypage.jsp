@@ -146,7 +146,7 @@
             </div>
 
             <!-- 콘텐츠: 게임 랭킹 -->
-            <div class="content-box" id="conten-ranking" data-content="ranking">
+            <div class="content-box" id="content-ranking" data-content="ranking">
                 <!-- 게임1 랭킹 -->
                 <div class="ranking-card">
                     <h5>게임 1 랭킹</h5>
