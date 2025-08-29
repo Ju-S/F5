@@ -21,7 +21,7 @@ class Exam02 extends Phaser.Scene{
 
     preload() {
 
-        this.load.image('player','/game/pmg/img/player.png')
+        this.load.spritesheet('walk','/game/pmg/img/player.png',{frameWidth:107.625,frameHeight:130.5})
         this.load.image('needle','/game/pmg/img/needle.png')
     }
 
@@ -29,6 +29,28 @@ class Exam02 extends Phaser.Scene{
 
 
         this.speed = (Math.random()*300+100);
+
+        // -- 애니메이션 만들기
+
+        this.anims.create({
+
+            key:'right',
+            frames:this.anims.generateFrameNumbers("walk",{start:0,end:7}),
+            frameRate:10,
+            repeat:1
+
+
+        })
+
+        this.anims.create({
+
+            key:'left',
+            frames:this.anims.generateFrameNumbers("walk",{start:8,end:15}),
+            frameRate:10,
+            repeat:1
+
+
+        })
 
         this.cameras.main.setBackgroundColor("#ffffff"); // 배경색 설정
 
@@ -97,6 +119,10 @@ class Exam02 extends Phaser.Scene{
 
 
 
+
+
+
+
     }
 
     update(time,delta ) { // time 시간값 / delta 매 프레임마다 경과한시간
@@ -116,19 +142,19 @@ class Exam02 extends Phaser.Scene{
             box.setVelocityY(this.speed);
             this.boxes.push(box);
 
-            box.body.setSize(200,100);
+            box.body.setSize(200,   100);
             box.body.setOffset(200,100);
-
 
 
         }
 
+
         if(this.cursor.left.isDown){ // 만약 왼쪽 방향키 누르면
             this.me.setVelocityX(-this.speed); // x좌표를 5만큼 감소
-
+            this.me.play("left");
         }else if(this.cursor.right.isDown){ // 만약 오른쪽 방향키 누르면
             this.me.setVelocityX(this.speed); // x좌표를 5만큼 감소
-
+            this.me.play("right");
         }else {
             this.me.setVelocityX(0); // 내가 누르지 않으면 멈춤
         }
