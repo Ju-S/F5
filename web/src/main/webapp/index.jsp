@@ -3,14 +3,16 @@
 <html>
 <head>
     <jsp:include page="/common/Head.jsp"/>
+
     <link rel="stylesheet" href="/index.css">
+    <link rel="stylesheet" href="/common/header/Header.css">
 
 </head>
 
 
 <body>
 <%-- 공용 헤더 --%>
-<jsp:include page="/common/Header.jsp"/>
+<jsp:include page="/common/header/Header.jsp"/>
 
 
 <%--컨테이너--%>
