@@ -193,7 +193,7 @@ class Pmg_game extends Phaser.Scene {
                     this.spade.setScale(0.1);
                     this.spade.setOrigin(0, 0);
 
-                    this.me.setScale(1);
+                    this.me.setScale(1); // 메인
                     break;
 
                 case 2 :
@@ -202,7 +202,7 @@ class Pmg_game extends Phaser.Scene {
                     this.diamond.setScale(0.1);
                     this.diamond.setOrigin(0, 0);
 
-                    this.me.setScale(0.2);
+                    this.me.setScale(0.2); // 메인
                     break;
 
                 case 3 :
@@ -210,7 +210,7 @@ class Pmg_game extends Phaser.Scene {
                     this.heart.setScale(0.1);
                     this.heart.setOrigin(0, 0);
 
-                    this.player_speed = 1000;
+                    this.player_speed = 1000; // 메인
                     break;
 
                 case 4 :
@@ -218,7 +218,7 @@ class Pmg_game extends Phaser.Scene {
                     this.clover.setScale(0.1);
                     this.clover.setOrigin(0, 0);
 
-                    this.player_speed = 100;
+                    this.player_speed = 100; // 메인
                     break;
 
 
@@ -259,14 +259,14 @@ class Pmg_game extends Phaser.Scene {
 
             let crutch = this.physics.add.sprite(0 , Math.random() * 250, 'crutch');
 
-            crutch.setDisplaySize(100, 50);
+            crutch.setDisplaySize(50, 50);
             crutch.setOrigin(0, 0);
             crutch.setVelocityX(100);
             this.crutches.push(crutch);
 
 
-            crutch.body.setSize(200, 100);
-            crutch.body.setOffset(200, 100);
+            crutch.body.setSize(1000,1000);
+            crutch.body.setOffset(-500, 0);
 
             this.crutches.forEach((crutch, index) => {
                 crutch.rotation += 80 * delta/2 ; // 회전 속도 조절
