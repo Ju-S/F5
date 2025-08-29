@@ -115,6 +115,22 @@ public class BoardController extends HttpServlet {
                     String oriFileName = multi.getOriginalFileName("file");
                     String fileUrl = request.getContextPath() + "/upload/boardImage/" + sysFileName;
                     response.getWriter().write(fileUrl);
+                    response.sendRedirect("/board/writeBoard/writeBoard.jsp");
+                    break;
+                }
+                // 게시글 하나의 아이템에 대한 세부 속성 조회 및 출력
+                case "/get_board_detail.board": {
+                    long boardId = Long.parseLong(request.getParameter("boardId"));
+
+                    // 게시글 정보
+                    BoardDTO detail = boardDAO.getBoardDetail(boardId);
+
+                    //TODO: 댓글 정보
+
+                    //TODO: 작성자 프로필사진 정보
+
+                    request.setAttribute("boardDetail", detail);
+                    request.getRequestDispatcher("/board/detailBoard/detailBoard.jsp").forward(request, response);
                     break;
                 }
             }
@@ -128,7 +144,5 @@ public class BoardController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         doGet(request, response);
-
-
     }
 }
