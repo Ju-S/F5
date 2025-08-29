@@ -180,7 +180,7 @@
 </div>
 
 
-<script src="/member/signin/ index.js"></script>
+<script src="/member/signin/signin.js"></script>
 
 
 </body>

@@ -149,7 +149,7 @@ function dupliCheck(button, url){
                         if (target === "id") {
                             $("#nickname").focus();
                         } else if (target === "nickname") {
-                            $("#name").focus(); // 예시
+                            $("#pw").focus(); // 예시
                         }
 
                     }, 0);
