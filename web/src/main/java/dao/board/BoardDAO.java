@@ -1,8 +1,10 @@
 package dao.board;
 
+import dto.board.BoardDTO;
 import util.DataUtil;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 
 public class BoardDAO {
     private static BoardDAO instance;
@@ -19,6 +21,20 @@ public class BoardDAO {
 
     //region create
     //TODO: 게시글 작성
+    public int write(BoardDTO boardDTO)throws Exception{
+        String sql = "insert into board values(board_seq.nextval,?,?,?,?,?,default,default,default,default)";
+
+        try (Connection con = DataUtil.getConnection();
+        PreparedStatement pstat = con.prepareStatement(sql)) {
+            pstat.setLong(1, boardDTO.getBoardCategory());
+            pstat.setString(2, boardDTO.getWriter());
+            pstat.setLong(3, boardDTO.getGameId());
+            pstat.setString(4,boardDTO.getTitle());
+            pstat.setString(5, boardDTO.getContents());
+
+            return pstat.executeUpdate();
+        }
+    }
     //endregion
 
     //region read
