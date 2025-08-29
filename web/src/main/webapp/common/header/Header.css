@@ -1,0 +1,41 @@
+/*header 내용 */
+.header {
+    height: 8%;
+    width: 100%;
+    padding-top: 24px;
+    padding-left: 250px;
+
+    overflow: hidden;
+}
+
+/*로고*/
+.logoBox img {
+    width: 28px;
+    height: 40px;
+    /*transform: scale(0.7); !* 80% 크기로 축소 *!*/
+}
+
+/*로그인, 회원가입 버튼있는 box*/
+.headerBtn {
+    float: left;
+    width: 90%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+
+    padding-left: 72%;
+}
+
+/*회원가입 버튼*/
+.headerBtn .btn-outline-light {
+    color: var(--secondary-color);
+    border: 1px solid var(--secondary-color);
+    margin-right: 3%;
+}
+
+/*로그인 버튼*/
+.headerBtn .btn-primary {
+    background-color: var(--secondary-color);
+    border: 1px solid var(--secondary-color);
+}

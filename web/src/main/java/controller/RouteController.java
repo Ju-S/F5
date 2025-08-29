@@ -16,6 +16,10 @@ public class RouteController extends HttpServlet {
 
             switch (cmd) {
                 //TODO: .page에 따른 페이지 라우팅(페이지 이동 관련)
+                case "/board_list.page": {
+                    request.getRequestDispatcher("/board/list/boardListPage.jsp").forward(request, response);
+                    break;
+                }
             }
         } catch(Exception e) {
             e.printStackTrace();
