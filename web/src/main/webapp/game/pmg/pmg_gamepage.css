@@ -26,7 +26,6 @@ div{
     padding: 0;
 
 
-
 }
 
 body {
@@ -89,6 +88,7 @@ body {
     height: 800px;
     float: left;
     border: 1px solid black;
+    border-radius: var(--border-radius);
 }
 
 .main_top{
@@ -104,7 +104,7 @@ body {
     height: 90%;
     float: left;
     margin-top: 20px;
-    background-color: #2a2a2a;
+    background-color: var(--primary-subcolor);
     /*var(--primary-subcolor);*/
     font-size : 50px;
     display: flex;
@@ -124,7 +124,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: var(--primary-color);
+    background-color: var(--danger-color);
     color:#fff;
     border-radius: 10px;
     margin-top: 30px;
@@ -132,7 +132,7 @@ body {
 }
 
 .play_btn:hover{
-
+    background-color: var(--mainbtn-hover-color);
     cursor: pointer;
 }
 
@@ -226,6 +226,7 @@ body {
 
 .reply_btn:hover{
     cursor: pointer;
+    background-color: var(--btnsecondary-hover-color);
 }
 
 .reply_bar{

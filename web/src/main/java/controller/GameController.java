@@ -68,8 +68,8 @@ public class GameController extends HttpServlet {
                     }
 
 
-                    response.setContentType("application/json; charset=utf-8");
-
+                    response.setContentType("application/json; charset=utf-8"); // json 응답
+                    response.getWriter().write("{\"result\":\"success\"}");
 
 
                     break;
@@ -92,9 +92,6 @@ public class GameController extends HttpServlet {
 
                 
                 case "/write_reply.game" : // 댓글 작성
-
-
-
 
                     String writer = request.getParameter("writer");
                     // String writer = (String)request.getSession().getAttribute("loginId");

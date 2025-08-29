@@ -182,9 +182,6 @@
                         </div>
                     </form>
 
-                    <form action="/go_gamepage1.game" method="post">
-                        <button type = "submit"> 버튼</button>
-                    </form>
 
                 </div> <!-- main_bottom -->
             </div> <%-- main --%>

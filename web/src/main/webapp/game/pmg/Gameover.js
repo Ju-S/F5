@@ -51,7 +51,7 @@ class Gameover extends Phaser.Scene {
 
         restartButton.on("pointerdown",()=>{ // 누를 시
 
-            this.scene.start("Exam02");
+            this.scene.start("Pmg_game");
 
         })
 
