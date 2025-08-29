@@ -2,10 +2,8 @@
 <html>
 <head>
     <jsp:include page="/common/Head.jsp"/>
-    <link rel="stylesheet" href="/board/detailBoard/detailBoard.css"> <!-- css 링크  -->
     <link rel="stylesheet" href="/common/common.css"> <!-- common css 링크 -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
+    <link rel="stylesheet" href="/board/detailBoard/detailBoard.css"> <!-- css 링크  -->
 
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.js"></script>
