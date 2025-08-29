@@ -1,9 +1,9 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <html>
 
 <head>
     <jsp:include page="/common/Head.jsp"/>
-    <link rel="stylesheet" href="/board/reply/reply.css">
+    <link rel="stylesheet" href="/board/detailBoard/detailBoard.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
 
@@ -23,7 +23,7 @@
                          style="width: 50px; height: 50px;">
                 </div>
                 <div class="col-10 writer">
-                    작성자
+                    ${boardDetail.writer}
                 </div>
                 <div class="col-1">
                     <div class="reportBox">
@@ -33,14 +33,14 @@
                             <i class="bi bi-three-dots-vertical"></i>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item text-danger" href="#">🚨 신고하기</a></li>
+                            <li><a class="dropdown-item text-danger" href="#">신고하기</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
             <div class="row"> <!-- 게시글 컨텐츠 영역 -->
                 <div class="col-12 post-contents">
-                    내요요오오오오옹~~~~~~~~~~
+                    ${boardDetail.contents}
                 </div>
             </div>
             <div class="row"> <!-- 삭제 수정 버튼 영역 -->
@@ -81,7 +81,7 @@
                                 <i class="bi bi-three-dots-vertical"></i>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item text-danger" href="#">🚨 신고하기</a></li>
+                                <li><a class="dropdown-item text-danger" href="#">신고하기</a></li>
                             </ul>
                         </div>
                     </div>
