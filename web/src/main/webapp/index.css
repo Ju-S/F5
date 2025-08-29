@@ -45,7 +45,7 @@ body {
     width: 100%;
 
     background-color:  var(--primary-subcolor);
-    border-radius: 15px;
+    border-radius: var(--border-radius);
 }
 .game img{
     width: auto;
@@ -128,9 +128,9 @@ body {
     color:var(--danger-color) ;
 }
 .mainGameBtn.clicked {
-    background-color: white;
-    border: var(--danger-color) ;
-    color: var(--danger-color) ;
+    background-color: white !important;
+    border: var(--danger-color) !important;
+    color: var(--danger-color) !important;
 }
 /*이미지 확대된 상태에서 줄어들도록*/
 .mainGameImg {
