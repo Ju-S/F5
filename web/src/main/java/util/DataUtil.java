@@ -13,7 +13,7 @@ public class DataUtil {
     static {
         try {
             Context ctx = new InitialContext();
-            dataSource = (DataSource) ctx.lookup("java:comp/env/jdbc/F5");
+            dataSource = (DataSource) ctx.lookup("java:comp/env/jdbc/f5");
         } catch (Exception e) {
             throw new ExceptionInInitializerError("DataSource lookup failed: " + e.getMessage());
         }
