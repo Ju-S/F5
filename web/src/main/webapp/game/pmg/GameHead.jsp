@@ -11,6 +11,7 @@
 <script src = "/game/pmg/Exam01.js"></script>
 <script src = "/game/pmg/Exam02.js"></script>
 <script src = "/game/pmg/Gameover.js"></script>
+
 <style>
     #gamebox{
         width: 600px;

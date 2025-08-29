@@ -47,6 +47,11 @@ public class GameController extends HttpServlet {
 
                 case "/gameover.game":
 
+                    //region read
+                    // 행위 + 자원 (e.g, /getMemberList.member로 작성 요망)
+                    //TODO: 게임오버 시 sql game_score 테이블에 스코어 insert
+                    //TODO: sql 값 score만 넣은상태
+
                     int score = Integer.parseInt(request.getParameter("score"));
                     System.out.println("cmd : " + cmd);
                     System.out.println("score:" + score);
@@ -57,7 +62,7 @@ public class GameController extends HttpServlet {
                         String tier = "BRONZE";
                         gameScoreDAO.insert_tier(tier);
                     }else if(10000 < score && score < 20000){
-                    String tier = "SILVER";
+                        String tier = "SILVER";
                         gameScoreDAO.insert_tier(tier);
                     }else if(20000 < score ){
                         String tier = "GOLD";
@@ -68,31 +73,32 @@ public class GameController extends HttpServlet {
 
 
                     response.setContentType("application/json; charset=utf-8");
-                    response.getWriter().write("{\"result\": " + result + "}");
+
 
 
                     break;
 
-                // 행위 + 자원 (e.g, /getMemberList.member로 작성 요망)
-                //TODO: 게임오버 시 sql game_score 테이블에 스코어 insert
-                //TODO: sql 값 score만 넣은상태
 
 
-
+                //region read
                 case "/go_gamepage1.game" :
+
+                    //ToDO 댓글출력
 
                     List<GameReplyDTO> list = gameReplyDAO.selectAll();
 
                     request.setAttribute("list", list);
-                    System.out.println("댓글 개수: " + list.size());
+
                     request.getRequestDispatcher("/game/pmg/pmg_gamepage.jsp").forward(request, response);
 
-
-
                     break;
-
+                //endregion
+                
+                //region read
+                
                 case "/write_reply.game" :
 
+                    //TODO: 댓글 작성
                     String writer = request.getParameter("writer");
                     // String writer = (String)request.getSession().getAttribute("loginId");
                     int game_id = Integer.parseInt(request.getParameter("game_id"));
@@ -100,14 +106,11 @@ public class GameController extends HttpServlet {
 
                     gameReplyDAO.insert_reply(game_id,writer,contents);
                     response.sendRedirect("/game/pmg/pmg_gamepage.jsp");
-
+    
                     break;
-
-
-
-
-                //TODO : 댓글 작성
+                //endregion
             }
+
         } catch(Exception e) {
             e.printStackTrace();
             response.sendRedirect("/error.jsp");
@@ -120,3 +123,7 @@ public class GameController extends HttpServlet {
         doGet(request, response);
     }
 }
+
+//region read
+//TODO: 
+//endregion
