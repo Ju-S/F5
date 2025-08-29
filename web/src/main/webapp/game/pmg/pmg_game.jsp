@@ -27,6 +27,7 @@
         },
         //  scene:[Exam01 , Exam02, MainScene]
         scene: [Exam02 , Gameover]
+
     };
 
     let game = new Phaser.Game(config);

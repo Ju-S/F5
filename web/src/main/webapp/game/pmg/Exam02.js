@@ -43,6 +43,8 @@ class Exam02 extends Phaser.Scene{
             this.boxes.splice(this.boxes.indexOf(box),1); // 배열에서 제거
         });
 
+
+
         this.cursor = this.input.keyboard.createCursorKeys();
         this.physics.world.setBounds(0,0,500,300);
 
@@ -93,6 +95,8 @@ class Exam02 extends Phaser.Scene{
 
         this.me.setScale(0.3);
 
+
+
     }
 
     update(time,delta ) { // time 시간값 / delta 매 프레임마다 경과한시간
@@ -105,12 +109,16 @@ class Exam02 extends Phaser.Scene{
         this.score_text.setText('점수: ' + Math.floor(this.currentTime));
 
         if(this.frame% 60 == 0){
-            let box =
-                this.physics.add.sprite(Math.random()*500,0,'needle');
-            this.boxes.push(box);
-            box.setDisplaySize(50,50);
-            box.setVelocityY(this.speed);
+            let box = this.physics.add.sprite(Math.random()*500,0,'needle');
+
+            box.setDisplaySize(50,100);
             box.setOrigin(0,0);
+            box.setVelocityY(this.speed);
+            this.boxes.push(box);
+
+            box.body.setSize(200,100);
+            box.body.setOffset(200,100);
+
 
 
         }
@@ -124,17 +132,6 @@ class Exam02 extends Phaser.Scene{
         }else {
             this.me.setVelocityX(0); // 내가 누르지 않으면 멈춤
         }
-
-        // if(this.cursor.up.isDown){ // 만약 위쪽 방향키 누르면
-        //     this.me.setVelocityY(-this.speed); // y좌표를 5만큼 감소
-        //
-        // }else if(this.cursor.down.isDown){ // 만약 아래쪽 방향키 누르면
-        //     this.me.setVelocityY(this.speed);  // y좌표를 5만큼 증가
-
-
-        // }else {
-        //     this.me.setVelocityY(0); // 내가 누르지 않으면 멈춤
-        // }
 
 
 
