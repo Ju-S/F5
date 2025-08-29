@@ -32,7 +32,7 @@ function createBoardItem(post) {
     let title = $("<td>").attr("width", "30%").addClass("title")
         .append($("<a>").attr({
             "title": post.title,
-            "href": "/item.board?seq=" + post.id
+            "href": "/board/reply/reply.jsp"
         }).html(post.title));
     // let writer = $("<td>").attr("width", "15%").html(post.writer);
     // let writerDate = $("<td>").attr("width", "30%").html(milliToDate(post.writeDate));

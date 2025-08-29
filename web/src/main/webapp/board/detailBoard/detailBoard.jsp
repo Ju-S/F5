@@ -15,7 +15,7 @@
 <jsp:include page="/common/header/Header.jsp"/>
 
 <form action="/write.board" method="post">
-    <div class="container g-0">
+    <div class="container">
         <div class="row">
             <div class="col-1">
                 <jsp:include page="/common/sidenavi/SideNavi.jsp"/>
