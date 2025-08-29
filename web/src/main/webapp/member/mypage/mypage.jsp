@@ -71,7 +71,7 @@
 
 
             <!-- 메인 콘텐츠 영역 -->
-            <div class="main-content">
+            <div class="main">
                 <!-- 콘텐츠 1 : 개인정보 수정 -->
                 <div class="content-box active" id="content-edit" data-content="profile">
                     <h2 class="section-title">개인 정보 수정</h2>
