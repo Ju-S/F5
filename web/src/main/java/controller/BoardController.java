@@ -11,6 +11,7 @@ import dao.member.BlackListDAO;
 import dao.member.MemberDAO;
 import dao.member.MemberGameTierDAO;
 import dao.member.MemberProfileFileDAO;
+import dto.board.BoardDTO;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -40,11 +41,31 @@ public class BoardController extends HttpServlet {
 
             String cmd = request.getRequestURI();
 
+
             switch (cmd) {
                 // 행위 + 자원 (e.g, /get_memberList.member로 작성 요망)
                 //TODO: 게임 관련 기능
+                case "/write.board":
+                    long boardCategory = Long.parseLong(request.getParameter("boardCategory"));
+                    String writer = request.getParameter("writer");
+                    long gameId = Long.parseLong(request.getParameter("gameId"));
+                    String title = request.getParameter("title");
+                    String contents = request.getParameter("contents");
+
+                    BoardDTO boardDTO = BoardDTO.builder()
+                            .boardCategory(boardCategory)
+                            .writer(writer)
+                            .gameId(gameId)
+                            .title(title)
+                            .contents(contents)
+                            .build();
+
+                    int write = boardDAO.write(boardDTO);
+                    response.sendRedirect("/board/reply/reply.jsp");
+                    break;
+
             }
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             response.sendRedirect("/error.jsp");
         }
