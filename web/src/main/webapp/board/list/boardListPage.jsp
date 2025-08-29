@@ -31,7 +31,7 @@
                 </div>
                 <div class="col-2 p-0 write">
                     <!-- 글 작성 버튼 -->
-                    <button id="writeBtn" onClick="location.href = '/board/detailBoard/detailBoard.jsp'" class="btn"
+                    <button id="writeBtn" onClick="location.href = '/write_board.page'" class="btn"
                             type="button">글 작성
                     </button>
                 </div>
