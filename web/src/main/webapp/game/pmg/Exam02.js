@@ -37,23 +37,19 @@ class Exam02 extends Phaser.Scene{
             key:'right',
             frames:this.anims.generateFrameNumbers("walk",{start:0,end:7}),
             frameRate:10,
-            repeat:1
-
+            repeat:-1
 
         })
-
         this.anims.create({
 
             key:'left',
             frames:this.anims.generateFrameNumbers("walk",{start:8,end:15}),
             frameRate:10,
-            repeat:1
-
+            repeat:-1
 
         })
 
         this.cameras.main.setBackgroundColor("#ffffff"); // 배경색 설정
-
         let cameraWidth = this.cameras.main.width; // 카메라 넓이 가져오기
         let cameraHeight = this.cameras.main.height; // 카메라 높이 가져오기
 
@@ -65,10 +61,8 @@ class Exam02 extends Phaser.Scene{
             this.boxes.splice(this.boxes.indexOf(box),1); // 배열에서 제거
         });
 
-
-
         this.cursor = this.input.keyboard.createCursorKeys();
-        this.physics.world.setBounds(0,0,500,300);
+        this.physics.world.setBounds(0,0,600,400);
 
 
         this.time_text  = this.add.text(10,10, "시간:",{
@@ -80,33 +74,31 @@ class Exam02 extends Phaser.Scene{
             fill:"#000000"
         });
 
-
-        this.me = this.physics.add.sprite(250,300,'player');
-
+        this.me = this.physics.add.sprite(250,350,'player');
         this.physics.add.overlap(this.me,this.boxes,(me,box)=>{  // 충돌시 , 점수보내기 + gameover
 
             this.isGameOver = true;
             this.me.disableBody(true, true); // 충돌 후 플레이어 비활성화
             $.ajax({
-            url: "/gameover.game" ,
-            type : "post",
-            data : {
+                url: "/gameover.game" ,
+                type : "post",
+                data : {
 
-                score: Math.floor(this.currentTime)
-            },
-            success: (response) => {
-                console.log("서버 응답:", response);
+                    score: Math.floor(this.currentTime/10)
+                },
+                success: (response) => {
+                    console.log("서버 응답:", response);
 
-                this.scene.start("Gameover",{score : Math.floor(this.currentTime)});
+                    this.scene.start("Gameover",{score : Math.floor(this.currentTime/10)});
 
-            },
-            error: (err) => {
-                console.error("점수 전송 실패", err);
+                },
+                error: (err) => {
+                    console.error("점수 전송 실패", err);
 
-                this.scene.start("Gameover");
+                    this.scene.start("Gameover");
 
-            }
-        });
+                }
+            });
 
         });
 
@@ -119,10 +111,6 @@ class Exam02 extends Phaser.Scene{
 
 
 
-
-
-
-
     }
 
     update(time,delta ) { // time 시간값 / delta 매 프레임마다 경과한시간
@@ -132,7 +120,7 @@ class Exam02 extends Phaser.Scene{
             this.currentTime += delta; // 점수값 초기화
         }
         this.time_text.setText('생존 시간: ' + (this.currentTime / 1000).toFixed(2));
-        this.score_text.setText('점수: ' + Math.floor(this.currentTime));
+        this.score_text.setText('점수: ' + Math.floor(this.currentTime / 10));
 
         if(this.frame% 60 == 0){
             let box = this.physics.add.sprite(Math.random()*500,0,'needle');
@@ -142,7 +130,7 @@ class Exam02 extends Phaser.Scene{
             box.setVelocityY(this.speed);
             this.boxes.push(box);
 
-            box.body.setSize(200,   100);
+            box.body.setSize(200,100);
             box.body.setOffset(200,100);
 
 

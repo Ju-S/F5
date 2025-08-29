@@ -1,7 +1,16 @@
 package controller;
 
+import dao.board.BoardCategoryDAO;
+import dao.board.BoardDAO;
+import dao.board.BoardFileDAO;
+import dao.board.ReplyDAO;
+import dao.game.GameDAO;
 import dao.game.GameReplyDAO;
 import dao.game.GameScoreDAO;
+import dao.member.BlackListDAO;
+import dao.member.MemberDAO;
+import dao.member.MemberGameTierDAO;
+import dao.member.MemberProfileFileDAO;
 import dto.game.GameReplyDTO;
 
 import javax.servlet.ServletException;
@@ -19,6 +28,19 @@ public class GameController extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
 
         try {
+            BoardCategoryDAO boardCategoryDAO = BoardCategoryDAO.getInstance();
+            BoardDAO boardDAO = BoardDAO.getInstance();
+            BoardFileDAO boardFileDAO = BoardFileDAO.getInstance();
+            ReplyDAO replyDAO = ReplyDAO.getInstance();
+            GameDAO gameDAO = GameDAO.getInstance();
+            GameReplyDAO gameReplyDAO = GameReplyDAO.getInstance();
+            GameScoreDAO gameScoreDAO = GameScoreDAO.getInstance();
+            BlackListDAO blackListDAO = BlackListDAO.getInstance();
+            MemberDAO memberDAO = MemberDAO.getInstance();
+            MemberGameTierDAO memberGameTierDAO = MemberGameTierDAO.getInstance();
+            MemberProfileFileDAO memberProfileFileDAO = MemberProfileFileDAO.getInstance();
+
+
             GameScoreDAO dao_gamescore = GameScoreDAO.getInstance();
 
             GameReplyDAO dao_reply = GameReplyDAO.getInstance();

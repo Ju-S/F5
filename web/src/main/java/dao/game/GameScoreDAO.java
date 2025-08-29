@@ -15,9 +15,13 @@ public class GameScoreDAO {
         return instance;
     }
 
+    //region create
+
+
+
     private GameScoreDAO() throws Exception {
     }
-
+    //TODO: 게임 점수 등록
     public int insert_score(int score) throws Exception{
         String sql = "INSERT INTO game_score (id,game_id, member_id, score) VALUES (GAME_SCORE_SEQ.nextval,2, 'one', ?)";
 
@@ -28,15 +32,15 @@ public class GameScoreDAO {
         }
 
     }
+    //endregion
 
 
+
+    //region create
 
     public int insert_tier(String tier) throws Exception{ // 랭킹출력
-        //region create
+
         //TODO: 점수를 티어로 변환하여 정보를 tier에 넣기
-        //endregion
-
-
         String sql = "insert into member_game_tier values (member_GAME_TIER_SEQ.nextval,2,3,?)";
 
         try (Connection con = DataUtil.getConnection();
@@ -48,15 +52,18 @@ public class GameScoreDAO {
     }
 
 
-        public int select_ranking() throws Exception{ // 랭킹출력
-        //region create
-        //TODO: 랭킹출력
-        //endregion
+    //endregion
+
+    //region create
 
 
-            String sql = "SELECT game_score.*, member_game_tier.tier " +
-                    "FROM game_score game_score " +
-                    "JOIN member_game_tier mgt ON gs.member_id = mgt.member_id";
+
+    public int select_ranking() throws Exception{ // 랭킹출력
+
+            //TODO: 랭킹출력 (미완성)
+        String sql = "SELECT game_score.*, member_game_tier.tier " +
+                "FROM game_score game_score " +
+                "JOIN member_game_tier mgt ON gs.member_id = mgt.member_id";
         try (Connection con = DataUtil.getConnection();
              PreparedStatement pstat = con.prepareStatement(sql))
         {
@@ -64,9 +71,12 @@ public class GameScoreDAO {
         }
 
     }
-    //region create
-    //TODO: 게임 점수 등록
+
     //endregion
+
+
+
+
 
     //region read
     //TODO: 게임 점수 조회

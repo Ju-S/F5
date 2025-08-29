@@ -15,8 +15,8 @@
     let config = {
         type : Phaser.AUTO,
         parent : "gamebox",
-        width : 500,
-        height: 300,
+        width : 600,
+        height: 400,
 
         physics : {
             default : "arcade",

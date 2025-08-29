@@ -24,12 +24,13 @@ public class GameReplyDAO {
     private GameReplyDAO() throws Exception {
     }
 
-
+    //region create
     public int insert_reply(int game_id, String writer , String contents) throws Exception{ // 댓글 입력
-        //region create
+
         //TODO: 댓글 작성 : sql에 데이터값 옮기기 완료
-        //TODO : game_id는 게임종류별 id받아야함 실행을위해 임시 GAME_REPLY_SEQ 사용
-        //endregion
+
+        //game_id는 게임종류별 id받아야함 실행을위해 임시 GAME_REPLY_SEQ 사용
+
 
       String sql = "insert into game_reply (id, game_id,writer, contents, write_date) values (GAME_REPLY_SEQ.nextval, ?, ?, ?, sysdate)";
 
@@ -46,13 +47,13 @@ public class GameReplyDAO {
         }
 
     }
+//endregion
 
-
-
+    //region read
     public List<GameReplyDTO> selectAll() throws Exception{ // 댓글 목록 출력
-        //region read
+
         //TODO: 댓글 목록 조회
-        //endregion
+
         String sql = "select * from game_reply order by id desc";
 
         try(Connection con = DataUtil.getConnection();
@@ -75,9 +76,7 @@ public class GameReplyDAO {
             }
         }
     }
-
-
-
+//endregion
 
 
 
