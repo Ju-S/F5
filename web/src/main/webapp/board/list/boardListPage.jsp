@@ -11,11 +11,14 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 </head>
 <body>
-<jsp:include page="/common/Header.jsp"/>
+<jsp:include page="/common/header/Header.jsp"/>
 
 <div class="container">
     <div class="row">
-        <div class="col-1"><!-- 네비게이션 --></div>
+        <div class="col-1">
+            <!-- 네비게이션 -->
+            <jsp:include page="/common/sidenavi/SideNavi.jsp"/>
+        </div>
         <div class="col-11 vh-100">
             <div class="row toolbar">
                 <div class="col-2 filter p-0">

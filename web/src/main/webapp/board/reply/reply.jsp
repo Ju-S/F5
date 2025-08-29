@@ -9,10 +9,13 @@
 
 </head>
 <body>
-<jsp:include page="/common/Header.jsp"/>
+<jsp:include page="/common/header/Header.jsp"/>
 <div class="container">
     <div class="row full">
-        <div class="col-1 navi"><!-- 네비게이션 --></div>
+        <div class="col-1 navi">
+            <!-- 네비게이션 -->
+            <jsp:include page="/common/sidenavi/SideNavi.jsp"/>
+        </div>
         <div class="col-5 post-card "><!-- 게시글 영역 -->
             <div class="row"><!-- 프로필 제목 영역 -->
                 <div class="col-1 profile">
@@ -55,34 +58,34 @@
         <div class="col-5 comment-card"> <!-- 댓글영역 -->
             <!-- 여기가 이제 forEach로 묶일거임 -->
             <div class="comment-box">
-            <div class="row comments">
-                <div class="col-1 profile">
-                    <img src="topview.jpg" class="rounded-circle profile-img" alt="..."
-                         style="width: 50px; height: 50px;">
-                </div>
-                <div class="col-10">
-                    <div class="row">
-                        <div class="col-12 comment-writer">
-                            작성자
+                <div class="row comments">
+                    <div class="col-1 profile">
+                        <img src="topview.jpg" class="rounded-circle profile-img" alt="..."
+                             style="width: 50px; height: 50px;">
+                    </div>
+                    <div class="col-10">
+                        <div class="row">
+                            <div class="col-12 comment-writer">
+                                작성자
+                            </div>
+                            <div class="col-12 comment-contents">
+                                댓글내용~~~
+                            </div>
                         </div>
-                        <div class="col-12 comment-contents">
-                            댓글내용~~~
+                    </div>
+                    <div class="col-1">
+                        <div class="reportBox">
+                            <button type="button" class="btn btn-sm btn-dark dropdown-toggle" id="reportComment"
+                                    data-bs-toggle="dropdown" aria-expanded="false"
+                                    style="background: transparent; border: none; padding: 0;">
+                                <i class="bi bi-three-dots-vertical"></i>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item text-danger" href="#">🚨 신고하기</a></li>
+                            </ul>
                         </div>
                     </div>
                 </div>
-                <div class="col-1">
-                    <div class="reportBox">
-                        <button type="button" class="btn btn-sm btn-dark dropdown-toggle" id="reportComment"
-                                data-bs-toggle="dropdown" aria-expanded="false"
-                                style="background: transparent; border: none; padding: 0;">
-                            <i class="bi bi-three-dots-vertical"></i>
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item text-danger" href="#">🚨 신고하기</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
             </div>
             <div class="row">
                 <div class="col-9">
