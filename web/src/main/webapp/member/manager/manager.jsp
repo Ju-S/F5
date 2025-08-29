@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="css/manager-style.css">
 </head>
 <body>
+
 <!-- Header -->
 <jsp:include page="/common/header/Header.jsp"/>
 

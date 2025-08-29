@@ -1,61 +1,18 @@
 @charset "UTF-8";
 
-:root {
-    /* 색상 변수 */
-    --primary-color: #101012; /* 검정 바탕색 */
-    --primary-subcolor: #2a2a2a; /* 회색 바탕 서브색 */
-    --secondary-color: #3E459D; /* 청보라 컬러 */
-    --danger-color: #EC6333; /* 주황색 포인트 컬러 */
-    --sub-btn-color: #888; /* 서브 버튼 컬러(회색) */
-
-    /* 폰트 변수 */
-    --title-font: 'Taenada', sans-serif;
-    --sub-font: 'Pretendard', sans-serif;
-
-}
-
 html,
 body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    overflow: hidden;
-    /* 스크롤 차단 */
-    background-color: var(--primary-color); /* 이런 식으로 사용 */
-    font-family: "Noto Sans KR", sans-serif;
-    color: #fff;
+    font-family: var(--sub-font);
 }
 /* 회원정보 전체 박스 */
 .container {
     width: 100vw;
-    height: 100vh;
+    height: calc(100vh - 64px); /* padding 위아래 32px*2 제외 */
     padding: 32px;
     box-sizing: border-box;
     background-color: var(--primary-color);
     gap: 38px;
     border: none;
-}
-
-/* ----- 로그 상단 네비 ----- */
-.navbar.bg-body-tertiary {
-    padding: 10px 120px;
-}
-
-.bg-body-tertiary {
-    background-color: var(--primary-color) !important;
-}
-
-.container-fluid {
-    background-color:var(--primary-color);
-}
-
-/* ----- 세로 네비바 ----- */
-.subnav {
-    color: white;
-    font-weight: 700;
-    font-size: 1.5rem;
-    justify-content: center;
-    align-items: flex-start;
 }
 
 /* main-content는 옆으로 자동 배치되도록 수정 */
