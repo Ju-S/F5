@@ -1,0 +1,99 @@
+@charset "UTF-8";
+
+/* 개인정보 수정 */
+#content-edit {
+    background-color: #2a2a2a;
+    border-radius: 16px;
+    padding: 40px;
+    width: 100%;
+    max-width: 1000px;
+    color: white;
+}
+
+.section-title {
+    color: #f25c1a;
+    margin-bottom: 24px;
+}
+
+/* 폼 라벨 + 인풋 */
+.input-label-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 100%;
+}
+
+.input-label-group.half {
+    flex: 1;
+}
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group.row {
+    display: flex;
+    gap: 12px;
+    align-items: flex-end;
+}
+
+.nickname-input {
+    flex: 2;
+}
+
+/* 공통 인풋 */
+.form-input {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+}
+
+.form-input.half {
+    flex: 1;
+}
+
+/* 중복확인 버튼 */
+.check-button {
+    flex: 1;
+    height: 48px;
+    background-color: #888;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+
+/* 드롭다운(출생년도 선택) */
+.form-select {
+    height: 48px;
+    padding: 12px;
+    font-size: 1rem;
+    border-radius: 6px;
+    border: none;
+    color: #000;
+    background-color: #fff;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.form-select:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+/* 성별 라디오 버튼 */
+.form-check-input {
+    transform: scale(1.2);
+}
+
+/* 성별 묶음 (커스텀 클래스 사용) */
+.gender-radio-group {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    height: 48px;
+}
