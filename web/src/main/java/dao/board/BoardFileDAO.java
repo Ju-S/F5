@@ -6,7 +6,6 @@ import java.sql.Connection;
 
 public class BoardFileDAO {
     private static BoardFileDAO instance;
-    private static Connection con;
 
     public static synchronized BoardFileDAO getInstance() throws Exception {
         if (instance == null) {
@@ -16,7 +15,6 @@ public class BoardFileDAO {
     }
 
     private BoardFileDAO() throws Exception {
-        con = DataUtil.getConnection();
     }
 
     //region create

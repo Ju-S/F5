@@ -43,7 +43,7 @@ public class MemberController extends HttpServlet {
             String cmd = request.getRequestURI();
             Gson g = new Gson();
             switch (cmd) {
-                // 행위 + 자원 (e.g, /getMemberList.member로 작성 요망)
+                // 행위 + 자원 (e.g, /get_memberList.member로 작성 요망)
                 //TODO: 회원 관련 기능
 
                 //아이디 중복일때

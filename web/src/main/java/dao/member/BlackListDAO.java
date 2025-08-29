@@ -6,7 +6,6 @@ import java.sql.Connection;
 
 public class BlackListDAO {
     private static BlackListDAO instance;
-    private static Connection con;
 
     public static synchronized BlackListDAO getInstance() throws Exception {
         if (instance == null) {
@@ -16,7 +15,6 @@ public class BlackListDAO {
     }
 
     private BlackListDAO() throws Exception {
-        con = DataUtil.getConnection();
     }
 
     //region create

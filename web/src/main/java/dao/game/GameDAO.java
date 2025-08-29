@@ -6,7 +6,6 @@ import java.sql.Connection;
 
 public class GameDAO {
     private static GameDAO instance;
-    private static Connection con;
 
     public static synchronized GameDAO getInstance() throws Exception {
         if (instance == null) {
@@ -16,7 +15,6 @@ public class GameDAO {
     }
 
     private GameDAO() throws Exception {
-        con = DataUtil.getConnection();
     }
 
     //region read
