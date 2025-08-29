@@ -52,8 +52,7 @@ public class GameController extends HttpServlet {
 
 
                     int score = Integer.parseInt(request.getParameter("score"));
-                    System.out.println("cmd : " + cmd);
-                    System.out.println("score:" + score);
+
                     int result =  gameScoreDAO.insert_score(score);
 
 
@@ -81,7 +80,6 @@ public class GameController extends HttpServlet {
                 case "/go_gamepage1.game" : //댓글출력
 
 
-
                     List<GameReplyDTO> list = gameReplyDAO.selectAll();
 
                     request.setAttribute("list", list);
@@ -90,10 +88,12 @@ public class GameController extends HttpServlet {
 
                     break;
 
-                
+
 
                 
                 case "/write_reply.game" : // 댓글 작성
+
+
 
 
                     String writer = request.getParameter("writer");
@@ -102,7 +102,7 @@ public class GameController extends HttpServlet {
                     String contents = request.getParameter("contents");
 
                     gameReplyDAO.insert_reply(game_id,writer,contents);
-                    response.sendRedirect("/game/pmg/pmg_gamepage.jsp");
+                    response.sendRedirect("/go_gamepage1.game");
     
                     break;
 

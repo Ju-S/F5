@@ -182,7 +182,7 @@
                         </div>
                     </form>
 
-                    <form action="/go_gamepage1.game" method="get">
+                    <form action="/go_gamepage1.game" method="post">
                         <button type = "submit"> 버튼</button>
                     </form>
 
