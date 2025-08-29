@@ -2,34 +2,19 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
-            crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
-            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <jsp:include page="/common/Head.jsp"/>
     <link rel="stylesheet" href="css/main-style.css">
     <link rel="stylesheet" href="css/edit-content.css">
     <link rel="stylesheet" href="css/ranking-content.css">
 </head>
 <body>
 <!-- Header -->
-<div class="log">
-    <nav class="navbar bg-body-tertiary">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">
-                <img src="img/log.svg" alt="Logo" width="32" class="d-inline-block align-text-top"/>
-            </a>
-        </div>
-    </nav>
-</div>
+<jsp:include page="/common/header/Header.jsp"/>
 
 <div class="container">
     <div class="row">
         <div class="col-1 subnav">
-            네비 서브쪽
+            <jsp:include page="/common/sidenavi/SideNavi.jsp"/>
         </div>
 
         <!-- 서브 네비 -->
