@@ -1,4 +1,5 @@
 function createBoardList(postList, itemPerPage) {
+    $(".item-list-view").html("");
     if (postList.length === 0) {
         let emptyAlert = $("<td>").attr({
             "colspan": "5",
@@ -12,7 +13,6 @@ function createBoardList(postList, itemPerPage) {
             $(".item-list-view").append($("<tr>").append(emptyItemTd.append(emptyItem)));
         }
     } else {
-        $(".item-list-view").html("");
         for (let post of postList) {
             createBoardItem(post);
         }

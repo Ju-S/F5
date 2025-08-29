@@ -1,44 +1,45 @@
-function createPageNavigation(maxPage, curPage, naviPerPage, filter) {
+function createPageNavigation(maxPage, curPage, naviPerPage, filter, searchQuery) {
     if (maxPage > 1) {
         let nav = $("<nav>");
         let ul = $("<ul>").addClass("pagination");
 
         let prevArrow = $("<li>").addClass("page-item");
-        let prevArrowLink = $("<a>").addClass("page-link", "arrow");
+        let prevArrowLink = $("<a>").addClass("page-link arrow");
 
         let nextArrow = $("<li>").addClass("page-item");
-        let nextArrowLink = $("<a>").addClass("page-link", "arrow");
+        let nextArrowLink = $("<a>").addClass("page-link arrow");
 
         if (curPage <= naviPerPage) {
             prevArrow.addClass("disabled");
         }
 
-        if (curPage > maxPage - naviPerPage) {
+        if (curPage > Math.floor(maxPage / naviPerPage) * naviPerPage) {
             nextArrow.addClass("disabled");
-        }
-
-        if (filter !== -1) {
-            filterOpt = "&filter=" + filter;
-        } else {
-            filterOpt = "";
         }
 
         let prevPageLast = Math.floor((curPage - 1) / naviPerPage) * naviPerPage;
         let nextPageFirst = prevPageLast + naviPerPage + 1;
 
         if (filter !== -1) {
+            filterOpt = "&filter=" + filter;
             prevPageLast += filterOpt;
             nextPageFirst += filterOpt;
+        }
+
+        if (searchQuery) {
+            searchQueryOpt = "&searchQuery=" + searchQuery;
+            prevPageLast += searchQueryOpt;
+            nextPageFirst += searchQueryOpt;
         }
 
         prevArrowLink.html("<i class='bi bi-arrow-left'></i>");
         nextArrowLink.html("<i class='bi bi-arrow-right'></i>");
 
         prevArrowLink.on("click", () => {
-            setBoardListAndNav(filter, prevPageLast);
+            setBoardListAndNav(filter, prevPageLast, searchQuery);
         })
         nextArrowLink.on("click", () => {
-            setBoardListAndNav(filter, nextPageFirst);
+            setBoardListAndNav(filter, nextPageFirst, searchQuery);
         })
 
         prevArrow.append(prevArrowLink);
@@ -53,7 +54,7 @@ function createPageNavigation(maxPage, curPage, naviPerPage, filter) {
                 let navLink = $("<a>").addClass("page-link");
 
                 navLink.on("click", () => {
-                    setBoardListAndNav(filter, i);
+                    setBoardListAndNav(filter, i, searchQuery);
                 })
                 navLink.html(i);
                 if (i === curPage) {

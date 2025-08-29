@@ -29,15 +29,28 @@ public class BoardDAO {
 
     //region read
     //TODO: 게시글 목록 조회(title, writer 등 대표항목)
-    public List<BoardDTO> getBoardPage(int curPage, int itemPerPage, int filter) throws Exception {
+    public List<BoardDTO> getBoardPage(int curPage, int itemPerPage, int filter, String searchQuery) throws Exception {
         String sql = "SELECT * FROM (SELECT board.*, ROW_NUMBER() OVER(ORDER BY id DESC) rn FROM board";
-        sql = filter == -1 ? sql : sql + " WHERE board_category = ?";
+        if (filter != -1) {
+            sql += " WHERE board_category = ?";
+            if (searchQuery != null) {
+                sql += " AND ";
+            }
+        } else if (searchQuery != null) {
+            sql += " WHERE ";
+        }
+        if (searchQuery != null) {
+            sql += "title LIKE ?";
+        }
         sql += ") WHERE rn BETWEEN ? AND ?";
 
         try (Connection con = DataUtil.getConnection(); PreparedStatement pstat = con.prepareStatement(sql)) {
             int parameterIndex = 1;
             if (filter != -1) {
                 pstat.setInt(parameterIndex++, filter);
+            }
+            if (searchQuery != null) {
+                pstat.setString(parameterIndex++, "%" + searchQuery + "%");
             }
             pstat.setInt(parameterIndex++, curPage * itemPerPage - (itemPerPage - 1));
             pstat.setInt(parameterIndex, curPage * itemPerPage);
@@ -70,15 +83,31 @@ public class BoardDAO {
         return posts;
     }
 
-    public int getMaxPage(int itemPerPage, int filter) throws Exception {
+    public int getMaxPage(int itemPerPage, int filter, String searchQuery) throws Exception {
         String sql = "SELECT count(*) FROM board";
-        sql = filter == -1 ? sql : sql + " WHERE board_category = ?";
+        if (filter != -1) {
+            sql += " WHERE board_category = ?";
+            if (searchQuery != null) {
+                sql += " AND ";
+            }
+        } else if (searchQuery != null) {
+            sql += " WHERE ";
+        }
+        if (searchQuery != null) {
+            sql += "title LIKE ?";
+        }
 
         try (Connection con = DataUtil.getConnection();
              PreparedStatement pstat = con.prepareStatement(sql)) {
+            int parameterIndex = 1;
+
             if (filter != -1) {
-                pstat.setInt(1, filter);
+                pstat.setInt(parameterIndex++, filter);
             }
+            if (searchQuery != null) {
+                pstat.setString(parameterIndex, searchQuery);
+            }
+
             try (ResultSet rs = pstat.executeQuery()) {
                 if (rs.next()) {
                     return (rs.getInt(1) - 1) / itemPerPage + 1;

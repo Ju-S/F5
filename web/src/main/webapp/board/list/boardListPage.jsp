@@ -24,7 +24,7 @@
                 </div>
                 <div class="col search p-0">
                     <!-- 검색어 -->
-                    <input class="form-control h-100" type="text" placeholder="검색어 입력...">
+                    <jsp:include page="/board/list/components/SearchBar.jsp"/>
                 </div>
                 <div class="col-2 p-0 write">
                     <!-- 글 작성 버튼 -->
@@ -46,7 +46,11 @@
 </div>
 
 <script>
-    setBoardListAndNav(-1);
+    let params = new URLSearchParams(window.location.search);
+    let filter = params.get("filter");
+    let page = params.get("page");
+    let searchQuery = params.get("searchQuery");
+    setBoardListAndNav(filter, page, searchQuery);
 </script>
 
 </body>

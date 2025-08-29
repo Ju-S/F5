@@ -7,8 +7,9 @@
 </select>
 <script>
     $("#filterSelect").on("change", (e) => {
+        let searchQuery = $("#searchBar").val();
         let filter = e.target.value;
-        setBoardListAndNav(filter);
+        setBoardListAndNav(filter, null, searchQuery);
     });
 </script>
 

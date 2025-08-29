@@ -1,9 +1,13 @@
-function setBoardListAndNav(filter, page=1) {
+function setBoardListAndNav(filter, page, searchQuery) {
     let url = "/get_board_list.board";
     url += page ? "?page=" + page : "";
     if (filter) {
         url += page ? "&" : "?";
         url += "filter=" + filter;
+    }
+    if (searchQuery) {
+        url += page || filter ? "&" : "?";
+        url += "searchQuery=" + searchQuery;
     }
 
     $.ajax({
@@ -18,6 +22,7 @@ function setBoardListAndNav(filter, page=1) {
         let curPage = data.curPage;
         let naviPerPage = data.naviPerPage;
         let filter = data.filter;
-        createPageNavigation(maxPage, curPage, naviPerPage, filter);
+        let searchQuery = data.searchQuery;
+        createPageNavigation(maxPage, curPage, naviPerPage, filter, searchQuery);
     });
 }

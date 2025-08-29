@@ -64,17 +64,20 @@ public class BoardController extends HttpServlet {
                         filter = Integer.parseInt(request.getParameter("filter"));
                     } catch (Exception ignored) {}
 
-                    List<BoardDTO> boardDTOList = boardDAO.getBoardPage(curPage, itemPerPage, filter);
+                    String searchQuery = request.getParameter("searchQuery");
+
+                    List<BoardDTO> boardDTOList = boardDAO.getBoardPage(curPage, itemPerPage, filter, searchQuery);
 
                     Map<String, Object> data = new HashMap<>();
 
                     data.put("list", boardDTOList);
                     data.put("itemPerPage", itemPerPage);
 
-                    data.put("maxPage", boardDAO.getMaxPage(itemPerPage, filter));
+                    data.put("maxPage", boardDAO.getMaxPage(itemPerPage, filter, searchQuery));
                     data.put("curPage", curPage);
                     data.put("naviPerPage", naviPerPage);
                     data.put("filter", filter);
+                    data.put("searchQuery", searchQuery);
 
                     response.setCharacterEncoding("UTF-8");
                     response.getWriter().write(gson.toJson(data));
