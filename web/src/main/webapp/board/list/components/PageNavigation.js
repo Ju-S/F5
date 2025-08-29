@@ -1,5 +1,5 @@
 function createPageNavigation(maxPage, curPage, naviPerPage, filter, searchQuery) {
-    if (maxPage > 1) {
+    if (maxPage > 0) {
         let nav = $("<nav>");
         let ul = $("<ul>").addClass("pagination");
 

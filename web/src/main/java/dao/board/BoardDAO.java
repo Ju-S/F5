@@ -119,7 +119,7 @@ public class BoardDAO {
                 pstat.setInt(parameterIndex++, filter);
             }
             if (searchQuery != null) {
-                pstat.setString(parameterIndex, searchQuery);
+                pstat.setString(parameterIndex, "%" + searchQuery + "%");
             }
 
             try (ResultSet rs = pstat.executeQuery()) {
