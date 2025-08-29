@@ -1,18 +1,3 @@
-#signinBtn{
-    display: none;
-}
-#loginBtn{
-    display: none;
-}
-
-body, html {
-    overflow: hidden;
-    background-color: #101012;
-}
-
-/*div {
-    border: 1px solid red;
-}*/
 
 /* 왼쪽 네비 */
 #sideNavi {
@@ -21,59 +6,71 @@ body, html {
 
 /* 홈버튼 */
 #homebox {
-    height: 15vh;
+    height: 9vh;
+    display: flex;
+    justify-content: center;
+
+}
+#home {
+    width: 75%;
+    height: 75%;
+    border-radius: 20px;
+
+    background-color: var(--primary-subcolor);
+}
+#homebtn{
+    height: 100%;
+    width: 100%;
+
     display: flex;
     justify-content: center;
     align-items: center;
 }
-
-#home {
-    width: 55%;
-    height: 55%;
-    border-radius: 20px;
-    background-color: #2a2a2a;
-}
-
 #home:hover, #home:active {
-    background-color: #3E459D;
+    background-color:var(--secondary-color);
 }
 
+
+/*네비*/
+#navibox{
+    height: 60vh;
+    overflow: hidden;
+}
 .naviContent {
     display: flex;
     justify-content: center;
     align-items: center;
 
-    margin-top: 2vh;
+    margin-bottom: 1vh;
 }
 
 /* 버튼 기본 스타일 */
 #gamebtn,#boardbtn,#mypagebtn {
-    width: 8vh;
+    width: 6vh;
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #2a2a2a;
+    background-color: var(--primary-subcolor);
     border-radius: 50px;
     overflow: hidden;
-    transition: all 0.2s ease-in-out;
+    transition: all 0.4s ease;
 }
 
 .icon {
-    width: 8vh;
-    height: 8vh;
+    width: 6vh;
+    height: 6vh;
 
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
 
-    background-color: #2a2a2a;
+    background-color: var(--primary-subcolor);
     cursor: pointer;
-    transition: background-color 0.2s;
 }
 
 .icon:hover {
-    background-color: #6539af;
+    background-color:var(--secondary-color);
 }
 
 .icon img {
@@ -86,11 +83,11 @@ body, html {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
+    gap: 1px;
 
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.3s ease-in-out;
+    transition: max-height 0.4s ease;
 }
 
 .submenu.open {
@@ -98,11 +95,31 @@ body, html {
 }
 
 
-.col-11 {
+/* 홈버튼 */
+#logoutbox {
+    height: 10vh;
+    display: flex;
+    justify-content: center;
+
+}
+#logout {
+    width: 6vh;
+    height: 6vh;
+    border-radius: 50%;
+    margin-top: auto;
+
+    background-color: var(--primary-subcolor);
+}
+#logoutbtn{
     height: 100%;
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#logout:hover, #logout:active {
+    background-color:var(--secondary-color);
+    
 }
 
-#other {
-    width: 100%;
-    height: 100vh;
-}

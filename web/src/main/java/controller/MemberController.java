@@ -47,17 +47,29 @@ public class MemberController extends HttpServlet {
                 //TODO: 회원 관련 기능
 
                 //아이디 중복일때
-                //아래메소드는 단순확인용 수정예정 - 0828작성
+                //아래메소드는 단순확인용 수정예정 - 0829작성
                 case "/dupliIdCheck.member" :
                     response.setContentType("text/html; charset=UTF-8");
                     System.out.println("cmd = " + cmd);
+                    String id = request.getParameter("id"); // 클라이언트에서 넘어온 id
+                    System.out.println("입력된 ID = " + id);
+
                     PrintWriter pw = response.getWriter();
-                    /*pw.append("true");*/
-                    pw.write("true");
+                    pw.append("false");
                     pw.close();
                     break;
 
+                case "/dupliNicknameCheck.member" :
+                    //닉네임 중복일때
+                    //아래메소드는 단순확인용 수정예정 - 0829작성
+                    response.setContentType("text/html; charset=UTF-8");
+                    System.out.println("cmd = " + cmd);
+                    String nickname = request.getParameter("nickname"); // 클라이언트에서 넘어온 id
+                    System.out.println("입력된 nickname = " + nickname);
 
+                    pw = response.getWriter();
+                    pw.append("false");
+                    pw.close();
 
 
             }
