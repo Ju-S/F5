@@ -11,7 +11,7 @@
 <style>
     #gamebox{
         width: 500px;
-        height: 800px;
+        height: 300px;
         border: 1px solid black;
         margin: auto;
     }

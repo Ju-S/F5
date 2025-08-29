@@ -29,8 +29,34 @@ public class GameScoreDAO {
 
     }
 
-    public int select_ranking() throws Exception{ // 랭킹출력
-        String sql = "select * from game_score";
+
+
+    public int insert_tier(String tier) throws Exception{ // 랭킹출력
+        //region create
+        //TODO: 점수를 티어로 변환하여 정보를 tier에 넣기
+        //endregion
+
+
+        String sql = "insert into member_game_tier values (member_GAME_TIER_SEQ.nextval,2,3,?)";
+
+        try (Connection con = DataUtil.getConnection();
+             PreparedStatement pstat = con.prepareStatement(sql))
+        {   pstat.setString(1, tier);
+            return pstat.executeUpdate();
+        }
+
+    }
+
+
+        public int select_ranking() throws Exception{ // 랭킹출력
+        //region create
+        //TODO: 랭킹출력
+        //endregion
+
+
+            String sql = "SELECT game_score.*, member_game_tier.tier " +
+                    "FROM game_score game_score " +
+                    "JOIN member_game_tier mgt ON gs.member_id = mgt.member_id";
         try (Connection con = DataUtil.getConnection();
              PreparedStatement pstat = con.prepareStatement(sql))
         {
@@ -38,11 +64,6 @@ public class GameScoreDAO {
         }
 
     }
-
-
-
-
-
     //region create
     //TODO: 게임 점수 등록
     //endregion

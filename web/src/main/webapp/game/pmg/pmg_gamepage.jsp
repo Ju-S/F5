@@ -4,6 +4,7 @@
 
 <html>
 <head>
+    <jsp:include page="/game/pmg/GameHead.jsp"/>
     <meta charset="UTF-8">
     <title>Insert title here</title>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -56,7 +57,6 @@
             height: 800px;
             float: left;
             border: 1px solid black;
-
         }
 
         .navi{
@@ -86,6 +86,7 @@
         .game_box{
 
             font: var(--title-font);
+
             width: 62%;
             height: 90%;
             float: left;
@@ -290,11 +291,21 @@
         <div class="main_top">
 
             <div class="game_box">
-
                 Play Game! <br>
              <button class = "play_btn"> play </button>
 
+                <script>
+                    $(".play_btn").on("click",function (){
+
+                        $(".game_box").empty(); // title play 버튼 지우기
+                        $(".game_box").load("/game/pmg/pmg_game.jsp"); //링크게임 내용실행
+                    });
+
+                </script>
+
+
             </div>
+
 
             <div class="ranking_box">
 
@@ -403,5 +414,12 @@
 
 
 </div> <!-- container -->
+
+
+
+
+
+
+
 </body>
 </html>

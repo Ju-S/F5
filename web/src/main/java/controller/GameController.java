@@ -22,19 +22,37 @@ public class GameController extends HttpServlet {
             GameScoreDAO dao_gamescore = GameScoreDAO.getInstance();
 
             GameReplyDAO dao_reply = GameReplyDAO.getInstance();
-           String cmd = request.getRequestURI();
+            String cmd = request.getRequestURI();
 
 
             switch (cmd) {
 
                 case "/gameover.game":
 
-                   int score = Integer.parseInt(request.getParameter("score"));
+                    int score = Integer.parseInt(request.getParameter("score"));
                     System.out.println("cmd : " + cmd);
                     System.out.println("score:" + score);
-                 int result =  dao_gamescore.insert_score(score);
+                    int result =  dao_gamescore.insert_score(score);
+
+
+                    if(0 < score && score < 10000){ //TODO 점수를 받아서 알맞는 tier 구분
+                        String tier = "BRONZE";
+                        dao_gamescore.insert_tier(tier);
+                    }else if(10000 < score && score < 20000){
+                    String tier = "SILVER";
+                        dao_gamescore.insert_tier(tier);
+                    }else if(20000 < score ){
+                        String tier = "GOLD";
+                        dao_gamescore.insert_tier(tier);
+                    }
+
+
+
+
                     response.setContentType("application/json; charset=utf-8");
                     response.getWriter().write("{\"result\": " + result + "}");
+
+
                     break;
 
                 // 행위 + 자원 (e.g, /getMemberList.member로 작성 요망)
@@ -45,17 +63,20 @@ public class GameController extends HttpServlet {
 
                 case "/go_gamepage1.game" :
 
-                   List<GameReplyDTO> list = dao_reply.selectAll();
+                    List<GameReplyDTO> list = dao_reply.selectAll();
 
-                   request.setAttribute("list", list);
+                    request.setAttribute("list", list);
                     System.out.println("댓글 개수: " + list.size());
                     request.getRequestDispatcher("/game/pmg/pmg_gamepage.jsp").forward(request, response);
+
+
+
                     break;
 
                 case "/write_reply.game" :
 
                     String writer = request.getParameter("writer");
-                   // String writer = (String)request.getSession().getAttribute("loginId");
+                    // String writer = (String)request.getSession().getAttribute("loginId");
                     int game_id = Integer.parseInt(request.getParameter("game_id"));
                     String contents = request.getParameter("contents");
 

@@ -22,10 +22,11 @@ class Exam02 extends Phaser.Scene{
     preload() {
 
         this.load.image('player','/game/pmg/img/player.png')
-        this.load.image('ball','/game/pmg/img/ball.png')
+        this.load.image('needle','/game/pmg/img/needle.png')
     }
 
     create() {
+
 
         this.speed = (Math.random()*300+100);
 
@@ -43,9 +44,20 @@ class Exam02 extends Phaser.Scene{
         });
 
         this.cursor = this.input.keyboard.createCursorKeys();
-        this.physics.world.setBounds(0,0,500,800);
+        this.physics.world.setBounds(0,0,500,300);
 
-        this.me = this.physics.add.sprite(250,1000,'player');
+
+        this.time_text  = this.add.text(10,10, "시간:",{
+            fontSize:"16px",
+            fill:"#000000"
+        });
+        this.score_text = this.add.text(10,30, "점수:",{
+            fontSize:"16px",
+            fill:"#000000"
+        });
+
+
+        this.me = this.physics.add.sprite(250,300,'player');
 
         this.physics.add.overlap(this.me,this.boxes,(me,box)=>{  // 충돌시 , 점수보내기 + gameover
 
@@ -53,7 +65,7 @@ class Exam02 extends Phaser.Scene{
             this.me.disableBody(true, true); // 충돌 후 플레이어 비활성화
             $.ajax({
             url: "/gameover.game" ,
-            type : "get",
+            type : "post",
             data : {
 
                 score: Math.floor(this.currentTime)
@@ -61,7 +73,7 @@ class Exam02 extends Phaser.Scene{
             success: (response) => {
                 console.log("서버 응답:", response);
 
-                this.scene.start("Gameover");
+                this.scene.start("Gameover",{score : Math.floor(this.currentTime)});
 
             },
             error: (err) => {
@@ -89,16 +101,14 @@ class Exam02 extends Phaser.Scene{
         if (!this.isGameOver) { // 게임오버가 아니라면
             this.currentTime += delta; // 점수값 초기화
         }
-
-
-        document.getElementById("timebox").innerHTML = (time/1000).toFixed(2);
-        document.getElementById("scorebox").innerHTML = Math.floor(this.currentTime);
+        this.time_text.setText('생존 시간: ' + (this.currentTime / 1000).toFixed(2));
+        this.score_text.setText('점수: ' + Math.floor(this.currentTime));
 
         if(this.frame% 60 == 0){
             let box =
-                this.physics.add.sprite(Math.random()*500,0,'ball');
+                this.physics.add.sprite(Math.random()*500,0,'needle');
             this.boxes.push(box);
-            box.setDisplaySize(70,70);
+            box.setDisplaySize(50,50);
             box.setVelocityY(this.speed);
             box.setOrigin(0,0);
 

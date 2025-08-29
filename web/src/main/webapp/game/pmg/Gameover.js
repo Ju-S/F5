@@ -7,7 +7,26 @@ class Gameover extends Phaser.Scene {
 
     }
 
+    init(data){//스코어 data를 받아옴
+
+        this.end_score = data.score; // 넘겨받을 점수를 this.end_score 변수에 넣음
+    }
+
+
+
+
     create() {
+
+        this.add.text(
+            this.cameras.main.width/2 ,
+            this.cameras.main.height/2- 80,
+            "score: " + this.end_score, // init에서 받은 점수값을 출력
+            {
+                fontSize:"50px",
+                fill: "#34ce42"
+            }
+        ).setOrigin(0.5);
+
         this.add.text(
             this.cameras.main.width/2,
             this.cameras.main.height/2,
