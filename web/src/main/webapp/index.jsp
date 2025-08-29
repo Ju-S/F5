@@ -2,17 +2,17 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <jsp:include page="/common/Head.jsp"/>
+    <jsp:include page="/common/Mcommon/MHead.jsp"/>
 
     <link rel="stylesheet" href="/index.css">
-    <link rel="stylesheet" href="/common/header/Header.css">
+    <link rel="stylesheet" href="/common/Mcommon/MHeader.css">
 
 </head>
 
 
 <body>
-<%-- 공용 헤더 --%>
-<jsp:include page="/common/header/Header.jsp"/>
+<%-- M공용 헤더 --%>
+<jsp:include page="/common/Mcommon/MHeader.jsp"/>
 
 
 <%--컨테이너--%>

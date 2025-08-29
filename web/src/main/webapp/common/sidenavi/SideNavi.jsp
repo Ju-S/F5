@@ -15,7 +15,7 @@
             <div id="gamebtn" class="naviContent">
                 <%--기본으로 보이는 아이콘--%>
                 <div class="icon">
-                    <img src="https://cdn-icons-png.flaticon.com/128/3916/3916598.png" alt="game">
+                    <img src="/common/sidenavi/sideNaviIcon/main_game_color.svg" alt="gameIcon">
                 </div>
                 <!-- active되면 보일 아이콘 여기 들어감 -->
             </div>
@@ -27,7 +27,7 @@
             <div id="boardbtn" class="naviContent">
                 <%--기본으로 보이는 아이콘--%>
                 <div class="icon">
-                    <img src="https://cdn-icons-png.flaticon.com/128/3916/3916598.png" alt="game">
+                    <img src="/common/sidenavi/sideNaviIcon/main_massge_color.svg" alt="boardIcon">
                 </div>
                 <!-- active되면 보일 아이콘 여기 들어감 -->
             </div>
@@ -39,7 +39,7 @@
             <div id="mypagebtn" class="naviContent">
                 <%--기본으로 보이는 아이콘--%>
                 <div class="icon">
-                    <img src="https://cdn-icons-png.flaticon.com/128/3916/3916598.png" alt="game">
+                    <img src="/common/sidenavi/sideNaviIcon/main_mypage_color.svg" alt="mypageIcon">
                 </div>
                 <!-- active되면 보일 아이콘 여기 들어감 -->
             </div>

@@ -10,17 +10,24 @@ const menuState = {
 };
 
 //아이콘 이미지 배열로 넘기기
-let gameIcons = [
-    "https://cdn-icons-png.flaticon.com/128/11899/11899737.png",
-    "https://cdn-icons-png.flaticon.com/128/565/565547.png"
-];
-let boardIcons = [
-    "https://cdn-icons-png.flaticon.com/128/11899/11899737.png",
-    "https://cdn-icons-png.flaticon.com/128/565/565547.png"
-];
+    let gameIcons = [
+        { src: "/common/sidenavi/sideNaviIcon/game1.svg", link: "/game1" },
+        { src: "/common/sidenavi/sideNaviIcon/game2.svg", link: "/game2" },
+        { src: "/common/sidenavi/sideNaviIcon/game3.svg", link: "/game3" },
+        { src: "/common/sidenavi/sideNaviIcon/game4.svg", link: "/game4" }
+    ];
+
+    let boardIcons = [
+        { src: "/common/sidenavi/sideNaviIcon/Group_color.svg", link: "/game/allList.jsp" },
+        { src: "/common/sidenavi/sideNaviIcon/game1.svg", link: "/game/game1List.jsp" },
+        { src: "/common/sidenavi/sideNaviIcon/game2.svg", link: "/game/game2List.jsp" },
+        { src: "/common/sidenavi/sideNaviIcon/game3.svg", link: "/game/game3List.jsp" },
+        { src: "/common/sidenavi/sideNaviIcon/game4.svg", link: "/game/game4List.jsp" }
+    ];
+
 let mypageIcons = [
-    "https://cdn-icons-png.flaticon.com/128/11899/11899737.png",
-    "https://cdn-icons-png.flaticon.com/128/565/565547.png"
+    { src: "/common/sidenavi/sideNaviIcon/game1.svg", link: "/myPage1" },
+    { src: "/common/sidenavi/sideNaviIcon/game2.svg", link: "/myPage2" }
 ];
 
 
@@ -36,9 +43,9 @@ function clickHandle(buttonId, iconsArr) {
         //서브메뉴 추가
         const $submenu = $("<div>").addClass("submenu");
         for (let icon of iconsArr) {
-            const $img = $("<img>").attr("src", icon);
-            const $iconDiv = $("<div>").addClass("icon").append($img);
-            $submenu.append($iconDiv);
+            const $img = $("<img>").attr("src", icon.src);
+            const $iconA = $("<a>").addClass("icon").attr("href", icon.link).append($img);
+            $submenu.append($iconA);
         }
         $btn.append($submenu);
 
@@ -48,7 +55,7 @@ function clickHandle(buttonId, iconsArr) {
             $firstIcon.css("margin-bottom","10px");//마진10
 
             $submenu.addClass("open");
-        }, 10);
+        }, 300);
 
     } else { // 버튼 열려있으면 않으면
         menuState[buttonId] = false;

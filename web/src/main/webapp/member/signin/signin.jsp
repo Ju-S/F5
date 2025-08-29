@@ -9,9 +9,8 @@
 <html>
 <head>
     <title>Title</title>
-    <jsp:include page="/common/Head.jsp"/>
+    <jsp:include page="/common/Mcommon/MHead.jsp"/>
     <link rel="stylesheet" href="/member/signin/signin.css">
-
 
 </head>
 <body>
