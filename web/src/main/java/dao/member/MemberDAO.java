@@ -15,6 +15,10 @@ public class MemberDAO {
 
     private MemberDAO() throws Exception {
     }
+    //region create
+    //TODO: 아이디 중복검사(true,false 반환)
+    //endregion
+
 
     //region create
     //TODO: 회원가입

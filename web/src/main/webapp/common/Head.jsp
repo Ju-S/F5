@@ -8,5 +8,8 @@
         crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <link rel="stylesheet" href="/common/common.css">
+<script src="/common/sidenavi/SideNavi.js"></script>
+<link rel="stylesheet" href="/common/sidenavi/SideNavi.css">
+<link rel="stylesheet" href="/common/header/Header.css">
 
 <title>F5</title>
