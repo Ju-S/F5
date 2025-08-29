@@ -3,6 +3,7 @@ package dao.game;
 import util.DataUtil;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 
 public class GameDAO {
     private static GameDAO instance;
@@ -16,6 +17,9 @@ public class GameDAO {
 
     private GameDAO() throws Exception {
     }
+
+
+
 
     //region read
     //TODO: 등록된 게임 정보 조회

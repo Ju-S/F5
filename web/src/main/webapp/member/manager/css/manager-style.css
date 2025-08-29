@@ -1,93 +1,29 @@
 @charset "UTF-8";
 /* 관리자 페이지 */
-:root {
-    /* 색상 변수 */
-    --primary-color: #101012; /* 검정 바탕색 */
-    --primary-subcolor: #2a2a2a; /* 회색 바탕 서브색 */
-    --secondary-color: #3E459D; /* 청보라 컬러 */
-    --btnsecondary-hover-color: #23275E; /* 청보라 클릭시 색상 */
-    --danger-color: #EC6333; /* 주황색 포인트 컬러 */
-    --mainbtn-hover-color: #a74013; /* 주황색 클릭시 색상 */
-    --sub-btn-color: #888; /* 서브 버튼 컬러(회색) */
-    --btnsub-hover-color: #636262; /* 서브 버튼 클릭시 색상 */
-
-    /* 폰트 변수 */
-    --title-font: 'Taenada', sans-serif;
-    --sub-font: 'Pretendard', sans-serif;
-
-    /*  radius 바탕  */
-    --border-radius: 22px;
-
-}
 
 html,
 body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    overflow: hidden;
-    background-color: var(--primary-color);
-    font-family: "Pretendard", sans-serif;
+    font-family: var(--sub-font);
     color: #fff;
 }
 
 /* 회원정보 전체 박스 */
-.custom-container {
-    display: flex;
+.container {
     width: 100vw;
-    height: 100vh;
-    padding: 32px 120px;
+    height: calc(100vh - 64px); /* padding 위아래 32px*2 제외 */
+    padding: 32px;
     box-sizing: border-box;
     background-color: var(--primary-color);
     gap: 38px;
     border: none;
 }
 
-/* ----- 로그 상단 네비 ----- */
-.navbar.bg-body-tertiary {
-    padding: 10px 120px;
-}
-
-.bg-body-tertiary {
-    background-color: var(--primary-color) !important;
-}
-
-.container-fluid {
-    background-color: var(--primary-color);
-}
-
-/* Sidebar - 서브바 */
-.sidebar {
-    color: white;
-    font-weight: 700;
-    font-size: 1.5rem;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-}
-
-.sidebar button {
-    background: none;
-    border: none;
-    color: #aaa;
-    margin: 1rem 0;
-    font-size: 1.5rem;
-    cursor: pointer;
-}
-
-.sidebar button.active {
-    color: #fff;
-}
-
 /* ----- main content ----- */
 .main-content {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: stretch;
+    flex-grow: 1;
+    overflow-y: auto;
+    position: relative;
     gap: 32px;
-    width: 100%;
-    overflow: hidden;
 }
 
 /* 필터 & 버튼 */
@@ -118,11 +54,8 @@ body {
     max-width: 1000px;
     color: white;
 }
-
 .table-responsive.fixed-height-table {
-    overflow: hidden;
-    width: 100%;
-    flex-grow: 1;
+    overflow-y: auto; /* hidden에서 변경 */
     height: 600px;
 }
 
