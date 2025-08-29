@@ -1,5 +1,6 @@
 package controller;
 
+import com.google.gson.Gson;
 import dao.board.BoardCategoryDAO;
 import dao.board.BoardDAO;
 import dao.board.BoardFileDAO;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 @WebServlet("*.member")
 public class MemberController extends HttpServlet {
@@ -39,10 +41,25 @@ public class MemberController extends HttpServlet {
             //endregion
 
             String cmd = request.getRequestURI();
-
+            Gson g = new Gson();
             switch (cmd) {
                 // 행위 + 자원 (e.g, /get_memberList.member로 작성 요망)
                 //TODO: 회원 관련 기능
+
+                //아이디 중복일때
+                //아래메소드는 단순확인용 수정예정 - 0828작성
+                case "/dupliIdCheck.member" :
+                    response.setContentType("text/html; charset=UTF-8");
+                    System.out.println("cmd = " + cmd);
+                    PrintWriter pw = response.getWriter();
+                    /*pw.append("true");*/
+                    pw.write("true");
+                    pw.close();
+                    break;
+
+
+
+
             }
         } catch(Exception e) {
             e.printStackTrace();

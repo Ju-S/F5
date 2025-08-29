@@ -1,0 +1,108 @@
+#signinBtn{
+    display: none;
+}
+#loginBtn{
+    display: none;
+}
+
+body, html {
+    overflow: hidden;
+    background-color: #101012;
+}
+
+/*div {
+    border: 1px solid red;
+}*/
+
+/* 왼쪽 네비 */
+#sideNavi {
+    height: 100%;
+}
+
+/* 홈버튼 */
+#homebox {
+    height: 15vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#home {
+    width: 55%;
+    height: 55%;
+    border-radius: 20px;
+    background-color: #2a2a2a;
+}
+
+#home:hover, #home:active {
+    background-color: #3E459D;
+}
+
+.naviContent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin-top: 2vh;
+}
+
+/* 버튼 기본 스타일 */
+#gamebtn,#boardbtn,#mypagebtn {
+    width: 8vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #2a2a2a;
+    border-radius: 50px;
+    overflow: hidden;
+    transition: all 0.2s ease-in-out;
+}
+
+.icon {
+    width: 8vh;
+    height: 8vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+
+    background-color: #2a2a2a;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.icon:hover {
+    background-color: #6539af;
+}
+
+.icon img {
+    width: 24px;
+    height: 24px;
+}
+
+/* 서브메뉴 */
+.submenu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-in-out;
+}
+
+.submenu.open {
+    max-height: 300px; /* 아이콘 개수에 맞게 조절 가능 */
+}
+
+
+.col-11 {
+    height: 100%;
+}
+
+#other {
+    width: 100%;
+    height: 100vh;
+}

@@ -1,0 +1,328 @@
+
+
+
+/*공용 버튼에 대하여*/
+.btns{
+    margin-left: 5%;
+    width: 30%;
+    height: 100%;
+
+    background-color:var(--secondary-color);
+    border:1px solid var(--secondary-color);
+    border-radius: 8px;
+}
+
+
+/*호버 액티브 모음*/
+.btn.btn-primary:hover {
+    border: 1px solid  !important;
+    background-color: #262a59 !important;
+}
+.btn-outline-light:hover {
+    background-color: var(--secondary-color);
+    border: 1px solid var(--secondary-color) ;
+    color:white  !important;
+}
+
+
+
+* {
+    box-sizing: border-box;
+}
+body {
+    background-color: white;
+}
+/*컨테이너 크기*/
+#container1 {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+/*오른쪽*/
+#right {
+    float: left;
+    width: 50%;
+    height: 100%;
+
+    position: relative; /*부모 자격 부여*/
+}
+/*웰컴이미지*/
+#rightZindex2 {
+    position: absolute; /* 블러이미지 아래에 놓이게 세팅 */
+    z-index: 2;
+
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+#rightZindex2 img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+/*블러이미지*/
+#rigthZindex3 {
+    position: absolute; /* 이미지 위에 놓이게 세팅 */
+    z-index: 3;
+
+    top: 7.5%; /* 원하는 만큼 내리기 */
+    left: 10%;
+
+    width: 80%;
+    height: 85%;
+    background-color: #ffffff70; /*단순 블러된 이미지 위해서 직접 지정*/
+}
+#rightText {
+    font-family: var(--title-font);
+    font-size: 90px;
+    font-weight: 600;
+    color:var(--primary-color);
+
+    margin-top: 35%;
+    margin-left: 5%;
+}
+
+
+/*왼쪽*/
+#left {
+    float: left;
+    width: 50%;
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+/*회원가입 위한 전체 박스*/
+#leftBox {
+    width: 55%;
+    height: 70%;
+}
+
+/*1층 텍스트*/
+#leftText {
+    padding-top: 8%;
+    width: 100%;
+    height: 20%;
+
+    font-family: var(--title-font);
+    font-size: 40px;
+    font-weight: 600;
+    color:var(--primary-color);
+}
+
+/*2층 아이디*/
+#idRow {
+    width: 100%;
+    height: 10%;
+}
+/*아이디, 버튼 칸 실제로 놓이는 칸*/
+#idRowBox {
+    width: 100%;
+    height: 70%;
+
+    display: flex;
+    align-items: stretch; /* 인풋,버튼 위치 동일하게 맞추려면 필요*/
+}
+#idRow input {
+    width: 65%;
+    height: 100%;
+
+    border-radius: 11px;
+    padding-left: 4%;
+    border: 1.5px solid var(--sub-btn-color);
+}
+/*#idBtn {
+}*/
+#idRowText {
+    width: 100%;
+    height: 30%;
+}
+
+
+/*3층 닉네임*/
+#nicknameRow {
+    width: 100%;
+    height: 10%;
+}
+/*닉네임 실제로 놓이는 칸*/
+#nicknameRowBox {
+    width: 100%;
+    height: 70%;
+
+    display: flex;
+    align-items: stretch; /* 인풋,버튼 위치 동일하게 맞추려면 필요*/
+}
+#nickname {
+    width: 65%;
+    height: 100%;
+
+    border-radius: 11px;
+    padding-left: 4%;
+    border: 1.5px solid var(--sub-btn-color);
+}
+/*#nicknameRowBox button {
+}*/
+#nicknameRowText {
+    width: 100%;
+    height: 30%;
+}
+
+
+/*4층 비밀번호*/
+#pwRow {
+    width: 100%;
+    height: 10%;
+}
+/*비밀번호 실제 놓이는곳*/
+#pwRowBox {
+    width: 100%;
+    height: 70%;
+    display: flex;
+    justify-content: space-between; /* 비번+비번확인 간격 자동 */
+}
+#pwRowBox input {
+    width: 48%;
+    height: 100%;
+
+    border-radius: 11px;
+    padding-left: 4%;
+    border: 1.5px solid var(--sub-btn-color);
+}
+#pwRowText {
+    width: 100%;
+    height: 30%;
+}
+
+
+/*5층 이름*/
+#nameRow {
+    width: 100%;
+    height: 10%;
+}
+/*실제 이름 놓이는 칸*/
+#nameRowBox {
+    width: 100%;
+    height: 70%;
+}
+#name {
+    width: 100%;
+    height: 100%;
+
+    border-radius: 11px;
+    padding-left: 4%;
+    border: 1.5px solid var(--sub-btn-color);
+}
+#nameRowText {
+    width: 100%;
+    height: 30%;
+}
+
+
+/*6층 이메일*/
+#emailRow {
+    width: 100%;
+    height: 10%;
+}
+/*실제 이메일 놓이는 칸*/
+#emailRowBox {
+    width: 100%;
+    height: 70%;
+
+    display: flex;
+    align-items: stretch; /* 인풋,버튼 위치 동일하게 맞추려면 필요*/
+}
+#email {
+    width: 65%;
+    height: 100%;
+
+    border-radius: 11px;
+    padding-left: 4%;
+    border: 1.5px solid var(--sub-btn-color);
+}
+/*#emailBtn {
+}*/
+#emailRowText {
+    width: 100%;
+    height: 30%;
+}
+
+
+/*7층 대시보드*/
+#dashboardRow {
+    width: 100%;
+    height: 10%;
+}
+/*실제 대시보드 놓이는 줄*/
+#dashboardRowBox {
+    display: flex;
+
+    width: 100%;
+    height: 70%;
+}
+#genderBox {
+    width: 50%;
+    height: 100%;
+    display: inline-block;
+    color:var(--primary-color);
+}
+#genderBox input{
+    accent-color: var(--danger-color);/*눌리는 버튼 색상 지정*/
+}
+
+#yearBox {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-end; /* 오른쪽 정렬 */
+}
+#dropdownMenuButton2 {
+    width: 60%; /* 부모 요소의 절반 너비 */
+    text-align: center;
+    white-space: nowrap; /*칸줄어들지 않게 고정*/
+    overflow: hidden;
+    border-radius: 8px;
+}
+.dropdown-menu {
+    max-height: 200px; /* 7개정도 보이게 높이 설정함 */
+    overflow-y: auto; /* 세로 스크롤 활성화 */
+}
+#dashboardRowText {
+    width: 100%;
+    height: 30%;
+}
+
+
+/*동의 받을지 말지 고민중 이후 없앨수도??*/
+#agreeRow {
+    width: 100%;
+    height: 20%;
+}
+#agreeBtnBox {
+    margin-top: 11%;
+    width: 100%;
+    height: 35%;
+
+    display: flex;
+    align-items: stretch; /* 높이 동일하게 */
+}
+
+/*완료버튼*/
+#completeBtn {
+    width: 65%;
+    height: 100%;
+    border-radius: 8px;
+    background-color:var(--secondary-color);
+    border:1px solid var(--secondary-color);
+}
+#delBtn {
+    margin-left: 5%;
+    width: 30%;
+    height: 100%;
+    color:var(--secondary-color);
+    border:1px solid var(--secondary-color);
+    border-radius: 8px;
+}
+
+
