@@ -133,8 +133,6 @@
                                     <div class="ranking_tier">GOLD</div>
                                 </div>
 
-
-
                             </div> <%-- ranking_box--%>
 
                 </div>   <%-- main top--%>

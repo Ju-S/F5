@@ -100,7 +100,8 @@ class Pmg_game extends Phaser.Scene {
         });
 
 
-        this.me = this.physics.add.sprite(250, 350, 'player');
+        this.me = this.physics.add.sprite(250, 350, 'walk',0); // 첫프레임 0번으로 설정
+
         this.physics.add.overlap(this.me, this.boxes, (me, box) => {  // 충돌시 , 점수보내기 + gameover
 
             this.isGameOver = true;
@@ -168,12 +169,21 @@ class Pmg_game extends Phaser.Scene {
         if (this.cursor.left.isDown) { // 만약 왼쪽 방향키 누르면
             this.me.setVelocityX(-this.player_speed); // x좌표를 5만큼 감소
             this.me.play("left", true);
+            this.lastDirection = 'left'; // 방향 left로 기억
+
         } else if (this.cursor.right.isDown) { // 만약 오른쪽 방향키 누르면
             this.me.setVelocityX(this.player_speed); // x좌표를 5만큼 감소
             this.me.play("right", true); // true 넣어야 끊기지 않고 계속 달림
+            this.lastDirection = 'right'; // 방향 right 로 기억
         } else {
             this.me.setVelocityX(0); // 내가 누르지 않으면 멈춤
             this.me.anims.stop(); // 애니매이션 멈추기
+
+            if (this.lastDirection === 'left') {
+                this.me.setFrame(8); // 왼쪽 idle 프레임 (왼쪽 애니메이션 시작 프레임)
+            } else {
+                this.me.setFrame(3); // 오른쪽 idle 프레임
+            }
         }
 
         //---  이벤트 발생지점
