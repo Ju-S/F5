@@ -51,18 +51,20 @@ public class BoardController extends HttpServlet {
                 //TODO: 게시글 관련 기능
 
                 // 게시글 목록 확인.(pagination)
-                case "/get_board_list.board" : {
+                case "/get_board_list.board": {
                     int naviPerPage = 10;
                     int itemPerPage = 10;
                     int curPage = 1;
                     try {
                         curPage = Integer.parseInt(request.getParameter("page"));
-                    } catch (Exception ignored) {}
+                    } catch (Exception ignored) {
+                    }
 
                     int filter = -1;
                     try {
                         filter = Integer.parseInt(request.getParameter("filter"));
-                    } catch (Exception ignored) {}
+                    } catch (Exception ignored) {
+                    }
 
                     String searchQuery = request.getParameter("searchQuery");
 
@@ -83,8 +85,6 @@ public class BoardController extends HttpServlet {
                     response.getWriter().write(gson.toJson(data));
                     break;
                 }
-                // 행위 + 자원 (e.g, /get_memberList.member로 작성 요망)
-                //TODO: 게임 관련 기능
                 case "/write.board": {
                     long boardCategory = Long.parseLong(request.getParameter("boardCategory"));
                     String writer = request.getParameter("writer");
@@ -101,11 +101,26 @@ public class BoardController extends HttpServlet {
                             .build();
 
                     int write = boardDAO.write(boardDTO);
-                    response.sendRedirect("/board/reply/detailBoard.jsp");
+                    response.sendRedirect("/board/writeBoard/writeBoard.jsp");
+                    break;
+                }
+                // 게시글 하나의 아이템에 대한 세부 속성 조회 및 출력
+                case "/get_board_detail.board": {
+                    long boardId = Long.parseLong(request.getParameter("boardId"));
+
+                    // 게시글 정보
+                    BoardDTO detail = boardDAO.getBoardDetail(boardId);
+                    
+                    //TODO: 댓글 정보
+                    
+                    //TODO: 작성자 프로필사진 정보
+
+                    request.setAttribute("boardDetail", detail);
+                    request.getRequestDispatcher("/board/detailBoard/detailBoard.jsp").forward(request, response);
                     break;
                 }
             }
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             response.sendRedirect("/error.jsp");
         }
