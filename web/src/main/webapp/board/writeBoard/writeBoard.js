@@ -13,6 +13,7 @@ $(document).ready(function() {
 
     });
 });
+
 function uploadImage(file) {
     var formData = new FormData();
     formData.append("file", file);

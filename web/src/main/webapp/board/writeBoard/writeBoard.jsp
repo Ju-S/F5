@@ -65,6 +65,7 @@
                     <div class="completeBtn-box">
                         <button type="submit" class="btn btn-primary" id="complete">작성완료</button>
                     </div>
+
                 </div>
             </div>
         </div>

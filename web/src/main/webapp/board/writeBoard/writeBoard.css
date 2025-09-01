@@ -10,9 +10,8 @@
 }
 
 .mainContents {
-    background-color: #2a2a2a;
+    background-color: var(--primary-subcolor);
     border-radius: 15px;
-
     margin-bottom: 50px;
 }
 
@@ -20,6 +19,7 @@
     width: 100%;
     height: 120px;
     padding-left: 20px;
+    font-family: var(--sub-font);
 }
 
 .tagsBox {
@@ -41,18 +41,20 @@
     height: 80px;
 }
 
-.title {
+.titleBox .title {
     width: 100%;
     height: 40%;
     margin-top: 10px;
     display: flex;
     align-items: flex-end;
     padding-bottom: 5px;
+    font-family: var(--sub-font);
 }
 
 .titleText {
     width: 100%;
     height: 100%;
+
 }
 
 .titleText input {
@@ -72,6 +74,7 @@
     height: 100%;
     float: left;
    margin-left:20px;
+    font-family: var(--sub-font);
 }
 
 .gameId-box label{
@@ -90,6 +93,7 @@
     height: 100%;
     float: left;
     padding-left: 10px;
+    font-family: var(--sub-font);
 }
 
 .board_category-box label{
@@ -127,19 +131,21 @@
 }
 
 .completeBtn-box #complete {
-    background-color: #EC6333;
+    background-color: var(--danger-color);
     color: white;
     border: none;
     width: 100px;
     height: 40px;
+    font-family: var(--sub-font);
 }
 
 .cancelBtn-box #cancel {
-    background-color: #888;
+    background-color: var(--sub-btn-color);
     color: white;
     border: none;
     width: 100px;
     height: 40px;
+    font-family: var(--sub-font);
 }
 
 /*섬머노트 디자인*/
