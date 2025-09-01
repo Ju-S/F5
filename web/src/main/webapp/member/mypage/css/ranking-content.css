@@ -1,22 +1,31 @@
 @charset "UTF-8";
 
 /* 랭킹 */
-#conten-ranking {
+#content-ranking {
     width: 100%;
     max-width: 1000px;
     box-sizing: border-box;
 }
+.ranking-list-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;  /* 카드들이 세로로 고르게 배치 */
+    padding-bottom: 32px;            /* 아래 여백 */
+}
 
 .ranking-card {
-    background-color: #2a2a2a;
+    /*flex: 1;                !* 높이를 고르게 나눔 *!*/
+    height: 142px;
+    margin-bottom: 16px;
+    background-color: var(--primary-subcolor);
     border-radius: 12px;
     padding: 30px 24px;
-    margin-bottom: 16px;
     width: 100%; /* 부모 너비 꽉 채우기 */
     box-sizing: border-box;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
-    color: white;
 }
+
 .list-group {
     background-color: transparent; /* 부모 배경 유지 */
     color: #fff;
@@ -24,9 +33,14 @@
     margin-bottom: 0;
 }
 
+ol.list-group-numbered > li::before {
+    display: none;
+}
+
+
 /* 리스트 아이템이 있는 경우 */
 .list-group-item {
-    background-color: #2a2a2a; /* 카드보다 살짝 밝은 어두운 회색 */
+    background-color: var(--primary-subcolor); /* 카드보다 살짝 밝은 어두운 회색 */
     border-radius: 10px;
     margin-bottom: 10px;
     padding: 16px;

@@ -3,9 +3,9 @@
 <html>
 <head>
     <jsp:include page="/common/Head.jsp"/>
-    <link rel="stylesheet" href="css/main-style.css">
-    <link rel="stylesheet" href="css/edit-content.css">
-    <link rel="stylesheet" href="css/ranking-content.css">
+    <link rel="stylesheet" href="css/main-style.css?v=1.2">
+    <link rel="stylesheet" href="css/edit-content.css?v=1.2">
+    <link rel="stylesheet" href="css/ranking-content.css?v=1.2">
 </head>
 <body>
 <!-- Header -->
@@ -137,35 +137,68 @@
                 <!-- 콘텐츠: 게임 랭킹 -->
                 <div class="content-box" id="content-ranking" data-content="ranking">
                     <!-- 게임1 랭킹 -->
-                    <div class="ranking-card">
-                        <h5>게임 1 랭킹</h5>
-                        <ol class="list-group list-group-numbered">
-                            <li class="list-group-item d-flex justify-content-between align-items-start">
-                                <div class="ms-2 me-auto">
-                                    <div class="fw-bold">게임 1(제목 넣을 예정)</div>
-                                    Content for list item
-                                </div>
-                                <span class="badge text-bg-primary rounded-pill">14</span>
-                            </li>
-                        </ol>
+                    <div class="ranking-list-wrapper">
+                        <div class="ranking-card">
+                            <h5 style="color: var(--danger-color)">남극 탐혐게임</h5>
+                            <ol class="list-group list-group-numbered">
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                    <div class="ms-2 me-auto">
+                                        <div class="fw-bold">게임 랭킹 들어갈 자리</div>
+                                    </div>
+                                    <span class="badge text-bg-primary rounded-pill">랭킹</span>
+                                </li>
+                            </ol>
+                        </div>
+
+                        <div class="ranking-card">
+                            <h5 style="color: var(--danger-color)">Packman 게임</h5>
+                            <ol class="list-group list-group-numbered">
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                    <div class="ms-2 me-auto">
+                                        <div class="fw-bold">게임 랭킹 들어갈 자리</div>
+                                    </div>
+                                    <span class="badge text-bg-primary rounded-pill">랭킹</span>
+                                </li>
+                            </ol>
+                        </div>
+
+                        <div class="ranking-card">
+                            <h5 style="color: var(--danger-color)">종스크롤 게임</h5>
+                            <ol class="list-group list-group-numbered">
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                    <div class="ms-2 me-auto">
+                                        <div class="fw-bold">게임 랭킹 들어갈 자리</div>
+                                    </div>
+                                    <span class="badge text-bg-primary rounded-pill">랭킹</span>
+                                </li>
+                            </ol>
+                        </div>
+
+                        <div class="ranking-card">
+                            <h5 style="color: var(--danger-color)">버블슈터 게임</h5>
+                            <ol class="list-group list-group-numbered">
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                    <div class="ms-2 me-auto">
+                                        <div class="fw-bold">게임 랭킹 들어갈 자리</div>
+                                    </div>
+                                    <span class="badge text-bg-primary rounded-pill">랭킹</span>
+                                </li>
+                            </ol>
+                        </div>
+
+                        <div class="ranking-card">
+                            <h5 style="color: var(--danger-color)">지오메트리 대시게임</h5>
+                            <ol class="list-group list-group-numbered">
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                    <div class="ms-2 me-auto">
+                                        <div class="fw-bold">게임 랭킹 들어갈 자리</div>
+                                    </div>
+                                    <span class="badge text-bg-primary rounded-pill">랭킹</span>
+                                </li>
+                            </ol>
+                        </div>
                     </div>
 
-                    <div class="ranking-card">
-                        <h5>게임 2 랭킹</h5>
-                        <!-- 동일 구조 반복 -->
-                    </div>
-
-                    <div class="ranking-card">
-                        <h5>게임 3 랭킹</h5>
-                    </div>
-
-                    <div class="ranking-card">
-                        <h5>게임 4 랭킹</h5>
-                    </div>
-
-                    <div class="ranking-card">
-                        <h5>게임 5 랭킹</h5>
-                    </div>
                 </div>
 
 
@@ -173,7 +206,7 @@
                 <div class="content-box" id="content-logout" data-content="logout">
                     <h2>로그아웃</h2>
                     <p>로그아웃 처리하시겠습니까?</p>
-                    <button class="button-primary">로그아웃</button>
+                    <a class="btn button-primary">로그아웃</a>
                 </div>
             </div>
         </div>

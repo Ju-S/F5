@@ -2,7 +2,7 @@
 
 /* 개인정보 수정 */
 #content-edit {
-    background-color: #2a2a2a;
+    background-color: var(--primary-subcolor);
     border-radius: 16px;
     padding: 40px;
     width: 100%;
@@ -11,7 +11,7 @@
 }
 
 .section-title {
-    color: #f25c1a;
+    color: var(--danger-color);
     margin-bottom: 24px;
 }
 
@@ -58,7 +58,7 @@
 .check-button {
     flex: 1;
     height: 48px;
-    background-color: #888;
+    background-color: var(--sub-btn-color);
     border: none;
     border-radius: 6px;
     color: white;
