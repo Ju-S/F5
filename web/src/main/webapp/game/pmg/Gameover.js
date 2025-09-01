@@ -29,7 +29,7 @@ class Gameover extends Phaser.Scene {
             this.cameras.main.height/2,
             "GAME OVER",
             {
-                fontSize:"80px",
+                fontSize:"70px",
                 fill: "#ff0000"
             }
         ).setOrigin(0.5);

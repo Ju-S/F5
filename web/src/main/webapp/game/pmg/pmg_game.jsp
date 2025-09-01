@@ -15,12 +15,12 @@
         physics : {
             default : "arcade",
             arcade: {
-                // debug:true,
+                debug:true,
                 // gravity : { y:300}
             }
         },
 
-        scene: [first_scene,second_scene,Pmg_game , Gameover]
+        scene: [first_scene,second_scene,Pmg_game, Gameover]
 
     };
 

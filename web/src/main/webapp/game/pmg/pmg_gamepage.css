@@ -274,3 +274,7 @@ body {
     font: var(--sub-font);
     cursor: pointer;
 }
+
+.dropdown-toggle::after {
+    display: none;
+}

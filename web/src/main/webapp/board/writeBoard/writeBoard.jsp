@@ -71,6 +71,6 @@
     </div>
 </form>
 
-<script src="/board/detailBoard/detailBoard.js"></script><!-- js 링크 -->
+<script src="/board/writeBoard/writeBoard.js"></script><!-- js 링크 -->
 </body>
 </html>

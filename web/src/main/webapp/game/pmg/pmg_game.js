@@ -78,8 +78,6 @@ class Pmg_game extends Phaser.Scene {
 
 
 
-
-
         this.cursor = this.input.keyboard.createCursorKeys();
         this.physics.world.setBounds(0, 0, 600, 400);
 
@@ -106,6 +104,7 @@ class Pmg_game extends Phaser.Scene {
 
             this.isGameOver = true;
             this.me.disableBody(true, true); // 충돌 후 플레이어 비활성화
+
             $.ajax({
                 url: "/gameover.game",
                 type: "post",
@@ -132,7 +131,7 @@ class Pmg_game extends Phaser.Scene {
         this.me.setCollideWorldBounds(true);
 
         this.me.setScale(0.5);
-        this.me.setOffset(40, 10);
+        this.me.setOffset(20, 10);
 
 
     }
@@ -336,7 +335,6 @@ class Pmg_game extends Phaser.Scene {
                     this.clover = this.physics.add.sprite(265, 50, 'clover');
                     this.clover.setScale(0.1);
                     this.clover.setOrigin(0, 0);
-
                     this.player_speed = 100;
                     break;
 
@@ -348,7 +346,6 @@ class Pmg_game extends Phaser.Scene {
                 this.event_text.destroy();
                 this.event_text = null;
             }
-
 
             if(this.spade){
                 this.spade.destroy();
@@ -363,7 +360,6 @@ class Pmg_game extends Phaser.Scene {
                 this.clover.destroy();
                 this.clover = null;
             }
-
 
 
             this.me.setScale(0.5);

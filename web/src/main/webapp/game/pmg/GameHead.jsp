@@ -24,10 +24,9 @@
     }
 
 
-    .dropdown-toggle::after {
+    dropdown-toggle::after {
         display: none;
     }
-
 
 </style>
 
