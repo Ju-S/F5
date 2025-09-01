@@ -15,35 +15,35 @@
     "game1",
     "게임 1 타이틀",
     "게임 1 에 대한 설명 , 게임 1 에 대한 설명 게임 1 에 대한 설명게임 1 에 대한 설명 게임 1 에 대한 설명게임 1 에 대한 설명",
-    "/index_img/img1.jpg",
+        "/index_img/desktop_home_js.svg",
     "game1"
     ),
     game2: createGameView(
     "game2",
     "게임 2 타이틀",
     "게임 2 에 대한 설명 , 게임 2 에 대한 설명 게임 2 에 대한 설명게임 2 에 대한 설명 게임 2 에 대한 설명게임 2 에 대한 설명",
-    "/index_img/img2.jpg",
+        "/index_img/desktop_home_jw.svg",
     "game2"
     ),
     game3: createGameView(
     "game3",
     "게임 3 타이틀",
     "게임 3 에 대한 설명 , 게임 3 에 대한 설명 게임 3 에 대한 설명 게임 3 에 대한 설명 게임 3 에 대한 설명 게임 3 에 대한 설명",
-    "/index_img/img1.jpg",
+        "/index_img/desktop_home_kj.svg",
     "game3"
     ),
     game4: createGameView(
     "game4",
     "게임 4 타이틀",
     "게임 4 에 대한 설명 , 게임 4 에 대한 설명 게임 4 에 대한 설명게임 4 에 대한 설명 게임 4 에 대한 설명게임 4 에 대한 설명",
-    "/index_img/img2.jpg",
+        "/index_img/desktop_home_mk.svg",
     "game4"
     ),
     game5: createGameView(
     "game5",
     "게임 5 타이틀",
     "게임 5 에 대한 설명 , 게임 5 에 대한 설명 게임 5 에 대한 설명게임 5 에 대한 설명 게임 5 에 대한 설명게임 5 에 대한 설명",
-    "/index_img/img1.jpg",
+        "/index_img/desktop_home_ys.svg",
     "game5"
     )
 };
