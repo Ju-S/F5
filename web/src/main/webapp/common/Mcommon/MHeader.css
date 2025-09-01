@@ -6,12 +6,17 @@ body{
     height: 100%;
 }
 .header{
-    height: 8%;
-    width: 100%;
-    padding-top: 24px;
-    padding-left: 1.5%;
-
-    overflow: hidden;
+    position: fixed; /* 스크롤해도 고정 */
+    top: 15px;
+    right: 0;
+    left: 0;
+    height: 64px; /* px나 rem로 고정하는 게 퍼센트보다 안정적 */
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0 24px;
+    z-index: 100; /* 이미지보다 항상 위 */
+    background: transparent; /* 배경 없애서 이미지 위로 올라오도록 */
 }
 
 /*로고*/
