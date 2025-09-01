@@ -153,7 +153,7 @@
                 <div id="agreeRow">
                     <div id="agreeBtnBox">
                         <button class="btn btn-primary" id="completeBtn" type="submit">회원가입</button>
-                        <button class="btn-outline-light" id="delBtn" type="button">취소</button>
+                        <button class="btn btn-primary" id="delBtn" type="button">취소</button>
 
                     </div>
                 </div>

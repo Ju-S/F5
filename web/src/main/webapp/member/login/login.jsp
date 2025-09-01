@@ -32,7 +32,6 @@
             <div id="loginBox">
                 <input type="text" placeholder="ID" id="id">
                 <input type="password" placeholder="PW" id="pw">
-
             </div>
 
             <div id="loginBtnBox">

@@ -17,23 +17,7 @@
 
 
 <%-- M공용 헤더 --%>
-<%--<jsp:include page="/common/Mcommon/MHeader.jsp"/>--%>
-<div class="header">
-    <div class="logoBox">
-        <img src="/index_img/Union.svg"/>
-    </div>
-
-    <div class="headerBtn">
-        <button type="button" class="btn btn-outline-light" id="signinBtn">회원가입</button>
-        <button type="button" class="btn btn-primary" id="loginBtn">로그인</button>
-    </div>
-</div>
-
-
-
-
-
-
+<jsp:include page="/common/Mcommon/MHeader.jsp"/>
 
     <%--왼쪽 게임 네비--%>
     <div id="left">

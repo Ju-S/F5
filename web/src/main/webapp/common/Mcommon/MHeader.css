@@ -10,7 +10,7 @@ body{
     top: 15px;
     right: 0;
     left: 0;
-    height: 64px; /* px나 rem로 고정하는 게 퍼센트보다 안정적 */
+    height: 64px;
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -44,14 +44,40 @@ body{
 }
 
 /*회원가입 버튼*/
-.headerBtn .btn-outline-light{
-    color:var(--secondary-color);
-    border:1px solid var(--secondary-color);
+#signinBtn{
+    border:1px solid var(--sub-btn-color);
+    background-color:var(--sub-btn-color);
+    margin-right: 3%;
+}
+#signinBtn:hover{
+    color: white !important;
+    border:1px solid white !important;
+    background-color:var( --btnsub-hover-color) !important;
+    box-shadow: 0 0 8px 3px rgba(122, 122, 122, 0.7) !important;
+    margin-right: 3%;
+}
+#signinBtn:active{
+    color: white !important;
+    border:1px solid white !important;
+    background-color:var( --btnsub-hover-color) !important;
+    box-shadow: 0 0 8px 3px rgba(122, 122, 122, 0.7) !important;
     margin-right: 3%;
 }
 
 /*로그인 버튼*/
-.headerBtn .btn-primary{
+#loginBtn{
     background-color:var(--secondary-color);
     border:1px solid var(--secondary-color);
+}
+#loginBtn:hover{
+    color: white !important;
+    background-color:var( --btnsecondary-hover-color) !important;
+    border:1px solid white !important;
+    box-shadow: 0 0 8px 3px rgba(122, 122, 122, 0.7) !important;
+}
+#loginBtn:active{
+    color: white !important;
+    background-color:var( --btnsecondary-hover-color) !important;
+    border:1px solid white !important;
+    box-shadow: 0 0 8px 3px rgba(122, 122, 122, 0.7) !important;
 }
