@@ -115,7 +115,7 @@ function dupliCheck(button, url){
 
                 let $btn3 = $("<button>").attr({
                     "type": "button",
-                    "class": "btn btn-primary",
+                    "class": "btn btn-primary modalBtn",
                     "data-bs-dismiss": "modal",
                     "id": "btn3"
                 }).html("사용하기"); //사용하기 버튼
