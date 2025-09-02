@@ -32,11 +32,11 @@ function createBoardItem(post) {
     let title = $("<td>").attr("width", "30%").addClass("title")
         .append($("<a>").attr({
             "title": post.title,
-            "href": "/board/reply/detailBoard.jsp"
+            "href": "/get_board_detail.board?boardId=" + post.id
         }).html(post.title));
     // let writer = $("<td>").attr("width", "15%").html(post.writer);
     // let writerDate = $("<td>").attr("width", "30%").html(milliToDate(post.writeDate));
-    // let viewCount = $("<td>").attr("width", "20%").html(post.viewCount);
+    let viewCount = $("<td>").attr("width", "20%").html(post.viewCount);
     let modifyBtn = $("<td>").attr("width", "30%").addClass("modify")
         .append($("<button>").addClass("btn btn-primary modifyBtn").html("수정"));
 
@@ -45,7 +45,7 @@ function createBoardItem(post) {
         .append(title)
         // .append(writer)
         // .append(writerDate)
-        // .append(viewCount)
+        .append(viewCount)
         .append(modifyBtn)
     );
 }

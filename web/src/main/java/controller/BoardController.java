@@ -1,6 +1,7 @@
 package controller;
 
 import com.google.gson.Gson;
+import com.oreilly.servlet.MultipartRequest;
 import dao.board.BoardCategoryDAO;
 import dao.board.BoardDAO;
 import dao.board.BoardFileDAO;
@@ -13,6 +14,7 @@ import dao.member.MemberDAO;
 import dao.member.MemberGameTierDAO;
 import dao.member.MemberProfileFileDAO;
 import dto.board.BoardDTO;
+import util.FileUtil;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -51,18 +53,20 @@ public class BoardController extends HttpServlet {
                 //TODO: 게시글 관련 기능
 
                 // 게시글 목록 확인.(pagination)
-                case "/get_board_list.board" : {
+                case "/get_board_list.board": {
                     int naviPerPage = 10;
                     int itemPerPage = 10;
                     int curPage = 1;
                     try {
                         curPage = Integer.parseInt(request.getParameter("page"));
-                    } catch (Exception ignored) {}
+                    } catch (Exception ignored) {
+                    }
 
                     int filter = -1;
                     try {
                         filter = Integer.parseInt(request.getParameter("filter"));
-                    } catch (Exception ignored) {}
+                    } catch (Exception ignored) {
+                    }
 
                     String searchQuery = request.getParameter("searchQuery");
 
@@ -94,18 +98,44 @@ public class BoardController extends HttpServlet {
 
                     BoardDTO boardDTO = BoardDTO.builder()
                             .boardCategory(boardCategory)
-                            .writer(writer)
+                            .writer("test")
                             .gameId(gameId)
                             .title(title)
                             .contents(contents)
                             .build();
 
                     int write = boardDAO.write(boardDTO);
-                    response.sendRedirect("/board/reply/detailBoard.jsp");
+
+                    response.sendRedirect("/board_list.page");
+                    break;
+                }
+                case "/upload_image.board": {
+                    MultipartRequest multi = FileUtil.fileUpload(request, "boardImage");
+                    String sysFileName = multi.getFilesystemName("file");
+                    String oriFileName = multi.getOriginalFileName("file");
+                    String fileUrl = request.getContextPath() + "/upload/boardImage/" + sysFileName;
+                    response.setContentType("text/plain; charset=UTF-8");
+                    response.getWriter().write(fileUrl);
+
+                    break;
+                }
+                // 게시글 하나의 아이템에 대한 세부 속성 조회 및 출력
+                case "/get_board_detail.board": {
+                    long boardId = Long.parseLong(request.getParameter("boardId"));
+
+                    // 게시글 정보
+                    BoardDTO detail = boardDAO.getBoardDetail(boardId);
+
+                    //TODO: 댓글 정보
+
+                    //TODO: 작성자 프로필사진 정보
+
+                    request.setAttribute("boardDetail", detail);
+                    request.getRequestDispatcher("/board/detailBoard/detailBoard.jsp").forward(request, response);
                     break;
                 }
             }
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             response.sendRedirect("/error.jsp");
         }
@@ -113,6 +143,7 @@ public class BoardController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
         doGet(request, response);
     }
 }

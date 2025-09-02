@@ -13,6 +13,9 @@ import java.util.List;
 public class BoardDAO {
     private static BoardDAO instance;
 
+    private BoardDAO() throws Exception {
+    }
+
     public static synchronized BoardDAO getInstance() throws Exception {
         if (instance == null) {
             instance = new BoardDAO();
@@ -20,20 +23,17 @@ public class BoardDAO {
         return instance;
     }
 
-    private BoardDAO() throws Exception {
-    }
-
     //region create
     //TODO: 게시글 작성
-    public int write(BoardDTO boardDTO)throws Exception{
+    public int write(BoardDTO boardDTO) throws Exception {
         String sql = "insert into board values(board_seq.nextval,?,?,?,?,?,default,default,default,default)";
 
         try (Connection con = DataUtil.getConnection();
-        PreparedStatement pstat = con.prepareStatement(sql)) {
+             PreparedStatement pstat = con.prepareStatement(sql)) {
             pstat.setLong(1, boardDTO.getBoardCategory());
             pstat.setString(2, boardDTO.getWriter());
             pstat.setLong(3, boardDTO.getGameId());
-            pstat.setString(4,boardDTO.getTitle());
+            pstat.setString(4, boardDTO.getTitle());
             pstat.setString(5, boardDTO.getContents());
 
             return pstat.executeUpdate();
@@ -132,6 +132,28 @@ public class BoardDAO {
     }
 
     //TODO: 게시글 단일 조회(contents포함 세부항목)
+    public BoardDTO getBoardDetail(long boardId) throws Exception {
+        String sql = "SELECT * FROM BOARD WHERE id = ?";
+
+        try (Connection con = DataUtil.getConnection();
+             PreparedStatement pstat = con.prepareStatement(sql)) {
+            pstat.setLong(1, boardId);
+            try (ResultSet rs = pstat.executeQuery()) {
+                if (rs.next()) {
+                    return BoardDTO.builder()
+                            .id(rs.getLong("id"))
+                            .title(rs.getString("title"))
+                            .writer(rs.getString("writer"))
+                            .contents(rs.getString("contents"))
+                            .writeDate(rs.getTimestamp("write_date"))
+                            .gameId(rs.getLong("game_id"))
+                            .boardCategory(rs.getLong("board_category"))
+                            .build();
+                }
+                return null;
+            }
+        }
+    }
     //endregion
 
     //region update

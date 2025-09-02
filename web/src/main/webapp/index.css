@@ -15,7 +15,7 @@ body {
 #container1{
     position: absolute;
     width: 100%; /* 화면 가로 전체 */
-    height: 92%; /* 화면 세로 전체 */
+    height: 100%; /* 화면 세로 전체 */
     bottom: 0; /*바닥에 딱 붙이게*/
 }
 
@@ -31,7 +31,7 @@ body {
     bottom: 0;
     left: 5%;
     width: 20%; /*바디 기준 20%*/
-    height: 100%;
+    height: 92%;
     z-index: 10; /* right보다 위에 있도록 */
 }
 .game {
@@ -44,12 +44,21 @@ body {
     height: 18%;
     width: 100%;
 
-    background-color:  var(--primary-subcolor);
-    border-radius: 15px;
 }
 .game img{
     width: auto;
     height: 100%;
+}
+.game img:hover{
+    border: 1px solid #EC6333;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+}
+.game img.clicked {
+    border: 2px solid #EC6333;
+    border-radius: 20px;
+    box-shadow: 0 0 12px 5px rgba(236, 99, 51, 0.7);
+    cursor: pointer;
 }
 
 
@@ -61,13 +70,13 @@ body {
 
     overflow: hidden;
 
-    width: 100%; /* body기준 전체 너비 */
+    width: 100%;
     height: 100%;
-    z-index: 5; /* left 보다 아래 */
+    z-index: 5;
 }
 /*메인게임 박스*/
 .mainGame {
-    width: 100%; /*right의(body기준전체) 전체*/
+    width: 100%;
     height: 100%;
 
     overflow: hidden;
@@ -77,12 +86,13 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: right bottom; /* 오른쪽-바닥을 기준으로 */
 }
 .mainGameTitle {
     position:absolute;
     z-index: 3; /* 없으면 maingame 밑으로 들어감 */
 
-    top:50%;
+    top:60%;
     right: 8%;
 
     font-family: var(--title-font);
@@ -90,13 +100,12 @@ body {
     font-weight: 600;
 
     color: var(--danger-color) ;
-
 }
 .mainGameContent {
     position:absolute;
     z-index: 3; /* 없으면 maingame 밑으로 들어감 */
 
-    top: 68%;
+    top: 76%;
     right: 8%;
     max-width: 20%;
 
@@ -104,13 +113,12 @@ body {
     font-weight: 300;
     font-size: 16px;
     color: white;
-
 }
 .mainGameBtn{
     position:absolute;
     z-index: 3; /* 없으면 maingame 밑으로 들어감 */
 
-    top:76%;
+    top:85%;
     right: 8%;
     width: 20%;
 
@@ -118,26 +126,27 @@ body {
     font-weight: 300;
     font-size: 16px;
 
-
     background-color:var(--danger-color) ;
     border: 1px solid var(--danger-color) ;
 }
 .mainGameBtn:hover{
-    background-color: white;
-    border: 1px solid var(--danger-color) ;
-    color:var(--danger-color) ;
+    color: white !important;
+    border: 1px solid var(--mainbtn-hover-color) !important;
+    background-color: var(--mainbtn-hover-color) !important;
+    box-shadow: 0 0 8px 3px rgba(236, 99, 51, 0.7) !important;
+
 }
-.mainGameBtn.clicked {
-    background-color: white;
-    border: var(--danger-color) ;
-    color: var(--danger-color) ;
+.mainGameBtn:active {
+    color: white !important;
+    border: 1px solid var(--mainbtn-hover-color) !important;
+    background-color: var(--mainbtn-hover-color) !important;
+    box-shadow: 0 0 8px 3px rgba(236, 99, 51, 0.7) !important;
 }
 /*이미지 확대된 상태에서 줄어들도록*/
 .mainGameImg {
     transition: transform 0.2s ease-in-out;
     transform: scale(1.05);
 }
-
 
 /*애니메이션*/
 /* 제목+내용: 오른쪽에서 왼쪽으로 들어오기 */

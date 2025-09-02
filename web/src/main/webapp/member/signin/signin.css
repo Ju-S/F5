@@ -1,36 +1,57 @@
-
-
-
 /*공용 버튼에 대하여*/
 .btns{
     margin-left: 5%;
     width: 30%;
     height: 100%;
 
-    background-color:var(--secondary-color);
-    border:1px solid var(--secondary-color);
-    border-radius: 8px;
+    background-color:var(--secondary-color) !important;
+    border:1px solid var(--secondary-color) !important;
+    border-radius: 11px; /*22로 하면 너무 동그람*/
+}
+.btns:hover,.btns:active  {
+    border: 1px solid var(--btnsecondary-hover-color) !important;
+    background-color: var(--btnsecondary-hover-color) !important;
 }
 
 
-/*호버 액티브 모음*/
-.btn.btn-primary:hover {
-    border: 1px solid  !important;
-    background-color: #262a59 !important;
+/* 공용: 왼쪽 폼의 모든 텍스트/비번/이메일 입력 */
+#leftBox input[type="text"]:focus,
+#leftBox input[type="password"]:focus,
+#leftBox input[type="email"]:focus,
+#leftBox input:focus {
+
+    border: 1.5px solid var(--danger-color) !important;
+    outline: 0;
+    /* 포커스 링(선택 사항) */
+    box-shadow: 0 0 0 3px rgba(236, 99, 51, .15);
+    transition: border-color .15s ease, box-shadow .15s ease;
 }
-.btn-outline-light:hover {
-    background-color: var(--secondary-color);
-    border: 1px solid var(--secondary-color) ;
-    color:white  !important;
+
+.modalBtn{
+    background-color: var(--danger-color);
+    border: 1px solid var(--danger-color);
 }
+.modalBtn:hover,.modalBtn:active{
+    background-color: var(--mainbtn-hover-color) !important;
+    border: 1px solid var(--mainbtn-hover-color) !important;
+}
+
 
 
 
 * {
     box-sizing: border-box;
 }
+html{
+    height: 100%;
+    margin:0;
+}
 body {
     background-color: white;
+}
+form{
+    margin: 0;
+    padding: 0;
 }
 /*컨테이너 크기*/
 #container1 {
@@ -38,6 +59,8 @@ body {
     height: 100%;
     overflow: hidden;
 }
+
+
 /*오른쪽*/
 #right {
     float: left;
@@ -84,6 +107,7 @@ body {
 }
 
 
+
 /*왼쪽*/
 #left {
     float: left;
@@ -100,6 +124,7 @@ body {
     height: 70%;
 }
 
+
 /*1층 텍스트*/
 #leftText {
     padding-top: 8%;
@@ -112,15 +137,15 @@ body {
     color:var(--primary-color);
 }
 
+
 /*2층 아이디*/
 #idRow {
     width: 100%;
     height: 10%;
 }
-/*아이디, 버튼 칸 실제로 놓이는 칸*/
-#idRowBox {
+#idRowBox {/*아이디, 버튼 칸 실제로 놓이는 칸*/
     width: 100%;
-    height: 70%;
+    height: calc(100% - 16px);
 
     display: flex;
     align-items: stretch; /* 인풋,버튼 위치 동일하게 맞추려면 필요*/
@@ -133,11 +158,9 @@ body {
     padding-left: 4%;
     border: 1.5px solid var(--sub-btn-color);
 }
-/*#idBtn {
-}*/
 #idRowText {
     width: 100%;
-    height: 30%;
+    height: 16px;
 }
 
 
@@ -146,10 +169,9 @@ body {
     width: 100%;
     height: 10%;
 }
-/*닉네임 실제로 놓이는 칸*/
-#nicknameRowBox {
+#nicknameRowBox {/*닉네임 실제로 놓이는 칸*/
     width: 100%;
-    height: 70%;
+    height: calc(100% - 16px);
 
     display: flex;
     align-items: stretch; /* 인풋,버튼 위치 동일하게 맞추려면 필요*/
@@ -162,11 +184,9 @@ body {
     padding-left: 4%;
     border: 1.5px solid var(--sub-btn-color);
 }
-/*#nicknameRowBox button {
-}*/
 #nicknameRowText {
     width: 100%;
-    height: 30%;
+    height: 16px;
 }
 
 
@@ -175,10 +195,9 @@ body {
     width: 100%;
     height: 10%;
 }
-/*비밀번호 실제 놓이는곳*/
-#pwRowBox {
+#pwRowBox {/*비밀번호 실제 놓이는곳*/
     width: 100%;
-    height: 70%;
+    height: calc(100% - 16px);
     display: flex;
     justify-content: space-between; /* 비번+비번확인 간격 자동 */
 }
@@ -192,7 +211,7 @@ body {
 }
 #pwRowText {
     width: 100%;
-    height: 30%;
+    height: 16px;
 }
 
 
@@ -201,10 +220,9 @@ body {
     width: 100%;
     height: 10%;
 }
-/*실제 이름 놓이는 칸*/
-#nameRowBox {
+#nameRowBox {/*실제 이름 놓이는 칸*/
     width: 100%;
-    height: 70%;
+    height: calc(100% - 16px);
 }
 #name {
     width: 100%;
@@ -216,7 +234,7 @@ body {
 }
 #nameRowText {
     width: 100%;
-    height: 30%;
+    height: 16px;
 }
 
 
@@ -225,10 +243,9 @@ body {
     width: 100%;
     height: 10%;
 }
-/*실제 이메일 놓이는 칸*/
-#emailRowBox {
+#emailRowBox {/*실제 이메일 놓이는 칸*/
     width: 100%;
-    height: 70%;
+    height: calc(100% - 16px);
 
     display: flex;
     align-items: stretch; /* 인풋,버튼 위치 동일하게 맞추려면 필요*/
@@ -241,11 +258,9 @@ body {
     padding-left: 4%;
     border: 1.5px solid var(--sub-btn-color);
 }
-/*#emailBtn {
-}*/
 #emailRowText {
     width: 100%;
-    height: 30%;
+    height: 16px;
 }
 
 
@@ -254,12 +269,11 @@ body {
     width: 100%;
     height: 10%;
 }
-/*실제 대시보드 놓이는 줄*/
-#dashboardRowBox {
+#dashboardRowBox {/*실제 대시보드 놓이는 줄*/
     display: flex;
 
     width: 100%;
-    height: 70%;
+    height: calc(100% - 16px);
 }
 #genderBox {
     width: 50%;
@@ -270,19 +284,35 @@ body {
 #genderBox input{
     accent-color: var(--danger-color);/*눌리는 버튼 색상 지정*/
 }
-
 #yearBox {
     width: 50%;
     height: 100%;
     display: flex;
     justify-content: flex-end; /* 오른쪽 정렬 */
 }
+
+
 #dropdownMenuButton2 {
     width: 60%; /* 부모 요소의 절반 너비 */
+    height: 48px;
     text-align: center;
     white-space: nowrap; /*칸줄어들지 않게 고정*/
     overflow: hidden;
-    border-radius: 8px;
+    border-radius: 11px;
+    background: var(--sub-btn-color);
+}
+#dropdownMenuButton2:hover{
+    background-color: var(--btnsub-hover-color)!important;
+    border: 1px solid var(--btnsub-hover-color) !important;
+    color:white  !important;
+}
+#dropdownMenuButton2:active{
+    background-color: var(--btnsub-hover-color)!important;
+    border: 1px solid var(--btnsub-hover-color) !important;
+    color:white  !important;
+}
+.dropdown-item:active{
+    background-color: var(--btnsub-hover-color);
 }
 .dropdown-menu {
     max-height: 200px; /* 7개정도 보이게 높이 설정함 */
@@ -290,7 +320,7 @@ body {
 }
 #dashboardRowText {
     width: 100%;
-    height: 30%;
+    height:16px;
 }
 
 
@@ -302,27 +332,36 @@ body {
 #agreeBtnBox {
     margin-top: 11%;
     width: 100%;
-    height: 35%;
+    height: 30%;
 
     display: flex;
     align-items: stretch; /* 높이 동일하게 */
 }
-
 /*완료버튼*/
 #completeBtn {
     width: 65%;
-    height: 100%;
-    border-radius: 8px;
+    height: 48px;
+    border-radius: 11px; /*22로 하면너무동그람*/
     background-color:var(--secondary-color);
     border:1px solid var(--secondary-color);
 }
+#completeBtn:hover,#completeBtn:active {
+    border: 1px solid var(--btnsecondary-hover-color) !important;
+    background-color: var(--btnsecondary-hover-color) !important;
+}
+/*취소버튼*/
 #delBtn {
     margin-left: 5%;
     width: 30%;
-    height: 100%;
+    height: 48px;
     color:var(--secondary-color);
+    background-color:white;
     border:1px solid var(--secondary-color);
-    border-radius: 8px;
+    border-radius: 11px;
 }
-
+#delBtn:hover,#delBtn:active {
+    color:white !important;
+    background-color:var(--sub-btn-color) !important;
+    border:1px solid var(--sub-btn-color) !important;
+}
 
