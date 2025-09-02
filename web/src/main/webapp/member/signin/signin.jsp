@@ -9,9 +9,8 @@
 <html>
 <head>
     <title>Title</title>
-    <jsp:include page="/common/Head.jsp"/>
+    <jsp:include page="/common/Mcommon/MHead.jsp"/>
     <link rel="stylesheet" href="/member/signin/signin.css">
-
 
 </head>
 <body>
@@ -154,7 +153,7 @@
                 <div id="agreeRow">
                     <div id="agreeBtnBox">
                         <button class="btn btn-primary" id="completeBtn" type="submit">회원가입</button>
-                        <button class="btn-outline-light" id="delBtn" type="button">취소</button>
+                        <button class="btn btn-primary" id="delBtn" type="button">취소</button>
 
                     </div>
                 </div>
@@ -181,7 +180,7 @@
 </div>
 
 
-<script src="/member/signin/ index.js"></script>
+<script src="/member/signin/signin.js"></script>
 
 
 </body>

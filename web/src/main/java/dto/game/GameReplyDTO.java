@@ -16,3 +16,5 @@ public class GameReplyDTO {
     private String contents;
     private Timestamp writeDate;
 }
+
+
