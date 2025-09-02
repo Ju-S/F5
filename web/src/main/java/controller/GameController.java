@@ -48,6 +48,7 @@ public class GameController extends HttpServlet {
 
             switch (cmd) {
 
+
                 case "/gameover.game": { // 게임 오버시 발생
 
 
@@ -87,13 +88,13 @@ public class GameController extends HttpServlet {
                     request.setAttribute("listranking", listranking);
 
                     System.out.println("랭킹 리스트: " + listranking);
-                    request.getRequestDispatcher("/game/pmg/pmg_gamepage.jsp").forward(request, response);
+                    request.getRequestDispatcher("/game/gamepage.jsp").forward(request, response);
 
                     break;
 
             }
 
-                
+
                 case "/write_reply.game" : { // 댓글 작성 (작성자)
 
                     String writer = request.getParameter("writer");
@@ -130,6 +131,8 @@ public class GameController extends HttpServlet {
 
                 }
 
+
+
             }
 
         } catch(Exception e) {
@@ -146,5 +149,5 @@ public class GameController extends HttpServlet {
 }
 
 //region read
-//TODO: 
+//TODO:
 //endregion

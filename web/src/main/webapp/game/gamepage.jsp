@@ -47,16 +47,51 @@
             <div class="main">
 
                 <div class="main_top">
-                    <%--                    <div class="row">--%>
-                    <%--                        <div class="col-md-6">--%>
+                    <%-- <div class="row">--%>
+                    <%--  <div class="col-md-6">--%>
                     <div class="game_box">
                         Play Game! <br>
                         <button class = "play_btn"> play </button>
 
                         <script>
+                            // controller에서 보내준  gameId를 변수로 만듬
+                            <%--// const GAMEID = Number("${gameId}");--%>
+
+                            const GAMEID = 4; // 예시
+
                             $(".play_btn").on("click",function (){
                                 $(".game_box").empty(); // title play 버튼 지우기
-                                $(".game_box").load("/game/pmg/pmg_game.jsp"); //링크게임 내용실행
+
+                                switch (GAMEID) {
+
+                                    case 1 : {
+                                        //주성
+                                        break;
+                                    }
+
+                                    case 2 : {
+                                        //지원
+                                        break;
+                                    }
+
+                                    case 3 : {
+                                        //기준
+                                        break;
+                                    }
+
+                                    case 4 : {
+                                        //민규
+                                        $(".game_box").load("/game/gameplay.jsp"); //링크게임 내용실행
+                                        break;
+                                    }
+
+                                    case 5 : {
+                                        //영서
+                                        break;
+                                    }
+
+                                }
+
                             });
 
                         </script>
@@ -144,14 +179,12 @@
                             </div>
                         </div>
 
-
-
                     </c:forEach>
 
                     <form action="/write_reply.game" method="post">
                         <div class="text_reply">
                             <input type="hidden" name="writer" value="man">
-                            <input type="hidden" name="gameId" value="5">
+                            <input type="hidden" name="gameId" value="3">
                             <input type="text" class="reply_area" placeholder="write your comment!" name="contents">
                             <button class="reply_btn"><i class="fa-solid fa-paper-plane" style="color: #ffffff;"></i></button>
                         </div>
@@ -202,16 +235,11 @@
         const $replyBar = $(this).closest(".reply_bar");
         const $contentDiv = $replyBar.find(".reply_content");
         const $hiddenInput = $(this).closest(".update_form").find(".hidden_contents");
-
         $hiddenInput.val($contentDiv.text());
         // 폼은 submit 되니 따로 처리 안 해도 됨
     });
 
 </script>
-
-
-
-
 
 
 
