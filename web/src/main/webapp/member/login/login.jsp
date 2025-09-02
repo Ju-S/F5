@@ -8,10 +8,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <jsp:include page="/common/Head.jsp"/>
+    <jsp:include page="/common/Mcommon/MHead.jsp"/>
     <link rel="stylesheet" href="/member/login/login.css">
-
-
 </head>
 
 
@@ -34,7 +32,6 @@
             <div id="loginBox">
                 <input type="text" placeholder="ID" id="id">
                 <input type="password" placeholder="PW" id="pw">
-
             </div>
 
             <div id="loginBtnBox">

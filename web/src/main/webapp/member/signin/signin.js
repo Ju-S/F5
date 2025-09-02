@@ -8,6 +8,49 @@ let dupliNicknameCheck = false;
 
 
 
+// 아이디 중복 확인 버튼 눌렀을때
+$(document).ready(function () {
+    dupliCheck("#idBtn", "/dupliIdCheck.member"); /*아이디 중복 버튼 눌리면*/
+    dupliCheck("#nicknameBtn", "/dupliNicknameCheck.member"); /*닉네임 중복버튼 누르면*/
+})
+
+
+
+// 연도 체크 값 저장
+let selectedYear = null; // 선택된 연도를 저장할 변수
+//드롭다운 내용 채우기
+let $ul = $(".dropdown-menu");
+let currentYear = new Date().getFullYear(); // 현재 년도 가져오기
+for (let i = currentYear; i >= 1900; i--) {
+    let $li = $("<li>");
+    let $a = $("<a>").addClass("dropdown-item").attr("href", "#").text(i);
+
+    // 클릭 이벤트 추가
+    $a.on("click", function (e) {
+        selectedYear = $(this).text(); // 선택된 연도 저장
+        e.preventDefault(); // 링크 이동 방지
+        $("#dropdownMenuButton2").text($(this).text()); // 버튼 텍스트 변경
+    });
+    $li.append($a);
+    $ul.append($li);
+}
+
+
+//닫기 누르면 뒤로가기
+$("#delBtn").on("click",function(){
+    location.href = "/index.jsp";
+})
+
+
+// 성별 체크 값 저장 (value값 male, female)
+let selectedGender = null;
+$("input[name='sex']").on("change", function () {
+    selectedGender = $(this).val();
+});
+//비어있는 칸 있으면 채우라고 alert 띄우기
+
+
+
 //중복 버튼에 관하여 함수 만들기
 function dupliCheck(button, url){
     /*어떤 버튼 눌렸을때*/
@@ -72,7 +115,7 @@ function dupliCheck(button, url){
 
                 let $btn3 = $("<button>").attr({
                     "type": "button",
-                    "class": "btn btn-primary",
+                    "class": "btn btn-primary modalBtn",
                     "data-bs-dismiss": "modal",
                     "id": "btn3"
                 }).html("사용하기"); //사용하기 버튼
@@ -106,7 +149,7 @@ function dupliCheck(button, url){
                         if (target === "id") {
                             $("#nickname").focus();
                         } else if (target === "nickname") {
-                            $("#name").focus(); // 예시
+                            $("#pw").focus(); // 예시
                         }
 
                     }, 0);
@@ -119,49 +162,7 @@ function dupliCheck(button, url){
         });
     })
 
-// 아이디 중복 확인 버튼 눌렀을때
-$(document).ready(function () {
-
-
-    dupliCheck("#idBtn", "/dupliIdCheck.member"); /*아이디 중복 버튼 눌리면*/
-    dupliCheck("#nicknameBtn", "/dupliNicknameCheck.member"); /*닉네임 중복버튼 누르면*/
-
-
-})
-
-
-
-
-// 연도 체크 값 저장
-let selectedYear = null; // 선택된 연도를 저장할 변수
-//드롭다운 내용 채우기
-let $ul = $(".dropdown-menu");
-let currentYear = new Date().getFullYear(); // 현재 년도 가져오기
-for (let i = currentYear; i >= 1900; i--) {
-    let $li = $("<li>");
-    let $a = $("<a>").addClass("dropdown-item").attr("href", "#").text(i);
-
-    // 클릭 이벤트 추가
-    $a.on("click", function (e) {
-        selectedYear = $(this).text(); // 선택된 연도 저장
-        e.preventDefault(); // 링크 이동 방지
-        $("#dropdownMenuButton2").text($(this).text()); // 버튼 텍스트 변경
-    });
-    $li.append($a);
-    $ul.append($li);
 }
 
 
-//닫기 누르면 뒤로가기
-$("#delBtn").on("click",function(){
-    location.href = "/index.jsp";
-})
 
-
-// 성별 체크 값 저장 (value값 male, female)
-let selectedGender = null;
-$("input[name='sex']").on("change", function () {
-    selectedGender = $(this).val();
-})
-
-//비어있는 칸 있으면 채우라고 alert 띄우기
