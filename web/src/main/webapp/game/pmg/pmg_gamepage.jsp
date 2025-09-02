@@ -71,7 +71,7 @@
                     <div class="ranking_box">
                         <div class="ranking_title">Ranking</div>
 
-                        <c:forEach var= "j" items = "${list_ranking}">
+                        <c:forEach var= "j" items = "${listranking}">
                             <div class="ranking_bar">
                                 <div class="ranking_number">${j.rank}</div>
                                 <div class="ranking_name">${j.memberId}</div>
@@ -101,13 +101,13 @@
                             </div>
 
                             <input type = "hidden" name="gameId" value="${i.gameId}">
-                            <input type = "hidden" name="write_date" value="${i.writeDate}">
+                            <input type = "hidden" name="writedate" value="${i.writeDate}">
                             <button style="background-color:#3E459D; color:#fff; font-size:15px; border-radius:10px; border:none; padding: 5px 5px;">수정</button>
                     </form>
 
                     <form action="/delete_reply.game" method="post">
                         <input type = "hidden" name="gameId" value="${i.gameId}">
-                        <input type = "hidden" name="write_date" value = " ${i.writeDate}">
+                        <input type = "hidden" name="writedate" value = " ${i.writeDate}">
                         <button style="background-color:#3E459D; color:#fff; font-size:15px; border-radius:10px; border:none;  padding: 5px 5px;">삭제</button>
 
                     </form>
@@ -135,7 +135,7 @@
                 <form action="/write_reply.game" method="post">
                     <div class="text_reply">
                         <input type="hidden" name="writer" value="man">
-                        <input type="hidden" name="game_id" value="5">
+                        <input type="hidden" name="gameId" value="5">
                         <input type="text" class="reply_area" placeholder="write your comment!" name="contents">
                         <button class="reply_btn"><i class="fa-solid fa-paper-plane" style="color: #ffffff;"></i></button>
                     </div>
