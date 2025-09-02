@@ -35,7 +35,7 @@ body {
 /*블러이미지*/
 #leftZindex3{
     position: absolute; /* 부모 기준으로 지정 가능 */
-    top: 7.5%; left: 10%; width: 80%; height: 85%;/* 원하는 만큼 지정 */
+    top: 16px; bottom: 16px; left: 16px; right: 16px;  /* 원하는 만큼 지정 */
 
     background-color: #ffffff70; /*단순 블러된 이미지 위해서 직접 지정*/
     z-index: 3;
@@ -50,6 +50,17 @@ body {
     margin-left: 5%;
 }
 
+
+
+#rightBox input[type="text"]:focus,
+#rightBox input[type="password"]:focus
+{
+    border: 1.5px solid var(--danger-color) !important;
+    outline: 0;
+    /* 포커스 링(선택 사항) */
+    box-shadow: 0 0 0 3px rgba(236, 99, 51, .15);
+    transition: border-color .15s ease, box-shadow .15s ease;
+}
 
 /*오른쪽*/
 #right{
@@ -85,7 +96,7 @@ body {
     padding-top: 2%;
 }
 #loginBox input{
-    border-radius: 11px;
+    border-radius: 11px;/*22픽셀 너무 둥그래서 임의 지정*/
     border: 1.5px solid var(--sub-btn-color);
     padding-left: 4%;
 
@@ -102,10 +113,18 @@ body {
 }
 #loginBtnBox button{
     background-color:var(--secondary-color);
-    border-radius: 11px;
+    border-radius: 11px; /*22픽셀 너무 둥그래서 임의 지정*/
 
     width: 100%;
-    height: 100%;
+    height: 48px;
+}
+.mainGameBtn:hover{
+    background-color:var(--btnsecondary-hover-color) !important;
+    border: 1px solid var(--btnsecondary-hover-color) !important;
+}
+.mainGameBtn:active{
+    background-color:var(--btnsecondary-hover-color) !important;
+    border: 1px solid var(--btnsecondary-hover-color) !important;
 }
 /*로그인 푸터 박스*/
 #loginFooter{
@@ -116,13 +135,18 @@ body {
     justify-content: center;
 }
 #loginFooter a{
-    margin-top: 7%;
+    margin-top: 24px;
     color: var(--sub-btn-color);
+    text-decoration: none;
+}
+#loginFooter a:hover,#loginFooter a:active{
+    cursor: pointer;
+    color: var(--primary-subcolor);
 }
 #verticalLine{
     border-left: 1px solid var(--sub-btn-color);
     height: 25%;
-    margin-top: 7%;
+    margin-top: 24px;
     margin-right: 4%;
     margin-left: 4%;
     display: inline;
