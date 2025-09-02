@@ -4,7 +4,9 @@
 
     <%--홈버튼--%>
     <div id="homebox" class="col-12">
-        <div id="home">home</div>
+        <div id="home">
+            <a href="/index.jsp" id="homebtn"><img src="/common/sidenavi/sideNaviIcon/home_color.svg" alt="homeIcon"></a>
+        </div>
     </div>
 
 
@@ -14,8 +16,8 @@
         <div id="game" class="naviContent">
             <div id="gamebtn" class="naviContent">
                 <%--기본으로 보이는 아이콘--%>
-                <div class="icon">
-                    <img src="https://cdn-icons-png.flaticon.com/128/3916/3916598.png" alt="game">
+                <div class="icon main-icon">
+                    <img src="/common/sidenavi/sideNaviIcon/main_game_color.svg" alt="gameIcon">
                 </div>
                 <!-- active되면 보일 아이콘 여기 들어감 -->
             </div>
@@ -26,8 +28,8 @@
         <div id="board" class="naviContent">
             <div id="boardbtn" class="naviContent">
                 <%--기본으로 보이는 아이콘--%>
-                <div class="icon">
-                    <img src="https://cdn-icons-png.flaticon.com/128/3916/3916598.png" alt="game">
+                <div class="icon main-icon">
+                    <img src="/common/sidenavi/sideNaviIcon/main_massge_color.svg" alt="boardIcon">
                 </div>
                 <!-- active되면 보일 아이콘 여기 들어감 -->
             </div>
@@ -38,12 +40,21 @@
         <div id="mypage" class="naviContent">
             <div id="mypagebtn" class="naviContent">
                 <%--기본으로 보이는 아이콘--%>
-                <div class="icon">
-                    <img src="https://cdn-icons-png.flaticon.com/128/3916/3916598.png" alt="game">
+                <div class="icon main-icon">
+                    <img src="/common/sidenavi/sideNaviIcon/main_mypage_color.svg" alt="mypageIcon">
                 </div>
                 <!-- active되면 보일 아이콘 여기 들어감 -->
             </div>
         </div>
     </div>
+
+
+        <%--로그아웃 버튼--%>
+        <div id="logoutbox" class="col-12">
+            <div id="logout">
+                <a href="#" id="logoutbtn"><img src="/common/sidenavi/sideNaviIcon/logout_color.svg" alt="logout"></a>
+            </div>
+        </div>
+
 </div>
 <script src="./SideNavi.js"></script>
