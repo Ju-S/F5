@@ -196,8 +196,7 @@
                                 <li class="list-group-item d-flex justify-content-between align-items-start">
                                     <div class="ms-2 me-auto">
                                         <div class="fw-bold">
-                                            게임 랭킹 들어갈 자리<i class="fa-solid fa-hospital"
-                                                           style="background-color: white;"></i>
+                                            게임 랭킹 들어갈 자리
                                         </div>
                                     </div>
                                     <span class="badge text-bg-primary rounded-pill">랭킹</span>
