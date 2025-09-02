@@ -153,6 +153,7 @@ public class MemberController extends HttpServlet {
                     }
                     break;
 
+                    // 회원정보 조회 할 예정 - 작성만 한부분
                 case "":
                     HttpSession session = request.getSession();
                     String memberId = (String) session.getAttribute("loginId"); //로그인 회원
