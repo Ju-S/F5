@@ -25,14 +25,15 @@ public class GameScoreDAO {
 
 
     //region create
-    public int insert_score(int score) throws Exception{// 점수 등록
+    public int insert_score(int game_id,int score) throws Exception{// 점수 등록
         //TODO: 게임 점수 등록
 
-        String sql = "INSERT INTO game_score (id,game_id, member_id, score) VALUES (GAME_SCORE_SEQ.nextval,3, 'MIN', ?)";
+        String sql = "INSERT INTO game_score (id,game_id, member_id, score) VALUES (GAME_SCORE_SEQ.nextval,?, 'MIN', ?)";
 
         try (Connection con = DataUtil.getConnection();
              PreparedStatement pstat = con.prepareStatement(sql))
-        {   pstat.setInt(1, score);
+        {   pstat.setInt(1, game_id);
+            pstat.setInt(2, score);
             return pstat.executeUpdate();
         }
 
@@ -44,14 +45,15 @@ public class GameScoreDAO {
 
     //region create
 
-    public int insert_tier(String tier) throws Exception{ // 티어 구분
+    public int insert_tier(int game_id , String tier) throws Exception{ // 티어 구분
 
         //TODO: 점수를 티어로 변환하여 정보를 tier에 넣기
-        String sql = "insert into member_game_tier values (member_GAME_TIER_SEQ.nextval,'MIN',3,?)";
+        String sql = "insert into member_game_tier values (member_GAME_TIER_SEQ.nextval,'MIN',?,?)";
 
         try (Connection con = DataUtil.getConnection();
              PreparedStatement pstat = con.prepareStatement(sql))
-        {   pstat.setString(1, tier);
+        {  pstat.setInt(1, game_id);
+            pstat.setString(2, tier);
             return pstat.executeUpdate();
         }
 

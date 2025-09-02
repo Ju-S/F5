@@ -45,7 +45,6 @@ public class GameController extends HttpServlet {
 
             String cmd = request.getRequestURI();
 
-
             switch (cmd) {
 
 
@@ -53,21 +52,20 @@ public class GameController extends HttpServlet {
 
 
                     //게임오버 시 sql game_score 테이블에 스코어 insert 점수를 받아서 알맞는 tier 구분 sql 값 score만 넣은상태
-
+                    int gameId = Integer.parseInt(request.getParameter("gameId")); // 이후
                     int score = Integer.parseInt(request.getParameter("score"));
-                    System.out.println("score: " + score);
-                    int result = gameScoreDAO.insert_score(score);
+                    int result = gameScoreDAO.insert_score(gameId,score);
 
 
                     if (0 < score && score < 1000) {
                         String tier = "BRONZE";
-                        gameScoreDAO.insert_tier(tier);
+                        gameScoreDAO.insert_tier(gameId,tier);
                     } else if (1000 < score && score < 2000) {
                         String tier = "SILVER";
-                        gameScoreDAO.insert_tier(tier);
+                        gameScoreDAO.insert_tier(gameId,tier);
                     } else if (2000 < score) {
                         String tier = "GOLD";
-                        gameScoreDAO.insert_tier(tier);
+                        gameScoreDAO.insert_tier(gameId,tier);
                     }
 
                     response.setContentType("application/json; charset=utf-8"); // json 응답
@@ -121,8 +119,8 @@ public class GameController extends HttpServlet {
                 case "/update_reply.game" : { // 댓글 수정 (작성날짜)
                     String contents = request.getParameter("contents");
                     int gameId = Integer.parseInt(request.getParameter("gameId"));
-                    String writeDAte = request.getParameter("writedate");
-                    Timestamp write_date = Timestamp.valueOf(writeDAte);
+                    String writedate = request.getParameter("writedate");
+                    Timestamp write_date = Timestamp.valueOf(writedate);
 
                     gameReplyDAO.updateReply(contents, write_date);
                     response.sendRedirect("/go_gamepage.game?gameId=" + gameId);
@@ -130,7 +128,6 @@ public class GameController extends HttpServlet {
 
 
                 }
-
 
 
             }
@@ -144,9 +141,11 @@ public class GameController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
+
         doGet(request, response);
     }
 }
+
 
 //region read
 //TODO:

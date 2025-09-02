@@ -21,7 +21,7 @@
     <%--if (sceneMap[GAMEID]) {--%>
     <%--    let config = {--%>
     <%--        type: Phaser.AUTO,--%>
-    <%--        parent: "gamebox", // HTML에 이 id가 있어야 함--%>
+    <%--        parent: "gamebox",
     <%--        width: 600,--%>
     <%--        height: 400,--%>
     <%--        physics: {--%>

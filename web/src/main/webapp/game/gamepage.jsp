@@ -81,7 +81,7 @@
 
                                     case 4 : {
                                         //민규
-                                        $(".game_box").load("/game/gameplay.jsp"); //링크게임 내용실행
+                                        $(".game_box").load("/game/game.jsp"); //링크게임 내용실행
                                         break;
                                     }
 
