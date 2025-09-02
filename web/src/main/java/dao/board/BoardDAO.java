@@ -158,6 +158,18 @@ public class BoardDAO {
 
     //region update
     //TODO: 게시글 수정
+    public int updateBoard(BoardDTO boardDTO)throws Exception{
+        String sql = "update board set title=?,game_id=?,board_category=?,contents=?,where id=?";
+        try(Connection con = DataUtil.getConnection();
+        PreparedStatement pstat = con.prepareStatement(sql)){
+            pstat.setString(1,boardDTO.getTitle());
+            pstat.setLong(2,boardDTO.getGameId());
+            pstat.setLong(3,boardDTO.getBoardCategory());
+            pstat.setString(4,boardDTO.getContents());
+            pstat.setLong(5,boardDTO.getId());
+            return pstat.executeUpdate();
+        }
+    }
     //endregion
 
     //region delete

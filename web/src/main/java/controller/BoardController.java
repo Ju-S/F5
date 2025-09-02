@@ -90,15 +90,23 @@ public class BoardController extends HttpServlet {
                 // 행위 + 자원 (e.g, /get_memberList.member로 작성 요망)
                 //TODO: 게임 관련 기능
                 case "/write.board": {
+
+                    // 먼저 세션에 값 심기
+                    request.getSession().setAttribute("loginId", "testUser");
+
+                    // 세션에서 꺼내서 writer로 사용
+                    String writer = (String) request.getSession().getAttribute("loginId");
+                    System.out.println("writer = " + writer);
+
                     long boardCategory = Long.parseLong(request.getParameter("boardCategory"));
-                    String writer = request.getParameter("writer");
+//                    String writer = request.getParameter("writer");
                     long gameId = Long.parseLong(request.getParameter("gameId"));
                     String title = request.getParameter("title");
                     String contents = request.getParameter("contents");
-
+                    System.out.println(writer);
                     BoardDTO boardDTO = BoardDTO.builder()
                             .boardCategory(boardCategory)
-                            .writer("test")
+                            .writer(writer)
                             .gameId(gameId)
                             .title(title)
                             .contents(contents)
@@ -132,6 +140,22 @@ public class BoardController extends HttpServlet {
 
                     request.setAttribute("boardDetail", detail);
                     request.getRequestDispatcher("/board/detailBoard/detailBoard.jsp").forward(request, response);
+                    break;
+                }
+                // 게시글 수정
+                case "/update.board":{
+                    String title = request.getParameter("title");
+                    Long gameId = Long.parseLong(request.getParameter("gameId"));
+                    Long boardCategory = Long.parseLong(request.getParameter("boardCategory"));
+                    String contents = request.getParameter("contents");
+                    BoardDTO boardDTO = BoardDTO.builder()
+                            .boardCategory(boardCategory)
+                            .gameId(gameId)
+                            .title(title)
+                            .contents(contents)
+                            .build();
+                    int updateBoard = boardDAO.updateBoard(boardDTO);
+                    response.sendRedirect("/board_list.page");
                     break;
                 }
             }
