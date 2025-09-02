@@ -84,8 +84,8 @@ public class GameScoreDAO {
                         "        JOIN (\n" +
                         "            SELECT MEMBER_ID, GAME_ID, TIER,\n" +
                         "                   ROW_NUMBER() OVER (\n" +
-                        "                       PARTITION BY MEMBER_ID, GAME_ID \n" +
-                        "                       ORDER BY CASE TIER\n" +
+                        "                       PARTITION BY MEMBER_ID, GAME_ID \n" + // MEMBER_ID와 GAME_ID의 조합별로 그룹을 나누고, 그 그룹 안에서 ORDER BY에 따라 번호를 매김.
+                        "                       ORDER BY CASE TIER\n" +  // 각 티어별로 번호를 매김
                         "                                WHEN 'GOLD' THEN 3\n" +
                         "                                WHEN 'SILVER' THEN 2\n" +
                         "                                WHEN 'BRONZE' THEN 1\n" +
@@ -96,7 +96,7 @@ public class GameScoreDAO {
                         "            WHERE GAME_ID = ?\n" +
                         "        ) MGT\n" + // MEMBER_GAME_TIER 컬럼 MGT
                         "        ON GS.MEMBER_ID = MGT.MEMBER_ID AND GS.GAME_ID = MGT.GAME_ID\n" +
-                        "        WHERE GS.RN_MEMBER = 1 AND MGT.RN_TIER = 1\n" +
+                        "        WHERE GS.RN_MEMBER = 1 AND MGT.RN_TIER = 1\n" +  // 각 유저의 최고점수,최고티어 만 추출
                         "    )\n" +
                         ") FINAL\n" +
                         "WHERE RANKING <= 20\n" + // 랭킹 20번까지

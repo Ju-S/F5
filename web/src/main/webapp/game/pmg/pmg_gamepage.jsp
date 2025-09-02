@@ -89,64 +89,130 @@
                 <div class="main_bottom">
 
                     <c:forEach var= "i" items = "${list}">
+                        <%-- choose , when 사용하여 i.id = sessionScope.id 조건 붙일것--%>
+                        <%--<c:choose> <c:when test="${sessionScope.loginId == i.writer}"> 작성자 시점
+                        ,  otherwise ~~ 그외 유저 시점 --%>
 
-                    <form action="/update_reply.game" method="post">
-
-                        <div class= "reply_bar">
+                        <div class="reply_bar">
                             <div class="reply_profile"><i class="fa-solid fa-user"></i></div>
+
                             <div class="reply_main">
-                                <div class="reply_center"> member ${i.writer} ${i.tier}</div>
-                                <div class="reply_center">subhead
-                                    <input type = "text" value = "${i.contents} " name = "contents" /></div>
+                                <div class="reply_center "> member ${i.writer} ${i.tier}</div>
+
+                                <div class="reply_center reply_content" name="contents"
+                                     value="${i.contents}" contenteditable="false" data-original="${i.contents}">
+                                        ${i.contents}
+                                </div>
+                            </div><%--reply_main--%>
+                            <form action="/update_reply.game" method="post" class="update_form">
+                                <input type="hidden" name="gameId" value="${i.gameId}">
+                                <input type="hidden" name="writedate" value="${i.writeDate}">
+                                <input type="hidden" name="contents" class="hidden_contents">
+
+                                <button type="button" class="btn-edit"
+                                        style="background-color:#3E459D; color:#fff; font-size:15px; border-radius:10px; border:none; padding: 5px 5px;">
+                                    수정
+                                </button>
+                                <button type="submit" class="btn-update d-none"
+                                        style="background-color:#3E459D; color:#fff; font-size:15px; border-radius:10px; border:none; padding: 5px 5px;">
+                                    수정 완료
+                                </button>
+                                <button type="button" class="btn-cancel d-none"
+                                        style="background-color:#dc3545; color:#fff; font-size:15px; border-radius:10px; border:none; padding: 5px 5px;">
+                                    취소
+                                </button>
+
+                            </form>
+
+                            <form action="/delete_reply.game" method="post">
+                                <input type = "hidden" name="gameId" value="${i.gameId}">
+                                <input type = "hidden" name="writedate" value="${i.writeDate}">
+                                <button class="btn-delete" style="background-color:#3E459D; color:#fff; font-size:15px; border-radius:10px; border:none; padding: 5px 5px;">삭제</button>
+                            </form>
+
+                            <div class="dropdown">
+                                    <%-- 원본 class="btn btn btn-dark dropdown-toggle" --%>
+                                <button type="button" class="btn btn btn-dark" id="reportPost" data-bs-toggle="dropdown" aria-expanded="false"
+                                        style="background: transparent; border: none; padding: 0;">
+                                    <i class="bi bi-three-dots-vertical"></i>
+                                </button>
+
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li><a class="dropdown-item text-danger" href="#">신고하기</a></li>
+                                </ul>
+
                             </div>
+                        </div>
 
-                            <input type = "hidden" name="gameId" value="${i.gameId}">
-                            <input type = "hidden" name="writedate" value="${i.writeDate}">
-                            <button style="background-color:#3E459D; color:#fff; font-size:15px; border-radius:10px; border:none; padding: 5px 5px;">수정</button>
+
+
+                    </c:forEach>
+
+                    <form action="/write_reply.game" method="post">
+                        <div class="text_reply">
+                            <input type="hidden" name="writer" value="man">
+                            <input type="hidden" name="gameId" value="5">
+                            <input type="text" class="reply_area" placeholder="write your comment!" name="contents">
+                            <button class="reply_btn"><i class="fa-solid fa-paper-plane" style="color: #ffffff;"></i></button>
+                        </div>
                     </form>
 
-                    <form action="/delete_reply.game" method="post">
-                        <input type = "hidden" name="gameId" value="${i.gameId}">
-                        <input type = "hidden" name="writedate" value = " ${i.writeDate}">
-                        <button style="background-color:#3E459D; color:#fff; font-size:15px; border-radius:10px; border:none;  padding: 5px 5px;">삭제</button>
 
-                    </form>
-
-
-
-                    <div class="dropdown">
-                            <%-- 원본 class="btn btn btn-dark dropdown-toggle" --%>
-                        <button type="button" class="btn btn btn-dark" id="reportPost" data-bs-toggle="dropdown" aria-expanded="false"
-                                style="background: transparent; border: none; padding: 0;">
-                            <i class="bi bi-three-dots-vertical"></i>
-                        </button>
-
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item text-danger" href="#">신고하기</a></li>
-                        </ul>
-
-                    </div>
-                </div>
-
-
-
-                </c:forEach>
-
-                <form action="/write_reply.game" method="post">
-                    <div class="text_reply">
-                        <input type="hidden" name="writer" value="man">
-                        <input type="hidden" name="gameId" value="5">
-                        <input type="text" class="reply_area" placeholder="write your comment!" name="contents">
-                        <button class="reply_btn"><i class="fa-solid fa-paper-plane" style="color: #ffffff;"></i></button>
-                    </div>
-                </form>
-
-
-            </div> <!-- main_bottom -->
-        </div> <%-- main --%>
-    </div> <!-- col-11 -->
-</div> <!-- row-->
+                </div> <!-- main_bottom -->
+            </div> <%-- main --%>
+        </div> <!-- col-11 -->
+    </div> <!-- row-->
 </div>  <!-- container -->
+
+
+<script>
+    $(".btn-edit").on("click", function () {
+        const $replyBar = $(this).closest(".reply_bar");
+        const $contentDiv = $replyBar.find(".reply_content");
+
+        $contentDiv.attr("contenteditable", "true").focus();
+
+        // 버튼 토글
+        const $form = $(this).closest(".update_form");
+        $form.find(".btn-edit").addClass("d-none"); // 수정버튼 감추기
+        $form.find(".btn-update").removeClass("d-none");
+        $form.find(".btn-cancel").removeClass("d-none")
+        $replyBar.find(".btn-delete").addClass("d-none"); // 삭제버튼 감추기
+
+    });
+
+    $(".btn-cancel").on("click", function () {
+        const $replyBar = $(this).closest(".reply_bar");
+        const $contentDiv = $replyBar.find(".reply_content");
+
+        $contentDiv.text($contentDiv.data("original"));
+        $contentDiv.attr("contenteditable", "false");
+
+        // 버튼 토글
+        const $form = $(this).closest(".update_form");
+        $form.find(".btn-edit").removeClass("d-none"); // 수정버튼 보이게
+        $form.find(".btn-update").addClass("d-none");
+        $form.find(".btn-cancel").addClass("d-none");
+        $replyBar.find(".btn-delete").removeClass("d-none"); // 삭제버튼 보이게
+
+
+    });
+
+    $(".btn-update").on("click", function () {
+        const $replyBar = $(this).closest(".reply_bar");
+        const $contentDiv = $replyBar.find(".reply_content");
+        const $hiddenInput = $(this).closest(".update_form").find(".hidden_contents");
+
+        $hiddenInput.val($contentDiv.text());
+        // 폼은 submit 되니 따로 처리 안 해도 됨
+    });
+
+</script>
+
+
+
+
+
 
 
 </body>

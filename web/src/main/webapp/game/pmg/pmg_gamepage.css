@@ -248,6 +248,7 @@ body {
 
 .reply_main{
     width:70%;
+    height: 100%;
     text-align: center;
 }
 
@@ -257,7 +258,6 @@ body {
     text-align: left;
     float:left;
 }
-
 
 
 .reply_bar_btn{
@@ -275,6 +275,10 @@ body {
     cursor: pointer;
 }
 
+
+
+
 .dropdown-toggle::after {
     display: none;
 }
+
