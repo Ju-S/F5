@@ -138,6 +138,9 @@
     height: 40px;
     font-family: var(--sub-font);
 }
+#complete:hover,#complete:active{
+    background-color: var(--mainbtn-hover-color);
+}
 
 .cancelBtn-box #cancel {
     background-color: var(--sub-btn-color);
@@ -147,7 +150,9 @@
     height: 40px;
     font-family: var(--sub-font);
 }
-
+#cancel:hover,#cancel:active{
+    background-color: var(--btnsub-hover-color);
+}
 /*섬머노트 디자인*/
 #summernote {
     height: 100%;

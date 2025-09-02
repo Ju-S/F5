@@ -106,7 +106,7 @@ public class BoardController extends HttpServlet {
 
                     int write = boardDAO.write(boardDTO);
 
-                    response.sendRedirect("/board/detailBoard/detailBoard.jsp");
+                    response.sendRedirect("/board_list.page");
                     break;
                 }
                 case "/upload_image.board": {
@@ -114,8 +114,9 @@ public class BoardController extends HttpServlet {
                     String sysFileName = multi.getFilesystemName("file");
                     String oriFileName = multi.getOriginalFileName("file");
                     String fileUrl = request.getContextPath() + "/upload/boardImage/" + sysFileName;
+                    response.setContentType("text/plain; charset=UTF-8");
                     response.getWriter().write(fileUrl);
-                    response.sendRedirect("/board/writeBoard/writeBoard.jsp");
+
                     break;
                 }
                 // 게시글 하나의 아이템에 대한 세부 속성 조회 및 출력
