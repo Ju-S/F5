@@ -25,9 +25,15 @@
                 <div style="position: relative;">
                     <%-- 파일 이미지 불러오기 --%>
                     <form id="profileUploadForm" enctype="multipart/form-data">
-                        <img src="/downloadImgFile.member?ts=<%=System.currentTimeMillis()%>"
-                             onerror="this.onerror=null; this.src='/member/my_page/img/profile.svg';" />
+                        <%-- 이미지 들어갈 부분 --%>
+                            <div class="profile-image">
+                                <img id="img"
+                                     src="/downloadImgFile.member?ts=<%=System.currentTimeMillis()%>"
+                                     onerror="this.onerror=null; this.src='/member/my_page/img/profile.svg';"
+                                     alt="profile"/>
+                            </div>
 
+                        <%-- 파일 아이콘 --%>
                         <input type="file" name="file" id="fileInput" style="display: none;" accept="image/*"/>
                         <button type="button" class="edit-icon" id="imgFileBtn">
                             <img src="/member/my_page/img/edit.svg" alt="edit"/>

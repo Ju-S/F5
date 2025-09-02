@@ -51,17 +51,27 @@ body {
 
 /* 회원 이미지 */
 .profile-image {
-    width: 100px;
-    height: 100px;
+    width: 150px;
+    height: 150px;
     border-radius: 50%;
+    overflow: hidden;
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-image img {
+    width: 100%;      /* 부모 크기에 맞춤 */
+    height: 100%;     /* 부모 크기에 맞춤 */
+    object-fit: cover; /* 비율 유지하며 꽉 채우기 */
 }
 
 /* 이미지 변경 버튼 디자인 */
 .edit-icon {
     position: absolute;
-    left: 80px;
-    top: 90px;
+    left: 100px;
+    top: 120px;
     background-color: var(--primary-subcolor);
     border-radius: 50%;
     width: 36px;

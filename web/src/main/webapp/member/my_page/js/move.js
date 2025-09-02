@@ -54,15 +54,20 @@ document.addEventListener("DOMContentLoaded", () => {
             const file = fileInput.files[0];
             if (!file) return;
 
+            /* <form> 안의 첫 번째 <img>만 변경 */
             const reader = new FileReader();
             reader.onload = (e) => {
-                document.getElementById("img").src = e.target.result;
+                const previewImg = document.querySelector("#profileUploadForm img");
+                if (previewImg) {
+                    previewImg.src = e.target.result;
+                }
             };
             reader.readAsDataURL(file);
 
             const formData = new FormData();
             formData.append("file", file);
 
+            // 파일 업로드인지 확인
             fetch("/uploadImgFile.member", {
                 method: "POST",
                 body: formData
