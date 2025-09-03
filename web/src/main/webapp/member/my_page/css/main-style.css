@@ -1,0 +1,234 @@
+@charset "UTF-8";
+
+html,
+body {
+    font-family: var(--sub-font); /* 폰트 서브 */
+}
+/* 회원정보 전체 박스 */
+.container {
+    width: 100vw;
+    height: calc(100vh - 64px); /* padding 위아래 32px*2 제외 */
+    padding: 32px;
+    box-sizing: border-box;
+    background-color: var(--primary-color);
+    gap: 38px;
+    border: none;
+}
+
+/* ----- Main Content ----- */
+.main-content {
+    flex: 1;
+    padding: 32px;
+    display: flex;
+    justify-content: flex-start; /* 수정됨 */
+    align-items: flex-start;
+    width: 100%; /* 추가 가능 */
+    height: calc(100vh - 64px); /* padding 위아래 32px*2 제외 */
+    position: relative;
+    overflow: hidden;
+    /* 스크롤 차단 */
+}
+
+/* ----- Sidebar ----- */
+.main {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+}
+
+.sidebar {
+    width: 250px; /* ✅ 고정 너비 부여 */
+    background-color: var(--primary-color);
+    padding-left: 16px;
+    padding-right: 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+    height: 100%;
+    flex-shrink: 0;
+}
+
+/* 회원 이미지 */
+.profile-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-image img {
+    width: 100%;      /* 부모 크기에 맞춤 */
+    height: 100%;     /* 부모 크기에 맞춤 */
+    object-fit: cover; /* 비율 유지하며 꽉 채우기 */
+}
+
+/* 이미지 변경 버튼 디자인 */
+.edit-icon {
+    position: absolute;
+    left: 100px;
+    top: 120px;
+    background-color: var(--primary-subcolor);
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.edit-image {
+    width: 24px;
+    height: 24px;
+}
+
+/* 사용자 닉네임 */
+.textMember {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    width: 100%;
+}
+
+h4 {
+    margin: 8px 0 4px;
+    font-weight: 700;
+    text-align: center;
+}
+
+p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #aaa;
+    text-align: center;
+}
+
+/* 사이드 버튼 */
+.btn {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 0;
+    border: none;
+    border-radius: var(--primary-color); /* 이건 border-radius 값인데... */
+}
+.btn:focus,
+.btn:active,
+.btn:focus-visible {
+    outline: none !important;
+    box-shadow: none !important;
+    border: none !important;
+}
+
+/* 이미지 눌렀을때 크기 커지는 코드 */
+.menu-button img{
+    width: 24px;
+    height: 24px;
+    padding-bottom: 4px;
+}
+
+.menu-button.active .menu-img {
+    transform: scale(1.3); /* 30% 확대 */
+}
+
+.menu-button {
+    width: 100%;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+    font-size: 0.9rem;
+    color: white;
+    background: none;
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background-color 0.2s;
+}
+
+.menu-button.active {
+    background-color: var(--secondary-color);
+    border: none;
+}
+
+.menu-button:hover:not(.active) {
+    background-color: var(--btnsecondary-hover-color);
+    border: none;
+}
+
+.menu-button:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.menu-button svg {
+    width: 18px;
+    height: 18px;
+    fill: white;
+}
+
+/* ----- Content Box ----- */
+.content-box {
+    display: none;
+}
+.content-box.active {
+    display: block;
+}
+
+/* 버튼 영역 */
+.button-group {
+    display: flex;
+    gap: 16px;
+    margin-top: 60px;
+}
+
+.button-primary {
+    background-color: var(--danger-color);
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    flex: 1;
+}
+
+.button-primary.active {
+    background-color: var(--danger-color);
+}
+.button-primary:hover:not(.active){
+    background-color: var(--mainbtn-hover-color);
+}
+
+.button-secondary {
+    background-color: var(--sub-btn-color);
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    flex: 1;
+}
+.button-primary.active {
+    background-color: var(--sub-btn-color);
+}
+.button-primary:hover:not(.active){
+    background-color: var(--btnsub-hover-color);
+}
+
+/* 로그아웃 */
+#content-logout {
+    background-color: var(--primary-subcolor);
+    border-radius: 16px;
+    padding: 40px;
+    width: 100%;
+    max-width: 1000px;
+    color: white;
+}
+
+

@@ -12,6 +12,7 @@ import dao.member.MemberDAO;
 import dao.member.MemberGameTierDAO;
 import dao.member.MemberProfileFileDAO;
 import dto.game.GameReplyDTO;
+import dto.game.GameScoreDTO;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,6 +20,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.List;
 
 @WebServlet("*.game")
@@ -42,70 +45,109 @@ public class GameController extends HttpServlet {
 
             String cmd = request.getRequestURI();
 
-
             switch (cmd) {
 
-                case "/gameover.game": // 게임 오버시 발생
 
-                    
+                case "/gameover.game": { // 게임 오버시 발생
+
+
                     //게임오버 시 sql game_score 테이블에 스코어 insert 점수를 받아서 알맞는 tier 구분 sql 값 score만 넣은상태
-
-
+                    int gameId = Integer.parseInt(request.getParameter("gameId")); // 이후
                     int score = Integer.parseInt(request.getParameter("score"));
-                    System.out.println("cmd : " + cmd);
-                    System.out.println("score:" + score);
-                    int result =  gameScoreDAO.insert_score(score);
+                    // String memberId =(String) request.getSession().getAttribute("loginId");
+                    int result = gameScoreDAO.insertScore(gameId,score);
 
 
-                    if(0 < score && score < 10000){
+                    if (0 < score && score < 1000) {
                         String tier = "BRONZE";
-                        gameScoreDAO.insert_tier(tier);
-                    }else if(10000 < score && score < 20000){
+                        gameScoreDAO.insertTier(gameId,tier);
+                    } else if (1000 < score && score < 2000) {
                         String tier = "SILVER";
-                        gameScoreDAO.insert_tier(tier);
-                    }else if(20000 < score ){
+                        gameScoreDAO.insertTier(gameId,tier);
+                    } else if (2000 < score) {
                         String tier = "GOLD";
-                        gameScoreDAO.insert_tier(tier);
+                        gameScoreDAO.insertTier(gameId,tier);
                     }
 
-
-                    response.setContentType("application/json; charset=utf-8");
-
-
+                    response.setContentType("application/json; charset=utf-8"); // json 응답
+                    response.getWriter().write("{\"result\":\"success\"}");
 
                     break;
+            }
 
+                case "/go_gamepage.game": { //게임페이지 입장시 , 댓글목록 및 랭킹 목록 출력
 
+                    int gameId = Integer.parseInt(request.getParameter("gameId"));
 
-
-                case "/go_gamepage1.game" : //댓글출력
-
-
-
-                    List<GameReplyDTO> list = gameReplyDAO.selectAll();
+                    List<GameReplyDTO> list = gameReplyDAO.selectAll(gameId);
+                    List<GameScoreDTO> listranking = gameScoreDAO.selectRanking(gameId);
 
                     request.setAttribute("list", list);
+                    request.setAttribute("listranking", listranking);
 
-                    request.getRequestDispatcher("/game/pmg/pmg_gamepage.jsp").forward(request, response);
+
+                    request.getRequestDispatcher("/game/gamepage.jsp").forward(request, response);
 
                     break;
 
-                
+            }
 
-                
-                case "/write_reply.game" : // 댓글 작성
 
+                case "/write_reply.game" : { // 댓글 작성 (작성자)
 
                     String writer = request.getParameter("writer");
                     // String writer = (String)request.getSession().getAttribute("loginId");
-                    int game_id = Integer.parseInt(request.getParameter("game_id"));
+                    int gameId = Integer.parseInt(request.getParameter("gameId"));
                     String contents = request.getParameter("contents");
 
-                    gameReplyDAO.insert_reply(game_id,writer,contents);
-                    response.sendRedirect("/game/pmg/pmg_gamepage.jsp");
-    
+                    gameReplyDAO.insertReply(gameId, writer, contents);
+                    response.sendRedirect("/go_gamepage.game?gameId=" + gameId);
+
+                    break;
+                }
+                case "/delete_reply.game" : { // 댓글 삭제 (작성날짜)
+
+                    int gameId = Integer.parseInt(request.getParameter("gameId"));
+                    String writer = request.getParameter("writer");
+                    // String writer = (String)request.getSession().getAttribute("loginId");
+                    int id = Integer.parseInt(request.getParameter("id"));
+
+                    gameReplyDAO.deleteReply(writer , id);
+                    response.sendRedirect("/go_gamepage.game?gameId=" + gameId);
                     break;
 
+                }
+                case "/update_reply.game" : { // 댓글 수정 (작성날짜)
+                    String contents = request.getParameter("contents");
+                    int gameId = Integer.parseInt(request.getParameter("gameId"));
+                    String writer = request.getParameter("writer");
+                    // String writer = (String)request.getSession().getAttribute("loginId");
+                    int id = Integer.parseInt(request.getParameter("id"));
+
+                    gameReplyDAO.updateReply(contents, writer , id);
+                    response.sendRedirect("/go_gamepage.game?gameId=" + gameId);
+                    break;
+
+                }
+                case "/report_reply.game" : {
+
+                    String writer = request.getParameter("writer");
+                    // String writer = (String)request.getSession().getAttribute("loginId");
+                    int reportcount =  Integer.parseInt(request.getParameter("reportcount"));
+                    int gameId = Integer.parseInt(request.getParameter("gameId"));
+                    gameReplyDAO.insertReportCount(writer , reportcount);
+
+                    response.sendRedirect("/go_gamepage.game?gameId=" + gameId);
+                    break;
+
+                }
+
+
+                case "/toGamePage.game" :{
+                    String gameId = request.getParameter("gameId");
+                    request.setAttribute("gameId", gameId);
+                    //request.getRequestDispatcher().forward(request, response); 어디로 보내야 하는지 논의 필요~
+                }
             }
 
         } catch(Exception e) {
@@ -117,10 +159,12 @@ public class GameController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
+
         doGet(request, response);
     }
 }
 
+
 //region read
-//TODO: 
+//TODO:
 //endregion

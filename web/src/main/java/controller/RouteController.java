@@ -1,7 +1,5 @@
 package controller;
 
-import dto.board.BoardDTO;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,14 +16,6 @@ public class RouteController extends HttpServlet {
 
             switch (cmd) {
                 //TODO: .page에 따른 페이지 라우팅(페이지 이동 관련)
-                case "/board_list.page": {
-                    request.getRequestDispatcher("/board/list/boardListPage.jsp").forward(request, response);
-                    break;
-                }
-                case "/write_board.page": {
-                    request.getRequestDispatcher("/board/writeBoard/writeBoard.jsp").forward(request, response);
-                    break;
-                }
             }
         } catch (Exception e) {
             e.printStackTrace();

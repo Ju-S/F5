@@ -52,6 +52,15 @@ public class BoardController extends HttpServlet {
                 // 행위 + 자원 (e.g, /getMemberList.member로 작성 요망)
                 //TODO: 게시글 관련 기능
 
+                case "/board_list.board": {
+                    request.getRequestDispatcher("/board/list/boardListPage.jsp").forward(request, response);
+                    break;
+                }
+                case "/write_board.board": {
+                    request.getRequestDispatcher("/board/detailBoard/writeBoard.jsp").forward(request, response);
+                    break;
+                }
+
                 // 게시글 목록 확인.(pagination)
                 case "/get_board_list.board": {
                     int naviPerPage = 10;

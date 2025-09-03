@@ -15,4 +15,7 @@ public class GameScoreDTO {
     private String memberId;
     private long score;
     private Timestamp recdDate;
+
+    private String tier; // 추가
+    private int rank; // 추가
 }
