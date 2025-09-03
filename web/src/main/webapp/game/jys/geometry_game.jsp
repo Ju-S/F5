@@ -30,7 +30,7 @@
         type: Phaser.AUTO,
         width: 600,
         height: 400,
-        backgroundColor: '#222',
+        backgroundColor: '#2c2c2c',
         physics: {
             default: 'arcade',
             arcade: {gravity: {y: 0}, debug: false}
