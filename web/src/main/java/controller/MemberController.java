@@ -62,7 +62,7 @@ public class MemberController extends HttpServlet {
         try {
             //region 임시적 모든 dao 선언
 
-            String apiKey = (String) new InitialContext().lookup("java:comp/env/sendgrid/apiKey");
+
             BoardCategoryDAO boardCategoryDAO = BoardCategoryDAO.getInstance();
             BoardDAO boardDAO = BoardDAO.getInstance();
             BoardFileDAO boardFileDAO = BoardFileDAO.getInstance();

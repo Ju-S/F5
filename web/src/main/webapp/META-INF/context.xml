@@ -9,5 +9,5 @@
             url="jdbc:oracle:thin:@10.5.5.5:1521:xe"
     />
 
-    <Environment name="sendgrid/apiKey" value="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" type="java.lang.String" override="false"/>
+
 </Context>
