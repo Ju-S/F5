@@ -24,13 +24,14 @@ public class ReplyDAO {
 
     //region create
     //TODO: 댓글 작성
-    public int writeReply(Long boardId, String contents) throws Exception {
-        String sql = "INSERT INTO reply values(reply_seq.nextval,?,?,default,default,default)";
+    public int writeReply(Long boardId, String contents, String writer) throws Exception {
+        String sql = "INSERT INTO reply values(reply_seq.nextval,?,?,default,default,default, ?)";
         try (Connection con = DataUtil.getConnection();
              PreparedStatement pstat = con.prepareStatement(sql)) {
 
             pstat.setLong(1, boardId);
             pstat.setString(2, contents);
+            pstat.setString(3, writer);
             return pstat.executeUpdate();
         }
     }

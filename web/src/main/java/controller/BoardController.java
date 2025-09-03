@@ -99,13 +99,8 @@ public class BoardController extends HttpServlet {
                 // 행위 + 자원 (e.g, /get_memberList.member로 작성 요망)
                 //TODO: 게임 관련 기능
                 case "/write.board": {
-
-                    // 먼저 세션에 값 심기
-                    request.getSession().setAttribute("loginId", "testUser");
-
                     // 세션에서 꺼내서 writer로 사용
                     String writer = (String) request.getSession().getAttribute("loginId");
-                    System.out.println("writer = " + writer);
 
                     long boardCategory = Long.parseLong(request.getParameter("boardCategory"));
                     long gameId = Long.parseLong(request.getParameter("gameId"));
@@ -145,7 +140,6 @@ public class BoardController extends HttpServlet {
                     //TODO: 댓글 정보
 
                     //TODO: 작성자 프로필사진 정보
-                    request.getSession().setAttribute("loginId", "test");
                     request.setAttribute("boardDetail", detail);
                     request.getRequestDispatcher("/board/detailBoard/detailBoard.jsp").forward(request, response);
                     break;

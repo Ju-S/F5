@@ -23,7 +23,7 @@ $(document).ready(function () {
             },
             success: function (res) {
                 $("#commentContents").val(""); // 입력창 비우기
-                loadComments(boardId); // 댓글 목록 다시 불러오기
+                loadComments(boardId, loginId); // 댓글 목록 다시 불러오기
             },
             error: function () {
                 alert("댓글 등록 실패");
@@ -38,7 +38,7 @@ function updateComment(id, writer, contents) {
     $.ajax({
         url: "/update_reply.reply",
         type: "post",
-        data: {id: id, writer:writer, contents:contents},
+        data: {id: id, writer: writer, contents: contents},
         dataType: "json",
         success: function () {
             loadComments(boardId, loginId);
@@ -54,7 +54,7 @@ function deleteComment(id, writer) {
     $.ajax({
         url: "/delete_reply.reply",
         type: "post",
-        data: {id: id, writer:writer},
+        data: {id: id, writer: writer},
         dataType: "json",
         success: function () {
             loadComments(boardId, loginId);
@@ -83,16 +83,52 @@ function loadComments(boardId, loginId) {
                     .attr("src", "/board/detailBoard/profile_img/replyProfile.jpg")
                     .addClass("rounded-circle profile-img");
 
-                let profileCol = $("<div>").addClass("col-2 profile").
-                css({display:"flex",justifyContent:"center",alignItems:"center"}).append(profileImg);
+                let profileCol = $("<div>").addClass("col-2 profile").css({
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "flex-start"
+                }).append(profileImg);
 
                 // col-8 댓글 내용
                 let commentWriter = $("<div>").addClass("col-12 comment-writer").text(comment.writer);
-                let commentContents = $("<div>").addClass("col-12 comment-contents").text(comment.contents);
+                let commentContents = $("<span>")
+                    .addClass("comment-contents")
+                    .text(comment.contents);
 
-                let commentRow = $("<div>").addClass("row").append(commentWriter, commentContents);
-                let commentCol = $("<div>").addClass("col-8").
-                css({display:"flex",alignItems:"center"}).append(commentRow);
+                let moreOption = $("<a>")
+                    .css({
+                        "text-decoration": "none",
+                        "color": "var(--sub-btn-color)",
+                        "cursor": "pointer",
+                        "margin-left": "4px"
+                    })
+                    .text("...더보기")
+                    .on("click", function () {
+                        commentContents.toggleClass("expanded");
+                        if (commentContents.hasClass("expanded")) {
+                            $(this).text(" 접기");
+                        } else {
+                            $(this).text("...더보기");
+                        }
+                    });
+
+                // commentContents 뒤에 바로 붙임
+                let contentsWrapper = $("<div>")
+                    .addClass("col-12 comment-contents-wrapper")
+                    .append(commentContents, moreOption);
+
+                setTimeout(() => {
+                    if (commentContents[0].scrollHeight <= commentContents[0].clientHeight) {
+                        // 내용이 짧으면 ...더보기 숨김
+                        moreOption.hide();
+                    }
+                }, 0);
+
+                let commentRow = $("<div>").addClass("row").append(commentWriter, contentsWrapper);
+                let commentCol = $("<div>").addClass("col-7").css({
+                    display: "flex",
+                    alignItems: "center"
+                }).append(commentRow);
 
                 // col-2 신고 버튼
                 let reportIcon = $("<i>").addClass("bi bi-three-dots-vertical vertical-dots");
@@ -114,29 +150,68 @@ function loadComments(boardId, loginId) {
                         )
                     );
 
-                let modifyItem = $("<button id='commentUpdate'>").addClass("btn btn-primary btn-sm").
-                css({backgroundColor:"#EC6333", border:"none",marginBottom:"10px"}).html("수정");
+                let modifyItem = $("<button id='commentUpdate'>").addClass("btn btn-primary btn-sm").css({
+                    backgroundColor: "#EC6333",
+                    border: "none",
+                    marginBottom: "10px"
+                }).html("수정");
 
-                let deleteItem = $("<button id='commentDelete'>").addClass("btn btn-primary btn-sm").
-                css({backgroundColor:"#888",border:"none"}).html("삭제");
+                let deleteItem = $("<button id='commentDelete'>").addClass("btn btn-primary btn-sm").css({
+                    backgroundColor: "#888",
+                    border: "none"
+                }).html("삭제");
 
-                let modifyBtn = $("<button id='commentUpdate'>").addClass("btn btn-primary btn-sm").
-                css({"display": "none", backgroundColor:"#EC6333", border:"none",marginBottom:"10px"}).html("완료");
+                let modifyBtn = $("<button id='commentUpdate'>").addClass("btn btn-primary btn-sm").css({
+                    "display": "none",
+                    backgroundColor: "#EC6333",
+                    border: "none",
+                    marginBottom: "10px"
+                }).html("완료");
 
-                let deleteBtn = $("<button id='commentDelete'>").addClass("btn btn-primary btn-sm").
-                css({"display": "none", backgroundColor:"#888",border:"none"}).html("취소");
+                let deleteBtn = $("<button id='commentDelete'>").addClass("btn btn-primary btn-sm").css({
+                    "display": "none",
+                    backgroundColor: "#888",
+                    border: "none"
+                }).html("취소");
 
-                modifyItem.on("click", function() {
-                    commentContents.attr("contenteditable","true");
+                modifyItem.on("click", function () {
+                    commentContents.attr("contenteditable", "true");
+                    commentContents.focus();
                     deleteBtn.css("display", "inline-block");
                     modifyBtn.css("display", "inline-block");
                     modifyItem.css("display", "none");
                     deleteItem.css("display", "none");
                 });
 
+                modifyBtn.on("click", function () {
+                    //삭제 시 발생할 함수
+                    $.ajax({
+                        url: "/update_reply.reply",
+                        type: "post",
+                        data: {id: comment.id, writer: comment.writer, contents: commentContents.html()},
+                        success: function () {
+                            loadComments(boardId, loginId);
+                        },
+                        error: function () {
+                            alert("댓글 수정 실패");
+                        }
+                    });
+                });
 
-                deleteItem.on("click", function() {
-                   //삭제 시 발생할 함수
+
+                deleteItem.on("click", function () {
+                    //삭제 시 발생할 함수
+                    $.ajax({
+                        url: "/delete_reply.reply",
+                        type: "post",
+                        data: {id: comment.id, writer: comment.writer},
+                        success: function () {
+                            loadComments(boardId, loginId);
+                        },
+                        error: function () {
+                            alert("댓글 삭제 실패");
+                        }
+                    });
                 });
 
                 let reportBox = $("<div>").addClass("reportBox").append(reportButton);
@@ -146,16 +221,26 @@ function loadComments(boardId, loginId) {
                 let hr = $("<hr>").css({"margin-top": "8px", "margin-bottom": "8px"});
 
                 let reportCol;
+                let reportColSub;
                 console.log(comment.writer);
                 if (loginId == comment.writer) {
-                    reportCol = $("<div>").addClass("col-2").append(modifyItem, deleteItem, modifyBtn, deleteBtn);
+                    reportCol = $("<div>").addClass("col-auto mt-1 pe-0 ps-0").append(modifyItem, modifyBtn);
+                    reportColSub = $("<div>").addClass("col-auto mt-1 pe-0").append(deleteItem, deleteBtn);
                 } else {
                     reportBox.append(reportMenu);
-                    reportCol = $("<div>").addClass("col-2").append(reportBox);
+                    reportCol = $("<div>").addClass("col-1 d-flex justify-content-end").append(reportBox);
+                    commentCol.removeClass("col-6");
+                    commentCol.addClass("col-9");
                 }
 
                 // 최종 조립
-                rowComments.append(profileCol, commentCol, reportCol, hr);
+                rowComments.append(profileCol, commentCol, reportCol);
+
+                if(reportColSub) {
+                    rowComments.append(reportColSub);
+                }
+
+                rowComments.append(hr);
 
                 // DOM에 추가
                 $("#comment-box").append(rowComments);

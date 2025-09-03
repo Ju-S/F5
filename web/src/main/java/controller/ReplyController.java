@@ -54,8 +54,9 @@ public class ReplyController extends HttpServlet {
                 case "/write.reply": {
                     Long boardId = Long.parseLong(request.getParameter("boardId"));
                     String contents = request.getParameter("contents");
-                    System.out.println(boardId+":"+contents);
-                    replyDAO.writeReply(boardId,contents);
+                    String writer = (String)request.getSession().getAttribute("loginId");
+
+                    replyDAO.writeReply(boardId,contents,writer);
                     break;
                 }
                 case "/get_reply_list.reply":{
@@ -68,8 +69,7 @@ public class ReplyController extends HttpServlet {
                     Long id = Long.parseLong(request.getParameter("id"));
                     String contents = request.getParameter("contents");
                     String writer = request.getParameter("writer");
-                    if(writer == request.getSession().getAttribute("loginId") ){
-
+                    if(writer.equals(request.getSession().getAttribute("loginId"))){
                         replyDAO.updateById(id,contents);
                     }
 
@@ -78,11 +78,9 @@ public class ReplyController extends HttpServlet {
                 case "/delete_reply.reply": {
                     Long id = Long.parseLong(request.getParameter("id"));
                     String writer = request.getParameter("writer");
-                    if(writer == request.getSession().getAttribute("loginId") ){
-
+                    if(writer.equals(request.getSession().getAttribute("loginId"))){
                         replyDAO.deleteById(id);
                     }
-
 
                     break;
                 }

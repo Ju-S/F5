@@ -70,7 +70,7 @@
 
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
 }
 
 .profile-img img {
@@ -118,10 +118,25 @@
     font-size: 14px;
     font-family: var(--sub-font);
 }
-.comment-contents{
-    padding-left:10px;
-    font-size: 16px;
+
+.comment-contents-wrapper {
+    display: inline;  /* div라도 inline flow 유지 */
+    word-break: break-word;
 }
+
+.comment-contents {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;   /* 최대 2줄 */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    white-space: normal;
+    word-break: break-word;
+}
+
+.comment-contents.expanded {
+    -webkit-line-clamp: unset; /* 전체 내용 */
+}
+
 .send-btn-row{
     margin-top: auto;
     padding-bottom: 10px;
