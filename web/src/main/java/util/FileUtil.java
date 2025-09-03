@@ -62,4 +62,25 @@ public class FileUtil {
 
         return file.delete(); // true: 삭제 성공, false: 실패
     }
+
+    // 파일 이미지 출력 - downloadImgFile
+    public static void streamFile(HttpServletRequest request, HttpServletResponse response, File targetFile) throws Exception {
+        // 호출 : FileUtil.streamFile(request, response, targetFile);
+        String mimeType = request.getServletContext().getMimeType(targetFile.getName());
+        if (mimeType == null) {
+            mimeType = "application/octet-stream";
+        }
+
+        response.setContentType(mimeType);
+        response.setContentLength((int) targetFile.length());
+
+        try (FileInputStream fis = new FileInputStream(targetFile);
+             ServletOutputStream sos = response.getOutputStream()) {
+            byte[] buffer = new byte[4096];
+            int bytesRead;
+            while ((bytesRead = fis.read(buffer)) != -1) {
+                sos.write(buffer, 0, bytesRead);
+            }
+        }
+    }
 }

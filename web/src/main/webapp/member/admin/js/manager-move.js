@@ -7,7 +7,8 @@ const reports = [
     { title: '#1번 게임 #', nickname: 'Nickname', date: '2025/08/28', count: 2 },
 ];
 
-const rowsPerPage = 5;
+// 게시물 예시
+const rowsPerPage = 10;
 let currentPage = 1;
 
 function renderTable() {
@@ -29,6 +30,7 @@ function renderTable() {
         tbody.appendChild(tr);
     }
 }
+
 
 function renderPagination() {
     const pagination = document.getElementById('pagination');
