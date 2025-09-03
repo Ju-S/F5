@@ -1,6 +1,7 @@
 package controller;
 
 import com.google.gson.Gson;
+import com.oreilly.servlet.MultipartRequest;
 import dao.board.BoardCategoryDAO;
 import dao.board.BoardDAO;
 import dao.board.BoardFileDAO;
@@ -14,16 +15,22 @@ import dao.member.MemberGameTierDAO;
 import dao.member.MemberProfileFileDAO;
 import dto.member.MemberDTO;
 import enums.Authority;
+import dto.member.MemberProfileFileDTO;
+import util.FileUtil;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Timestamp;
@@ -66,11 +73,8 @@ public class MemberController extends HttpServlet {
             MemberProfileFileDAO memberProfileFileDAO = MemberProfileFileDAO.getInstance();
             //endregion
 
-
             String cmd = request.getRequestURI();
             Gson g = new Gson();
-
-
             switch (cmd) {
                 // 행위 + 자원 (e.g, /get_memberList.member로 작성 요망)
                 //TODO: 회원 관련 기능
@@ -140,9 +144,8 @@ public class MemberController extends HttpServlet {
                     break;
                 }
 
-
                 case "/dupliNicknameCheck.member" : {
-                    
+
                     //닉네임 중복검사
                     response.setContentType("text/html; charset=UTF-8");
                     String nickname = request.getParameter("nickname");
@@ -157,7 +160,7 @@ public class MemberController extends HttpServlet {
 
 
                 case "/mailCheck.member"  : {
-                   
+
                     //이메일 인증: 코드 발송
                     response.setContentType("application/json; charset=UTF-8");
 
@@ -209,7 +212,7 @@ public class MemberController extends HttpServlet {
                         response.getWriter().write("{\"ok\":false,\"msg\":\"send fail\"}"); // 실패하면 okr객체에 false 담기
                     }
                     break;
-                    
+
                 }
 
 
@@ -294,13 +297,81 @@ public class MemberController extends HttpServlet {
                     break;
                 }
 
+                    // 마이페이지 회원 이미지 파일 저장 & 업데이트
+                    // FileUtil 사용해서 업로드 처리
+                case "/uploadImgFile.member":
+                    try {
+                        // FileUtil.java 사용
+                        MultipartRequest multi = FileUtil.fileUpload(request, "profile");
+
+                        String oriName = multi.getOriginalFileName("file");
+                        String sysName = multi.getFilesystemName("file");
+                        // 받았는지 확인용
+                        System.out.println("oriName: " + oriName);
+                        System.out.println("sysName: " + sysName);
+
+
+                        // 세션에서 로그인한 사용자 ID 가져오기
+                        HttpSession session = request.getSession();
+                        String memberId = (String) session.getAttribute("loginId");
+
+                        if (oriName != null && sysName != null && memberId != null) {
+                            MemberProfileFileDTO profileDto = MemberProfileFileDTO.builder()
+                                    .memberId(memberId)
+                                    .oriName(oriName)
+                                    .sysName(sysName)
+                                    .build();
+
+                            int result = memberProfileFileDAO.insertProfileImage(profileDto);
+                            System.out.println("DB INSERT result = " + result);
+                        } else {
+                            System.out.println("파일 또는 로그인 정보 누락 - 업로드 실패");
+                        }
+
+                        response.sendRedirect("/member/my_page/mypage.jsp"); // 마이페이지로 이동
+                        break;
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        response.sendRedirect("/error.jsp");
+                    }
+
+                    // 마이페이지에 이미지 출력
+                case "/downloadImgFile.member":
+                    try {
+                        HttpSession session = request.getSession();
+                        String memberId = (String) session.getAttribute("loginId");
+
+                        MemberProfileFileDTO profileDto = memberProfileFileDAO.getProfileImagePath(memberId);
+                        String sysName = (profileDto != null) ? profileDto.getSysName() : null;
+
+                        String basePath = request.getServletContext().getRealPath("/upload/profile");
+                        String defaultImgPath = request.getServletContext().getRealPath("/member/my_page/img/profile.svg");
+
+                        File targetFile = (sysName == null || !(new File(basePath, sysName)).exists())
+                                ? new File(defaultImgPath)
+                                : new File(basePath, sysName);
+
+                        FileUtil.streamFile(request, response, targetFile);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        response.sendRedirect("/error.jsp");
+                    }
+                    break;
+
+                    // 회원정보 조회 할 예정 - 작성만 한부분
+                case "":
+                    HttpSession session = request.getSession();
+                    String memberId = (String) session.getAttribute("loginId"); //로그인 회원
+
+                    break;
+
             }
         } catch(Exception e) {
             e.printStackTrace();
             response.sendRedirect("/error.jsp");
         }
     }
-
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

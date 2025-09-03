@@ -12,15 +12,12 @@ class Gameover extends Phaser.Scene {
         this.end_score = data.score; // 넘겨받을 점수를 this.end_score 변수에 넣음
     }
 
-
-
-
     create() {
 
         this.add.text(
             this.cameras.main.width/2 ,
             this.cameras.main.height/2- 80,
-            "score: " + this.end_score, // init에서 받은 점수값을 출력
+            "SCORE: " + this.end_score, // init에서 받은 점수값을 출력
             {
                 fontSize:"50px",
                 fill: "#34ce42"
@@ -30,9 +27,9 @@ class Gameover extends Phaser.Scene {
         this.add.text(
             this.cameras.main.width/2,
             this.cameras.main.height/2,
-            "YOU DIED",
+            "GAME OVER",
             {
-                fontSize:"80px",
+                fontSize:"70px",
                 fill: "#ff0000"
             }
         ).setOrigin(0.5);
@@ -40,7 +37,7 @@ class Gameover extends Phaser.Scene {
         let restartButton = this.add.text(
             this.cameras.main.width/2,
             this.cameras.main.height/2 + 80,
-            "RETRY",
+            "RETRY?",
             {
                 padding:{left:10 , right:10 , top:5 , bottom: 10},
                 fontSize:"60px",
@@ -51,14 +48,14 @@ class Gameover extends Phaser.Scene {
 
         restartButton.on("pointerdown",()=>{ // 누를 시
 
-            this.scene.start("Exam02");
+            this.scene.start("Pmg_game");
 
         })
 
 
         restartButton.on("pointerover",()=>{ // 터치 시
 
-            restartButton.setBackgroundColor("#edededff")
+            restartButton.setBackgroundColor("#242323")
             this.game.canvas.style.cursor = "pointer";
 
         })
