@@ -6,12 +6,21 @@
     <display-name>Archetype Created Web Application</display-name>
 
 
+    <context-param>
+        <param-name>SMTP_USER</param-name>
+        <param-value>apikey</param-value> <!-- SendGrid는 고정값 'apikey' -->
+    </context-param>
 
-        <resource-env-ref>
-            <description>SendGrid API Key</description>
-            <resource-env-ref-name>sendgrid/apiKey</resource-env-ref-name>
-            <resource-env-ref-type>java.lang.String</resource-env-ref-type>
-        </resource-env-ref>
+    <context-param>
+        <param-name>SMTP_PASS</param-name>
+        <param-value>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</param-value> <!-- SendGrid API Key -->
+    </context-param>
+
+    <context-param>
+        <param-name>SMTP_FROM</param-name>
+        <param-value>jaann20914@gmail.com</param-value> <!-- SendGrid에서 'Verified'된 From 주소 -->
+    </context-param>
+
 
 
 
