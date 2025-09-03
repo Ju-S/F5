@@ -7,7 +7,6 @@
 
 
 
-
         <resource-env-ref>
             <description>SendGrid API Key</description>
             <resource-env-ref-name>sendgrid/apiKey</resource-env-ref-name>
