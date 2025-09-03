@@ -16,11 +16,11 @@ $(document).ready(function () {
         {src: "/common/sidenavi/sideNaviIcon/game4.svg", link: "/game4"}
     ];
     let boardIcons = [
-        {src: "/common/sidenavi/sideNaviIcon/Group.svg", link: "/board_list.page"},
-        {src: "/common/sidenavi/sideNaviIcon/game1.svg", link: "/board_list.page"},
-        {src: "/common/sidenavi/sideNaviIcon/game2.svg", link: "/board_list.page"},
-        {src: "/common/sidenavi/sideNaviIcon/game3.svg", link: "/board_list.page"},
-        {src: "/common/sidenavi/sideNaviIcon/game4.svg", link: "/board_list.page"}
+        {src: "/common/sidenavi/sideNaviIcon/Group.svg", link: "/board_list.board"},
+        {src: "/common/sidenavi/sideNaviIcon/game1.svg", link: "/board_list.board"},
+        {src: "/common/sidenavi/sideNaviIcon/game2.svg", link: "/board_list.board"},
+        {src: "/common/sidenavi/sideNaviIcon/game3.svg", link: "/board_list.board"},
+        {src: "/common/sidenavi/sideNaviIcon/game4.svg", link: "/board_list.board"}
     ];
     let mypageIcons = [
         {src: "/common/sidenavi/sideNaviIcon/game1.svg", link: "/myPage1"},
