@@ -42,15 +42,21 @@
             </form>
 
             <div id="loginFooter">
-                <a href="/" id="findId">아이디 찾기</a>
+                <a href="/toFindIdPage.member" id="findId">아이디 찾기</a>
                 <div id="verticalLine"></div> <!-- 수직선 추가 -->
-                <a href="/" id="findPw">비밀번호 찾기</a>
+                <a href="/toFindPwPage.member" id="findPw">비밀번호 찾기</a>
             </div>
 
         </div>
     </div>
 
 </div>
+
+<%--스크립트 임포트--%>
+<script src="/member/login/login.js"></script>
+
+
+
 
 
 </body>

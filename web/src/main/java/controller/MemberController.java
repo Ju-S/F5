@@ -80,12 +80,14 @@ public class MemberController extends HttpServlet {
                     response.sendRedirect("/member/login/login.jsp");
                     return; //리다이렉트 후에 리턴넣어야 작동되네
                 }
-                
+
+
                 case "/toSigninPage.member":{
                     //회원가입 페이지로 이동
                     response.sendRedirect("/member/signin/signin.jsp");
                     return;//리다이렉트 후에 리턴넣어야 작동되네
                 }
+
 
                 case "/isLoginOk.member":{
                     //로그인 해도 되는지?
@@ -101,11 +103,24 @@ public class MemberController extends HttpServlet {
                         response.sendRedirect("/index.jsp");
                         return;
                     }else {
-                        // 실패 시에도 반드시 응답을 보냄(보통 로그인 페이지로)
-                        response.sendRedirect("/member/login/login.jsp");
+                        // 실패 시에도 반드시 응답을 보냄(로그인 페이지로 보내면서 alert 뜨게 만들기)
+                        response.sendRedirect("/member/login/login.jsp?msg=loginfail");
                         return;
                     }
+                }
 
+
+                case"/toFindIdPage.member":{
+                    // 아이디 찾기 페이지로 이동 (forward)
+                    response.sendRedirect("/member/findId/findId.jsp");
+                    return;
+                }
+
+
+                case"/toFindPwPage.member":{
+                    // 비번 찾기 페이지로 이동 (forward)
+                    response.sendRedirect("/member/findPw/findPw.jsp");
+                    return;
                 }
 
 
@@ -125,6 +140,7 @@ public class MemberController extends HttpServlet {
                     break;
                 }
 
+
                 case "/dupliNicknameCheck.member" : {
                     
                     //닉네임 중복검사
@@ -138,6 +154,7 @@ public class MemberController extends HttpServlet {
                     pw.close();
                     break;
                 }
+
 
                 case "/mailCheck.member"  : {
                    
@@ -194,7 +211,8 @@ public class MemberController extends HttpServlet {
                     break;
                     
                 }
-                
+
+
                 case "/verifyEmailCode.member" : {
                     //이메일 인증: 코드 발송
                     response.setContentType("application/json; charset=UTF-8");
@@ -234,6 +252,7 @@ public class MemberController extends HttpServlet {
                     break;
 
                 }
+
 
                 case "/signin.member" : {
                     request.setCharacterEncoding("UTF-8");
