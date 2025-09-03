@@ -14,7 +14,6 @@ $(document).ready(function(){
         $(".empty-box").removeClass("d-none");
         $(".deleteBtn_box").removeClass("d-none");
         $(".updateBtn_box").removeClass("d-none");
-
         $("#update-complete-box").addClass("d-none");
         $("#cancel-box").addClass("d-none");
     })

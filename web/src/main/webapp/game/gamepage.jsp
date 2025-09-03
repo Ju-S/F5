@@ -4,7 +4,7 @@
 
     <html>
     <head>
-        <jsp:include page="/game/GameHead.jsp"/>
+        <jsp:include page="/game/pmg/GameHead.jsp"/>
         <meta charset="UTF-8">
         <title>Insert title here</title>
         <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -76,18 +76,20 @@
                                         }
 
                                         case 3 : {
+                                            //기준
                                             $(".game_box").load("/game/kjs/kjs_game.jsp");
                                             break;
                                         }
 
                                         case 4 : {
                                             //민규
-                                            $(".game_box").load("/game/game.jsp"); //링크게임 내용실행
+                                            $(".game_box").load("/game/pmg/game.jsp"); //링크게임 내용실행
                                             break;
                                         }
 
                                         case 5 : {
                                             //영서
+                                            $(".game_box").load("/game/Geometry_Dash_Lite/js/geometry_game.jsp");
                                             break;
                                         }
 
@@ -112,7 +114,7 @@
                                     <div class="ranking_number">${j.rank}</div>
                                     <div class="ranking_name">${j.memberId}</div>
                                     <div class="ranking_score">${j.score}</div>
-                                    <div class="ranking_tier">${j.tier}</div>
+                                    <div class="ranking_tier"><img src="${j.tier}" alt="tier_icon" class="tier_icon"></div>
                                 </div>
                             </c:forEach>
 
@@ -125,15 +127,15 @@
                     <div class="main_bottom">
 
                         <c:forEach var= "i" items = "${list}">
-                            <%-- choose , when 사용하여 i.id = sessionScope.id 조건 붙일것--%>
-                            <%--<c:choose>
-                            <c:when test="${sessionScope.loginId == i.writer}"> 작성자 시점--%>
+
+                            <c:choose>
+                            <c:when test="${sessionScope.loginId == i.writer}"> <%-- 작성자 시점 --%>
 
                             <div class="reply_bar">
                                 <div class="reply_profile"><i class="fa-solid fa-user"></i></div>
 
                                 <div class="reply_main">
-                                    <div class="reply_center "> 작성자 : ${i.writer} ${i.tier}</div>
+                                    <div class="reply_center"> 작성자 : ${i.writer} <img src="${i.tier}" alt="tier_icon" class="tier_icon"></div>
 
                                     <div class="reply_center reply_content" name="contents"
                                          value="${i.contents}" contenteditable="false" data-original="${i.contents}">
@@ -189,35 +191,35 @@
                             </div>
 
 
-                            <%--작성자 외 시점--%>
 
 
-    <%--                    </c:when>--%>
 
-    <%--                    <c:otherwise>--%>
+                        </c:when>
 
-    <%--                        <div class="reply_bar">--%>
-    <%--                            <div class="reply_profile"><i class="fa-solid fa-user"></i></div>--%>
+                        <c:otherwise> <%--작성자 외 시점--%>
 
-    <%--                            <div class="reply_main">--%>
-    <%--                                <div class="reply_center "> 작성자 :  ${i.writer} ${i.tier}</div>--%>
+                            <div class="reply_bar">
+                                <div class="reply_profile"><i class="fa-solid fa-user"></i></div>
 
-    <%--                                <div class="reply_center reply_content" name="contents"--%>
-    <%--                                     value="${i.contents}" contenteditable="false" data-original="${i.contents}">--%>
-    <%--                                        ${i.contents}--%>
-    <%--                                </div>--%>
-    <%--                            </div>--%>
-    <%--                        </div>--%>
-    <%--                    </c:otherwise>--%>
+                                <div class="reply_main">
+                                    <div class="reply_center "> 작성자 :  ${i.writer} ${i.tier}</div>
 
-    <%--                    </c:choose>--%>
+                                    <div class="reply_center reply_content" name="contents"
+                                         value="${i.contents}" contenteditable="false" data-original="${i.contents}">
+                                            ${i.contents}
+                                    </div>
+                                </div>
+                            </div>
+                        </c:otherwise>
+
+                        </c:choose>
 
                         </c:forEach>
 
 
                         <form action="/write_reply.game" method="post">
                             <div class="text_reply">
-                                <input type="hidden" name="writer" value="woman"> <%--${sessionScope.loginId}--%>
+                                <input type="hidden" name="writer" value="${sessionScope.loginId}">
                                 <input type="hidden" name="gameId" value="4">   <%--${game_id}--%>
                                 <input type="text" class="reply_area" placeholder="write your comment!" name="contents">
                                 <button id="writing_btn" class="reply_btn"><i class="fa-solid fa-paper-plane" style="color: #ffffff;"></i></button>

@@ -53,12 +53,28 @@ public class GameReplyDAO {
 
         //TODO: 댓글 목록 조회
 
-        String sql = "select gr.*, mgt.tier\n" +
-                "from game_reply gr\n" +
-                "left join member_game_tier mgt\n" +
-                "on gr.writer = mgt.member_id and gr.game_id = mgt.game_id\n" +
-                "where gr.game_id = ?\n" +
-                "order by gr.id desc\n";
+        String sql = "SELECT gr.*, t.tier\n" +
+                "FROM game_reply gr\n" +
+                "LEFT JOIN (\n" +
+                "    SELECT *\n" +
+                "    FROM (\n" +
+                "        SELECT member_id, game_id, tier,\n" +
+                "               ROW_NUMBER() OVER (\n" +
+                "                   PARTITION BY member_id, game_id\n" +
+                "                   ORDER BY CASE tier\n" +
+                "                       WHEN '/game/img/gold.png' THEN 3\n" +
+                "                       WHEN '/game/img/silver.png' THEN 2\n" +
+                "                       WHEN '/game/img/bronze.png' THEN 1\n" +
+                "                       ELSE 0\n" +
+                "                   END DESC\n" +
+                "               ) AS rn\n" +
+                "        FROM member_game_tier\n" +
+                "    ) \n" +
+                "    WHERE rn = 1\n" +
+                ") t\n" +
+                "ON gr.writer = t.member_id AND gr.game_id = t.game_id\n" +
+                "WHERE gr.game_id = ?\n" +
+                "ORDER BY gr.id DESC\n";
 
         try(Connection con = DataUtil.getConnection();
             PreparedStatement pstat = con.prepareStatement(sql)){

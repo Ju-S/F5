@@ -111,14 +111,14 @@ class Pmg_game extends Phaser.Scene {
                 type: "post",
                 data: {
                     gameId: 4, /*개개인 game_id 값 넣기*/
-                    score: Math.floor(this.currentTime / 10)
+                    score: Math.floor(this.currentTime / 10) // 개개인 score 기준대로 값 넣기
 
                 },
 
                 success: (response) => {
                     console.log("서버 응답:", response);
 
-                    this.scene.start("Gameover", {score: Math.floor(this.currentTime / 10)});
+                    this.scene.start("Gameover", {score: Math.floor(this.currentTime / 10)}); // 게임오버시 score 보내기
 
                 },
                 error: (err) => {

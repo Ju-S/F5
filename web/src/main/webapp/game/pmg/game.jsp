@@ -10,11 +10,11 @@
 
 
     <%--let sceneMap = {--%>
-    <%--    1: [first_scene, second_scene, JusungGame, Gameover],--%>
-    <%--    2: [first_scene, SecondGameScene, JiwonGame, Gameover],--%>
-    <%--    3: [StartScene, MidScene, GijunGame, Gameover],--%>
+    <%--    1: [first_scene, second_scene, JusungGame, Gameover], //주성--%>
+    <%--    2: [first_scene, SecondGameScene, JiwonGame, Gameover], // 지원--%>
+    <%--    3: [MainScene], // 기준--%>
     <%--    4: [first_scene, second_scene, Pmg_game, Gameover], // 민규--%>
-    <%--    5: [IntroScene, MainScene, YoungseoGame, Gameover]--%>
+    <%--    5: [geometry_gameScene], // 영서--%>
     <%--};--%>
 
 
