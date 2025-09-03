@@ -46,14 +46,17 @@ body {
 }
 
 .top {
-    width: 1200px;
+
     height: 100px;
     border: 1px solid black;
+
+
 }
 
 .logo {
     width: 50px;
     height: 50px;
+    margin: auto;
 
 }
 
@@ -61,6 +64,7 @@ body {
     width: 100%;
     height: 100%;
     object-fit: contain;
+
 }
 
 .left_Navi{
@@ -248,6 +252,7 @@ body {
 
 .reply_main{
     width:70%;
+    height: 100%;
     text-align: center;
 }
 
@@ -257,7 +262,6 @@ body {
     text-align: left;
     float:left;
 }
-
 
 
 .reply_bar_btn{
@@ -275,6 +279,10 @@ body {
     cursor: pointer;
 }
 
+
+
+
 .dropdown-toggle::after {
     display: none;
 }
+

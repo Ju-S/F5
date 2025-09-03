@@ -23,7 +23,7 @@ class second_scene extends Phaser.Scene {
             {
                 padding:{left:10 , right:10 , top:5 , bottom: 10},
                 fontSize:"30px",
-                fill: "#000000"
+                fill: "#eaea16"
             }
         ).setOrigin(0.5).setInteractive();
 
@@ -36,7 +36,6 @@ class second_scene extends Phaser.Scene {
         });
 
         second_Button.on("pointerover",()=>{ // 터치 시
-
 
             this.game.canvas.style.cursor = "pointer";
 

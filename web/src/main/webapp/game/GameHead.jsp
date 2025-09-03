@@ -10,7 +10,6 @@
 
 <script src = "/game/pmg/first_scene.js"></script>
 <script src = "/game/pmg/second_scene.js"></script>
-
 <script src = "/game/pmg/pmg_game.js"></script>
 <script src = "/game/pmg/Gameover.js"></script>
 
@@ -21,11 +20,6 @@
         border: 1px solid black;
         margin: auto;
 
-    }
-
-
-    dropdown-toggle::after {
-        display: none;
     }
 
 </style>
