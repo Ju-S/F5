@@ -30,23 +30,24 @@
     <div id="right">
         <div id="rightBox">
 
-            <form method="post" action="/isLoginOk.member">
-                <div id="loginText">아이디 찾기</div>
-                <div id="loginBox">
-                    <input type="text" placeholder="ID" id="id" name="id">
-                    <input type="password" placeholder="PW" id="pw" name="pw">
+
+                <div id="findIdText">아이디 찾기</div>
+                <div id="findIdBox">
+                    <input type="text" placeholder="name" id="name" name="name">
+                    <input type="password" placeholder="email" id="email" name="email">
+
+                    <button class="mainGameBtn btn btn-primary slide-right" type="submit">email 인증</button>
                 </div>
 
-                <div id="loginBtnBox">
-                    <button class="mainGameBtn btn btn-primary slide-right" type="submit">로그인</button>
-                </div>
-            </form>
 
-            <div id="loginFooter">
-                <a href="/toFindIdPage.member" id="findId">아이디 찾기</a>
-                <div id="verticalLine"></div> <!-- 수직선 추가 -->
-                <a href="/toFindPwPage.member" id="findPw">비밀번호 찾기</a>
-            </div>
+
+
+
+
+
+
+
+
 
         </div>
     </div>

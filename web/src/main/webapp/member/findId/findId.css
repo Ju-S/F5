@@ -52,16 +52,6 @@ body {
 
 
 
-#rightBox input[type="text"]:focus,
-#rightBox input[type="password"]:focus
-{
-    border: 1.5px solid var(--danger-color) !important;
-    outline: 0;
-    /* 포커스 링(선택 사항) */
-    box-shadow: 0 0 0 3px rgba(236, 99, 51, .15);
-    transition: border-color .15s ease, box-shadow .15s ease;
-}
-
 /*오른쪽*/
 #right{
     float: left;
@@ -70,88 +60,8 @@ body {
 
     display: flex;
     justify-content: center;
-
 }
-form{
-    margin: 0;
-    padding: 0;
-}
-/*로그인 영역 박스*/
 #rightBox{
-    margin-top: 27%;
-    width: 45%;
-    height: 60%;
-}
-/*텍스트 box*/
-#loginText{
-    width: 100%;
-    height: 15%;
-
-    font-family: var(--title-font);
-    font-size: 40px;
-    font-weight: 600;
-    color: var(--primary-color);
-    padding-top: 4%;
-}
-/*아이디 비밀번호 입력 box*/
-#loginBox{
-    width: 100%;
-    height: 30%;
-    padding-top: 2%;
-}
-#loginBox input{
-    border-radius: 11px;/*22픽셀 너무 둥그래서 임의 지정*/
-    border: 1.5px solid var(--sub-btn-color);
-    padding-left: 4%;
-
-    width: 100%;
-    height: 28%;
-}
-#loginBox input:nth-child(2) {
-    margin-top: 5%;
-}
-/*로그인 버튼 박스*/
-#loginBtnBox{
-    width: 100%;
-    height: 5%;
-}
-#loginBtnBox button{
-    background-color:var(--secondary-color);
-    border-radius: 11px; /*22픽셀 너무 둥그래서 임의 지정*/
-
-    width: 100%;
-    height: 48px;
-}
-.mainGameBtn:hover{
-    background-color:var(--btnsecondary-hover-color) !important;
-    border: 1px solid var(--btnsecondary-hover-color) !important;
-}
-.mainGameBtn:active{
-    background-color:var(--btnsecondary-hover-color) !important;
-    border: 1px solid var(--btnsecondary-hover-color) !important;
-}
-/*로그인 푸터 박스*/
-#loginFooter{
-    width: 100%;
     height: 50%;
-
-    display: flex;
-    justify-content: center;
-}
-#loginFooter a{
-    margin-top: 24px;
-    color: var(--sub-btn-color);
-    text-decoration: none;
-}
-#loginFooter a:hover,#loginFooter a:active{
-    cursor: pointer;
-    color: var(--primary-subcolor);
-}
-#verticalLine{
-    border-left: 1px solid var(--sub-btn-color);
-    height: 25%;
-    margin-top: 24px;
-    margin-right: 4%;
-    margin-left: 4%;
-    display: inline;
+    width: 50%;
 }
