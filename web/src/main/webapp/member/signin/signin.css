@@ -14,7 +14,7 @@
 }
 
 
-/* 공용: 왼쪽 폼의 모든 텍스트/비번/이메일 입력 */
+/*!* 공용: 왼쪽 폼의 모든 텍스트/비번/이메일 입력 *!
 #leftBox input[type="text"]:focus,
 #leftBox input[type="password"]:focus,
 #leftBox input[type="email"]:focus,
@@ -22,10 +22,20 @@
 
     border: 1.5px solid var(--danger-color) !important;
     outline: 0;
-    /* 포커스 링(선택 사항) */
+    !* 포커스 링(선택 사항) *!
     box-shadow: 0 0 0 3px rgba(236, 99, 51, .15);
     transition: border-color .15s ease, box-shadow .15s ease;
+}*/
+
+
+/* 선택 시 포커스 링(선택 사항) */
+.input-error{
+    border: 1px solid var(--danger-color) !important;
+    box-shadow: 0 0 0 3px rgba(236, 99, 51, .50);
+    transition: border-color .15s ease, box-shadow .15s ease;
 }
+
+
 
 .modalBtn{
     background-color: var(--danger-color);
