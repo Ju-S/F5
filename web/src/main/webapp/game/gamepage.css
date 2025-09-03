@@ -1,4 +1,3 @@
-
 @charset "UTF-8";
 
 
@@ -16,12 +15,16 @@
 
 }
 
-
+div{
+    border:none !important;
+}
 
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+
+
 }
 
 body {
@@ -43,14 +46,17 @@ body {
 }
 
 .top {
-    width: 1200px;
+
     height: 100px;
     border: 1px solid black;
+
+
 }
 
 .logo {
     width: 50px;
     height: 50px;
+    margin: auto;
 
 }
 
@@ -58,6 +64,7 @@ body {
     width: 100%;
     height: 100%;
     object-fit: contain;
+
 }
 
 .left_Navi{
@@ -84,6 +91,7 @@ body {
     height: 800px;
     float: left;
     border: 1px solid black;
+    border-radius: var(--border-radius);
 }
 
 .main_top{
@@ -99,7 +107,7 @@ body {
     height: 90%;
     float: left;
     margin-top: 20px;
-    background-color: #2a2a2a;
+    background-color: var(--primary-subcolor);
     /*var(--primary-subcolor);*/
     font-size : 50px;
     display: flex;
@@ -119,7 +127,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: var(--primary-color);
+    background-color: var(--danger-color);
     color:#fff;
     border-radius: 10px;
     margin-top: 30px;
@@ -127,7 +135,7 @@ body {
 }
 
 .play_btn:hover{
-
+    background-color: var(--mainbtn-hover-color);
     cursor: pointer;
 }
 
@@ -221,6 +229,7 @@ body {
 
 .reply_btn:hover{
     cursor: pointer;
+    background-color: var(--btnsecondary-hover-color);
 }
 
 .reply_bar{
@@ -243,6 +252,7 @@ body {
 
 .reply_main{
     width:70%;
+    height: 100%;
     text-align: center;
 }
 
@@ -252,7 +262,6 @@ body {
     text-align: left;
     float:left;
 }
-
 
 
 .reply_bar_btn{
@@ -269,3 +278,11 @@ body {
     font: var(--sub-font);
     cursor: pointer;
 }
+
+
+
+
+.dropdown-toggle::after {
+    display: none;
+}
+

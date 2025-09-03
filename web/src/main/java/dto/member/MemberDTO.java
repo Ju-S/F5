@@ -19,7 +19,7 @@ public class MemberDTO {
     // enums/Authority에서 권한 정의(ADMIN, MEMBER 등)
     private Authority authority;
     private int birthyear;
-    // 0 or 1로 성별 구분.
+    // 0남자 or 1여자로 성별 구분.
     private int sex;
     private Timestamp joinDate;
 }

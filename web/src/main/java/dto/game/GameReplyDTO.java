@@ -15,6 +15,9 @@ public class GameReplyDTO {
     private String writer;
     private String contents;
     private Timestamp writeDate;
+    private int report_count;
+    private String tier; // 추가
+
 }
 
 

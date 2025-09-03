@@ -17,7 +17,7 @@
 
 <div id="container1">
 
-    <form>
+    <form action="/signin.member" method="post" accept-charset="UTF-8">
         <%--왼쪽--%>
         <div id="left">
             <div id="leftBox">
@@ -27,7 +27,7 @@
 
                 <div id="idRow">
                     <div id="idRowBox">
-                        <input type="text" placeholder="id" id="id">
+                        <input type="text" placeholder="id(영어 대소문자,숫자 4~16자)" id="id" name="id">
 
                         <button class="btn btn-primary btns" id="idBtn" type="button">중복확인</button>
                         <%--모달 창--%>
@@ -66,7 +66,7 @@
 
                 <div id="nicknameRow">
                     <div id="nicknameRowBox">
-                        <input type="text" placeholder="nickname" id="nickname">
+                        <input type="text" placeholder="nickname(영어 대소문자, 숫자, 한글 1~12자)" id="nickname" name="nickname">
                         <button class="btn btn-primary btns" id="nicknameBtn" type="button">중복확인</button>
 
                         <%--모달 창--%>
@@ -104,7 +104,7 @@
 
                 <div id="pwRow">
                     <div id="pwRowBox">
-                        <input type="text" placeholder="pw" id="pw">
+                        <input type="text" name="pw" placeholder="pw (영어 대소문자, 숫자, 특수문자 + 숫자,특수문자는 1개이상 필수 사용 4~12자)" id="pw">
                         <input type="text" placeholder="pw check" id="pwCheck">
                     </div>
                     <div id="pwRowText"></div>
@@ -113,7 +113,7 @@
 
                 <div id="nameRow">
                     <div id="nameRowBox">
-                        <input type="text" placeholder="name" id="name">
+                        <input type="text" placeholder="name" id="name" name="name">
                     </div>
                     <div id="nameRowText"></div>
                 </div>
@@ -121,18 +121,57 @@
 
                 <div id="emailRow">
                     <div id="emailRowBox">
-                        <input type="text" placeholder="email" id="email">
-                        <button class="btn btn-primary btns" id="emailBtn">email인증</button>
+                        <input type="text" placeholder="email(.com이나 .co.kr)" id="email" name="email">
+                        <button class="btn btn-primary btns" id="emailBtn" type="button">email인증</button>
                     </div>
                     <div id="emailRowText"></div>
+                </div>
+
+                <div id="emailCodeRow">
+                    <div id="emailCodeRowBox">
+                        <input type="text" placeholder="email code" id="emailCode" disabled>
+                        <button class="btn btn-primary btns disabled" id="emailCodeBtn" type="button" disabled>인증 코드 확인</button>
+                    </div>
+
+                    <%--모달 창--%>
+                    <div class="modal" tabindex="-1" id="emailCodeModal">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <%--타이틀--%>
+                                <div class="modal-header">
+                                    <h5 class="modal-title"> 이메일 인증 확인 </h5>
+                                    <%--x버튼--%>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+
+                                <%--바디--%>
+                                <div class="modal-body">
+                                    <p><%--이메일이 인증되었습니다 / 이메일이 인증되지 않았습니다--%></p>
+                                </div>
+
+                                <%--푸터버튼--%>
+                                <div class="modal-footer">
+                                    <%--false(인증실패): 닫기 /true(인증성공):확인--%>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+
+                    <div id="emailCodeRowText"></div>
                 </div>
 
 
                 <div id="dashboardRow">
                     <div id="dashboardRowBox">
                         <div id="genderBox">
-                            <input type="radio" name="sex" value="male"> 남
-                            <input type="radio" name="sex" value="female"> 여
+                            <input type="radio" name="sex" value="0"> 남
+                            <input type="radio" name="sex" value="1"> 여
                         </div>
                         <div id="yearBox">
                             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2"
@@ -140,9 +179,9 @@
                                 태어난 연도
                             </button>
 
-                            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2"></ul>
+                            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2" id="yearMenu"></ul>
                             <%--스크립트로 드롭다운 내용 가져옴--%>
-
+                            <input type="hidden" id="targetYear" name="targetYear">
                         </div>
 
                     </div>
@@ -172,7 +211,7 @@
         </div>
 
         <div id="rightZindex2">
-            <img src="/member/login/loginimg.jpg"/> <%--영서가 이미지 주면 바꿀거임--%>
+            <img src="/member/signin/login.png"/> <%--영서가 이미지 주면 바꿀거임--%>
         </div>
 
 

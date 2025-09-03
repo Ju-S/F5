@@ -1,0 +1,67 @@
+* {
+    box-sizing: border-box;
+}
+body {
+    background-color: white;
+}
+/*컨테이너*/
+#container1 {
+    width: 100%;/*바디영역 전체 차지*/
+    height: 100%;
+    overflow: hidden;
+}
+
+/*왼쪽*/
+#left{
+    float: left;
+    width: 50%;
+    height: 100%;
+
+    position: relative; /*부모 기능 부여*/
+}
+/*아래 깔리는 이미지*/
+#leftZindex2{
+    position: absolute; /* 부모 기준으로 지정 가능 */
+    top: 0; left: 0; width: 100%; height: 100%; /*#left 꽉 채우기*/
+
+    z-index: 2; /*아래 깔리게 인덱스 조절*/
+}
+#leftZindex2 img{
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+}
+
+/*블러이미지*/
+#leftZindex3{
+    position: absolute; /* 부모 기준으로 지정 가능 */
+    top: 16px; bottom: 16px; left: 16px; right: 16px;  /* 원하는 만큼 지정 */
+
+    /*background-color: #ffffff70; !*단순 블러된 이미지 위해서 직접 지정*!*/
+    z-index: 3;
+}
+#leftText{
+    font-family: var(--title-font);
+    font-size: 90px;
+    font-weight: 600;
+    color: var(--primary-color);
+
+    margin-top: 35%;
+    margin-left: 15%;
+}
+
+
+
+/*오른쪽*/
+#right{
+    float: left;
+    width: 50%;
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+}
+#rightBox{
+    height: 50%;
+    width: 50%;
+}
