@@ -54,23 +54,23 @@ public class GameController extends HttpServlet {
                     //게임오버 시 sql game_score 테이블에 스코어 insert 점수를 받아서 알맞는 tier 구분 sql 값 score만 넣은상태
                     int gameId = Integer.parseInt(request.getParameter("gameId")); // 이후
                     int score = Integer.parseInt(request.getParameter("score"));
-                    int result = gameScoreDAO.insert_score(gameId,score);
+                    // String memberId =(String) request.getSession().getAttribute("loginId");
+                    int result = gameScoreDAO.insertScore(gameId,score);
 
 
                     if (0 < score && score < 1000) {
                         String tier = "BRONZE";
-                        gameScoreDAO.insert_tier(gameId,tier);
+                        gameScoreDAO.insertTier(gameId,tier);
                     } else if (1000 < score && score < 2000) {
                         String tier = "SILVER";
-                        gameScoreDAO.insert_tier(gameId,tier);
+                        gameScoreDAO.insertTier(gameId,tier);
                     } else if (2000 < score) {
                         String tier = "GOLD";
-                        gameScoreDAO.insert_tier(gameId,tier);
+                        gameScoreDAO.insertTier(gameId,tier);
                     }
 
                     response.setContentType("application/json; charset=utf-8"); // json 응답
                     response.getWriter().write("{\"result\":\"success\"}");
-
 
                     break;
             }
@@ -85,7 +85,7 @@ public class GameController extends HttpServlet {
                     request.setAttribute("list", list);
                     request.setAttribute("listranking", listranking);
 
-                    System.out.println("랭킹 리스트: " + listranking);
+
                     request.getRequestDispatcher("/game/gamepage.jsp").forward(request, response);
 
                     break;
@@ -100,18 +100,19 @@ public class GameController extends HttpServlet {
                     int gameId = Integer.parseInt(request.getParameter("gameId"));
                     String contents = request.getParameter("contents");
 
-                    gameReplyDAO.insert_reply(gameId, writer, contents);
+                    gameReplyDAO.insertReply(gameId, writer, contents);
                     response.sendRedirect("/go_gamepage.game?gameId=" + gameId);
 
                     break;
                 }
                 case "/delete_reply.game" : { // 댓글 삭제 (작성날짜)
 
-                   int gameId = Integer.parseInt(request.getParameter("gameId"));
-                    String thedate = request.getParameter("writedate");
-                    Timestamp writedate = Timestamp.valueOf(thedate);
+                    int gameId = Integer.parseInt(request.getParameter("gameId"));
+                    String writer = request.getParameter("writer");
+                    // String writer = (String)request.getSession().getAttribute("loginId");
+                    int id = Integer.parseInt(request.getParameter("id"));
 
-                    gameReplyDAO.deleteReply(writedate);
+                    gameReplyDAO.deleteReply(writer , id);
                     response.sendRedirect("/go_gamepage.game?gameId=" + gameId);
                     break;
 
@@ -119,16 +120,27 @@ public class GameController extends HttpServlet {
                 case "/update_reply.game" : { // 댓글 수정 (작성날짜)
                     String contents = request.getParameter("contents");
                     int gameId = Integer.parseInt(request.getParameter("gameId"));
-                    String writedate = request.getParameter("writedate");
-                    Timestamp write_date = Timestamp.valueOf(writedate);
+                    String writer = request.getParameter("writer");
+                    // String writer = (String)request.getSession().getAttribute("loginId");
+                    int id = Integer.parseInt(request.getParameter("id"));
 
-                    gameReplyDAO.updateReply(contents, write_date);
+                    gameReplyDAO.updateReply(contents, writer , id);
                     response.sendRedirect("/go_gamepage.game?gameId=" + gameId);
                     break;
 
+                }
+                case "/report_reply.game" : {
+
+                    String writer = request.getParameter("writer");
+                    // String writer = (String)request.getSession().getAttribute("loginId");
+                    int reportcount =  Integer.parseInt(request.getParameter("reportcount"));
+                    int gameId = Integer.parseInt(request.getParameter("gameId"));
+                    gameReplyDAO.insertReportCount(writer , reportcount);
+
+                    response.sendRedirect("/go_gamepage.game?gameId=" + gameId);
+                    break;
 
                 }
-
 
             }
 

@@ -25,9 +25,11 @@ public class GameScoreDAO {
 
 
     //region create
-    public int insert_score(int game_id,int score) throws Exception{// 점수 등록
+    public int insertScore(int game_id,int score) throws Exception{// 점수 등록
+        // String memberId =(String) request.getSession().getAttribute("loginId"); 
+        // Min 지우고 member_id 등록
         //TODO: 게임 점수 등록
-
+       
         String sql = "INSERT INTO game_score (id,game_id, member_id, score) VALUES (GAME_SCORE_SEQ.nextval,?, 'MIN', ?)";
 
         try (Connection con = DataUtil.getConnection();
@@ -45,8 +47,9 @@ public class GameScoreDAO {
 
     //region create
 
-    public int insert_tier(int game_id , String tier) throws Exception{ // 티어 구분
-
+    public int insertTier(int game_id , String tier) throws Exception{ // 티어 구분
+        // String memberId =(String) request.getSession().getAttribute("loginId");
+        // Min 지우고 member_id 등록
         //TODO: 점수를 티어로 변환하여 정보를 tier에 넣기
         String sql = "insert into member_game_tier values (member_GAME_TIER_SEQ.nextval,'MIN',?,?)";
 

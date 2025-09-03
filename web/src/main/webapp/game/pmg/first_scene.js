@@ -24,7 +24,7 @@ class first_scene extends Phaser.Scene {
             {
                 padding:{left:10 , right:10 , top:5 , bottom: 10},
                 fontSize:"30px",
-                fill: "#000000"
+                fill: "#eaea16"
             }
         ).setOrigin(0.5).setInteractive();
 
@@ -35,6 +35,7 @@ class first_scene extends Phaser.Scene {
             this.scene.start("second_scene");
 
         });
+
 
 
 

@@ -23,17 +23,18 @@
 <div class="container">
 
     <div class="row">
-        <div class="col-12">
-            <div class="top">
+<%--<div class="col-12">--%>
+        <div class="col-1">
                 <a href="#">
                     <div class="logo">
                         <img src="/game/pmg/img/logo.png">
                     </div>
                 </a>
             </div>
-        </div>
+    <div class="col-11">
+        <div class="top"></div>
     </div>
-
+    </div>
 
     <div class="row">
         <div class="col-1">
@@ -54,8 +55,8 @@
                         <button class = "play_btn"> play </button>
 
                         <script>
-                            // controller에서 보내준  gameId를 변수로 만듬
-                            <%--// const GAMEID = Number("${gameId}");--%>
+                           /* 페이지 입장 시 넘어온 파라미터 {game_id}를 변수로 만듬*/
+                            <%--// const GAMEID = Number("${game_id}");--%>
 
                             const GAMEID = 4; // 예시
 
@@ -125,14 +126,14 @@
 
                     <c:forEach var= "i" items = "${list}">
                         <%-- choose , when 사용하여 i.id = sessionScope.id 조건 붙일것--%>
-                        <%--<c:choose> <c:when test="${sessionScope.loginId == i.writer}"> 작성자 시점
-                        ,  otherwise ~~ 그외 유저 시점 --%>
+                        <%--<c:choose>
+                        <c:when test="${sessionScope.loginId == i.writer}"> 작성자 시점--%>
 
                         <div class="reply_bar">
                             <div class="reply_profile"><i class="fa-solid fa-user"></i></div>
 
                             <div class="reply_main">
-                                <div class="reply_center "> member ${i.writer} ${i.tier}</div>
+                                <div class="reply_center "> 작성자 : ${i.writer} ${i.tier}</div>
 
                                 <div class="reply_center reply_content" name="contents"
                                      value="${i.contents}" contenteditable="false" data-original="${i.contents}">
@@ -140,9 +141,10 @@
                                 </div>
                             </div><%--reply_main--%>
                             <form action="/update_reply.game" method="post" class="update_form">
-                                <input type="hidden" name="gameId" value="${i.gameId}">
-                                <input type="hidden" name="writedate" value="${i.writeDate}">
                                 <input type="hidden" name="contents" class="hidden_contents">
+                                <input type = "hidden" name="gameId" value="${i.gameId}">
+                                <input type = "hidden" name="writer" value="${i.writer}">
+                                <input type = "hidden" name="id" value="${i.id}">
 
                                 <button type="button" class="btn-edit"
                                         style="background-color:#3E459D; color:#fff; font-size:15px; border-radius:10px; border:none; padding: 5px 5px;">
@@ -161,30 +163,56 @@
 
                             <form action="/delete_reply.game" method="post">
                                 <input type = "hidden" name="gameId" value="${i.gameId}">
-                                <input type = "hidden" name="writedate" value="${i.writeDate}">
+                                <input type = "hidden" name="writer" value="${i.writer}">
+                                <input type = "hidden" name="id" value="${i.id}">
                                 <button class="btn-delete" style="background-color:#3E459D; color:#fff; font-size:15px; border-radius:10px; border:none; padding: 5px 5px;">삭제</button>
                             </form>
 
                             <div class="dropdown">
                                     <%-- 원본 class="btn btn btn-dark dropdown-toggle" --%>
+                                <form action="/report_reply.game" method="get">
+                                    <input type = "hidden" name="gameId" value="${i.gameId}">
+                                    <input type = "hidden" name="writer" value="${i.writer}">
+                                    <input type = "hidden" name="reportcount" value="${i.report_count}">
                                 <button type="button" class="btn btn btn-dark" id="reportPost" data-bs-toggle="dropdown" aria-expanded="false"
                                         style="background: transparent; border: none; padding: 0;">
                                     <i class="bi bi-three-dots-vertical"></i>
                                 </button>
 
                                 <ul class="dropdown-menu dropdown-menu-end">
-                                    <li><a class="dropdown-item text-danger" href="#">신고하기</a></li>
+                                    <li><button type="submit" class="dropdown-item text-danger" >신고하기</button></li>
                                 </ul>
-
+                                </form>
                             </div>
                         </div>
 
+<%--                    </c:when>--%>
+
+<%--                    <c:otherwise>--%>  <%--작성자 외 시점--%>
+
+<%--                        <div class="reply_bar">--%>
+<%--                            <div class="reply_profile"><i class="fa-solid fa-user"></i></div>--%>
+
+<%--                            <div class="reply_main">--%>
+<%--                                <div class="reply_center "> 작성자 :  ${i.writer} ${i.tier}</div>--%>
+
+<%--                                <div class="reply_center reply_content" name="contents"--%>
+<%--                                     value="${i.contents}" contenteditable="false" data-original="${i.contents}">--%>
+<%--                                        ${i.contents}--%>
+<%--                                </div>--%>
+<%--                            </div>--%>
+<%--                        </div>--%>
+<%--                    </c:otherwise>--%>
+
+<%--                    </c:choose>--%>
+
                     </c:forEach>
+
 
                     <form action="/write_reply.game" method="post">
                         <div class="text_reply">
-                            <input type="hidden" name="writer" value="man">
-                            <input type="hidden" name="gameId" value="3">
+                            <input type="hidden" name="writer" value="woman"> <%--${sessionScope.loginId}--%>
+                            <input type="hidden" name="gameId" value="4">   <%--${game_id}--%>
                             <input type="text" class="reply_area" placeholder="write your comment!" name="contents">
                             <button class="reply_btn"><i class="fa-solid fa-paper-plane" style="color: #ffffff;"></i></button>
                         </div>
@@ -228,16 +256,23 @@
         $form.find(".btn-cancel").addClass("d-none");
         $replyBar.find(".btn-delete").removeClass("d-none"); // 삭제버튼 보이게
 
-
     });
 
-    $(".btn-update").on("click", function () {
+    $(".btn-update").on("click", function (e) {
+        e.preventDefault(); // 자동 submit 방지 seq 값이 변하지 않고 수정하기 위함
+
         const $replyBar = $(this).closest(".reply_bar");
+        const $form = $(this).closest(".update_form");
         const $contentDiv = $replyBar.find(".reply_content");
-        const $hiddenInput = $(this).closest(".update_form").find(".hidden_contents");
-        $hiddenInput.val($contentDiv.text());
-        // 폼은 submit 되니 따로 처리 안 해도 됨
+
+        const updatedText = $contentDiv.text().trim();
+
+        $form.find(".hidden_contents").val(updatedText);
+
+        $form.submit(); // 직접 submit 실행
     });
+
+
 
 </script>
 
