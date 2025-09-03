@@ -6,10 +6,10 @@ class GameScene extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('bg', 'img/bg.png');         // 배경
-        this.load.image('floor', 'img/floor.svg');   // 바닥
-        this.load.image('player', 'img/player.png'); // 플레이어 이미지
-        this.load.audio('bgm', 'mp3/music.mp3'); // 음악
+        this.load.image('bg', '/game/jys/img/bg.png');         // 배경
+        this.load.image('floor', '/game/jys/img/floor.svg');   // 바닥
+        this.load.image('player', '/game/jys/img/player.png'); // 플레이어 이미지
+        this.load.audio('bgm', '/game/jys/mp3/music.mp3'); // 음악
     }
 
     create() {

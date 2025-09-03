@@ -53,6 +53,16 @@ body {
     gap: 24px;
 }
 
+#combo_chart{
+    width: 100%;
+    height: 600px;
+}
+
+.chart-right .chart-box {
+    width: 100%;
+    height: 300px;
+}
+
 .chart-small-box {
     height: 100%;
     background-color: var(--primary-subcolor);

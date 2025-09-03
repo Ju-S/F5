@@ -4,7 +4,7 @@
 <head>
     <jsp:include page="/common/Head.jsp"/>
     <link rel="stylesheet" href="/common/common.css">
-    <link rel="stylesheet" href="css/manager-style.css">
+    <link rel="stylesheet" href="css/board_admin.css">
 </head>
 <body>
 
@@ -21,15 +21,11 @@
         <!-- main 내용 -->
         <div class="col-11 main-content">
             <!-- 필터 & 버튼 -->
-            <div class="d-flex align-items-center gap-2 mb-3">
+            <div class="d-flex align-items-center gap-2">
                 <div class="form-check d-flex align-items-center">
                     <input class="form-check-input" type="checkbox" id="checkboxNoLabel">
                     <label class="form-check-label ms-2" for="checkboxNoLabel">Add</label>
                 </div>
-
-                <button class="btn btn-secondary filter-btn">
-                    Filter ⚙
-                </button>
             </div>
 
             <!-- 블랙리스트 게시물 -->
@@ -63,6 +59,6 @@
 
 </div>
 
-<script src="js/manager-move.js"></script>
+<script src="js/board_admin.js"></script>
 </body>
 </html>

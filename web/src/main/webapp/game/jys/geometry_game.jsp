@@ -12,7 +12,7 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
             rity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/phaser@3/dist/phaser.js"></script>
-    <script src="../geometry_gameScene.js"></script>
+    <script src="/game/Geometry_Dash_Lite/js/geometry_gameScene.js"></script>
     <style>
         body {
             margin: 0;
@@ -28,7 +28,7 @@
 <script>
     const config = {
         type: Phaser.AUTO,
-        width: 700,
+        width: 600,
         height: 400,
         backgroundColor: '#222',
         physics: {

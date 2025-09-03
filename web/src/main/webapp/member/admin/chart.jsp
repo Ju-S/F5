@@ -4,7 +4,7 @@
 <head>
     <jsp:include page="/common/Head.jsp"/>
     <link rel="stylesheet" href="/common/common.css">
-    <!-- ✅ 1. Google Chart API 로드 -->
+    <!-- 1. Google Chart API 로드 -->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <link rel="stylesheet" href="css/chart-style.css">
 </head>
@@ -41,10 +41,22 @@
                 </div>
             </div>
         </div>
-
-        <script src="js/chart-api.js" crossorigin="anonymous"></script>
     </div>
 </div>
+
+<!-- 여기서 서버 데이터 JS 변수에 담아주기 -->
+<script>
+    var maleCount = ${maleCount};
+    var femaleCount = ${femaleCount};
+    var yearStats = [
+        <c:forEach var="entry" items="${yearStats}" varStatus="st">
+        ['${entry.key}', ${entry.value}]<c:if test="${!st.last}">, </c:if>
+        </c:forEach>
+    ];
+</script>
+
+<!-- 외부 js 불러오기 -->
+<script src="/js/chart-api.js"></script>
 
 </body>
 </html>
