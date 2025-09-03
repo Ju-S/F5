@@ -106,6 +106,12 @@ public class GameController extends HttpServlet {
     
                     break;
 
+
+                case "/toGamePage.game" :{
+                    String gameId = request.getParameter("gameId");
+                    request.setAttribute("gameId", gameId);
+                    //request.getRequestDispatcher().forward(request, response); 어디로 보내야 하는지 논의 필요~
+                }
             }
 
         } catch(Exception e) {

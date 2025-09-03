@@ -1,4 +1,11 @@
-// right의 메인 게임페이지 생성자
+
+
+
+let lastHoveredGame = "game1"; // 마지막으로 호버한 게임
+let activeGame = null; // 현재 클릭으로 고정된 게임
+
+
+// right의 메인 게임페이지 생성하는 함수
 function createGameView(gameId, titleText, contentText, imgSrc, buttonText) {
     const $container1 = $("<div>").addClass(`mainGame ${gameId}`);
     const $img = $("<img>").addClass("mainGameImg")
@@ -11,7 +18,6 @@ function createGameView(gameId, titleText, contentText, imgSrc, buttonText) {
     $container1.append($img, $title, $content, $button);
     return $container1;
 }
-
 const gameViews = {
     game1: createGameView(
         "game1",
@@ -50,55 +56,48 @@ const gameViews = {
     )
 };
 
-// 왼쪽 네비바 움직이는 메소드
+
+// left의 네비바 움직이는 메소드
 function moveLeftMenu($e, toRight) {
     $e.css({
         transform: toRight ? "translateX(50px)" : "translateX(0px)",
         transition: "transform 0.3s ease"
     });
 }
-
-// right의 메인게임페이지에서 애니메이션 중복 제거용 함수
+// right의 글씨+버튼용 함수
 function slideIn($e, slideIn) {
     $e.each(function () {
-        this.classList.remove("slide-left", "slide-right");
+        this.classList.remove("slide-left", "slide-right"); //이전에 적용되었던 트랜지션 클래스 있으면 중복방지용으로 지움
         void this.offsetWidth;
-        this.classList.add(slideIn ? "slide-right" : "slide-left");
+        this.classList.add(slideIn ? "slide-right" : "slide-left"); //true만 right으로 나감 false면 left로 들어옴
     })
 }
-
 // 오른쪽 메인 교체 함수
 function changeRightView(target) {
+    if (!target || !gameViews[target]) return;
     let $currentElements = $("#right").find(".mainGameTitle, .mainGameContent, .mainGameBtn");
-    slideIn($currentElements, false);
+    slideIn($currentElements, false); // right의 글씨+버튼 왼쪽으로 나가도록
+
+
 
     setTimeout(() => {
-        const $newView = gameViews[target].clone();
-        $("#right").html("").append($newView);
+        const $newView = gameViews[target].clone(); //새로운 타겟 객체의 복사본 만들어서
+        $("#right").html("").append($newView); //right비우고 복사본 넣기
 
         setTimeout(() => {
-            $newView.find(".mainGameImg").css("transform", "scale(1)");
+            $newView.find(".mainGameImg").css("transform", "scale(1)"); //이미지에 대하여 트랜지션
         }, 20);
 
-        slideIn($newView.find(".mainGameTitle, .mainGameContent, .mainGameBtn"), true);
+        slideIn($newView.find(".mainGameTitle, .mainGameContent, .mainGameBtn"), true); // 새로운 타겟 객체의 복사본의 글씨+버튼 오른쪽에서 들어오게
     }, 200);
 }
 
-// 버튼 클릭 시 게임 페이지 이동
-$(document).on("click", ".mainGameBtn", function () {
-    let target = $(this).closest(".mainGame").attr("class").split(" ")[1];
-    location.href = "/toGame.game?gameId=" + target;
-});
-
-// 상태 변수
-let lastHoveredGame = "game1";
-let activeGame = null; // 현재 클릭으로 고정된 게임
 
 // 왼쪽 게임 클릭
 $(".game").on("click", function () {
-    const target = $(this).attr("class").split(" ")[1];
+    const target = $(this).attr("class").split(" ")[1];// game1, game2 이런 클래스 스트링값으로 받음
 
-    if (activeGame === target) {
+    if (activeGame === target) {// 방금 클릭했던 게임이 지금 클릭한 게임과 같다면
         // 같은 게임 다시 클릭 → 해제
         moveLeftMenu($(this), false);
         $(this).find("img").removeClass("clicked"); // 보더 제거
@@ -106,7 +105,7 @@ $(".game").on("click", function () {
         return;
     }
 
-    // 다른 게임이 고정돼 있으면 원위치
+    // 다른 게임이 고정되어 있는 상태면 그 다른게임을 원위치
     if (activeGame && activeGame !== target) {
         moveLeftMenu($(`.${activeGame}`), false);
         $(`.${activeGame}`).find("img").removeClass("clicked");
@@ -116,17 +115,26 @@ $(".game").on("click", function () {
     moveLeftMenu($(this), true);
     $(this).find("img").addClass("clicked"); // 보더 유지
     activeGame = target;
+
+    //호버후 클릭했을때 두번 로딩되는거 막고싶음 ************
+    if(lastHoveredGame===activeGame){
+        return;
+    }
+    changeRightView(target);
+    lastHoveredGame = target;
 });
 
-// 마우스 올리기 (hover 시에만 right 뷰 변경)
+// 마우스 올리기 (hover 시에 right 뷰 변경)
 $(".game").on("mouseover", function () {
-    const target = $(this).attr("class").split(" ")[1];
+    const target = $(this).attr("class").split(" ")[1]; // game1, game2 이런 클래스 스트링값으로 받음
 
-    // 클릭으로 고정된 게임은 hover 무시
+    // 현재클릭으로 고정된 게임은 hover 무시
     if (activeGame === target) return;
 
+    //직전에 호버했던 게임이라면 hover 무시
     if (lastHoveredGame === target) return;
     lastHoveredGame = target;
+
 
     moveLeftMenu($(this), true);
     changeRightView(target); // hover일 때만 오른쪽 뷰 교체
@@ -138,15 +146,31 @@ $(".game").on("mouseleave", function () {
 
     // 고정된 게임은 원위치 안 시킴
     if (activeGame === target) return;
-
     moveLeftMenu($(this), false);
+
+    //지금 클릭된 게임이 타겟과 다르다면
+    if (activeGame && activeGame !== target) {
+        changeRightView(activeGame); //클릭된 게임으로 right이미지 바꾸기
+        lastHoveredGame = activeGame;   // 클릭한게 lasthover가 되도록
+    } else if (!activeGame) {
+        lastHoveredGame = null;         // 액티브 된게 없는상태면 lasthover 원상복귀
+    }
+
 });
+
+
+
+
 
 // 로그인/회원가입 버튼
 $("#signinBtn").on("click", function () {
-    location.href = "/member/signin/signin.jsp";
+    location.href = "/toSigninPage.member";
 });
-
 $("#loginBtn").on("click", function () {
-    location.href = "/member/login/login.jsp";
+    location.href = "/toLoginPage.member";
+});
+// 버튼 클릭 시 게임 페이지 이동
+$(document).on("click", ".mainGameBtn", function () {
+    let target = $(this).closest(".mainGame").attr("class").split(" ")[1];
+    location.href = "/toGamePage.game?gameId=" + target;
 });

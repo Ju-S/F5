@@ -21,27 +21,32 @@
         </div>
 
         <div id="leftZindex2">
-            <img src="/member/login/loginimg.jpg"/> <%--영서가 이미지 주면 바꿀거임--%>
+            <img src="/member/signin/login.png"/> <%--영서가 이미지 주면 바꿀거임--%>
         </div>
 
 
     </div>
     <div id="right">
         <div id="rightBox">
+
+            <form method="post" action="/isLoginOk.member">
             <div id="loginText">Login</div>
             <div id="loginBox">
-                <input type="text" placeholder="ID" id="id">
-                <input type="password" placeholder="PW" id="pw">
+                <input type="text" placeholder="ID" id="id" name="id">
+                <input type="password" placeholder="PW" id="pw" name="pw">
             </div>
 
             <div id="loginBtnBox">
-                <button class="mainGameBtn btn btn-primary slide-right">로그인</button>
+                <button class="mainGameBtn btn btn-primary slide-right" type="submit">로그인</button>
             </div>
+            </form>
+
             <div id="loginFooter">
                 <a href="/" id="findId">아이디 찾기</a>
                 <div id="verticalLine"></div> <!-- 수직선 추가 -->
                 <a href="/" id="findPw">비밀번호 찾기</a>
             </div>
+
         </div>
     </div>
 
