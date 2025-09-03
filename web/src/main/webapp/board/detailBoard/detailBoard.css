@@ -3,8 +3,13 @@
 /*    border: 0.5px solid hotpink;*/
 /*    box-sizing: border-box;*/
 /*}*/
+/*body{*/
+/*    padding-bottom: 50px;*/
+/*}*/
+
 .container{
     min-height: calc(100vh - 60px);
+
 }
 
 .dropdown-toggle::after {
@@ -23,35 +28,51 @@
 .comment-card{
 
 }
+
+.total-card{
+    display: flex;
+
+}
+
 /*게시글 카드 영역*/
 .post-card {
-    background-color: #2a2a2a; /* 다크 배경 */
+    background-color: var(--primary-subcolor); /* 다크 배경 */
     color: white;
-    padding-right: 10px;
     border-radius: 15px;
-
+    margin-left: 20px;
+    margin-bottom: 50px;
 }
 
 /* 댓글 카드 영역 */
 .comment-card {
-    background-color: #2a2a2a;
+    background-color: var(--primary-subcolor);
     color: white;
-    padding-left: 10px;
     border-radius: 15px;
-
+    margin-left: 20px;
+    display:flex;
+    flex-direction: column;
+    margin-bottom: 50px;
 }
 .comment-box{
-    height: 725px;
+    height:750px;
     overflow-y: auto;
     overflow-x:hidden;
-}
 
+}
+/* 게시글 상단 프로필 자리 */
+.profile-row{
+    margin-top: 10px;
+}
 /* 프로필 이미지 */
 .profile-img {
     width: 50px;
     height: 50px;
 }
 
+/* 댓글 1개 row */
+.comments{
+    margin-top: 10px;
+}
 /* 댓글 작성 input */
 .comment-card input[type="text"] {
     width: 100%;
@@ -60,29 +81,50 @@
     padding: 8px 12px;
     outline: none;
 }
-
+/* 삭제 수정 버튼 row */
+.post-btn-row{
+    margin-top: auto;
+    padding-bottom: 10px;
+}
 .post-contents{
     height:670px;
+    overflow-y: auto;
+    margin-top:30px;
+}
+.post-contents img {
+    max-width: 100%;   /* post-contents 영역을 넘지 않도록 */
+    height: auto;      /* 원본 비율 유지 */
+    display: block;    /* inline 특성 제거 → 줄맞춤 이슈 방지 */
+
 }
 
 /*게시글 작성자 칸*/
 .writer{
     padding-left:30px;
+    font-family: var(--sub-font);
 }
 /*댓글 작성자 칸*/
 .comment-writer{
     padding-left:30px;
+    font-family: var(--sub-font);
 }
 .comment-contents{
     padding-left:30px;
 }
+.send-btn-row{
+    margin-top: auto;
+    padding-bottom: 10px;
+}
+
 /*댓글보내는 버튼*/
 #sendBtn{
-    background-color: #3E459D;
+    background-color: var(--secondary-color);
     border:none;
     width:80px;
     height:40px;
-
+}
+#sendBtn:hover,#sendBtn:active{
+    background-color: var(--btnsecondary-hover-color);
 }
 /*댓글보내는 버튼div*/
 .sendBtn_box{
@@ -91,12 +133,15 @@
     align-items: center;
 }
 #delete{
-    background-color: #888;
+    background-color: var(--sub-btn-color);
     color:white;
     border:none;
     width:80px;
     height:40px;
-
+    font-family: var(--sub-font);
+}
+#delete:hover,#delete:active{
+    background-color: var(--btnsub-hover-color);
 }
 .deleteBtn_box{
     display: flex;
@@ -104,17 +149,34 @@
     align-items: center;
 }
 #update{
-    background-color: #EC6333;
+    background-color: var(--danger-color);
     color:white;
     border:none;
     width:80px;
     height:40px;
-
+    font-family: var(--sub-font);
+}
+#update:hover,#update:active{
+    background-color: var(--mainbtn-hover-color) !important;
 }
 .updateBtn_box{
     display: flex;
     justify-content: center;
     align-items: center;
+}
+/* 수정 후 수정완료 버튼 */
+#update-complete{
+    background-color: var(--danger-color);
+    color:white;
+    border:none;
+    font-family: var(--sub-font);
+}
+#update-complete:hover,#update-complete:active{
+    background-color: var(--mainbtn-hover-color) !important;
+}
+/* 수정 후 취소 버튼 */
+#cancel{
+    font-family: var(--sub-font);
 }
 /*신고하기버튼박스*/
 .reportBox{
@@ -122,11 +184,21 @@
     justify-content: center;
     align-items: center;
 }
+/* 신고하기 버튼 3dot*/
 #reportPost{
     width:40px;
     height:40px;
 }
+
 #reportComment{
     width:40px;
     height:40px;
+}
+.report-menu{
+    min-width:100px;
+    text-align: center;
+    padding: 5px 0;     /* 위아래 패딩 줄이기 */
+}
+.vertical-dots:hover,.vertical-dots:active{
+    background-color: var(--btnsub-hover-color);
 }
