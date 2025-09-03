@@ -10,9 +10,8 @@
 }
 
 .mainContents {
-    background-color: #2a2a2a;
+    background-color: var(--primary-subcolor);
     border-radius: 15px;
-
     margin-bottom: 50px;
 }
 
@@ -20,6 +19,7 @@
     width: 100%;
     height: 120px;
     padding-left: 20px;
+    font-family: var(--sub-font);
 }
 
 .tagsBox {
@@ -28,36 +28,33 @@
 }
 
 .editorBox {
-    width:1165px ;
-    margin: 0 auto ;
+    width:1120px ;
+    margin-left: 15px;
     height: 440px;
     background-color: white;
     border-radius: 15px;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
-.completeBox {
+.button-box {
     width: 100%;
     height: 80px;
 }
 
-.title {
+.titleBox .title {
     width: 100%;
     height: 40%;
     margin-top: 10px;
-
     display: flex;
     align-items: flex-end;
-
     padding-bottom: 5px;
+    font-family: var(--sub-font);
 }
 
 .titleText {
     width: 100%;
     height: 100%;
+
 }
 
 .titleText input {
@@ -72,14 +69,15 @@
     height: 50%;
 }
 
-.tag1 { /*첫 번째 태그 div*/
-    width: 35%;
+.gameId-box { /*첫 번째 태그 div*/
+    width: 50%;
     height: 100%;
     float: left;
    margin-left:20px;
+    font-family: var(--sub-font);
 }
 
-.tag1 label{
+.gameId-box label{
     display: block;
     margin-bottom: 5px;
 }
@@ -90,14 +88,15 @@
     padding-right: 5px;
 }
 
-.tag2 { /*두 번째 태그 div*/
-    width: 35%;
+.board_category-box { /*두 번째 태그 div*/
+    width: 50%;
     height: 100%;
     float: left;
     padding-left: 10px;
+    font-family: var(--sub-font);
 }
 
-.tag2 label{
+.board_category-box label{
     display: block;
     margin-bottom: 5px;
 }
@@ -107,13 +106,13 @@
     height: 40px;
 }
 
-.complete1 {
+.empty-box {
     width: 70%;
     height: 100%;
     float: left;
 }
 
-.complete2 {
+.cancelBtn-box {
     width: 15%;
     height: 100%;
     float: left;
@@ -122,31 +121,38 @@
     justify-content: center;
 }
 
-.complete3 {
+.completeBtn-box {
     width: 15%;
     height: 100%;
     float: left;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: left;
 }
 
-.complete3 #complete {
-    background-color: #EC6333;
+.completeBtn-box #complete {
+    background-color: var(--danger-color);
     color: white;
     border: none;
     width: 100px;
     height: 40px;
+    font-family: var(--sub-font);
+}
+#complete:hover,#complete:active{
+    background-color: var(--mainbtn-hover-color);
 }
 
-.complete2 #cancel {
-    background-color: #888;
+.cancelBtn-box #cancel {
+    background-color: var(--sub-btn-color);
     color: white;
     border: none;
     width: 100px;
     height: 40px;
+    font-family: var(--sub-font);
 }
-
+#cancel:hover,#cancel:active{
+    background-color: var(--btnsub-hover-color);
+}
 /*섬머노트 디자인*/
 #summernote {
     height: 100%;
@@ -172,7 +178,7 @@
 .editorBox .note-editable {
     flex-grow: 1;
     overflow-y: auto;
-    height: 100%;
+    height: 100% !important;
 }
 
 .editorBox .note-toolbar{
@@ -180,6 +186,6 @@
 }
 
 .note-editor.note-frame{
-    width:1200px !important;
+    width:1120px !important;
     margin: 0 auto !important;
 }

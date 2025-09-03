@@ -27,26 +27,44 @@ function createBoardList(postList, itemPerPage) {
 }
 
 function createBoardItem(post) {
-    let tr = $("<tr>").attr("align", "center");
-    // let id = $("<td>").attr("width", "5%").html(post.id);
-    let title = $("<td>").attr("width", "30%").addClass("title")
+    let tr = $("<div>").addClass("row item-div");
+    let profileImg = $("<div>").addClass("col col-1 profile-img").append($("<img>"));
+    let title = $("<div>").addClass("col col-12 title")
         .append($("<a>").attr({
             "title": post.title,
             "href": "/get_board_detail.board?boardId=" + post.id
         }).html(post.title));
-    // let writer = $("<td>").attr("width", "15%").html(post.writer);
-    // let writerDate = $("<td>").attr("width", "30%").html(milliToDate(post.writeDate));
-    let viewCount = $("<td>").attr("width", "20%").html(post.viewCount);
-    let modifyBtn = $("<td>").attr("width", "30%").addClass("modify")
-        .append($("<button>").addClass("btn btn-primary modifyBtn").html("수정"));
+    let writer = $("<div>").addClass("col col-12 writer").html(post.writer);
+    let boardSummary = $("<div>").addClass("col col-3 board-summary");
+    let replyCount = $("<div>").html("<i class=\"bi bi-chat-left-dots-fill me-2\"></i>" + post.viewCount);
+    let viewCount = $("<div>").html("<i class=\"bi bi-eye ms-3 me-2\"></i>" + post.viewCount);
+
+    let reportBox = $("<div>").addClass("reportBox ms-2");
+    let reportBtn = $("<button>").addClass("btn btn-sm dropdown-toggle")
+        .attr({"id":"reportPost", "data-bs-toggle":"dropdown", "aria-expanded":"false"});
+    let reportBtnIcon = $("<i>").addClass("bi bi-three-dots-vertical vertical-dots");
+    let dropdownMenu = $("<ul>").addClass("dropdown-menu dropdown-menu-end report-menu")
+    let dropdownItem = $("<li>").addClass("dropdown-item text-danger").html("신고하기");
+
+    let writerTitleRow = $("<div>").addClass("col col-8 writer-title").append(
+        $("<div>").addClass("row").append(title).append(writer)
+    );
+
+    dropdownMenu.append(dropdownItem);
+
+    reportBtn.append(reportBtnIcon);
+
+    reportBox.append(reportBtn);
+    reportBox.append(dropdownMenu);
+
+    boardSummary.append(replyCount);
+    boardSummary.append(viewCount);
+    boardSummary.append(reportBox);
 
     $(".item-list-view").append(tr
-        // .append(id)
-        .append(title)
-        // .append(writer)
-        // .append(writerDate)
-        .append(viewCount)
-        .append(modifyBtn)
+        .append(profileImg)
+        .append(writerTitleRow)
+        .append(boardSummary)
     );
 }
 

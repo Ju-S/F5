@@ -1,9 +1,9 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isELIgnored="false" %>
 <html>
 <head>
     <jsp:include page="/common/Head.jsp"/>
     <link rel="stylesheet" href="/common/common.css"> <!-- common css 링크 -->
-    <link rel="stylesheet" href="/board/detailBoard/detailBoard.css"> <!-- css 링크  -->
+    <link rel="stylesheet" href="/board/writeBoard/writeBoard.css"> <!-- css 링크  -->
 
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.js"></script>
@@ -14,7 +14,7 @@
 <body>
 <jsp:include page="/common/header/Header.jsp"/>
 
-<form action="/write.board" method="post">
+<form action="/write.board" method="post" accept-charset="UTF-8">
     <div class="container">
         <div class="row">
             <div class="col-1">
@@ -23,11 +23,11 @@
             <div class="col-11 mainContents">
                 <div class="titleBox">
                     <div class="title">제목</div>
-                    <div class="titleText"><input type="text" placeholder="Title" name="title"></div>
+                    <div class="titleText"><input type="text" placeholder="Title" name="title" required></div>
                     <input type="hidden" name="writer" value="${sessionScope.loginId}">
                 </div>
                 <div class="tagsBox d-flex">
-                    <div class="tag1">
+                    <div class="gameId-box">
                         게임태그
                         <label for="gameId"></label>
                         <select class="form-select custom-size" id="gameId" name="gameId"
@@ -41,7 +41,7 @@
                             <option value="5">Game5</option>
                         </select>
                     </div>
-                    <div class="tag2">
+                    <div class="board_category-box">
                         태그
                         <label for="board_category"></label>
                         <select class="form-select custom-size" id="board_category" name="boardCategory"
@@ -57,14 +57,15 @@
                 <div class="editorBox">
                     <textarea id="summernote" name="contents"></textarea>
                 </div>
-                <div class="completeBox">
-                    <div class="complete1"></div>
-                    <div class="complete2">
+                <div class="button-box">
+                    <div class="empty-box"></div>
+                    <div class="cancelBtn-box">
                         <button type="submit" class="btn btn-primary" id="cancel">취소</button>
                     </div>
-                    <div class="complete3">
+                    <div class="completeBtn-box">
                         <button type="submit" class="btn btn-primary" id="complete">작성완료</button>
                     </div>
+
                 </div>
             </div>
         </div>

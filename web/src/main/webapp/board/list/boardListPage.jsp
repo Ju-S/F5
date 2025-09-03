@@ -21,22 +21,23 @@
         </div>
         <div class="col-11 vh-100">
             <div class="row toolbar">
-                <div class="col-2 filter p-0">
+                <div class="col-2 filter">
                     <!-- 필터 -->
                     <jsp:include page="/board/list/components/FilterSelect.jsp"/>
                 </div>
-                <div class="col search p-0">
+                <div class="col-4 search">
                     <!-- 검색어 -->
                     <jsp:include page="/board/list/components/SearchBar.jsp"/>
                 </div>
-                <div class="col-2 p-0 write">
+                <div class="col-4"></div>
+                <div class="col-2 write">
                     <!-- 글 작성 버튼 -->
                     <button id="writeBtn" onClick="location.href = '/write_board.page'" class="btn"
                             type="button">글 작성
                     </button>
                 </div>
             </div>
-            <div class="boardList mt-5">
+            <div class="boardList">
                 <div class="row">
                     <div class="col p-0">
                         <table class="item-list-view"><!-- 게시글 목록 --></table>
