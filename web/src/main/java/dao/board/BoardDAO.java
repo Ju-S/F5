@@ -159,7 +159,7 @@ public class BoardDAO {
     //region update
     //TODO: 게시글 수정
     public int updateBoard(BoardDTO boardDTO)throws Exception{
-        String sql = "update board set title=?,game_id=?,board_category=?,contents=?,where id=?";
+        String sql = "update board set title=?,game_id=?,board_category=?,contents=? where id=?";
         try(Connection con = DataUtil.getConnection();
         PreparedStatement pstat = con.prepareStatement(sql)){
             pstat.setString(1,boardDTO.getTitle());
@@ -174,5 +174,13 @@ public class BoardDAO {
 
     //region delete
     //TODO: 게시글 삭제
+    public int deleteBoard(Long boardId) throws Exception {
+        String sql = "delete from board where id = ?";
+        try (Connection con = DataUtil.getConnection();
+        PreparedStatement pstat = con.prepareStatement(sql)){
+            pstat.setLong(1, boardId);
+            return pstat.executeUpdate();
+        }
+    }
     //endregion
 }

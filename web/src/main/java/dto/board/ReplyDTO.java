@@ -11,6 +11,7 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 public class ReplyDTO {
     private long id;
+    private String writer;
     private long boardId;
     private String contents;
     private long likeCount;

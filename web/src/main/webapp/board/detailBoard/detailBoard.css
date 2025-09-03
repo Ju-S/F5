@@ -53,11 +53,11 @@
     flex-direction: column;
     margin-bottom: 50px;
 }
-.comment-box{
+#comment-box{
     height:750px;
     overflow-y: auto;
     overflow-x:hidden;
-
+    padding-top: 8px;
 }
 /* 게시글 상단 프로필 자리 */
 .profile-row{
@@ -67,11 +67,20 @@
 .profile-img {
     width: 50px;
     height: 50px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-img img {
+    width: 50px;
+    height: 50px;
 }
 
 /* 댓글 1개 row */
 .comments{
-    margin-top: 10px;
+    /*margin-top: 10px;*/
 }
 /* 댓글 작성 input */
 .comment-card input[type="text"] {
@@ -105,11 +114,13 @@
 }
 /*댓글 작성자 칸*/
 .comment-writer{
-    padding-left:30px;
+    padding-left:10px;
+    font-size: 14px;
     font-family: var(--sub-font);
 }
 .comment-contents{
-    padding-left:30px;
+    padding-left:10px;
+    font-size: 16px;
 }
 .send-btn-row{
     margin-top: auto;
@@ -201,4 +212,18 @@
 }
 .vertical-dots:hover,.vertical-dots:active{
     background-color: var(--btnsub-hover-color);
+}
+#commentUpdate{
+    font-family: var(--sub-font);
+}
+#commentUpdate:hover,#commentUpdate:active{
+    background-color: var(--mainbtn-hover-color) !important;
+    font-family: var(--sub-font);
+}
+#commentDelete{
+    font-family: var(--sub-font);
+}
+#commentDelete:hover,#commentDelete:active{
+    background-color: var(--btnsub-hover-color) !important;
+    font-family: var(--sub-font);
 }

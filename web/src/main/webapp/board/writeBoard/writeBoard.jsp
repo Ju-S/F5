@@ -47,10 +47,10 @@
                         <select class="form-select custom-size" id="board_category" name="boardCategory"
                                 aria-label="Default select example" required>
                             <!-- board_category -->
-                            <option value="" disabled selected>Open this select menu</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                            <option value="" disabled selected>Filter</option>
+                            <option value="1">정보/공략</option>
+                            <option value="2">질문</option>
+                            <option value="3">후기</option>
                         </select>
                     </div>
                 </div>
@@ -65,7 +65,6 @@
                     <div class="completeBtn-box">
                         <button type="submit" class="btn btn-primary" id="complete">작성완료</button>
                     </div>
-
                 </div>
             </div>
         </div>

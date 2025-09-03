@@ -49,71 +49,35 @@
                         </div>
                     </div>
 
-                    <div class="row post-btn-row"> <!-- 삭제 수정 버튼 영역 -->
+                    <c:if test="${sessionScope.loginId == boardDetail.writer}">
+                        <div class="row post-btn-row"> <!-- 삭제 수정 버튼 영역 -->
 
-                        <div class="col-6 empty-box"></div>
-                        <c:if test="${loginId eq boardDetail.writer}"> <!-- 게시글 주인만 삭제 수정 버튼 관여 가능 -->
+                            <div class="col-6 empty-box"></div>
+
                             <div class="col-3 deleteBtn_box">
-                                <button type="submit" class="btn btn-primary" id="delete">삭제</button>
+                                <button onClick="location.href = `/delete.board?boardId=${boardDetail.id}`"
+                                        class="btn btn-primary" id="delete">삭제
+                                </button>
                             </div>
                             <div class="col-3 updateBtn_box">
-                                <button type="submit" class="btn btn-primary" id="update">수정</button>
+                                <button onClick="location.href = `/update_form.board?boardId=${boardDetail.id}`"
+                                        class="btn btn-primary" id="update">수정
+                                </button>
                             </div>
-                            <!-- 수정완료 버튼 (초기에는 숨김) -->
-
-                            <div class="col-9 d-none" id="update-complete-box">
-                                <form id="updateForm" action="update.board" method="post">
-                                    <button type="submit" class="btn btn-success w-100" id="update-complete">수정완료
-                                    </button>
-                                </form>
-                            </div>
-
-                            <!-- 취소 버튼 (초기에는 숨김) -->
-                            <div class="col-3 d-none" id="cancel-box">
-                                <button type="button" class="btn btn-secondary w-100" id="cancel">취소</button>
-                            </div>
-                        </c:if>
-                    </div>
-
+                        </div>
+                    </c:if>
                 </div>
-
 
                 <div class="col-5 comment-card"> <!-- 댓글영역 -->
                     <!-- 여기가 이제 forEach로 묶일거임 -->
-                    <div class="comment-box">
+                    <div id="comment-box">
                         <div class="row comments">
-                            <div class="col-1 profile">
-                                <img src="/board/detailBoard/profile_img/replyProfile.jpg"
-                                     class="rounded-circle profile-img" alt="..."
-                                     style="width: 50px; height: 50px;">
-                            </div>
-                            <div class="col-10">
-                                <div class="row">
-                                    <div class="col-12 comment-writer">
-                                        작성자
-                                    </div>
-                                    <div class="col-12 comment-contents">
-                                        댓글내용~~~
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-1">
-                                <div class="reportBox">
-                                    <button type="button" class="btn btn-sm btn-dark dropdown-toggle" id="reportComment"
-                                            data-bs-toggle="dropdown" aria-expanded="false"
-                                            style="background: transparent; border: none; padding: 0;">
-                                        <i class="bi bi-three-dots-vertical vertical-dots"></i>
-                                    </button>
-                                    <ul class="dropdown-menu dropdown-menu-end report-menu">
-                                        <li><a class="dropdown-item text-danger" href="#">신고하기</a></li>
-                                    </ul>
-                                </div>
-                            </div>
+
                         </div>
                     </div>
                     <div class="row send-btn-row">
                         <div class="col-9">
-                            <input type="text" placeholder="댓글 작성">
+                            <input type="text" id="commentContents" placeholder="댓글 작성">
                         </div>
                         <div class="col-3 sendBtn_box">
                             <button type="submit" class="btn btn-primary" id="sendBtn"><i
@@ -126,6 +90,12 @@
         </div>
     </div>
 </div>
+<script>
+    let params = new URLSearchParams(window.location.search);
+    let boardId = params.get("boardId");
+
+    let loginId = "${sessionScope.loginId}";
+</script>
 <script src="/board/detailBoard/detailBoard.js"></script>
 </body>
 </html>

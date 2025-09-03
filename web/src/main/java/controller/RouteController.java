@@ -1,5 +1,7 @@
 package controller;
 
+import dto.board.BoardDTO;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,7 +23,7 @@ public class RouteController extends HttpServlet {
                     break;
                 }
                 case "/write_board.page": {
-                    request.getRequestDispatcher("/board/detailBoard/writeBoard.jsp").forward(request, response);
+                    request.getRequestDispatcher("/board/writeBoard/writeBoard.jsp").forward(request, response);
                     break;
                 }
             }
