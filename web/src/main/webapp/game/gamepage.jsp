@@ -202,14 +202,35 @@
                                 <div class="reply_profile"><i class="fa-solid fa-user"></i></div>
 
                                 <div class="reply_main">
-                                    <div class="reply_center "> 작성자 :  ${i.writer} ${i.tier}</div>
+                                    <div class="reply_center"> 작성자 : ${i.writer} <img src="${i.tier}" alt="tier_icon" class="tier_icon"></div>
 
                                     <div class="reply_center reply_content" name="contents"
                                          value="${i.contents}" contenteditable="false" data-original="${i.contents}">
                                             ${i.contents}
                                     </div>
                                 </div>
+                                <div class="dropdown">
+                                        <%-- 원본 class="btn btn btn-dark dropdown-toggle" --%>
+                                    <form action="/report_reply.game" method="get">
+                                        <input type = "hidden" name="gameId" value="${i.gameId}">
+                                        <input type = "hidden" name="writer" value="${i.writer}">
+                                        <input type = "hidden" name="reportcount" value="${i.report_count}">
+                                        <button type="button" class="btn btn btn-dark" id="reportPost" data-bs-toggle="dropdown" aria-expanded="false"
+                                                style="background: transparent; border: none; padding: 0;">
+                                            <i class="bi bi-three-dots-vertical"></i>
+                                        </button>
+
+                                        <ul class="dropdown-menu dropdown-menu-end">
+                                            <li><button type="submit" class="dropdown-item text-danger" >신고하기</button></li>
+                                        </ul>
+                                    </form>
+                                </div>
                             </div>
+
+
+
+
+
                         </c:otherwise>
 
                         </c:choose>
