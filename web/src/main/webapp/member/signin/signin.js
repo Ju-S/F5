@@ -16,6 +16,143 @@ let checkedList ={
 }
 
 
+
+
+
+let code = "";  /*인증번호 저장할 곳*/
+$('#emailBtn').click(function() {
+    let email = $('#email').val();
+    console.log('완성된 이메일 : ' + email);
+    let checkInput = $('#emailCode');
+
+    $.ajax({
+        type: 'GET',
+        url: '/mailCheck.member',
+        data: { email: email },           // ★ 파라미터는 data로 보내는 게 안전
+        success: function (res) {
+            try { res = typeof res === 'string' ? JSON.parse(res) : res; } catch (e) {}
+            if (res && res.ok) {
+                checkInput
+                    .prop('disabled', false)
+                    .val('')
+                    .removeClass('input-error')
+                    .focus();
+                $('#emailCodeBtn').prop('disabled', false).removeClass('disabled');
+                alert('인증번호가 전송되었습니다.');
+            } else {
+                alert('이메일 전송 실패. 잠시 후 다시 시도해주세요.');
+            }
+        }
+    });
+});
+
+
+// 이메일을 인풋에 무언가를 쓸 때
+$(document).on('input', '#email', function () {
+    dupliEmailCheck = false;
+    checkedList.email = null;
+
+    //이메일 코드
+    $('#emailCode')
+        .val('')
+        .prop('readonly', false)
+        .prop('disabled', true)
+        .removeClass('input-error');
+
+    console.log("이메일인풋 침"+"중복이메일체크불리언"+dupliEmailCheck+"이메일"+ checkedList.email);
+ /*   $('#emailCodeBtn')
+        .prop('disabled', true)
+        .removeClass('disabled');*/
+/*    $('#emailBtn').prop('disabled', false).removeClass('disabled');*/
+});
+
+
+// ★ 인증 코드 확인 버튼 클릭
+$('#emailCodeBtn').on('click', function () {
+    const emailVal = $('#email').val().trim();      // 이메일은 email 입력칸에서
+    const codeVal  = $('#emailCode').val().trim();  // 코드는 emailCode 입력칸에서
+
+    if (!emailVal) { alert('이메일을 먼저 입력하세요.'); $('#email').focus(); return; }
+    if ($('#emailCode').prop('disabled')) { alert('이메일 인증을 먼저 요청하세요.'); return; }
+    if (codeVal.length !== 6) { $('#emailCode').addClass('input-error'); alert('6자리 코드를 입력하세요.'); return; }
+
+    // 클릭 중복 방지
+    const $btn = $(this);
+    $btn.prop('disabled', true);
+
+    $.ajax({
+        type: 'POST',
+        url: '/verifyEmailCode.member',
+        data: { email: emailVal, code: codeVal },
+        dataType: 'json'
+    }).done(function (res) {
+        try { res = (typeof res === 'string') ? JSON.parse(res) : res; } catch(e) {}
+        const ok = (res && (res.ok === true)) || res === true || res === "true";
+
+        // ✅ emailCode 전용 모달 사용
+        const modalEl = document.getElementById('emailCodeModal');
+        const modal   = new bootstrap.Modal(modalEl);
+        const $bodyP  = $('#emailCodeModal .modal-body p');
+        const $footer = $('#emailCodeModal .modal-footer');
+
+        if (ok) { // 이메일 인증 완료
+            let str = "이메일이 인증되었습니다";
+            $bodyP.html(str);
+
+            $('#emailCode').removeClass('input-error');
+
+            let $btn3 = $("<button>").attr({
+                "type": "button",
+                "class": "btn btn-primary modalBtn",
+                "data-bs-dismiss": "modal",
+                "id": "btn3"
+            }).html("인증완료")
+                .on("click",function(){
+                    dupliEmailCheck = true;
+                    checkedList.email = emailVal;
+                    $('#emailCode').prop('readonly', true);
+                    $('#emailCodeBtn').prop('disabled', true).addClass("disabled");
+                    console.log("이메일 인증완료버튼 침"+"중복이메일체크불리언"+dupliEmailCheck+"이메일"+ checkedList.email);
+                });
+
+            $footer.html("").append($btn3);
+
+
+        } else { // 이메일 인증 실패
+            let str = "이메일이 인증되지 않았습니다";
+            $bodyP.html(str);
+
+            $('#emailCode').addClass('input-error');
+
+            let $btn1 = $("<button>").attr({
+                "type": "button",
+                "class": "btn btn-secondary",
+                "data-bs-dismiss": "modal",
+                "id": "btn1"
+            }).html("인증실패")
+                .on("click", function(){
+                    dupliEmailCheck = false;
+                    console.log("이메일인증 실패 버튼 침"+"중복이메일체크불리언"+dupliEmailCheck+"이메일"+ checkedList.email);
+
+                });
+
+            $footer.html("").append($btn1);
+        }
+        modal.show(); // Ajax 완료 후 모달 띄우기
+
+
+    }).fail(function () {
+        dupliEmailCheck = false;
+        $('#emailCode').addClass('input-error');
+        alert('서버 통신 중 오류가 발생했습니다. 이메일 인증을 다시 시도해주세요.');
+    }).always(function () {
+        $btn.prop('disabled', false);
+    });
+});
+
+
+
+
 // 아이디 중복 확인 버튼
 $(document).ready(function () {
     dupliCheck("#idBtn", "/dupliIdCheck.member"); /*아이디 중복 버튼 눌리면*/
@@ -24,125 +161,79 @@ $(document).ready(function () {
 })
 
 //중복 버튼에 관하여 함수 만들기
-function dupliCheck(button, url){
+function dupliCheck(button, url) {
     /*어떤 버튼 눌렸을때*/
     $(button).on("click", function () {
-        let $target =$(this).parent().children().first(); //input의 val
-        let target =$target.attr('id');// input의 아이디를 스트링으로 가져옴(id 또는 nickname)
+        let $target = $(this).parent().children().first(); //input의 val
+        let target = $target.attr('id');// input의 아이디를 스트링으로 가져옴(id 또는 nickname)
 
 
-
-        let isOk = applyRegex(target, rules, { strict: true }); // ★ dirty: 중복검사 전에 엄격 검증
+        let isOk = applyRegex(target, rules, {strict: true}); // ★ dirty: 중복검사 전에 엄격 검증
         if (!isOk) {
-            alert(rules["#"+target].msg);
+            alert(rules["#" + target].msg);
             $target.focus();
             return;  // ★ 여기서 종료: 모달/서버호출 안 함
         }
 
 
-
-        $.ajax({ //ajax로 id보냄
+        $.ajax({
             url: url,
             type: "post",
-            data: { [target]: $target.val() }
-
-        }).done(function (response) { //response true(중복) /false(사용가능) string값으로 받음
-            let modalId = target + "Modal";
-            let modal = new bootstrap.Modal(document.getElementById(modalId));//인스턴스생성
+            dataType: "text",
+            data: { [target]: ($target.val() || "").trim() }
 
 
-            //결과가 중복되었다면
+        }).done(function (response) {
+            response = String(response || "").trim().toLowerCase();
+            console.log("response["+response+"]");
+
+            //모달 인스턴스 생성
+            const modalId = target + "Modal";
+            const $modal  = $("#" + modalId);
+            const modal   = new bootstrap.Modal($modal[0]);
+            const $bodyP  = $modal.find(".modal-body p");
+            const $footer = $modal.find(".modal-footer");
+
+
+
+            //중복된 아이디일경우
             if (response === "true") {
-                let str = "사용 불가한 "+target+" 입니다";
-                $(".modal-body p").html(str); //모달바디 안에 스트링 넣고
+                $bodyP.html("사용 불가한 " + target + " 입니다");
+                const $btn1 = $("<button>", { type:"button", class:"btn btn-secondary", "data-bs-dismiss":"modal", id:"btn1" })
+                    .text("닫기")
+                    .on("click", function () {
+                        if (target === "id") { dupliIdCheck = false; $("#id").val("").focus(); }
+                        else { dupliNicknameCheck = false; $("#nickname").val("").focus(); }
+                    });
+                $footer.empty().append($btn1); //푸터에 버튼 1 추가
 
 
-                let $btn1 = $("<button>").attr({
-                    "type": "button",
-                    "class": "btn btn-secondary",
-                    "data-bs-dismiss": "modal",
-                    "id": "btn1"
-                }).html("닫기"); //닫기 버튼 만들고
-
-                //닫기 버튼 눌렀을 때, 포커스 주기
-                $btn1.on("click", function () {
-
-                    if(target==="id"){ //아이디중복 버튼 눌렀으면
-                        dupliIdCheck = false;
-                        $("#id").val("").focus();
-                        console.log(dupliIdCheck);
-
-                    }else if(target==="nickname"){//닉네임중복 버튼 눌렀으면
-                        dupliNicknameCheck = false;
-                        $("#nickname").val("").focus();
-                        console.log(dupliNicknameCheck);
-                    }
-                });
-
-                $(".modal-footer").html("").append($btn1);//모달 푸터에 닫기 버튼 넣기
-
-
-                //결과가 중복 안되었다면
+                //중복되지 않은 아이디일경우
             } else if (response === "false") {
-                let str = "사용 가능한"+target+" 입니다";
+                $bodyP.html("사용 가능한 " + target + " 입니다");
+                const $btn2 = $("<button>", { type:"button", class:"btn btn-secondary", "data-bs-dismiss":"modal", id:"btn2" })
+                    .text("취소")
+                    .on("click", function () {
+                        if (target === "id") { dupliIdCheck = false; $("#id").val("").focus(); }
+                        else { dupliNicknameCheck = false; $("#nickname").val("").focus(); }
+                    });
 
-                $(".modal-body p").html(str); //모달바디 안에 스트링 넣고
-
-                let $btn2 = $("<button>").attr({
-                    "type": "button",
-                    "class": "btn btn-secondary",
-                    "data-bs-dismiss": "modal",
-                    "id": "btn2"
-                }).html("취소"); //취소버튼
-
-                let $btn3 = $("<button>").attr({
-                    "type": "button",
-                    "class": "btn btn-primary modalBtn",
-                    "data-bs-dismiss": "modal",
-                    "id": "btn3"
-                }).html("사용하기"); //사용하기 버튼
+                const $btn3 = $("<button>", { type:"button", class:"btn btn-primary modalBtn", "data-bs-dismiss":"modal", id:"btn3" })
+                    .text("사용하기")
+                    .on("click", function () {
+                        if (target === "id") { dupliIdCheck = true; checkedList.id = $("#id").val(); }
+                        else { dupliNicknameCheck = true; checkedList.nickname = $("#nickname").val(); }
+                        setTimeout(() => { target === "id" ? $("#nickname").focus() : $("#pw").focus(); }, 0);
+                    });
+                $footer.empty().append($btn2, $btn3); //푸터에 버튼 2,3 추가
 
 
-                //취소 버튼 눌렀을 때 값 지우고, 포커스 주기
-                $btn2.on("click", function () {
-
-                    if(target==="id"){ //아이디중복 버튼 눌렀으면
-                        dupliIdCheck = false;
-                        $("#id").val("").focus();
-                        console.log(dupliIdCheck);
-                    } else if(target==="nickname"){//닉네임 중복 버튼 눌렀으면
-                        dupliNicknameCheck = false;
-                        $("#nickname").val("").focus();
-                        console.log(dupliNicknameCheck);
-                    }
-                });
-
-                //사용하기 버튼 눌렀을 때 검사 값 true로 바꾸기
-                $btn3.on("click", function () {
-                    if(target==="id"){//아이디중복 버튼 눌렀으면
-                        dupliIdCheck = true;
-                        checkedList.id=$("#id").val(); //중복검사 완료 객체에 저장
-                        console.log(dupliIdCheck);//true뜸
-                    }else if(target==="nickname"){
-                        dupliNicknameCheck = true;
-                        checkedList.nickname=$("#nickname").val(); //중복검사 완료 객체에 저장
-                        console.log(dupliNicknameCheck);//true뜸
-                    }
-
-                    setTimeout(() => {
-                        if (target === "id") {
-                            $("#nickname").focus();
-                        } else if (target === "nickname") {
-                            $("#pw").focus(); // 예시
-                        }
-
-                    }, 0);
-
-                });
-
-                $(".modal-footer").html("").append($btn2).append($btn3);//모달 푸터에 닫기 버튼 넣기
+            } else {
+                $bodyP.text("예상치 못한 응답: " + response);
+                $footer.empty();
             }
-            modal.show(); // Ajax 완료 후 모달 띄우기
+
+            modal.show();
         });
     })
 }
@@ -183,8 +274,8 @@ function setErrorBorder($target, ok) {
 
 
 // 현재 input 쓰여진 결과 검사해주는 함수
-function applyRegex(target,rules, opts = {}){ // ★ dirty: 엄격검증 옵션 추가
-    let $target= $("#"+target);
+function applyRegex(target, rules, opts = {}) { // ★ dirty: 엄격검증 옵션 추가
+    let $target = $("#" + target);
     const strict = !!opts.strict;            // ★
 
     // ★ dirty: 라이브 검증에서 빈 값은 보더 제거하고 통과로 취급
@@ -200,10 +291,8 @@ function applyRegex(target,rules, opts = {}){ // ★ dirty: 엄격검증 옵션 
     }
 
 
-    const rule = rules["#"+target];
+    const rule = rules["#" + target];
     if (!rule || !rule.regex) return true; //regex 없는경우는 true 리턴
-
-
 
 
     const ok = rule.regex.test($target.val().trim()); // ★ dirty: trim 후 검사
@@ -227,13 +316,14 @@ $(document).on("input blur", "input", function (e) {
         const val = $(this).val().trim();
         if (!$(this).data("dirty") || val === "") {
             $(this).removeClass("input-error");
-            if (id === "pw") { $("#pwCheck").removeClass("input-error"); }
+            if (id === "pw") {
+                $("#pwCheck").removeClass("input-error");
+            }
             return;
         }
     }
 
     applyRegex(id, rules);
-
 
     if (id === "pw") applyRegex("pwCheck", rules);
 
@@ -243,50 +333,17 @@ $(document).on("input blur", "input", function (e) {
     if (id === "nickname") {
         dupliNicknameCheck = ($(this).val().trim() === checkedList.nickname);
     }
-    if (id === "email") {
-        dupliEmailCheck = ($(this).val().trim() === checkedList.email);
-    }
+
+
 });
 
 
-
-//제출버튼 눌렀을 때
-$("form").on("submit",function(){
-    let fields = ["#id", "#nickname", "#pw", "#pwCheck", "#name", "#email"];
-
-    // 1. 비어있는 칸 있으면 채우라고 alert 띄우기
-    let emptyInput = fields.find(target=>$(target).val().trim()===""); //비어져 잇는 선택자 가져오고, 아니면 undefinded
-    if(emptyInput || selectedYear===null || selectedGender=== null){
-        alert("모든 입력 완료후 회원가입이 가능합니다");// 안채워진 칸 있으면 먼저 채우라고 alert
-        if (emptyInput) $(emptyInput).focus();
-        else if (selectedYear === null) $("#dropdownMenuButton2").focus();
-        else if (selectedGender === null) $("input[name='sex']").first().focus();
-        return false;
-    }
-
-
-    // 2.regex 검사는 keyup에 바인딩 되어있으나, 수정하지 않고 submit하면 다시 알리고 return
-    if ($(fields[0]).hasClass("input-error")) { alert(rules["#id"].msg); return false; }
-    else if ($(fields[1]).hasClass("input-error")) { alert(rules["#nickname"].msg); return false; }
-    else if ($(fields[2]).hasClass("input-error")) { alert(rules["#pw"].msg); return false; }
-    else if ($(fields[3]).hasClass("input-error")) { alert(rules["#pwCheck"].msg); return false; }
-    else if ($(fields[4]).hasClass("input-error")) { alert(rules["#name"].msg); return false; }
-    else if ($(fields[5]).hasClass("input-error")) { alert(rules["#email"].msg); return false; }
-
-
-    //3. 인증 안했으면 인증하라고 alert
-    if(dupliIdCheck ===false){alert("아이디 중복체크를 진행해주세요"); $("#idBtn").focus();return false;}
-    if(dupliNicknameCheck ===false){alert("닉네임 중복체크를 진행해주세요"); $("#nicknameBtn").focus();return false;}
-    if(dupliEmailCheck ===false){alert("이메일 인증을 진행해주세요"); $("#emailBtn").focus();return false;}
-})
-
-
 //닫기 누르면 뒤로가기
-$("#delBtn").on("click",function(){
+$("#delBtn").on("click", function () {
     location.href = "/index.jsp";
 })
 //연도 드롭다운 내용 채우기 + 클릭하면 selectedYear에 저장
-let $ul = $(".dropdown-menu");
+let $ul = $("#yearMenu");
 let currentYear = new Date().getFullYear(); // 현재 년도 가져오기
 for (let i = currentYear; i >= 1900; i--) {
     let $li = $("<li>");
@@ -295,14 +352,80 @@ for (let i = currentYear; i >= 1900; i--) {
     // 클릭 이벤트 추가
     $a.on("click", function (e) {
         selectedYear = $(this).text(); // 선택된 연도 저장
+        console.log(selectedYear);
+        $("#targetYear").val(selectedYear);
         e.preventDefault(); // 링크 이동 방지
         $("#dropdownMenuButton2").text($(this).text()); // 버튼 텍스트 변경
     });
     $li.append($a);
     $ul.append($li);
 }
+
+
 // 성별 체크 값 selectedGender에 넣어놓기
 $("input[name='sex']").on("change", function () {
     selectedGender = $(this).val();
-});
+})
+
+
+
+//제출버튼 눌렀을 때
+$("form").on("submit", function () {
+    let fields = ["#id", "#nickname", "#pw", "#pwCheck", "#name", "#email"];
+
+    // 1. 비어있는 칸 있으면 채우라고 alert 띄우기
+    let emptyInput = fields.find(target => $(target).val().trim() === ""); //비어져 잇는 선택자 가져오고, 아니면 undefinded
+    if (emptyInput || selectedYear === null || selectedGender === null) {
+        alert("모든 입력 완료후 회원가입이 가능합니다");// 안채워진 칸 있으면 먼저 채우라고 alert
+        if (emptyInput) $(emptyInput).focus();
+        else if (selectedYear === null) $("#dropdownMenuButton2").focus();
+        else if (selectedGender === null) $("input[name='sex']").first().focus();
+        return false;
+    }
+
+
+    // 2.regex 검사는 document의 input blur에 바인딩 되어있으나, 수정하지 않고 submit하면 다시 알리고 return하기
+    if ($(fields[0]).hasClass("input-error")) {
+        alert(rules["#id"].msg);
+        return false;
+    } else if ($(fields[1]).hasClass("input-error")) {
+        alert(rules["#nickname"].msg);
+        return false;
+    } else if ($(fields[2]).hasClass("input-error")) {
+        alert(rules["#pw"].msg);
+        return false;
+    } else if ($(fields[3]).hasClass("input-error")) {
+        alert(rules["#pwCheck"].msg);
+        return false;
+    } else if ($(fields[4]).hasClass("input-error")) {
+        alert(rules["#name"].msg);
+        return false;
+    } else if ($(fields[5]).hasClass("input-error")) {
+        alert(rules["#email"].msg);
+        return false;
+    }
+
+
+    //3. 인증 안했으면 인증하라고 alert
+    if (dupliIdCheck === false) {
+        alert("아이디 중복체크를 진행해주세요");
+        $("#idBtn").focus();
+        return false;
+    }
+    if (dupliNicknameCheck === false) {
+        alert("닉네임 중복체크를 진행해주세요");
+        $("#nicknameBtn").focus();
+        return false;
+    }
+    if (dupliEmailCheck === false) {
+        alert("이메일 인증을 진행해주세요");
+        $("#emailBtn").focus();
+        return false;
+    }
+
+
+
+})
+
+
 
