@@ -42,28 +42,45 @@ function updateActiveButton(clickedButton) {
     });
 }
 
-// 초기에 active 버튼 찾아서 이미지 맞춰주기
-document.addEventListener('DOMContentLoaded', () => {
-    const initiallyActive = document.querySelector('.menu-button.active');
-    if (initiallyActive) {
-        updateActiveButton(initiallyActive);
+/* 사용자 프로필 설정 */
+document.addEventListener("DOMContentLoaded", () => {
+    const imgFileBtn = document.getElementById("imgFileBtn");
+    const fileInput = document.getElementById("fileInput");
+
+    if (imgFileBtn && fileInput) {
+        imgFileBtn.addEventListener("click", () => fileInput.click());
+
+        fileInput.addEventListener("change", () => {
+            const file = fileInput.files[0];
+            if (!file) return;
+
+            /* <form> 안의 첫 번째 <img>만 변경 */
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const previewImg = document.querySelector("#profileUploadForm img");
+                if (previewImg) {
+                    previewImg.src = e.target.result;
+                }
+            };
+            reader.readAsDataURL(file);
+
+            const formData = new FormData();
+            formData.append("file", file);
+
+            // 파일 업로드인지 확인
+            fetch("/uploadImgFile.member", {
+                method: "POST",
+                body: formData
+            }).then(res => {
+                if (res.ok) {
+                    console.log("업로드 성공");
+                } else {
+                    alert("업로드 실패");
+                }
+            }).catch(err => {
+                console.error(err);
+                alert("에러 발생");
+            });
+        });
     }
-});
-
-// 클릭 시 업데이트
-buttons.forEach(button => {
-    button.addEventListener('click', () => {
-        updateActiveButton(button);
-    });
-});
-
-
-//수정, 수정완료, 취소 버튼
-document.querySelectorAll('.dropdown-menu a').forEach(item => {
-    item.addEventListener('click', function (e) {
-        e.preventDefault();
-        const selectedYear = this.textContent;
-        this.closest('.dropdown').querySelector('button').textContent = selectedYear;
-        // 필요시 숨겨진 input 등에 값 넣기 가능
-    });
 });

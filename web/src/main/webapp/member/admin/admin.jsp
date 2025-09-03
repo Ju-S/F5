@@ -21,14 +21,15 @@
         <!-- main 내용 -->
         <div class="col-11 main-content">
             <!-- 필터 & 버튼 -->
-            <div class="mb-3 d-flex gap-2 custom-margin-bottom">
-                <button class="btn btn-secondary" style="background-color: #3b3f9b; border-color: #3b3f9b;">
+            <div class="d-flex align-items-center gap-2 mb-3">
+                <div class="form-check d-flex align-items-center">
                     <input class="form-check-input" type="checkbox" id="checkboxNoLabel">
-                    <label class="form-check-label" for="checkDefault">
-                        Add
-                    </label>
+                    <label class="form-check-label ms-2" for="checkboxNoLabel">Add</label>
+                </div>
+
+                <button class="btn btn-secondary filter-btn">
+                    Filter ⚙
                 </button>
-                <button class="btn btn-secondary">Filter ⚙</button>
             </div>
 
             <!-- 블랙리스트 게시물 -->

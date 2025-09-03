@@ -2,7 +2,7 @@
 
 html,
 body {
-    font-family: var(--sub-font);
+    font-family: var(--sub-font); /* 폰트 서브 */
 }
 /* 회원정보 전체 박스 */
 .container {
@@ -15,14 +15,20 @@ body {
     border: none;
 }
 
-/* main-content는 옆으로 자동 배치되도록 수정 */
+/* ----- Main Content ----- */
 .main-content {
-    flex-grow: 1;
+    flex: 1;
     padding: 32px;
-    overflow-y: auto;
-    width: calc(100% - 250px); /* ✅ sidebar가 250px일 때 남은 공간 */
+    display: flex;
+    justify-content: flex-start; /* 수정됨 */
+    align-items: flex-start;
+    width: 100%; /* 추가 가능 */
+    height: calc(100vh - 64px); /* padding 위아래 32px*2 제외 */
     position: relative;
+    overflow: hidden;
+    /* 스크롤 차단 */
 }
+
 /* ----- Sidebar ----- */
 .main {
     width: 100%;
@@ -33,7 +39,8 @@ body {
 .sidebar {
     width: 250px; /* ✅ 고정 너비 부여 */
     background-color: var(--primary-color);
-    padding: 32px 16px;
+    padding-left: 16px;
+    padding-right: 32px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -44,18 +51,28 @@ body {
 
 /* 회원 이미지 */
 .profile-image {
-    width: 100px;
-    height: 100px;
+    width: 150px;
+    height: 150px;
     border-radius: 50%;
+    overflow: hidden;
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-image img {
+    width: 100%;      /* 부모 크기에 맞춤 */
+    height: 100%;     /* 부모 크기에 맞춤 */
+    object-fit: cover; /* 비율 유지하며 꽉 채우기 */
 }
 
 /* 이미지 변경 버튼 디자인 */
 .edit-icon {
     position: absolute;
-    left: 60px;
-    top: 76px;
-    background-color: #27282a;
+    left: 100px;
+    top: 120px;
+    background-color: var(--primary-subcolor);
     border-radius: 50%;
     width: 36px;
     height: 36px;
@@ -99,8 +116,18 @@ p {
     flex-direction: column;
     gap: 16px;
     padding: 0;
+    border: none;
+    border-radius: var(--primary-color); /* 이건 border-radius 값인데... */
+}
+.btn:focus,
+.btn:active,
+.btn:focus-visible {
+    outline: none !important;
+    box-shadow: none !important;
+    border: none !important;
 }
 
+/* 이미지 눌렀을때 크기 커지는 코드 */
 .menu-button img{
     width: 24px;
     height: 24px;
@@ -113,6 +140,7 @@ p {
 
 .menu-button {
     width: 100%;
+    height: 48px;
     display: flex;
     align-items: center;
     gap: 12px;
@@ -127,11 +155,13 @@ p {
 }
 
 .menu-button.active {
-    background-color: #3b3f9b;
+    background-color: var(--secondary-color);
+    border: none;
 }
 
 .menu-button:hover:not(.active) {
-    background-color: #3b3f9b;
+    background-color: var(--btnsecondary-hover-color);
+    border: none;
 }
 
 .menu-button:focus {
@@ -143,17 +173,6 @@ p {
     width: 18px;
     height: 18px;
     fill: white;
-}
-
-/* ----- Main Content ----- */
-.main-content {
-    flex: 1;
-    padding: 32px;
-    overflow-y: auto;
-    display: flex;
-    justify-content: flex-start; /* 수정됨 */
-    align-items: flex-start;
-    width: 100%; /* 추가 가능 */
 }
 
 /* ----- Content Box ----- */
@@ -172,7 +191,7 @@ p {
 }
 
 .button-primary {
-    background-color: #f25c1a;
+    background-color: var(--danger-color);
     color: white;
     padding: 12px;
     border: none;
@@ -180,18 +199,31 @@ p {
     flex: 1;
 }
 
+.button-primary.active {
+    background-color: var(--danger-color);
+}
+.button-primary:hover:not(.active){
+    background-color: var(--mainbtn-hover-color);
+}
+
 .button-secondary {
-    background-color: #888;
+    background-color: var(--sub-btn-color);
     color: white;
     padding: 12px;
     border: none;
     border-radius: 6px;
     flex: 1;
+}
+.button-primary.active {
+    background-color: var(--sub-btn-color);
+}
+.button-primary:hover:not(.active){
+    background-color: var(--btnsub-hover-color);
 }
 
 /* 로그아웃 */
 #content-logout {
-    background-color: #2a2a2a;
+    background-color: var(--primary-subcolor);
     border-radius: 16px;
     padding: 40px;
     width: 100%;
