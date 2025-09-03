@@ -21,6 +21,7 @@ import util.FileUtil;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.naming.InitialContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
@@ -60,6 +61,8 @@ public class MemberController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             //region 임시적 모든 dao 선언
+
+            String apiKey = (String) new InitialContext().lookup("java:comp/env/sendgrid/apiKey");
             BoardCategoryDAO boardCategoryDAO = BoardCategoryDAO.getInstance();
             BoardDAO boardDAO = BoardDAO.getInstance();
             BoardFileDAO boardFileDAO = BoardFileDAO.getInstance();
