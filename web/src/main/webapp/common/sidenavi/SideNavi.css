@@ -91,7 +91,34 @@
 }
 
 .submenu.open {
-    max-height: 300px; /* 아이콘 개수에 맞게 조절 가능 */
+    max-height: 500px; /* 아이콘 개수에 맞게 조절 가능 */
+}
+
+
+/*마이페이지 버튼*/
+#mypagebox{
+    margin-bottom: 1vh;
+    display: flex;
+    justify-content: center;
+}
+#mypage{
+    width: 6vh;
+    height: 6vh;
+    border-radius: 50%;
+    margin-top: auto;
+
+    background-color: var(--primary-subcolor);
+}
+#mypagebtn{
+    height: 100%;
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#mypage:hover, #mypage:active {
+    background-color:var(--secondary-color);
 }
 
 

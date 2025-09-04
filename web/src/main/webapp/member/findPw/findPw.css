@@ -1,0 +1,243 @@
+/* 선택 시 포커스 링(선택 사항) */
+#rightBox input.input-error,
+#rightBox textarea.input-error,
+#rightBox select.input-error {
+    border-width: 1.5px !important;
+    border-style: solid !important;
+    border-color: var(--danger-color) !important;
+    box-shadow: 0 0 0 3px rgba(236, 99, 51, .5) !important; /* 그로우 */
+    transition: border-color .15s ease, box-shadow .15s ease;
+}
+
+/* 포커스 상태까지 확실히 덮어쓰기 */
+#rightBox input.input-error:focus,
+#rightBox textarea.input-error:focus,
+#rightBox select.input-error:focus {
+    border-color: var(--danger-color) !important;
+    box-shadow: 0 0 0 3px rgba(236, 99, 51, .5) !important;
+}
+/*보라색 버튼 호버 공용*/
+#emailBtn:hover, #emailCodeBtn:hover, #completeBtn:hover{
+    background-color:var(--btnsecondary-hover-color) !important;
+    border: 1px solid var(--btnsecondary-hover-color) !important;
+}
+#emailBtn:active, #emailCodeBtn:active #completeBtn:active{
+    background-color:var(--btnsecondary-hover-color) !important;
+    border: 1px solid var(--btnsecondary-hover-color) !important;
+}
+
+/*disabled 처리*/
+#emailCodeBtn:disabled ,#emailBtn:disabled{
+    background-color: var(--sub-btn-color) !important;
+    border: 1px solid var(--sub-btn-color) !important;
+}
+#emailCodeBtn:disabled ,#emailBtn:disabled{ opacity: 1 !important; }
+
+
+
+
+
+* {
+    box-sizing: border-box;
+    /*border:1px solid black;*/
+}
+body {
+    background-color: white;
+}
+/*컨테이너*/
+#container1 {
+    width: 100%;/*바디영역 전체 차지*/
+    height: 100%;
+    overflow: hidden;
+}
+
+
+/*왼쪽*/
+#left{
+    float: left;
+    width: 50%;
+    height: 100%;
+
+    position: relative; /*부모 기능 부여*/
+}
+/*아래 깔리는 이미지*/
+#leftZindex2{
+    position: absolute; /* 부모 기준으로 지정 가능 */
+    top: 0; left: 0; width: 100%; height: 100%; /*#left 꽉 채우기*/
+
+    z-index: 2; /*아래 깔리게 인덱스 조절*/
+}
+#leftZindex2 img{
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+}
+/*블러이미지*/
+#leftZindex3{
+    position: absolute; /* 부모 기준으로 지정 가능 */
+    top: 16px; bottom: 16px; left: 16px; right: 16px;  /* 원하는 만큼 지정 */
+
+    /*background-color: #ffffff70; !*단순 블러된 이미지 위해서 직접 지정*!*/
+    z-index: 3;
+}
+#leftText{
+    font-family: var(--title-font);
+    font-size: 90px;
+    font-weight: 600;
+    color: var(--primary-color);
+
+    margin-top: 35%;
+    margin-left: 15%;
+}
+
+
+
+/*오른쪽*/
+#right{
+    float: left;
+    width: 50%;
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+}
+#rightBox{
+    margin-top: 18%;
+    height: 56%;
+    width: 45%;
+}
+
+
+/*텍스트*/
+#findPwText{
+    width: 100%;
+    height: 20%;
+
+    font-family: var(--title-font);
+    font-size: 40px;
+    font-weight: 600;
+    color: var(--primary-color);
+    padding-top: 4%;
+    margin-bottom: 2%;
+}
+
+
+/*이름 이메일 입력칸*/
+#findPwBox {
+    width: 100%;
+    /*height: 30%;*/
+    display: flex;
+    align-items: stretch;
+    flex-direction: column; /* 세로 배치 */
+}
+#findPwBox input{
+    padding-left: 4%;
+    width: 100%;
+    height: 50px;
+    border-radius: 11px; /*22픽셀 너무 둥그래서 임의 지정*/
+    display: block;
+}
+#findPwBox input:nth-child(2){
+    margin-top: 3%;
+}
+#emailBtn{
+    margin-top: 4%;
+    width: 100%;
+    height: 50px;
+    border-radius: 11px; /*22픽셀 너무 둥그래서 임의 지정*/
+    display: block;
+
+    background-color:var(--secondary-color) !important;
+    border: 1px solid var(--secondary-color) !important;
+}
+
+
+/*인증코드 입력칸*/
+#emailCodeBox {
+    margin-top: 13%;
+
+    width: 100%;
+    /*height: 30%;*/
+    display: flex;
+    align-items: stretch;
+    flex-direction: column; /* 세로 배치 */
+}
+#emailCode{
+    padding-left: 4%;
+    width: 100%;
+    height: 50px;
+    border-radius: 11px; /*22픽셀 너무 둥그래서 임의 지정*/
+    display: block;
+}
+#emailCodeBtn{
+    margin-top: 4%;
+    width: 100%;
+    height: 50px;
+    border-radius: 11px; /*22픽셀 너무 둥그래서 임의 지정*/
+    display: block;
+    background-color:var(--secondary-color) !important;
+    border: 1px solid var(--secondary-color) !important;
+}
+
+
+
+/*인증완료되면*/
+#pwChange{
+    font-family: var(--title-font);
+    font-size: 40px;
+    font-weight: 600;
+    color: var(--primary-color);
+
+    margin-top: 70px;
+}
+#pw{
+    margin-top: 40px;
+    width: 100%;
+    height: 50px;
+    padding-left: 4%;
+    border-radius: 11px;
+    display: inline;
+}
+#pwCheck{
+    margin-top: 10px;
+    width: 100%;
+    height: 50px;
+    padding-left: 4%;
+    border-radius: 11px;
+    display: inline;
+}
+#completeBtn{
+    background-color:var(--secondary-color);
+    border-radius: 11px; /*22픽셀 너무 둥그래서 임의 지정*/
+    width: 48%;
+    height: 48px;
+    margin-right: 2%;
+}
+#delBtn{
+    background-color:var(--sub-btn-color);
+    border: 1px solid var(--sub-btn-color);
+    border-radius: 11px; /*22픽셀 너무 둥그래서 임의 지정*/
+    width: 48%;
+    height: 48px;
+    margin-left: 2%;
+}
+#delBtn:hover, #delBtn:active{
+    background-color:var(--btnsub-hover-color);
+}
+
+
+#pwbtnsBox{
+    display: flex;
+    gap: 12px;          /* 버튼 사이 간격 */
+    margin-top: 45px;
+}
+
+.pw-actions #completeBtn,
+.pw-actions #delBtn {
+    flex: 1;            /* 두 버튼 같은 너비 */
+    height: 48px;
+    border-radius: 11px;
+}
+
+
