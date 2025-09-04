@@ -2,6 +2,8 @@
 let dupliIdCheck = false;
 //닉네임 중복검사
 let dupliNicknameCheck = false;
+
+//***************************이메일 프라이머리 키로 만들면 -> 이후에 이메일 중복여부, 이메일 보냈는지 확인여부로 나눠야 함
 //이메일 인증되었는지 확인
 let dupliEmailCheck =false;
 // 연도 체크 값 저장
@@ -14,12 +16,10 @@ let checkedList ={
     nickname :null,
     email:null
 }
-
-
-
-
-
 let code = "";  /*인증번호 저장할 곳*/
+
+
+//인증번호 보내는 버튼 -> ajax로 인증번호 보냄
 $('#emailBtn').click(function() {
     let email = $('#email').val();
     console.log('완성된 이메일 : ' + email);
@@ -47,12 +47,12 @@ $('#emailBtn').click(function() {
 });
 
 
-// 이메일을 인풋에 무언가를 쓸 때
+// 이메일을 인풋에 무언가를 쓰는 순간
 $(document).on('input', '#email', function () {
-    dupliEmailCheck = false;
+    dupliEmailCheck = false; // 값 초기화 시켜서 다시 인증받게 만들기
     checkedList.email = null;
 
-    //이메일 코드
+    //이메일 코드 못건들게 만들기
     $('#emailCode')
         .val('')
         .prop('readonly', false)
@@ -67,35 +67,36 @@ $(document).on('input', '#email', function () {
 });
 
 
-// ★ 인증 코드 확인 버튼 클릭
+// 인증 코드 확인 버튼 클릭
 $('#emailCodeBtn').on('click', function () {
-    const emailVal = $('#email').val().trim();      // 이메일은 email 입력칸에서
-    const codeVal  = $('#emailCode').val().trim();  // 코드는 emailCode 입력칸에서
+    const emailVal = $('#email').val().trim();
+    const codeVal  = $('#emailCode').val().trim();
 
-    if (!emailVal) { alert('이메일을 먼저 입력하세요.'); $('#email').focus(); return; }
-    if ($('#emailCode').prop('disabled')) { alert('이메일 인증을 먼저 요청하세요.'); return; }
-    if (codeVal.length !== 6) { $('#emailCode').addClass('input-error'); alert('6자리 코드를 입력하세요.'); return; }
 
-    // 클릭 중복 방지
+    if (!emailVal) { alert('이메일을 먼저 입력하세요.'); $('#email').focus(); return; } //값 비어있으면 return
+    if ($('#emailCode').prop('disabled')) { alert('이메일 인증을 먼저 요청하세요.'); return; }//인증안했으면 리턴
+    if (codeVal.length !== 6) { $('#emailCode').addClass('input-error'); alert('6자리 코드를 입력하세요.'); return; } //코드 6자리 아니면 리턴
+
+    // 인증코드 확인버튼 두번 못누르게 막아놓기
     const $btn = $(this);
     $btn.prop('disabled', true);
 
     $.ajax({
         type: 'POST',
-        url: '/verifyEmailCode.member',
+        url: '/verifyEmailCode.member', //인증코드 확인 컨트롤러 보내기
         data: { email: emailVal, code: codeVal },
         dataType: 'json'
     }).done(function (res) {
         try { res = (typeof res === 'string') ? JSON.parse(res) : res; } catch(e) {}
         const ok = (res && (res.ok === true)) || res === true || res === "true";
 
-        // ✅ emailCode 전용 모달 사용
+        // email 모달 만들기
         const modalEl = document.getElementById('emailCodeModal');
         const modal   = new bootstrap.Modal(modalEl);
         const $bodyP  = $('#emailCodeModal .modal-body p');
         const $footer = $('#emailCodeModal .modal-footer');
 
-        if (ok) { // 이메일 인증 완료
+        if (ok) { // 이메일 인증 완료 되면
             let str = "이메일이 인증되었습니다";
             $bodyP.html(str);
 
@@ -108,8 +109,8 @@ $('#emailCodeBtn').on('click', function () {
                 "id": "btn3"
             }).html("인증완료")
                 .on("click",function(){
-                    dupliEmailCheck = true;
-                    checkedList.email = emailVal;
+                    dupliEmailCheck = true; //이메일 인증 true로 변경
+                    checkedList.email = emailVal; // 이메일 확인으로 변경
                     $('#emailCode').prop('readonly', true);
                     $('#emailCodeBtn').prop('disabled', true).addClass("disabled");
                     console.log("이메일 인증완료버튼 침"+"중복이메일체크불리언"+dupliEmailCheck+"이메일"+ checkedList.email);
@@ -157,7 +158,6 @@ $('#emailCodeBtn').on('click', function () {
 $(document).ready(function () {
     dupliCheck("#idBtn", "/dupliIdCheck.member"); /*아이디 중복 버튼 눌리면*/
     dupliCheck("#nicknameBtn", "/dupliNicknameCheck.member"); /*닉네임 중복버튼 누르면*/
-    //To-DO : 여기다가 이메일 체크 함수도 바인딩해놓기
 })
 
 //중복 버튼에 관하여 함수 만들기
@@ -174,7 +174,6 @@ function dupliCheck(button, url) {
             $target.focus();
             return;  // ★ 여기서 종료: 모달/서버호출 안 함
         }
-
 
         $.ajax({
             url: url,
@@ -238,6 +237,7 @@ function dupliCheck(button, url) {
     })
 }
 
+
 // 정규식 규칙 & 메시지
 const rules = {
     "#id": {
@@ -273,17 +273,18 @@ function setErrorBorder($target, ok) {
 }
 
 
-// 현재 input 쓰여진 결과 검사해주는 함수
-function applyRegex(target, rules, opts = {}) { // ★ dirty: 엄격검증 옵션 추가
+// regex 실시간 검사 함수
+function applyRegex(target, rules, opts = {}) {
     let $target = $("#" + target);
-    const strict = !!opts.strict;            // ★
+    const strict = !!opts.strict;
 
-    // ★ dirty: 라이브 검증에서 빈 값은 보더 제거하고 통과로 취급
+    // dirty: 라이브 검증에서 빈 값은 보더 제거하고 통과로 취급
     if (!strict && $target.val().trim() === "") {
         $target.removeClass("input-error");
         return true;
     }
 
+    //pwCheck에 대하여는 pw와 값이 같은지를 확인
     if (target === "pwCheck") {
         let ok = $target.val().length > 0 && $target.val() === $("#pw").val().trim();
         setErrorBorder($target, ok);
@@ -295,7 +296,8 @@ function applyRegex(target, rules, opts = {}) { // ★ dirty: 엄격검증 옵�
     if (!rule || !rule.regex) return true; //regex 없는경우는 true 리턴
 
 
-    const ok = rule.regex.test($target.val().trim()); // ★ dirty: trim 후 검사
+    //다른 애들은 rule의 regex따라서 검사
+    const ok = rule.regex.test($target.val().trim());
     setErrorBorder($target, ok);// 스타일 바꾸고
     return ok;
 }
@@ -306,12 +308,12 @@ $(document).on("input blur", "input", function (e) {
     const id = $(this).attr("id"); // 현재 입력된 input의 id로 선택자 만들기
     if (!id) return;
 
-    // ★ dirty: input 시에는 dirty 표시
+
     if (e.type === "input") {
         $(this).data("dirty", true);
     }
 
-    // ★ dirty: blur 시, 입력한 적 없거나 값이 비어있으면 보더 제거 후 검증 스킵
+
     if (e.type === "blur") {
         const val = $(this).val().trim();
         if (!$(this).data("dirty") || val === "") {
@@ -326,15 +328,12 @@ $(document).on("input blur", "input", function (e) {
     applyRegex(id, rules);
 
     if (id === "pw") applyRegex("pwCheck", rules);
-
     if (id === "id") {
-        dupliIdCheck = ($(this).val().trim() === checkedList.id);
+        dupliIdCheck = ($(this).val().trim() === checkedList.id); //아이디 중복검사 된것과 같은지 확인
     }
     if (id === "nickname") {
-        dupliNicknameCheck = ($(this).val().trim() === checkedList.nickname);
+        dupliNicknameCheck = ($(this).val().trim() === checkedList.nickname); //닉네임 중복검사 된것과 같은지 확인
     }
-
-
 });
 
 
@@ -342,6 +341,8 @@ $(document).on("input blur", "input", function (e) {
 $("#delBtn").on("click", function () {
     location.href = "/index.jsp";
 })
+
+
 //연도 드롭다운 내용 채우기 + 클릭하면 selectedYear에 저장
 let $ul = $("#yearMenu");
 let currentYear = new Date().getFullYear(); // 현재 년도 가져오기
@@ -373,7 +374,7 @@ $("input[name='sex']").on("change", function () {
 $("form").on("submit", function () {
     let fields = ["#id", "#nickname", "#pw", "#pwCheck", "#name", "#email"];
 
-    // 1. 비어있는 칸 있으면 채우라고 alert 띄우기
+    // 1) 비어있는 칸 있으면 채우라고 alert 띄우기
     let emptyInput = fields.find(target => $(target).val().trim() === ""); //비어져 잇는 선택자 가져오고, 아니면 undefinded
     if (emptyInput || selectedYear === null || selectedGender === null) {
         alert("모든 입력 완료후 회원가입이 가능합니다");// 안채워진 칸 있으면 먼저 채우라고 alert
@@ -384,7 +385,7 @@ $("form").on("submit", function () {
     }
 
 
-    // 2.regex 검사는 document의 input blur에 바인딩 되어있으나, 수정하지 않고 submit하면 다시 알리고 return하기
+    // 2) regex 검사는 document의 input blur에 바인딩 되어있으나, 수정하지 않고 submit하면 다시 알리고 return하기
     if ($(fields[0]).hasClass("input-error")) {
         alert(rules["#id"].msg);
         return false;
@@ -406,7 +407,7 @@ $("form").on("submit", function () {
     }
 
 
-    //3. 인증 안했으면 인증하라고 alert
+    //3) 인증 안했으면 인증하라고 alert
     if (dupliIdCheck === false) {
         alert("아이디 중복체크를 진행해주세요");
         $("#idBtn").focus();
@@ -422,8 +423,6 @@ $("form").on("submit", function () {
         $("#emailBtn").focus();
         return false;
     }
-
-
 
 })
 

@@ -15,9 +15,22 @@
 <%--컨테이너--%>
 <div id="container1">
 
+    <c:choose>
+        <c:when test="${loginId ==null}">
+            <%-- 로그인 안되었을시 M공용 헤더 --%>
+            <jsp:include page="/common/Mcommon/MHeader.jsp"/>
 
-<%-- M공용 헤더 --%>
-<jsp:include page="/common/Mcommon/MHeader.jsp"/>
+        </c:when>
+
+        <c:otherwise>
+            <%-- 로그인 되었을시 c공용 헤더 --%>
+            <jsp:include page="/common/header/Header.jsp"/>
+        </c:otherwise>
+
+    </c:choose>
+
+
+
 
     <%--왼쪽 게임 네비--%>
     <div id="left">

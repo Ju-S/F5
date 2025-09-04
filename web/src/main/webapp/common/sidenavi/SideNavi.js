@@ -4,8 +4,7 @@ $(document).ready(function () {
 // 버튼 열려있는지에 대한 함수
     const menuState = {
         gamebtn: false,
-        boardbtn: false,
-        mypagebtn: false
+        boardbtn: false
     };
 
 //아이콘 이미지 배열로 넘기기
@@ -24,10 +23,7 @@ $(document).ready(function () {
         {src: "/common/sidenavi/sideNaviIcon/nav-4.svg", link: "/game/game3List.jsp"},
         {src: "/common/sidenavi/sideNaviIcon/nav-5.svg", link: "/game/game4List.jsp"}
     ];
-    let mypageIcons = [
-        {src: "/common/sidenavi/sideNaviIcon/game1.svg", link: "/myPage1"},
-        {src: "/common/sidenavi/sideNaviIcon/game2.svg", link: "/myPage2"}
-    ];
+
 
 
 // 공통 클릭 이벤트 함수
@@ -44,20 +40,17 @@ $(document).ready(function () {
             if (buttonId === "gamebtn") {//게임버튼 눌렀을 때
                 $firstIcon.attr("src", "/common/sidenavi/sideNaviIcon/main_game.svg");
 
-            } else if (buttonId === "boardbtn") {
+            } else if (buttonId === "boardbtn") { //보드버튼 눌렀을때
                 $firstIcon.attr("src", "/common/sidenavi/sideNaviIcon/main_massge.svg");
 
-            } else if (buttonId === "mypagebtn") {
-                $firstIcon.attr("src", "/common/sidenavi/sideNaviIcon/main_mypage.svg");
             }
-
 
             //서브메뉴 추가
             const $submenu = $("<div>").addClass("submenu");
             for (let icon of iconsArr) {
-                const $img = $("<img>").attr("src", icon.src);
+                const $img = $("<img>").attr("src", icon.src); //객체 배열의 src를 붙이기
                 const $div = $("<div>").addClass("icon").append($img);
-                const $iconA = $("<a>").attr("href", icon.link).append($div);
+                const $iconA = $("<a>").attr("href", icon.link).append($div); //객체 배열의 link를 붙이기
                 $submenu.append($iconA);
             }
             $btn.append($submenu);
@@ -94,15 +87,12 @@ $(document).ready(function () {
         $submenu.removeClass("open");
 
 
-        const $firstIcon = $btn.find(".main-icon img");
-        if ($btn.attr("id") === "gamebtn") {
+        const $firstIcon = $btn.find(".main-icon img"); //  클릭했던 것의 첫번째 아이콘에 대하여
+        if ($btn.attr("id") === "gamebtn") { //게임이면
             $firstIcon.attr("src", "/common/sidenavi/sideNaviIcon/main_game_color.svg");
-        } else if ($btn.attr("id") === "boardbtn") {
+        } else if ($btn.attr("id") === "boardbtn") {//보드면
             $firstIcon.attr("src", "/common/sidenavi/sideNaviIcon/main_massge_color.svg");
-        } else if ($btn.attr("id") === "mypagebtn") {
-            $firstIcon.attr("src", "/common/sidenavi/sideNaviIcon/main_mypage_color.svg");
         }
-
 
         setTimeout(() => {
             const $firstIcon = $btn.find(".icon:nth-child(1)");//맨 윗 아이콘에대하여
@@ -120,6 +110,30 @@ $(document).ready(function () {
             }
         });
     }
+
+
+
+// 마이페이지 버튼 마우스 오버
+    $("#mypagebtn").on("mouseover", function () {
+        //이미지 태그찾기
+        const $firstIcon = $(this).find("img");
+        $firstIcon.attr("src", "/common/sidenavi/sideNaviIcon/main_mypage.svg");
+    })
+// 마이페이지 버튼 마우스 리브
+    $("#mypagebtn").on("mouseleave", function () {
+        //이미지 태그찾기
+        const $firstIcon = $(this).find("img");
+        $firstIcon.attr("src", "/common/sidenavi/sideNaviIcon/main_mypage_color.svg");
+    })
+// 마이페이지 버튼 클릭
+    $("#mypagebtn").on("click", function () {
+        //이미지 태그찾기
+        const $firstIcon = $(this).find("img");
+        $firstIcon.attr("src", "/common/sidenavi/sideNaviIcon/main_mypage.svg");
+    })
+
+
+
 
 // 로그아웃 버튼 마우스 오버
     $("#logoutbtn").on("mouseover", function () {

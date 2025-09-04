@@ -37,14 +37,13 @@
 
 
         <%--마이페이지--%>
-        <div id="mypage" class="naviContent">
-            <div id="mypagebtn" class="naviContent">
-                <%--기본으로 보이는 아이콘--%>
-                <div class="icon main-icon">
-                    <img src="/common/sidenavi/sideNaviIcon/main_mypage_color.svg" alt="mypageIcon">
+        <div id="mypagebox" class="naviContent">
+
+                <div id="mypage">
+                    <a href="#" id="mypagebtn"><img src="/common/sidenavi/sideNaviIcon/main_mypage_color.svg" alt="mypageIcon"></a>
                 </div>
-                <!-- active되면 보일 아이콘 여기 들어감 -->
-            </div>
+
+
         </div>
     </div>
 

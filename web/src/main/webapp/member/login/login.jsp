@@ -42,6 +42,8 @@
             </form>
 
             <div id="loginFooter">
+                <a href="/index.jsp" id="findId">홈페이지</a>
+                <div id="verticalLine"></div> <!-- 수직선 추가 -->
                 <a href="/toFindIdPage.member" id="findId">아이디 찾기</a>
                 <div id="verticalLine"></div> <!-- 수직선 추가 -->
                 <a href="/toFindPwPage.member" id="findPw">비밀번호 찾기</a>
