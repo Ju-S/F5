@@ -55,8 +55,6 @@ public class AdminController extends HttpServlet {
             //관리자 권한 아니면 튕기기 ->dao 안통하고 로그인할때 세션에 저장해놓은거 가져올 수 있는지?
             /*String loginId = (String) request.getSession().getAttribute("loginId");
             String authority = memberDAO.getAuthority(loginId);*/
-
-
             String authority = (String) request.getSession().getAttribute("authority");
             if(authority.equals("Member")){//member 권한이면
                 return;

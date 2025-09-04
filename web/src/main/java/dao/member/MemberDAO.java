@@ -31,6 +31,14 @@ public class MemberDAO {
 
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
+                    // 블랙리스트 체크
+                    boolean isBlacklisted = BlackListDAO.getInstance().isBlacklisted(id);
+                    if (isBlacklisted) {
+                        System.out.println("Login denied: User is blacklisted.");
+                        return null; // 로그인 차단
+                    }
+
+
                     return MemberDTO.builder()
                             .id(rs.getString("id"))
                             .pw(rs.getString("pw"))
@@ -47,6 +55,23 @@ public class MemberDAO {
         }
         return null;
     }
+
+    public String getAuthority(String id) throws Exception {
+        String sql = "SELECT authority FROM member WHERE id = ?";
+        try (Connection conn = DataUtil.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getString("authority");
+                }
+                return null;
+            }
+        }
+    }
+
+
     //===================아이디 찾기용
     public boolean isNameEmailExist(String name,String email)throws Exception{
         String sql = "SELECT COUNT(*) FROM member WHERE name = ? and email = ?";
@@ -168,33 +193,6 @@ public class MemberDAO {
             return pstat.executeUpdate();
         }
     }
-
-    //===================로그인용
-    //로그인 기능
-    public boolean isLoginOk(String id, String pw) throws Exception {
-        String sql = "select * from member where id = ? and pw = ?";
-        try (Connection conn = DataUtil.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql);) {
-
-            ps.setString(1, id);
-            ps.setString(2, SecurityUtil.encrypt(pw));
-            System.out.println("inDAO" + SecurityUtil.encrypt(pw));
-
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    // 블랙리스트 체크
-                    boolean isBlacklisted = BlackListDAO.getInstance().isBlacklisted(id);
-                    if (isBlacklisted) {
-                        System.out.println("Login denied: User is blacklisted.");
-                        return false; // 로그인 차단
-                    }
-                    return true;
-                }
-                return false;
-            }
-        }
-    }
-
 
 
     //region create
