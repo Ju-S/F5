@@ -79,7 +79,7 @@
                         <div class="form-group">
                             <label class="col-form-label col-sm-2 pt-0" for="id">아이디</label>
                             <input type="text" id="id" class="form-input" placeholder="id" name="id" value="${member.id}" readonly/>
-                        </div>s
+                        </div>
 
                         <!-- name -->
                         <div class="form-group">
@@ -113,10 +113,7 @@
                             <div class="flex-fill">
                                 <label for="birthYear" class="form-label">출생년도</label>
                                 <select id="birthYear" class="form-select" name="birthyear" disabled>
-                                    <option selected disabled class="option_text">출생년도 선택</option>
-                                    <option value="1990">1990년</option>
-                                    <option value="1991">1991년</option>
-                                    <option value="1992">1992년</option>
+                                    <option disabled class="option_text">출생년도 선택</option>
                                 </select>
                             </div>
 
@@ -188,7 +185,7 @@
 
 <!-- 스크립트 연결 -->
 <script>
-    const memberInfo = ${member};
+    const memberInfo = ${memberJson};
 </script>
 
 <script src="/member/my_page/js/mypage.js"></script>

@@ -482,6 +482,7 @@ public class MemberController extends HttpServlet {
 
                     request.setAttribute("gameRankings", gameRankings);
                     request.setAttribute("member", member);
+                    request.setAttribute("memberJson", g.toJson(member));
 
                     request.getRequestDispatcher("/member/my_page/mypage.jsp").forward(request, response);
                     break;
@@ -503,8 +504,8 @@ public class MemberController extends HttpServlet {
                     String sex = request.getParameter("sex"); // "male" / "female"
                     int sexValue = 0; // 기본값
                     if (sex != null) {
-                        if (sex.equalsIgnoreCase("male")) sexValue = 1;
-                        else if (sex.equalsIgnoreCase("female")) sexValue = 2;
+                        if (sex.equalsIgnoreCase("male")) sexValue = 0;
+                        else if (sex.equalsIgnoreCase("female")) sexValue = 1;
                     }
 
                     MemberDTO dto = MemberDTO.builder()
@@ -519,7 +520,7 @@ public class MemberController extends HttpServlet {
                     int result = memberDAO.updateMember(dto);
 
                     if (result > 0) {
-                        response.sendRedirect("/member/my_page/mypage.jsp");
+                        response.sendRedirect("/mypage.member");
                     } else {
                         response.sendRedirect("/error.jsp");
                     }
