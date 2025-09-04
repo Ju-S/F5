@@ -170,6 +170,20 @@ public class BoardDAO {
         }
         return 0;
     }
+
+    public int getViewCountByBoardId(Long boardId) throws Exception {
+        String sql = "SELECT view_count FROM board WHERE id=?";
+        try (Connection con = DataUtil.getConnection();
+             PreparedStatement pstat = con.prepareStatement(sql)) {
+            pstat.setLong(1, boardId);
+            try (ResultSet rs = pstat.executeQuery()) {
+                while (rs.next()) {
+                    return rs.getInt(1);
+                }
+            }
+        }
+        return 0;
+    }
     //endregion
 
     //region update
@@ -192,6 +206,16 @@ public class BoardDAO {
         try (Connection con = DataUtil.getConnection();
              PreparedStatement pstat = con.prepareStatement(sql)) {
             pstat.setLong(1, getReportCountByBoardId(id) + 1);
+            pstat.setLong(2, id);
+            pstat.executeUpdate();
+        }
+    }
+
+    public void plusViewCount(Long id) throws Exception{
+        String sql = "UPDATE board SET view_count=? WHERE id=?";
+        try (Connection con = DataUtil.getConnection();
+             PreparedStatement pstat = con.prepareStatement(sql)) {
+            pstat.setLong(1, getViewCountByBoardId(id) + 1);
             pstat.setLong(2, id);
             pstat.executeUpdate();
         }

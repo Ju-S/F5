@@ -6,6 +6,12 @@ document.head.appendChild(link);
 
 $(document).ready(function () {
 // 댓글 등록 할 때
+    $.ajax({
+        url: "/add_view_count.board",
+        type: "post",
+        data: {id: boardId}
+    });
+
     $("#sendBtn").click(function () {
         console.log("댓글작성버튼클릭");
         let contents = $("#commentContents").val().trim();

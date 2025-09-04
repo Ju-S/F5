@@ -190,6 +190,11 @@ public class BoardController extends HttpServlet {
                     boardDAO.plusReportCount(id);
                     break;
                 }
+                case "/add_view_count.board": {
+                    Long id = Long.parseLong(request.getParameter("id"));
+                    boardDAO.plusViewCount(id);
+                    break;
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
