@@ -70,7 +70,7 @@
 
 </div>
 
-<script src="/member/admin/js/comment_admin.js"></script>
+<script src="/member/admin/js/admin_comment.js"></script>
 
 </body>
 </html>
