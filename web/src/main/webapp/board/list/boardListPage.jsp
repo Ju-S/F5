@@ -56,7 +56,8 @@
     let filter = params.get("filter");
     let page = params.get("page");
     let searchQuery = params.get("searchQuery");
-    setBoardListAndNav(filter, page, searchQuery);
+    let gameId = params.get("gameId");
+    setBoardListAndNav(filter, page, searchQuery, gameId);
 </script>
 
 </body>

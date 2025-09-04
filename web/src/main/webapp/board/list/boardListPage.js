@@ -1,4 +1,4 @@
-function setBoardListAndNav(filter, page, searchQuery) {
+function setBoardListAndNav(filter, page, searchQuery, gameId) {
     let url = "/get_board_list.board";
     url += page ? "?page=" + page : "";
     if (filter) {
@@ -8,6 +8,10 @@ function setBoardListAndNav(filter, page, searchQuery) {
     if (searchQuery) {
         url += page || filter ? "&" : "?";
         url += "searchQuery=" + searchQuery;
+    }
+    if (gameId) {
+        url += page || filter || searchQuery ? "&" : "?";
+        url += "gameId=" + gameId;
     }
 
     $.ajax({
@@ -22,7 +26,8 @@ function setBoardListAndNav(filter, page, searchQuery) {
         let curPage = data.curPage;
         let naviPerPage = data.naviPerPage;
         let filter = data.filter;
+        let gameId = data.gameId;
         let searchQuery = data.searchQuery;
-        createPageNavigation(maxPage, curPage, naviPerPage, filter, searchQuery);
+        createPageNavigation(maxPage, curPage, naviPerPage, filter, searchQuery, gameId);
     });
 }

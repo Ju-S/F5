@@ -21,5 +21,4 @@ public class BoardListDTO {
     private Timestamp writeDate;
     private long reportCount;
     private int replyCount;
-    private String writerProfileImg;
 }

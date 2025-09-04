@@ -78,17 +78,15 @@ public class BoardController extends HttpServlet {
                     } catch (Exception ignored) {
                     }
 
+                    int gameId = -1;
+                    try {
+                        gameId = Integer.parseInt(request.getParameter("gameId"));
+                    } catch (Exception ignored) {
+                    }
+
                     String searchQuery = request.getParameter("searchQuery");
 
-                    List<BoardListDTO> boardDTOList = boardDAO.getBoardPage(curPage, itemPerPage, filter, searchQuery);
-                    boardDTOList.forEach(item -> item.setReplyCount(replyDAO.getReplyCountByBoardId(item.getId())));
-                    boardDTOList.forEach(item -> {
-                        try {
-                            item.setWriterProfileImg(memberProfileFileDAO.getProfileImagePath(item.getWriter()).getSysName());
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    });
+                    List<BoardDTO> boardDTOList = boardDAO.getBoardPage(curPage, itemPerPage, filter, searchQuery);
                     Map<String, Object> data = new HashMap<>();
 
                     data.put("list", boardDTOList);
@@ -98,6 +96,7 @@ public class BoardController extends HttpServlet {
                     data.put("curPage", curPage);
                     data.put("naviPerPage", naviPerPage);
                     data.put("filter", filter);
+                    data.put("gameId", gameId);
                     data.put("searchQuery", searchQuery);
 
                     response.setCharacterEncoding("UTF-8");

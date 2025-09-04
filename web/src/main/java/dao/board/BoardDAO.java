@@ -45,7 +45,7 @@ public class BoardDAO {
 
     //region read
     //TODO: 게시글 목록 조회(title, writer 등 대표항목)
-    public List<BoardListDTO> getBoardPage(int curPage, int itemPerPage, int filter, String searchQuery) throws Exception {
+    public List<BoardDTO> getBoardPage(int curPage, int itemPerPage, int filter, String searchQuery) throws Exception {
         String sql = "SELECT * FROM (SELECT board.*, ROW_NUMBER() OVER(ORDER BY id DESC) rn FROM board";
         if (filter != -1) {
             sql += " WHERE board_category = ?";
@@ -78,8 +78,8 @@ public class BoardDAO {
     }
 
     // board의 resultSet을 boardDTO타입의 List로 변환.
-    private List<BoardListDTO> getBoardListByResultSet(ResultSet rs) throws Exception {
-        List<BoardListDTO> posts = new ArrayList<>();
+    private List<BoardDTO> getBoardListByResultSet(ResultSet rs) throws Exception {
+        List<BoardDTO> posts = new ArrayList<>();
         while (rs.next()) {
             int id = rs.getInt("id");
             String writer = rs.getString("writer");
@@ -87,7 +87,7 @@ public class BoardDAO {
             String contents = rs.getString("contents");
             Timestamp writeDate = rs.getTimestamp("write_date");
             int viewCount = rs.getInt("view_count");
-            posts.add(BoardListDTO.builder()
+            posts.add(BoardDTO.builder()
                     .id(id)
                     .writer(writer)
                     .title(title)
