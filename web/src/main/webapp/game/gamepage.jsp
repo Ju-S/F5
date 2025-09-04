@@ -21,22 +21,10 @@
 </head>
 
 <body>
+<!-- Header -->
+<jsp:include page="/common/header/Header.jsp"/>
+
 <div class="container">
-
-    <div class="row">
-        <%--<div class="col-12">--%>
-        <div class="col-1">
-            <a href="#">
-                <div class="logo">
-                    <img src="/game/pmg/img/logo.png">
-                </div>
-            </a>
-        </div>
-        <div class="col-11">
-            <div class="top"></div>
-        </div>
-    </div>
-
     <div class="row">
         <div class="col-1">
 
@@ -48,10 +36,10 @@
         <div class="col-11">
             <div class="main">
 
-                <div class="main_top">
+                <div class="main_top row">
                     <%-- <div class="row">--%>
                     <%--  <div class="col-md-6">--%>
-                    <div class="game_box">
+                    <div class="game_box col-8">
                         Play Game! <br>
                         <button class="play_btn"> play</button>
 
@@ -107,7 +95,7 @@
 
                     <%--  <div class="col-md-6">--%>
 
-                    <div class="ranking_box">
+                    <div class="ranking_box col-4">
                         <div class="ranking_title">Ranking</div>
 
                         <c:forEach var="j" items="${listranking}">
@@ -127,7 +115,7 @@
                 <%-- main top--%>
 
 
-                <div class="main_bottom">
+                <div class="main_bottom row">
 
                     <c:forEach var="i" items="${list}">
 
