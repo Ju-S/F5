@@ -26,12 +26,12 @@
                     <%-- 파일 이미지 불러오기 --%>
                     <form id="profileUploadForm" enctype="multipart/form-data">
                         <%-- 이미지 들어갈 부분 --%>
-                            <div class="profile-image">
-                                <img id="img"
-                                     src="/downloadImgFile.member?ts=<%=System.currentTimeMillis()%>"
-                                     onerror="this.onerror=null; this.src='/member/my_page/img/profile.svg';"
-                                     alt="profile"/>
-                            </div>
+                        <div class="profile-image">
+                            <img id="img"
+                                 src="/downloadImgFile.member?ts=<%=System.currentTimeMillis()%>"
+                                 onerror="this.onerror=null; this.src='/member/my_page/img/profile.svg';"
+                                 alt="profile"/>
+                        </div>
 
                         <%-- 파일 아이콘 --%>
                         <input type="file" name="file" id="fileInput" style="display: none;" accept="image/*"/>
@@ -74,158 +74,105 @@
                 <div class="content-box active" id="content-edit" data-content="profile">
                     <h2 class="section-title">개인 정보 수정</h2>
 
-                    <!-- ID -->
-                    <div class="form-group">
-                        <label class="col-form-label col-sm-2 pt-0" for="email">아이디</label>
-                        <input type="text" id="id" class="form-input" placeholder="id" name="id" readonly/>
-                    </div>
-
-                    <!-- name -->
-                    <div class="form-group">
-                        <label class="col-form-label col-sm-2 pt-0" for="email">이름</label>
-                        <input type="text" id="name" class="form-input" placeholder="name" name="name" readonly/>
-                    </div>
-
-                    <!-- Nickname -->
-                    <div class="form-group row align-items-end nickname-group">
-                        <div class="input-label-group nickname-input">
-                            <label class="col-form-label col-sm-2 pt-0" for="nickname">닉네임</label>
-                            <input type="text" id="nickname" class="form-input" placeholder="Nickname"
-                                   name="nickname" readonly/>
+                    <form id="profileForm" action="/updateMember.member" method="post">
+                        <!-- ID -->
+                        <div class="form-group">
+                            <label class="col-form-label col-sm-2 pt-0" for="email">아이디</label>
+                            <input type="text" id="id" class="form-input" placeholder="id" name="id" readonly/>
                         </div>
-                        <button class="check-button">중복확인</button>
-                    </div>
 
-                    <!-- Email -->
-                    <div class="form-group row align-items-end nickname-group">
-                        <div class="input-label-group nickname-input">
-                            <label class="col-form-label col-sm-2 pt-0" for="nickname">이메일</label>
-                            <input type="email" id="email" class="form-input" placeholder="email" name="email"
-                                   readonly/>
+                        <!-- name -->
+                        <div class="form-group">
+                            <label class="col-form-label col-sm-2 pt-0" for="email">이름</label>
+                            <input type="text" id="name" class="form-input" placeholder="name" name="name" readonly/>
                         </div>
-                        <button class="check-button">인증확인</button>
-                    </div>
 
-                    <!-- 출생년도 -->
-                    <div class="d-flex gap-4 mb-3">
+                        <!-- Nickname -->
+                        <div class="form-group row align-items-end nickname-group">
+                            <div class="input-label-group nickname-input">
+                                <label class="col-form-label col-sm-2 pt-0" for="nickname">닉네임</label>
+                                <input type="text" id="nickname" class="form-input" placeholder="Nickname"
+                                       name="nickname" readonly/>
+                            </div>
+                            <button class="check-button">중복확인</button>
+                        </div>
+
+                        <!-- Email -->
+                        <div class="form-group row align-items-end nickname-group">
+                            <div class="input-label-group nickname-input">
+                                <label class="col-form-label col-sm-2 pt-0" for="nickname">이메일</label>
+                                <input type="email" id="email" class="form-input" placeholder="email" name="email"
+                                       readonly/>
+                            </div>
+                            <button class="check-button">인증확인</button>
+                        </div>
+
                         <!-- 출생년도 -->
-                        <div class="flex-fill">
-                            <label for="birthYear" class="form-label">출생년도</label>
-                            <select id="birthYear" class="form-select" name="birthYear" readonly>
-                                <option selected disabled class="option_text">출생년도 선택</option>
-                                <option value="1990">1990년</option>
-                                <option value="1991">1991년</option>
-                                <option value="1992">1992년</option>
-                                <!-- 추가 -->
-                            </select>
-                        </div>
+                        <div class="d-flex gap-4 mb-3">
+                            <!-- 출생년도 -->
+                            <div class="flex-fill">
+                                <label for="birthYear" class="form-label">출생년도</label>
+                                <select id="birthYear" class="form-select" name="birthyear" disabled>
+                                    <option selected disabled class="option_text">출생년도 선택</option>
+                                    <option value="1990">1990년</option>
+                                    <option value="1991">1991년</option>
+                                    <option value="1992">1992년</option>
+                                    <!-- 추가 -->
+                                </select>
+                            </div>
 
-                        <!-- 성별 -->
-                        <div class="flex-fill">
-                            <label class="form-label d-block">성별</label>
-                            <div class="d-flex align-items-center gap-3">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="sex" id="male"
-                                           value="male"
-                                           checked>
-                                    <label class="form-check-label" for="male">남자</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="sex" id="female"
-                                           value="female">
-                                    <label class="form-check-label" for="female">여자</label>
+                            <!-- 성별 -->
+                            <div class="flex-fill">
+                                <label class="form-label d-block">성별</label>
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="sex" id="male"
+                                               value="male"
+                                               disabled checked>
+                                        <label class="form-check-label" for="male">남자</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="sex" id="female"
+                                               value="female" disabled>
+                                        <label class="form-check-label" for="female">여자</label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Buttons -->
-                    <div class="button-group" id="edit">
-                        <button type="button" class="button-primary w-50">수정</button>
-                    </div>
+                        <!-- Buttons -->
+                        <div class="button-group" id="edit">
+                            <button type="button" class="button-primary w-50">수정</button>
+                        </div>
 
-                    <div class="button-group" id="edit_check" style="display: none;">
-                        <button class="button-primary">수정완료</button>
-                        <button type="button" class="button-secondary">취소</button>
-                    </div>
+                        <div class="button-group" id="edit_check" style="display: none;">
+                            <button class="button-primary">수정완료</button>
+                            <button type="button" class="button-secondary">취소</button>
+                        </div>
+                    </form>
                 </div>
 
                 <!-- 콘텐츠: 게임 랭킹 -->
                 <div class="content-box" id="content-ranking" data-content="ranking">
                     <!-- 게임1 랭킹 -->
-                    <div class="ranking-list-wrapper">
+                    <c:forEach var="gameEntry" items="${gameRankings}">
                         <div class="ranking-card">
-                            <h5 style="color: var(--danger-color)">Antarctic Adventure</h5>
+                            <h5>게임ID: ${gameEntry.key}</h5> <!-- 게임 이름 대신 gameId -->
                             <ol class="list-group list-group-numbered">
-                                <li class="list-group-item d-flex justify-content-between align-items-start">
-                                    <div class="ms-2 me-auto">
-                                        <div class="fw-bold">
-                                            게임 랭킹 들어갈 자리
+                                <c:forEach var="rank" items="${gameEntry.value}">
+                                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                                        <div class="ms-2 me-auto">
+                                            <div class="fw-bold">
+                                                    ${rank.rank}등 / ${rank.score}점 / ${rank.tier}
+                                            </div>
                                         </div>
-                                    </div>
-                                    <span class="badge text-bg-primary rounded-pill">랭킹</span>
-                                </li>
+                                        <span class="badge text-bg-primary rounded-pill">${rank.rank}위</span>
+                                    </li>
+                                </c:forEach>
                             </ol>
                         </div>
-
-                        <div class="ranking-card">
-                            <h5 style="color: var(--danger-color)">Packman</h5>
-                            <ol class="list-group list-group-numbered">
-                                <li class="list-group-item d-flex justify-content-between align-items-start">
-                                    <div class="ms-2 me-auto">
-                                        <div class="fw-bold">
-                                            게임 랭킹 들어갈 자리
-                                        </div>
-                                    </div>
-                                    <span class="badge text-bg-primary rounded-pill">랭킹</span>
-                                </li>
-                            </ol>
-                        </div>
-
-                        <div class="ranking-card">
-                            <h5 style="color: var(--danger-color)">Bubble Shooter</h5>
-                            <ol class="list-group list-group-numbered">
-                                <li class="list-group-item d-flex justify-content-between align-items-start">
-                                    <div class="ms-2 me-auto">
-                                        <div class="fw-bold">
-                                            게임 랭킹 들어갈 자리
-                                        </div>
-                                    </div>
-                                    <span class="badge text-bg-primary rounded-pill">랭킹</span>
-                                </li>
-                            </ol>
-                        </div>
-
-                        <div class="ranking-card">
-                            <h5 style="color: var(--danger-color)">I hate injections!</h5>
-                            <ol class="list-group list-group-numbered">
-                                <li class="list-group-item d-flex justify-content-between align-items-start">
-                                    <div class="ms-2 me-auto">
-                                        <div class="fw-bold">
-                                            게임 랭킹 들어갈 자리
-                                        </div>
-                                    </div>
-                                    <span class="badge text-bg-primary rounded-pill">랭킹</span>
-                                </li>
-                            </ol>
-                        </div>
-                    </div>
-
-                    <div class="ranking-card">
-                        <h5 style="color: var(--danger-color)">Geometry Dash</h5>
-                        <ol class="list-group list-group-numbered">
-                            <li class="list-group-item d-flex justify-content-between align-items-start">
-                                <div class="ms-2 me-auto">
-                                    <div class="fw-bold">
-                                        게임 랭킹 들어갈 자리
-                                    </div>
-                                </div>
-                                <span class="badge text-bg-primary rounded-pill">랭킹</span>
-                            </li>
-                        </ol>
-                    </div>
+                    </c:forEach>
                 </div>
-
             </div>
 
 
@@ -233,14 +180,15 @@
             <div class="content-box" id="content-logout" data-content="logout">
                 <h2>회원탈퇴</h2><br>
                 <p>회원탈퇴를 하시겠습니까?</p>
-                <a class="btn button-primary">회원탈퇴</a>
+                <a href="/deleteMember.member" class="btn button-primary">회원탈퇴</a>
             </div>
+
         </div>
     </div>
-</div>
 </div>
 
 <!-- 스크립트 연결 -->
 <script src="/member/my_page/js/move.js"></script>
+
 </body>
 </html>

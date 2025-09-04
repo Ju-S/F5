@@ -12,14 +12,14 @@ import java.util.List;
 public class ReplyDAO {
     private static ReplyDAO instance;
 
+    private ReplyDAO() throws Exception {
+    }
+
     public static synchronized ReplyDAO getInstance() throws Exception {
         if (instance == null) {
             instance = new ReplyDAO();
         }
         return instance;
-    }
-
-    private ReplyDAO() throws Exception {
     }
 
     //region create
@@ -86,4 +86,77 @@ public class ReplyDAO {
         }
     }
     //endregion
+
+    // ReplyDAO.java
+    // 페이징 쿼리 예시: Oracle의 경우 ROWNUM 이용, MySQL은 LIMIT, OFFSET 활용
+    public List<ReplyDTO> getRepliesByBoardId(long boardId, int offset, int limit) {
+        String sql = "SELECT * FROM (" +
+                "   SELECT R.*, ROW_NUMBER() OVER (ORDER BY write_date DESC) rn" +
+                "   FROM reply R WHERE board_id = ?" +
+                ") WHERE rn BETWEEN ? AND ?";
+        List<ReplyDTO> list = new ArrayList<>();
+        try (Connection con = DataUtil.getConnection();
+             PreparedStatement pstat = con.prepareStatement(sql)) {
+
+            pstat.setLong(1, boardId);
+            pstat.setInt(2, offset);
+            pstat.setInt(3, limit);
+
+            try (ResultSet rs = pstat.executeQuery()) {
+                while (rs.next()) {
+                    ReplyDTO dto = ReplyDTO.builder()
+                            .id(rs.getLong("id"))
+                            .boardId(rs.getLong("board_id"))
+                            .writer(rs.getString("writer"))
+                            .contents(rs.getString("contents"))
+                            .likeCount(rs.getInt("like_count"))
+                            .writeDate(rs.getTimestamp("write_date"))
+                            .reportCount(rs.getInt("reprt_count"))
+                            .build();
+                    list.add(dto);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    // 관리자 댓글 총 개수
+    public int getReplyCountByBoardId(long boardId) {
+        String sql = "SELECT COUNT(*) FROM reply WHERE board_id = ?";
+        try (Connection con = DataUtil.getConnection();
+             PreparedStatement pstat = con.prepareStatement(sql)) {
+
+            pstat.setLong(1, boardId);
+
+            try (ResultSet rs = pstat.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+
+    // 관리자 댓글 삭제
+    public boolean deleteReply(long id) {
+        String sql = "DELETE FROM reply WHERE id = ?";
+        try (Connection con = DataUtil.getConnection();
+             PreparedStatement pstat = con.prepareStatement(sql)) {
+
+            pstat.setLong(1, id);
+            int result = pstat.executeUpdate();
+            return result > 0;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+
 }

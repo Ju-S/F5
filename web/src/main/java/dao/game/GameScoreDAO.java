@@ -7,10 +7,15 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class GameScoreDAO {
     private static GameScoreDAO instance;
+
+    private GameScoreDAO() throws Exception {
+    }
 
     public static synchronized GameScoreDAO getInstance() throws Exception {
         if (instance == null) {
@@ -19,22 +24,17 @@ public class GameScoreDAO {
         return instance;
     }
 
-
-    private GameScoreDAO() throws Exception {
-    }
-
-
     //region create
-    public int insertScore(int game_id,int score) throws Exception{// 점수 등록
+    public int insertScore(int game_id, int score) throws Exception {// 점수 등록
         // String memberId =(String) request.getSession().getAttribute("loginId"); 
         // Min 지우고 member_id 등록
         //TODO: 게임 점수 등록
-       
+
         String sql = "INSERT INTO game_score (id,game_id, member_id, score) VALUES (GAME_SCORE_SEQ.nextval,?, 'MIN', ?)";
 
         try (Connection con = DataUtil.getConnection();
-             PreparedStatement pstat = con.prepareStatement(sql))
-        {   pstat.setInt(1, game_id);
+             PreparedStatement pstat = con.prepareStatement(sql)) {
+            pstat.setInt(1, game_id);
             pstat.setInt(2, score);
             return pstat.executeUpdate();
         }
@@ -43,19 +43,17 @@ public class GameScoreDAO {
     //endregion
 
 
-
-
     //region create
 
-    public int insertTier(int game_id , String tier) throws Exception{ // 티어 구분
+    public int insertTier(int game_id, String tier) throws Exception { // 티어 구분
         // String memberId =(String) request.getSession().getAttribute("loginId");
         // Min 지우고 member_id 등록
         //TODO: 점수를 티어로 변환하여 정보를 tier에 넣기
         String sql = "insert into member_game_tier values (member_GAME_TIER_SEQ.nextval,'MIN',?,?)";
 
         try (Connection con = DataUtil.getConnection();
-             PreparedStatement pstat = con.prepareStatement(sql))
-        {  pstat.setInt(1, game_id);
+             PreparedStatement pstat = con.prepareStatement(sql)) {
+            pstat.setInt(1, game_id);
             pstat.setString(2, tier);
             return pstat.executeUpdate();
         }
@@ -64,13 +62,10 @@ public class GameScoreDAO {
     //endregion
 
 
-
     //region create
 
     public List<GameScoreDTO> selectRanking(int game_id) throws Exception {
-
         //TODO: 유저(중복 금지)의 최고점 및 최고 티어 순으로 랭킹조회
-
         String sql =
                 "SELECT *\n" +
                         "FROM (\n" +
@@ -107,8 +102,8 @@ public class GameScoreDAO {
 
         List<GameScoreDTO> rankings = new ArrayList<>();
 
-        try(Connection con = DataUtil.getConnection();
-            PreparedStatement pstat = con.prepareStatement(sql)) {
+        try (Connection con = DataUtil.getConnection();
+             PreparedStatement pstat = con.prepareStatement(sql)) {
 
             pstat.setInt(1, game_id); // for GAME_SCORE
             pstat.setInt(2, game_id); // for MEMBER_GAME_TIER
@@ -129,8 +124,6 @@ public class GameScoreDAO {
     }
 
     //endregion
-
-
 
 
     //region read

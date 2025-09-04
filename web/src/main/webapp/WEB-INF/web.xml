@@ -21,7 +21,16 @@
         <param-value>jaann20914@gmail.com</param-value> <!-- SendGrid에서 'Verified'된 From 주소 -->
     </context-param>
 
+    <!-- 관라지 아이디인지 확인 서블릿 -->
+    <servlet>
+        <servlet-name>AdminController</servlet-name>
+        <servlet-class>controller.AdminController</servlet-class>
+    </servlet>
 
+    <servlet-mapping>
+        <servlet-name>AdminController</servlet-name>
+        <url-pattern>*.admin</url-pattern>
+    </servlet-mapping>
 
 
 

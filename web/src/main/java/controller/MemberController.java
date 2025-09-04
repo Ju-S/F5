@@ -14,38 +14,32 @@ import dao.member.MemberDAO;
 import dao.member.MemberGameTierDAO;
 import dao.member.MemberProfileFileDAO;
 import dto.member.MemberDTO;
-import enums.Authority;
 import dto.member.MemberProfileFileDTO;
+import enums.Authority;
 import util.FileUtil;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import javax.naming.InitialContext;
 import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.servlet.http.HttpSession;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Timestamp;
+import java.util.Map;
 import java.util.Properties;
 
 @WebServlet("*.member")
 public class MemberController extends HttpServlet {
+    private static final long EMAIL_CODE_TTL = 10 * 60 * 1000L;  // 10분
     // sendGrid 계정
     private String SMTP_USER;   // ← web.xml에서 주입
     private String SMTP_PASS;   // ← web.xml에서 주입
     private String SMTP_FROM;   // ← web.xml에서 주입
-
-    private static final long EMAIL_CODE_TTL = 10 * 60 * 1000L;  // 10분
-
 
     @Override
     public void init() throws ServletException {
@@ -82,34 +76,34 @@ public class MemberController extends HttpServlet {
                 // 행위 + 자원 (e.g, /get_memberList.member로 작성 요망)
                 //TODO: 회원 관련 기능
 
-                case "/toLoginPage.member":{
+                case "/toLoginPage.member": {
                     //로그인 페이지로 이동
                     response.sendRedirect("/member/login/login.jsp");
                     return; //리다이렉트 후에 리턴넣어야 작동되네
                 }
 
 
-                case "/toSigninPage.member":{
+                case "/toSigninPage.member": {
                     //회원가입 페이지로 이동
                     response.sendRedirect("/member/signin/signin.jsp");
                     return;//리다이렉트 후에 리턴넣어야 작동되네
                 }
 
 
-                case "/isLoginOk.member":{
+                case "/isLoginOk.member": {
                     //로그인 해도 되는지?
-                    String id =request.getParameter("id");
+                    String id = request.getParameter("id");
                     String pw = request.getParameter("pw");
-                    System.out.println(id+":"+pw);
+                    System.out.println(id + ":" + pw);
 
-                    boolean isLoginOk =memberDAO.isLoginOk(id,pw);
-                    System.out.println("로그인성공 여부:"+isLoginOk);
+                    boolean isLoginOk = memberDAO.isLoginOk(id, pw);
+                    System.out.println("로그인성공 여부:" + isLoginOk);
 
-                    if(isLoginOk){
+                    if (isLoginOk) {
                         request.getSession().setAttribute("loginId", id); // 로그인 인증 정보를 세션에다 담음
                         response.sendRedirect("/index.jsp");
                         return;
-                    }else {
+                    } else {
                         // 실패 시에도 반드시 응답을 보냄(로그인 페이지로 보내면서 alert 뜨게 만들기)
                         response.sendRedirect("/member/login/login.jsp?msg=loginfail");
                         return;
@@ -117,21 +111,21 @@ public class MemberController extends HttpServlet {
                 }
 
 
-                case"/toFindIdPage.member":{
+                case "/toFindIdPage.member": {
                     // 아이디 찾기 페이지로 이동 (forward)
                     response.sendRedirect("/member/findId/findId.jsp");
                     return;
                 }
 
 
-                case"/toFindPwPage.member":{
+                case "/toFindPwPage.member": {
                     // 비번 찾기 페이지로 이동 (forward)
                     response.sendRedirect("/member/findPw/findPw.jsp");
                     return;
                 }
 
 
-                case "/dupliIdCheck.member" : {
+                case "/dupliIdCheck.member": {
                     //아이디 중복검사
                     response.setContentType("text/plain; charset=UTF-8"); // text/plain 권장
                     String id = request.getParameter("id");
@@ -140,6 +134,10 @@ public class MemberController extends HttpServlet {
                     boolean exists = memberDAO.isIdExist(id);
                     System.out.println("아이디중복검사 컨트롤러 id=\"" + id + "\", exists=" + exists);
 
+                    PrintWriter out = response.getWriter();
+                    out.append("false");
+                    out.close();
+
                     PrintWriter pw = response.getWriter();
                     pw.print(exists);   // println/append 대신 print
                     pw.flush();
@@ -147,8 +145,7 @@ public class MemberController extends HttpServlet {
                     break;
                 }
 
-                case "/dupliNicknameCheck.member" : {
-
+                case "/dupliNicknameCheck.member": {
                     //닉네임 중복검사
                     response.setContentType("text/html; charset=UTF-8");
                     String nickname = request.getParameter("nickname");
@@ -161,8 +158,8 @@ public class MemberController extends HttpServlet {
                     break;
                 }
 
-
-                case "/mailCheck.member"  : {
+                // 이메일 확인
+                case "/mailCheck.member": {
 
                     //이메일 인증: 코드 발송
                     response.setContentType("application/json; charset=UTF-8");
@@ -218,8 +215,8 @@ public class MemberController extends HttpServlet {
 
                 }
 
-
-                case "/verifyEmailCode.member" : {
+                // 이메일 인증
+                case "/verifyEmailCode.member": {
                     //이메일 인증: 코드 발송
                     response.setContentType("application/json; charset=UTF-8");
                     //request에 담긴 email과 code를 받기
@@ -259,15 +256,15 @@ public class MemberController extends HttpServlet {
 
                 }
 
-
-                case "/signin.member" : {
+                // 회원 정보
+                case "/signin.member": {
                     request.setCharacterEncoding("UTF-8");
 
                     String id = request.getParameter("id");
-                    String pw =request.getParameter("pw");
-                    String name =request.getParameter("name");
-                    String nickname =request.getParameter("nickname");
-                    String email =request.getParameter("email");
+                    String pw = request.getParameter("pw");
+                    String name = request.getParameter("name");
+                    String nickname = request.getParameter("nickname");
+                    String email = request.getParameter("email");
                     /*authority member*/
                     int birthyear = Integer.parseInt(request.getParameter("targetYear"));
                     int sex = Integer.parseInt(request.getParameter("sex"));
@@ -285,7 +282,7 @@ public class MemberController extends HttpServlet {
                             .joinDate(null)
                             .build();
 
-                    memberDAO.insertMember(temp); //dao 에 넣기
+                    memberDAO.inserMember(temp); //dao 에 넣기
                     //region read
                     //TODO: 여기서 그냥 response 바로 index.jsp로 가도 되는지
                     //endregion
@@ -300,77 +297,207 @@ public class MemberController extends HttpServlet {
                     break;
                 }
 
-                    // 마이페이지 회원 이미지 파일 저장 & 업데이트
-                    // FileUtil 사용해서 업로드 처리
-                case "/uploadImgFile.member":
+                /*  // 회원정보 조회 - 회원 가입 보고 수정 예정
+                case "/submit.member":
+                    id = request.getParameter("id");
+                    String pw = request.getParameter("pw");
+                    String name = request.getParameter("name");
+                    nickname = request.getParameter("nickname");
+                    String email = request.getParameter("email");
+
+                    // enums/Authority에서 권한 정의(ADMIN, MEMBER 등)
+                    String authStr = request.getParameter("authority");
+                    Authority authority = null;
+                    if (authStr != null) {
+                        authority = Authority.valueOf(authStr.toUpperCase());
+                    }
+
+                    // 출생년도 (숫자 변환)
+                    int birthyear = 0;
                     try {
-                        // FileUtil.java 사용
-                        MultipartRequest multi = FileUtil.fileUpload(request, "profile");
+                        birthyear = Integer.parseInt(request.getParameter("birthyear"));
+                    } catch (NumberFormatException e) {
+                        // 기본값 유지
+                    }
 
-                        String oriName = multi.getOriginalFileName("file");
-                        String sysName = multi.getFilesystemName("file");
-                        // 받았는지 확인용
-                        System.out.println("oriName: " + oriName);
-                        System.out.println("sysName: " + sysName);
+                    // 성별 가져오기
+                    String sex = request.getParameter("sex"); // "male" / "female"
+                    int sexValue = 0; // 기본값
+                    if (sex != null) {
+                        if (sex.equalsIgnoreCase("male")) sexValue = 1;
+                        else if (sex.equalsIgnoreCase("female")) sexValue = 2;
+                    }
 
+                    // 확인용
+                    System.out.println("폼 데이터 확인 : " + id + "," + pw + "," + name + "," + nickname + "," + email + "," + authority + "," + birthyear + "," + sex);
 
-                        // 세션에서 로그인한 사용자 ID 가져오기
-                        HttpSession session = request.getSession();
-                        String memberId = (String) session.getAttribute("loginId");
+                    if (id != null && pw != null && name != null && nickname != null && email != null && authority != null && birthyear > 0 && sex != null) {
+                        MemberDTO memberDTO = MemberDTO.builder()
+                                .id(id)
+                                .pw(pw)
+                                .name(name)
+                                .nickname(nickname)
+                                .email(email)
+                                .authority(authority)
+                                .birthyear(birthyear)
+                                .sex(sexValue)
+                                .build();
 
-                        if (oriName != null && sysName != null && memberId != null) {
-                            MemberProfileFileDTO profileDto = MemberProfileFileDTO.builder()
-                                    .memberId(memberId)
-                                    .oriName(oriName)
-                                    .sysName(sysName)
-                                    .build();
-
-                            int result = memberProfileFileDAO.insertProfileImage(profileDto);
-                            System.out.println("DB INSERT result = " + result);
+                        int result = memberDAO.inserMember(memberDTO);
+                        if (result > 0) {
+                            response.sendRedirect("/login"); //로그인창으로 이동 화면 수정
+                            break;
                         } else {
-                            System.out.println("파일 또는 로그인 정보 누락 - 업로드 실패");
+                            response.sendRedirect("/error.jsp"); //에러 페이지 이동
                         }
+                    }*/
 
-                        response.sendRedirect("/member/my_page/mypage.jsp"); // 마이페이지로 이동
-                        break;
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        response.sendRedirect("/error.jsp");
-                    }
-
-                    // 마이페이지에 이미지 출력
-                case "/downloadImgFile.member":
-                    try {
-                        HttpSession session = request.getSession();
-                        String memberId = (String) session.getAttribute("loginId");
-
-                        MemberProfileFileDTO profileDto = memberProfileFileDAO.getProfileImagePath(memberId);
-                        String sysName = (profileDto != null) ? profileDto.getSysName() : null;
-
-                        String basePath = request.getServletContext().getRealPath("/upload/profile");
-                        String defaultImgPath = request.getServletContext().getRealPath("/member/my_page/img/profile.svg");
-
-                        File targetFile = (sysName == null || !(new File(basePath, sysName)).exists())
-                                ? new File(defaultImgPath)
-                                : new File(basePath, sysName);
-
-                        FileUtil.streamFile(request, response, targetFile);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        response.sendRedirect("/error.jsp");
-                    }
-                    break;
-
-                    // 회원정보 조회 할 예정 - 작성만 한부분
-                case "":
+                // 회원 탈퇴
+                case "/deleteMember.member": {
+                    String id = request.getParameter("id");
                     HttpSession session = request.getSession();
-                    String memberId = (String) session.getAttribute("loginId"); //로그인 회원
+                    String memberId = (String) session.getAttribute("loginId");
 
+                    if (memberId != null && memberId.equals(id)) {
+                        int result = memberDAO.deleteDateMember(id);
+
+                        if (result > 0) {
+                            System.out.println("탈퇴성공");
+                            session.removeAttribute("loginId");
+                            response.sendRedirect("/index.jsp"); // 홈 페이지로 이동
+                        } else {
+                            response.sendRedirect("/error.jsp"); // 에러 페이지로 이동
+                        }
+                    } else {
+                        // 로그인된 사용자가 아니거나 ID가 일치하지 않으면 에러 페이지로 리다이렉트
+                        response.sendRedirect("/error.jsp");
+                    }
+                    break;
+                }
+
+                // 회원 아이디 확인 과정 - 마이페이지
+                case "/mypage.member": {
+                    HttpSession session = request.getSession();
+                    String memberId = (String) session.getAttribute("loginId");
+
+                    if (memberId != null) {
+                        MemberDTO memberDAOMemberById = memberDAO.getMemberById(memberId);
+                        response.setContentType("application/json; charset=UTF-8");
+                        PrintWriter out = response.getWriter();
+
+                        String json = g.toJson(memberDAOMemberById);
+                        out.println(json);
+                    }
+                    break;
+                }
+                // 회원 정보 수정 - update
+                case "/updateMember.member": {
+                    String id = request.getParameter("id");
+                    String name = request.getParameter("name");
+                    String nickname = request.getParameter("nickname");
+                    String email = request.getParameter("email");
+                    // 출생년도 (숫자 변환)
+                    int birthyear = 0;
+                    try {
+                        birthyear = Integer.parseInt(request.getParameter("birthyear"));
+                    } catch (NumberFormatException e) {
+                        // 기본값 유지
+                    }
+                    // 성별 가져오기
+                    String sex = request.getParameter("sex"); // "male" / "female"
+                    int sexValue = 0; // 기본값
+                    if (sex != null) {
+                        if (sex.equalsIgnoreCase("male")) sexValue = 1;
+                        else if (sex.equalsIgnoreCase("female")) sexValue = 2;
+                    }
+
+                    MemberDTO dto = MemberDTO.builder()
+                            .id(id)
+                            .name(name)
+                            .nickname(nickname)
+                            .email(email)
+                            .birthyear(birthyear)
+                            .sex(sexValue) // int 타입 성별
+                            .build();
+
+                    int result = memberDAO.updateMember(dto);
+
+                    if (result > 0) {
+                        response.sendRedirect("/member/my_page/mypage.jsp");
+                    } else {
+                        response.sendRedirect("/error.jsp");
+                    }
+                    break;
+                }
+
+                // 마이페이지 회원 이미지 파일 저장 & 업데이트
+                // FileUtil 사용해서 업로드 처리
+                case "/uploadImgFile.member": {
+                    // FileUtil.java 사용
+                    MultipartRequest multi = FileUtil.fileUpload(request, "profile");
+
+                    String oriName = multi.getOriginalFileName("file");
+                    String sysName = multi.getFilesystemName("file");
+                    // 받았는지 확인용
+                    System.out.println("oriName: " + oriName);
+                    System.out.println("sysName: " + sysName);
+
+
+                    // 세션에서 로그인한 사용자 ID 가져오기
+                    HttpSession session = request.getSession();
+                    String memberId = (String) session.getAttribute("loginId");
+
+                    if (oriName != null && sysName != null && memberId != null) {
+                        MemberProfileFileDTO profileDto = MemberProfileFileDTO.builder()
+                                .memberId(memberId)
+                                .oriName(oriName)
+                                .sysName(sysName)
+                                .build();
+
+                        int result = memberProfileFileDAO.insertProfileImage(profileDto);
+                        System.out.println("DB INSERT result = " + result);
+                    } else {
+                        System.out.println("파일 또는 로그인 정보 누락 - 업로드 실패");
+                    }
+
+                    response.sendRedirect("/member/my_page/mypage.jsp"); // 마이페이지로 이동
                     break;
 
+                }
+
+                // 마이페이지에 이미지 출력
+                case "/downloadImgFile.member": {
+                    HttpSession session = request.getSession();
+                    String memberId = (String) session.getAttribute("loginId");
+
+                    MemberProfileFileDTO profileDto = memberProfileFileDAO.getProfileImagePath(memberId);
+                    String sysName = (profileDto != null) ? profileDto.getSysName() : null;
+
+                    String basePath = request.getServletContext().getRealPath("/upload/profile");
+                    String defaultImgPath = request.getServletContext().getRealPath("/member/my_page/img/profile.svg");
+
+                    File targetFile = (sysName == null || !(new File(basePath, sysName)).exists())
+                            ? new File(defaultImgPath)
+                            : new File(basePath, sysName);
+
+                    FileUtil.streamFile(request, response, targetFile);
+                    break;
+                }
+
+                //차트 정보
+                case "/chartdate.member": {
+                    Map<String, Integer> genderStats = memberDAO.getGenderStats();
+                    Map<String, Integer> yearStats = memberDAO.getYearStats();
+
+                    request.setAttribute("maleCount", genderStats.getOrDefault("male", 0));
+                    request.setAttribute("femaleCount", genderStats.getOrDefault("female", 0));
+                    request.setAttribute("yearStats", yearStats);
+
+                    request.getRequestDispatcher("/chart/dashboard.jsp").forward(request, response);
+                    break;
+                }
             }
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             response.sendRedirect("/error.jsp");
         }

@@ -5,6 +5,10 @@
     width: 100%;
     max-width: 1000px;
     box-sizing: border-box;
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
 }
 .ranking-list-wrapper {
     flex: 1;
@@ -15,15 +19,22 @@
 }
 
 .ranking-card {
-    /*flex: 1;                !* 높이를 고르게 나눔 *!*/
-    height: 142px;
-    margin-bottom: 16px;
     background-color: var(--primary-subcolor);
     border-radius: 12px;
-    padding: 30px 24px;
-    width: 100%; /* 부모 너비 꽉 채우기 */
+    padding: 24px;
+    width: calc(33.333% - 13.33px);  /* 3개씩 한 줄 */
+    min-width: 280px;
     box-sizing: border-box;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    color: #fff;
+}
+
+/* 제목 */
+.ranking-card h5 {
+    margin-bottom: 16px;
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--danger-color);
 }
 
 .list-group {
@@ -37,13 +48,25 @@ ol.list-group-numbered > li::before {
     display: none;
 }
 
+.list-group {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
 
-/* 리스트 아이템이 있는 경우 */
 .list-group-item {
-    background-color: var(--primary-subcolor); /* 카드보다 살짝 밝은 어두운 회색 */
+    background-color: var(--primary-subcolor);
     border-radius: 10px;
     margin-bottom: 10px;
     padding: 16px;
     color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     border: none;
+}
+
+.badge {
+    font-size: 14px;
+    padding: 6px 12px;
 }
