@@ -28,7 +28,8 @@ function createBoardList(postList, itemPerPage) {
 
 function createBoardItem(post) {
     let tr = $("<div>").addClass("row item-div");
-    let profileImg = $("<div>").addClass("col col-1 profile-img").append($("<img>"));
+    let profileImg = $("<div>").addClass("col col-1 profile-img")
+        .append($("<img>").attr({"src":`/downloadImgFile.member?memberId=${post.writer}`, "onError":"this.onerror=null; this.src='/member/my_page/img/profile.svg';"}));
     let title = $("<div>").addClass("col col-12 title")
         .append($("<a>").attr({
             "title": post.title,
@@ -36,15 +37,23 @@ function createBoardItem(post) {
         }).html(post.title));
     let writer = $("<div>").addClass("col col-12 writer").html(post.writer);
     let boardSummary = $("<div>").addClass("col col-3 board-summary");
-    let replyCount = $("<div>").html("<i class=\"bi bi-chat-left-dots-fill me-2\"></i>" + post.viewCount);
+    let replyCount = $("<div>").html("<i class=\"bi bi-chat-left-dots-fill me-2\"></i>" + post.replyCount);
     let viewCount = $("<div>").html("<i class=\"bi bi-eye ms-3 me-2\"></i>" + post.viewCount);
 
     let reportBox = $("<div>").addClass("reportBox ms-2");
     let reportBtn = $("<button>").addClass("btn btn-sm dropdown-toggle")
-        .attr({"id":"reportPost", "data-bs-toggle":"dropdown", "aria-expanded":"false"});
+        .attr({"id": "reportPost", "data-bs-toggle": "dropdown", "aria-expanded": "false"});
     let reportBtnIcon = $("<i>").addClass("bi bi-three-dots-vertical vertical-dots");
     let dropdownMenu = $("<ul>").addClass("dropdown-menu dropdown-menu-end report-menu")
-    let dropdownItem = $("<li>").addClass("dropdown-item text-danger").html("신고하기");
+    let dropdownItem = $("<li>").addClass("dropdown-item text-danger").html("신고하기").css("cursor", "pointer");
+
+    dropdownItem.on("click", function() {
+        $.ajax({
+            url: "/add_report_count.board",
+            type: "post",
+            data: {id: post.id}
+        });
+    })
 
     let writerTitleRow = $("<div>").addClass("col col-8 writer-title").append(
         $("<div>").addClass("row").append(title).append(writer)

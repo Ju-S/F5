@@ -468,9 +468,12 @@ public class MemberController extends HttpServlet {
                 // 마이페이지에 이미지 출력
                 case "/downloadImgFile.member": {
                     HttpSession session = request.getSession();
-                    String memberId = (String) session.getAttribute("loginId");
+                    String targetId = request.getParameter("memberId");
+                    if(targetId == null) {
+                        targetId = (String) session.getAttribute("loginId");
+                    }
 
-                    MemberProfileFileDTO profileDto = memberProfileFileDAO.getProfileImagePath(memberId);
+                    MemberProfileFileDTO profileDto = memberProfileFileDAO.getProfileImagePath(targetId);
                     String sysName = (profileDto != null) ? profileDto.getSysName() : null;
 
                     String basePath = request.getServletContext().getRealPath("/upload/profile");

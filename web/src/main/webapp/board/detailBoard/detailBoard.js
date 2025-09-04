@@ -30,6 +30,15 @@ $(document).ready(function () {
             }
         });
     });
+
+    $(".post-report-btn").on("click", function() {
+        $.ajax({
+            url: "/add_report_count.board",
+            type: "post",
+            data: {id: boardId}
+        });
+    });
+
     loadComments(boardId, loginId);
 });
 
@@ -80,7 +89,7 @@ function loadComments(boardId, loginId) {
 
                 // col-2 profile
                 let profileImg = $("<img>")
-                    .attr("src", "/board/detailBoard/profile_img/replyProfile.jpg")
+                    .attr({"src":`/downloadImgFile.member?memberId=${comment.writer}`, "onError":"this.onerror=null; this.src='/member/my_page/img/profile.svg';"})
                     .addClass("rounded-circle profile-img");
 
                 let profileCol = $("<div>").addClass("col-2 profile").css({
@@ -142,13 +151,19 @@ function loadComments(boardId, loginId) {
                     .attr("style", "background: transparent; border: none; padding: 0;")
                     .append(reportIcon);
 
+                let reportItem = $("<a>").addClass("dropdown-item text-danger").text("신고하기").css("cursor", "pointer");
+
+                reportItem.on("click", function() {
+                    $.ajax({
+                        url: "/add_report_count.reply",
+                        type: "post",
+                        data: {id: comment.id}
+                    });
+                });
+
                 let reportMenu = $("<ul>")
                     .addClass("dropdown-menu dropdown-menu-end report-menu")
-                    .append(
-                        $("<li>").append(
-                            $("<a>").addClass("dropdown-item text-danger").attr("href", "#").text("신고하기")
-                        )
-                    );
+                    .append($("<li>").append(reportItem));
 
                 let modifyItem = $("<button id='commentUpdate'>").addClass("btn btn-primary btn-sm").css({
                     backgroundColor: "#EC6333",
@@ -228,7 +243,7 @@ function loadComments(boardId, loginId) {
                     reportColSub = $("<div>").addClass("col-auto mt-1 pe-0").append(deleteItem, deleteBtn);
                 } else {
                     reportBox.append(reportMenu);
-                    reportCol = $("<div>").addClass("col-1 d-flex justify-content-end").append(reportBox);
+                    reportCol = $("<div>").addClass("col-1 d-flex justify-content-end align-items-start").append(reportBox);
                     commentCol.removeClass("col-6");
                     commentCol.addClass("col-9");
                 }

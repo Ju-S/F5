@@ -60,6 +60,34 @@ public class ReplyDAO {
         }
         return list;
     }
+
+    public int getReplyCountByBoardId(Long boardId) throws Exception {
+        String sql = "SELECT count(*) FROM reply WHERE board_id = ?";
+        try (Connection con = DataUtil.getConnection();
+             PreparedStatement pstat = con.prepareStatement(sql)) {
+            pstat.setLong(1, boardId);
+            try (ResultSet rs = pstat.executeQuery()) {
+                while (rs.next()) {
+                    return rs.getInt(1);
+                }
+            }
+        }
+        return 0;
+    }
+
+    public int getReportCountByReplyId(Long replyId) throws Exception {
+        String sql = "SELECT report_count FROM reply WHERE id=?";
+        try (Connection con = DataUtil.getConnection();
+             PreparedStatement pstat = con.prepareStatement(sql)) {
+            pstat.setLong(1, replyId);
+            try (ResultSet rs = pstat.executeQuery()) {
+                while (rs.next()) {
+                    return rs.getInt(1);
+                }
+            }
+        }
+        return 0;
+    }
     //endregion
 
     //region update
@@ -71,6 +99,16 @@ public class ReplyDAO {
             pstat.setString(1, contents);
             pstat.setLong(2, id);
             return pstat.executeUpdate();
+        }
+    }
+
+    public void plusReportCount(Long id) throws Exception{
+        String sql = "UPDATE reply SET report_count=? WHERE id=?";
+        try (Connection con = DataUtil.getConnection();
+             PreparedStatement pstat = con.prepareStatement(sql)) {
+            pstat.setLong(1, getReportCountByReplyId(id) + 1);
+            pstat.setLong(2, id);
+            pstat.executeUpdate();
         }
     }
     //endregion

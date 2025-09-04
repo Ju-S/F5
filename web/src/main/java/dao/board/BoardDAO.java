@@ -2,6 +2,7 @@ package dao.board;
 
 import dto.admin.ReportedPostDTO;
 import dto.board.BoardDTO;
+import dto.board.BoardListDTO;
 import util.DataUtil;
 
 import java.sql.Connection;
@@ -44,7 +45,7 @@ public class BoardDAO {
 
     //region read
     //TODO: 게시글 목록 조회(title, writer 등 대표항목)
-    public List<BoardDTO> getBoardPage(int curPage, int itemPerPage, int filter, String searchQuery) throws Exception {
+    public List<BoardListDTO> getBoardPage(int curPage, int itemPerPage, int filter, String searchQuery) throws Exception {
         String sql = "SELECT * FROM (SELECT board.*, ROW_NUMBER() OVER(ORDER BY id DESC) rn FROM board";
         if (filter != -1) {
             sql += " WHERE board_category = ?";
@@ -77,8 +78,8 @@ public class BoardDAO {
     }
 
     // board의 resultSet을 boardDTO타입의 List로 변환.
-    private List<BoardDTO> getBoardListByResultSet(ResultSet rs) throws Exception {
-        List<BoardDTO> posts = new ArrayList<>();
+    private List<BoardListDTO> getBoardListByResultSet(ResultSet rs) throws Exception {
+        List<BoardListDTO> posts = new ArrayList<>();
         while (rs.next()) {
             int id = rs.getInt("id");
             String writer = rs.getString("writer");
@@ -86,7 +87,7 @@ public class BoardDAO {
             String contents = rs.getString("contents");
             Timestamp writeDate = rs.getTimestamp("write_date");
             int viewCount = rs.getInt("view_count");
-            posts.add(BoardDTO.builder()
+            posts.add(BoardListDTO.builder()
                     .id(id)
                     .writer(writer)
                     .title(title)
@@ -132,7 +133,7 @@ public class BoardDAO {
         }
     }
 
-    //TODO: 게시글 단일 조회(contents포함 세부항목)
+    //게시글 단일 조회(contents포함 세부항목)
     public BoardDTO getBoardDetail(long boardId) throws Exception {
         String sql = "SELECT * FROM BOARD WHERE id = ?";
 
@@ -155,10 +156,24 @@ public class BoardDAO {
             }
         }
     }
+
+    public int getReportCountByBoardId(Long boardId) throws Exception {
+        String sql = "SELECT report_count FROM board WHERE id=?";
+        try (Connection con = DataUtil.getConnection();
+             PreparedStatement pstat = con.prepareStatement(sql)) {
+            pstat.setLong(1, boardId);
+            try (ResultSet rs = pstat.executeQuery()) {
+                while (rs.next()) {
+                    return rs.getInt(1);
+                }
+            }
+        }
+        return 0;
+    }
     //endregion
 
     //region update
-    //TODO: 게시글 수정
+    //게시글 수정
     public int updateBoard(BoardDTO boardDTO)throws Exception{
         String sql = "update board set title=?,game_id=?,board_category=?,contents=? where id=?";
         try(Connection con = DataUtil.getConnection();
@@ -169,6 +184,16 @@ public class BoardDAO {
             pstat.setString(4,boardDTO.getContents());
             pstat.setLong(5,boardDTO.getId());
             return pstat.executeUpdate();
+        }
+    }
+
+    public void plusReportCount(Long id) throws Exception{
+        String sql = "UPDATE board SET report_count=? WHERE id=?";
+        try (Connection con = DataUtil.getConnection();
+             PreparedStatement pstat = con.prepareStatement(sql)) {
+            pstat.setLong(1, getReportCountByBoardId(id) + 1);
+            pstat.setLong(2, id);
+            pstat.executeUpdate();
         }
     }
     //endregion

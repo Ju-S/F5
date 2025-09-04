@@ -28,7 +28,7 @@
                         <%-- 이미지 들어갈 부분 --%>
                         <div class="profile-image">
                             <img id="img"
-                                 src="/downloadImgFile.member?ts=<%=System.currentTimeMillis()%>"
+                                 src="/downloadImgFile.member"
                                  onerror="this.onerror=null; this.src='/member/my_page/img/profile.svg';"
                                  alt="profile"/>
                         </div>

@@ -23,9 +23,11 @@
                     <div class="row profile-row"><!-- 프로필 제목 영역 -->
                         <div class="col-1 profile">
                             <!-- 이미지를 그냥 넣으면 경로때문에 지정이안됨. 경로지정해서 넣었음 -->
-                            <img src="/board/detailBoard/profile_img/profile.jpeg" class="rounded-circle profile-img"
-                                 alt="..."
-                                 style="width: 50px; height: 50px;">
+                            <img id="img"
+                                 src="/downloadImgFile.member?memberId=${boardDetail.writer}"
+                                 onerror="this.onerror=null; this.src='/member/my_page/img/profile.svg';"
+                                 alt="profile"
+                                 style="width: 50px; height: 50px;"/>
                         </div>
                         <div class="col-10 writer">
                             ${boardDetail.writer}
@@ -38,7 +40,7 @@
                                     <i class="bi bi-three-dots-vertical vertical-dots"></i>
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-end report-menu">
-                                    <li><a class="dropdown-item text-danger" href="#">신고하기</a></li>
+                                    <li><a class="dropdown-item text-danger post-report-btn" style="cursor: pointer">신고하기</a></li>
                                 </ul>
                             </div>
                         </div>

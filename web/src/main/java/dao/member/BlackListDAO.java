@@ -28,7 +28,7 @@ public class BlackListDAO {
     public boolean isBlacklisted(String memberId) throws Exception {
         String sql = """
         SELECT COUNT(*) 
-        FROM blacklist 
+        FROM black_list 
         WHERE member_id = ? 
           AND start_date <= CURRENT_TIMESTAMP 
           AND end_date >= CURRENT_TIMESTAMP
@@ -48,7 +48,7 @@ public class BlackListDAO {
 
     // 블랙리스트에 추가
     public int insertBlacklist(BlackListDTO dto) throws Exception {
-        String sql = "INSERT INTO blacklist (member_id, start_date, end_date) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO black_list (member_id, start_date, end_date) VALUES (?, ?, ?)";
         try (Connection conn = DataUtil.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
@@ -62,7 +62,7 @@ public class BlackListDAO {
 
     // 블랙리스트 전체 조회 (관리자 페이지용)
     public List<BlackListDTO> getAllBlacklist() throws Exception {
-        String sql = "SELECT * FROM blacklist ORDER BY start_date DESC";
+        String sql = "SELECT * FROM black_list ORDER BY start_date DESC";
         List<BlackListDTO> list = new ArrayList<>();
 
         try (Connection conn = DataUtil.getConnection();
@@ -91,7 +91,7 @@ public class BlackListDAO {
 
     // 블랙리스트 삭제
     public int deleteByMemberId(String memberId) throws Exception {
-        String sql = "DELETE FROM blacklist WHERE member_id = ?";
+        String sql = "DELETE FROM black_list WHERE member_id = ?";
         try (Connection conn = DataUtil.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, memberId);

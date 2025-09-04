@@ -14,6 +14,7 @@ import dao.member.MemberDAO;
 import dao.member.MemberGameTierDAO;
 import dao.member.MemberProfileFileDAO;
 import dto.board.BoardDTO;
+import dto.board.BoardListDTO;
 import util.FileUtil;
 
 import javax.servlet.annotation.WebServlet;
@@ -79,8 +80,15 @@ public class BoardController extends HttpServlet {
 
                     String searchQuery = request.getParameter("searchQuery");
 
-                    List<BoardDTO> boardDTOList = boardDAO.getBoardPage(curPage, itemPerPage, filter, searchQuery);
-
+                    List<BoardListDTO> boardDTOList = boardDAO.getBoardPage(curPage, itemPerPage, filter, searchQuery);
+                    boardDTOList.forEach(item -> item.setReplyCount(replyDAO.getReplyCountByBoardId(item.getId())));
+                    boardDTOList.forEach(item -> {
+                        try {
+                            item.setWriterProfileImg(memberProfileFileDAO.getProfileImagePath(item.getWriter()).getSysName());
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    });
                     Map<String, Object> data = new HashMap<>();
 
                     data.put("list", boardDTOList);
@@ -145,7 +153,7 @@ public class BoardController extends HttpServlet {
                     break;
                 }
                 // 게시글 수정
-                case "/update_form.board":{
+                case "/update_form.board": {
                     long boardId = Long.parseLong(request.getParameter("boardId"));
 
                     // 게시글 정보
@@ -154,7 +162,7 @@ public class BoardController extends HttpServlet {
                     request.getRequestDispatcher("/board/updateBoard/updateBoard.jsp").forward(request, response);
                     break;
                 }
-                case "/update.board":{
+                case "/update.board": {
                     Long boardId = Long.parseLong(request.getParameter("boardId"));
                     Long boardCategory = Long.parseLong(request.getParameter("boardCategory"));
                     Long gameId = Long.parseLong(request.getParameter("gameId"));
@@ -171,10 +179,15 @@ public class BoardController extends HttpServlet {
                     response.sendRedirect("/get_board_detail.board?boardId=" + boardId);
                     break;
                 }
-                case "/delete.board":{
+                case "/delete.board": {
                     String boardId = request.getParameter("boardId");
                     boardDAO.deleteBoard(Long.parseLong(boardId));
                     response.sendRedirect("/board/list/boardListPage.jsp");
+                    break;
+                }
+                case "/add_report_count.board": {
+                    Long id = Long.parseLong(request.getParameter("id"));
+                    boardDAO.plusReportCount(id);
                     break;
                 }
             }

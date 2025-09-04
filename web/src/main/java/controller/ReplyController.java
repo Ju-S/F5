@@ -81,7 +81,11 @@ public class ReplyController extends HttpServlet {
                     if(writer.equals(request.getSession().getAttribute("loginId"))){
                         replyDAO.deleteById(id);
                     }
-
+                    break;
+                }
+                case "/add_report_count.reply": {
+                    Long id = Long.parseLong(request.getParameter("id"));
+                    replyDAO.plusReportCount(id);
                     break;
                 }
             }
