@@ -1,6 +1,7 @@
 package dao.board;
 
 import dto.board.ReplyDTO;
+import dto.board.ReplyListDTO;
 import util.DataUtil;
 
 import java.sql.Connection;
@@ -39,15 +40,15 @@ public class ReplyDAO {
 
     //region read
     //TODO: 댓글 목록 조회
-    public List<ReplyDTO> getReplyByBoardId(Long boardId) throws Exception {
+    public List<ReplyListDTO> getReplyByBoardId(Long boardId) throws Exception {
         String sql = "SELECT * FROM reply WHERE board_id = ?";
-        List<ReplyDTO> list = new ArrayList<>();
+        List<ReplyListDTO> list = new ArrayList<>();
         try (Connection con = DataUtil.getConnection();
              PreparedStatement pstat = con.prepareStatement(sql)) {
             pstat.setLong(1, boardId);
             try (ResultSet rs = pstat.executeQuery()) {
                 while (rs.next()) {
-                    list.add(ReplyDTO.builder()
+                    list.add(ReplyListDTO.builder()
                             .id(rs.getLong("id"))
                             .writer(rs.getString("writer"))
                             .contents(rs.getString("contents"))
@@ -158,25 +159,6 @@ public class ReplyDAO {
             e.printStackTrace();
         }
         return list;
-    }
-
-    // 관리자 댓글 총 개수
-    public int getReplyCountByBoardId(long boardId) {
-        String sql = "SELECT COUNT(*) FROM reply WHERE board_id = ?";
-        try (Connection con = DataUtil.getConnection();
-             PreparedStatement pstat = con.prepareStatement(sql)) {
-
-            pstat.setLong(1, boardId);
-
-            try (ResultSet rs = pstat.executeQuery()) {
-                if (rs.next()) {
-                    return rs.getInt(1);
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return 0;
     }
 
 

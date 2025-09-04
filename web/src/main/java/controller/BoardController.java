@@ -58,7 +58,7 @@ public class BoardController extends HttpServlet {
                     break;
                 }
                 case "/write_board.board": {
-                    request.getRequestDispatcher("/board/detailBoard/writeBoard.jsp").forward(request, response);
+                    request.getRequestDispatcher("/board/writeBoard/writeBoard.jsp").forward(request, response);
                     break;
                 }
 
@@ -86,13 +86,21 @@ public class BoardController extends HttpServlet {
 
                     String searchQuery = request.getParameter("searchQuery");
 
-                    List<BoardDTO> boardDTOList = boardDAO.getBoardPage(curPage, itemPerPage, filter, searchQuery);
+                    List<BoardListDTO> boardDTOList = boardDAO.getBoardPage(curPage, itemPerPage, filter, searchQuery, gameId);
+                    boardDTOList.forEach(item -> {
+                        try {
+                            item.setNickname(memberDAO.getMemberById(item.getWriter()).getNickname());
+                            item.setReplyCount(replyDAO.getReplyCountByBoardId(item.getId()));
+                            System.out.println(item.getReplyCount());
+                        } catch (Exception e) {
+                        }
+                    });
                     Map<String, Object> data = new HashMap<>();
 
                     data.put("list", boardDTOList);
                     data.put("itemPerPage", itemPerPage);
 
-                    data.put("maxPage", boardDAO.getMaxPage(itemPerPage, filter, searchQuery));
+                    data.put("maxPage", boardDAO.getMaxPage(itemPerPage, filter, searchQuery, gameId));
                     data.put("curPage", curPage);
                     data.put("naviPerPage", naviPerPage);
                     data.put("filter", filter);
@@ -142,11 +150,9 @@ public class BoardController extends HttpServlet {
                     long boardId = Long.parseLong(request.getParameter("boardId"));
 
                     // 게시글 정보
-                    BoardDTO detail = boardDAO.getBoardDetail(boardId);
+                    BoardListDTO detail = boardDAO.getBoardDetail(boardId);
+                    detail.setNickname(memberDAO.getMemberById(detail.getWriter()).getNickname());
 
-                    //TODO: 댓글 정보
-
-                    //TODO: 작성자 프로필사진 정보
                     request.setAttribute("boardDetail", detail);
                     request.getRequestDispatcher("/board/detailBoard/detailBoard.jsp").forward(request, response);
                     break;
@@ -156,7 +162,8 @@ public class BoardController extends HttpServlet {
                     long boardId = Long.parseLong(request.getParameter("boardId"));
 
                     // 게시글 정보
-                    BoardDTO detail = boardDAO.getBoardDetail(boardId);
+                    BoardListDTO detail = boardDAO.getBoardDetail(boardId);
+                    detail.setNickname(memberDAO.getMemberById(detail.getWriter()).getNickname());
                     request.setAttribute("boardDetail", detail);
                     request.getRequestDispatcher("/board/updateBoard/updateBoard.jsp").forward(request, response);
                     break;

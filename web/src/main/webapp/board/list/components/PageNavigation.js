@@ -1,4 +1,4 @@
-function createPageNavigation(maxPage, curPage, naviPerPage, filter, searchQuery) {
+function createPageNavigation(maxPage, curPage, naviPerPage, filter, searchQuery, gameId) {
     if (maxPage > 0) {
         let nav = $("<nav>");
         let ul = $("<ul>").addClass("pagination");
@@ -32,14 +32,20 @@ function createPageNavigation(maxPage, curPage, naviPerPage, filter, searchQuery
             nextPageFirst += searchQueryOpt;
         }
 
+        if(gameId !== -1) {
+            gameIdOpt = "&gameId=" + gameId;
+            prevPageLast += gameIdOpt;
+            nextPageFirst += gameIdOpt;
+        }
+
         prevArrowLink.html("<i class='bi bi-arrow-left'></i>");
         nextArrowLink.html("<i class='bi bi-arrow-right'></i>");
 
         prevArrowLink.on("click", () => {
-            setBoardListAndNav(filter, prevPageLast, searchQuery);
+            setBoardListAndNav(filter, prevPageLast, searchQuery, gameId);
         })
         nextArrowLink.on("click", () => {
-            setBoardListAndNav(filter, nextPageFirst, searchQuery);
+            setBoardListAndNav(filter, nextPageFirst, searchQuery, gameId);
         })
 
         prevArrow.append(prevArrowLink);
@@ -54,7 +60,7 @@ function createPageNavigation(maxPage, curPage, naviPerPage, filter, searchQuery
                 let navLink = $("<a>").addClass("page-link");
 
                 navLink.on("click", () => {
-                    setBoardListAndNav(filter, i, searchQuery);
+                    setBoardListAndNav(filter, i, searchQuery, gameId);
                 })
                 navLink.html(i);
                 if (i === curPage) {

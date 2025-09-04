@@ -105,7 +105,7 @@ function loadComments(boardId, loginId) {
                 }).append(profileImg);
 
                 // col-8 댓글 내용
-                let commentWriter = $("<div>").addClass("col-12 comment-writer").text(comment.writer);
+                let commentWriter = $("<div>").addClass("col-12 comment-writer").text(comment.nickname);
                 let commentContents = $("<span>")
                     .addClass("comment-contents")
                     .text(comment.contents);

@@ -45,7 +45,7 @@ public class BoardDAO {
 
     //region read
     //TODO: 게시글 목록 조회(title, writer 등 대표항목)
-    public List<BoardDTO> getBoardPage(int curPage, int itemPerPage, int filter, String searchQuery) throws Exception {
+    public List<BoardListDTO> getBoardPage(int curPage, int itemPerPage, int filter, String searchQuery, int gameId) throws Exception {
         String sql = "SELECT * FROM (SELECT board.*, ROW_NUMBER() OVER(ORDER BY id DESC) rn FROM board";
         if (filter != -1) {
             sql += " WHERE board_category = ?";
@@ -57,6 +57,14 @@ public class BoardDAO {
         }
         if (searchQuery != null) {
             sql += "title LIKE ?";
+            if (gameId != -1) {
+                sql += " AND ";
+            }
+        } else if (gameId != -1) {
+            sql += " WHERE ";
+        }
+        if (gameId != -1) {
+            sql += "game_id=?";
         }
         sql += ") WHERE rn BETWEEN ? AND ?";
 
@@ -68,6 +76,9 @@ public class BoardDAO {
             if (searchQuery != null) {
                 pstat.setString(parameterIndex++, "%" + searchQuery + "%");
             }
+            if (gameId != -1) {
+                pstat.setInt(parameterIndex++, gameId);
+            }
             pstat.setInt(parameterIndex++, curPage * itemPerPage - (itemPerPage - 1));
             pstat.setInt(parameterIndex, curPage * itemPerPage);
 
@@ -78,8 +89,8 @@ public class BoardDAO {
     }
 
     // board의 resultSet을 boardDTO타입의 List로 변환.
-    private List<BoardDTO> getBoardListByResultSet(ResultSet rs) throws Exception {
-        List<BoardDTO> posts = new ArrayList<>();
+    private List<BoardListDTO> getBoardListByResultSet(ResultSet rs) throws Exception {
+        List<BoardListDTO> posts = new ArrayList<>();
         while (rs.next()) {
             int id = rs.getInt("id");
             String writer = rs.getString("writer");
@@ -87,7 +98,7 @@ public class BoardDAO {
             String contents = rs.getString("contents");
             Timestamp writeDate = rs.getTimestamp("write_date");
             int viewCount = rs.getInt("view_count");
-            posts.add(BoardDTO.builder()
+            posts.add(BoardListDTO.builder()
                     .id(id)
                     .writer(writer)
                     .title(title)
@@ -99,7 +110,7 @@ public class BoardDAO {
         return posts;
     }
 
-    public int getMaxPage(int itemPerPage, int filter, String searchQuery) throws Exception {
+    public int getMaxPage(int itemPerPage, int filter, String searchQuery, int gameId) throws Exception {
         String sql = "SELECT count(*) FROM board";
         if (filter != -1) {
             sql += " WHERE board_category = ?";
@@ -111,6 +122,14 @@ public class BoardDAO {
         }
         if (searchQuery != null) {
             sql += "title LIKE ?";
+            if (gameId != -1) {
+                sql += " AND ";
+            }
+        } else if (gameId != -1) {
+            sql += " WHERE ";
+        }
+        if (gameId != -1) {
+            sql += "game_id=?";
         }
 
         try (Connection con = DataUtil.getConnection();
@@ -121,7 +140,10 @@ public class BoardDAO {
                 pstat.setInt(parameterIndex++, filter);
             }
             if (searchQuery != null) {
-                pstat.setString(parameterIndex, "%" + searchQuery + "%");
+                pstat.setString(parameterIndex++, "%" + searchQuery + "%");
+            }
+            if (gameId != -1) {
+                pstat.setInt(parameterIndex, gameId);
             }
 
             try (ResultSet rs = pstat.executeQuery()) {
@@ -134,7 +156,7 @@ public class BoardDAO {
     }
 
     //게시글 단일 조회(contents포함 세부항목)
-    public BoardDTO getBoardDetail(long boardId) throws Exception {
+    public BoardListDTO getBoardDetail(long boardId) throws Exception {
         String sql = "SELECT * FROM BOARD WHERE id = ?";
 
         try (Connection con = DataUtil.getConnection();
@@ -142,7 +164,7 @@ public class BoardDAO {
             pstat.setLong(1, boardId);
             try (ResultSet rs = pstat.executeQuery()) {
                 if (rs.next()) {
-                    return BoardDTO.builder()
+                    return BoardListDTO.builder()
                             .id(rs.getLong("id"))
                             .title(rs.getString("title"))
                             .writer(rs.getString("writer"))
@@ -188,20 +210,20 @@ public class BoardDAO {
 
     //region update
     //게시글 수정
-    public int updateBoard(BoardDTO boardDTO)throws Exception{
+    public int updateBoard(BoardDTO boardDTO) throws Exception {
         String sql = "update board set title=?,game_id=?,board_category=?,contents=? where id=?";
-        try(Connection con = DataUtil.getConnection();
-        PreparedStatement pstat = con.prepareStatement(sql)){
-            pstat.setString(1,boardDTO.getTitle());
-            pstat.setLong(2,boardDTO.getGameId());
-            pstat.setLong(3,boardDTO.getBoardCategory());
-            pstat.setString(4,boardDTO.getContents());
-            pstat.setLong(5,boardDTO.getId());
+        try (Connection con = DataUtil.getConnection();
+             PreparedStatement pstat = con.prepareStatement(sql)) {
+            pstat.setString(1, boardDTO.getTitle());
+            pstat.setLong(2, boardDTO.getGameId());
+            pstat.setLong(3, boardDTO.getBoardCategory());
+            pstat.setString(4, boardDTO.getContents());
+            pstat.setLong(5, boardDTO.getId());
             return pstat.executeUpdate();
         }
     }
 
-    public void plusReportCount(Long id) throws Exception{
+    public void plusReportCount(Long id) throws Exception {
         String sql = "UPDATE board SET report_count=? WHERE id=?";
         try (Connection con = DataUtil.getConnection();
              PreparedStatement pstat = con.prepareStatement(sql)) {
@@ -211,7 +233,7 @@ public class BoardDAO {
         }
     }
 
-    public void plusViewCount(Long id) throws Exception{
+    public void plusViewCount(Long id) throws Exception {
         String sql = "UPDATE board SET view_count=? WHERE id=?";
         try (Connection con = DataUtil.getConnection();
              PreparedStatement pstat = con.prepareStatement(sql)) {
@@ -227,7 +249,7 @@ public class BoardDAO {
     public int deleteBoard(Long boardId) throws Exception {
         String sql = "delete from board where id = ?";
         try (Connection con = DataUtil.getConnection();
-        PreparedStatement pstat = con.prepareStatement(sql)){
+             PreparedStatement pstat = con.prepareStatement(sql)) {
             pstat.setLong(1, boardId);
             return pstat.executeUpdate();
         }

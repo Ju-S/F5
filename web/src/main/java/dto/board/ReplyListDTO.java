@@ -9,17 +9,13 @@ import java.sql.Timestamp;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class BoardListDTO {
+public class ReplyListDTO {
     private long id;
-    private long boardCategory;
     private String writer;
-    private long gameId;
-    private String title;
+    private long boardId;
     private String contents;
-    private long viewCount;
-    private long like_count;
+    private long likeCount;
     private Timestamp writeDate;
     private long reportCount;
-    private int replyCount;
     private String nickname;
 }

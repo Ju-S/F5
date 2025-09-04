@@ -32,7 +32,7 @@
                 <div class="col-4"></div>
                 <div class="col-2 write">
                     <!-- 글 작성 버튼 -->
-                    <button id="writeBtn" onClick="location.href = '/write_board.page'" class="btn"
+                    <button id="writeBtn" onClick="location.href = '/write_board.board'" class="btn"
                             type="button">글 작성
                     </button>
                 </div>

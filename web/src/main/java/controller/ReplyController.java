@@ -14,6 +14,7 @@ import dao.member.MemberDAO;
 import dao.member.MemberGameTierDAO;
 import dao.member.MemberProfileFileDAO;
 import dto.board.BoardDTO;
+import dto.board.ReplyListDTO;
 import util.FileUtil;
 
 import javax.servlet.annotation.WebServlet;
@@ -62,7 +63,14 @@ public class ReplyController extends HttpServlet {
                 case "/get_reply_list.reply":{
                     Long boardId = Long.parseLong(request.getParameter("boardId"));
                     response.setContentType("text/plain; charset=UTF-8");
-                    response.getWriter().write(gson.toJson(replyDAO.getReplyByBoardId(boardId)));
+                    List<ReplyListDTO> result = replyDAO.getReplyByBoardId(boardId);
+                    result.forEach(item -> {
+                            try{
+                                item.setNickname(memberDAO.getMemberById(item.getWriter()).getNickname());
+                            }catch(Exception e){}
+                    });
+
+                    response.getWriter().write(gson.toJson(result));
                     break;
                 }
                 case "/update_reply.reply": {

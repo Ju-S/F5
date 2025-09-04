@@ -35,7 +35,7 @@ function createBoardItem(post) {
             "title": post.title,
             "href": "/get_board_detail.board?boardId=" + post.id
         }).html(post.title));
-    let writer = $("<div>").addClass("col col-12 writer").html(post.writer);
+    let writer = $("<div>").addClass("col col-12 writer").html(post.nickname);
     let boardSummary = $("<div>").addClass("col col-3 board-summary");
     let replyCount = $("<div>").html("<i class=\"bi bi-chat-left-dots-fill me-2\"></i>" + post.replyCount);
     let viewCount = $("<div>").html("<i class=\"bi bi-eye ms-3 me-2\"></i>" + post.viewCount);

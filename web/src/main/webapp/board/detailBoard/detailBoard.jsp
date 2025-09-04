@@ -30,7 +30,7 @@
                                  style="width: 50px; height: 50px;"/>
                         </div>
                         <div class="col-10 writer">
-                            ${boardDetail.writer}
+                            ${boardDetail.nickname}
                         </div>
                         <div class="col-1">
                             <div class="reportBox">
