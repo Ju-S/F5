@@ -57,7 +57,7 @@
                             <script>
                                /* 페이지 입장 시 넘어온 파라미터 {game_id}를 변수로 만듬*/
 
-                                 //const GAMEID = ${gameId};
+
                                    const GAMEID = parseInt("${gameId}", 10);
 
                                 $(".play_btn").on("click",function (){
