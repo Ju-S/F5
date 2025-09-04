@@ -67,6 +67,7 @@
 
                                         case 1 : {
                                             //주성
+
                                             break;
                                         }
 
@@ -89,7 +90,7 @@
 
                                         case 5 : {
                                             //영서
-                                            $(".game_box").load("/game/Geometry_Dash_Lite/js/geometry_game.jsp");
+                                            $(".game_box").load("/game/jys/jys.jsp");
                                             break;
                                         }
 
@@ -183,9 +184,9 @@
                                         <i class="bi bi-three-dots-vertical"></i>
                                     </button>
 
-                                    <ul class="dropdown-menu dropdown-menu-end">
-                                        <li><button type="submit" class="dropdown-item text-danger" >신고하기</button></li>
-                                    </ul>
+<%--                                    <ul class="dropdown-menu dropdown-menu-end">--%>
+<%--                                        <li><button type="submit" class="dropdown-item text-danger" >신고하기</button></li>--%>
+<%--                                    </ul>--%>
                                     </form>
                                 </div>
                             </div>
