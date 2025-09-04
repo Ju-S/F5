@@ -1,7 +1,5 @@
-<%@ page import="enums.Authority" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <html>
 <head>
     <jsp:include page="/common/Head.jsp"/>
@@ -30,14 +28,13 @@
                 </div>
             </div>
 
-            <!-- 블랙리스트 게시물 -->
+            <!-- 회원 아이디 블랙리스트 게시물 -->
             <div class="table-content">
                 <div class="table-responsive p-3 rounded fixed-height-table">
                     <table class="table table-dark table-hover align-middle">
                         <thead>
                         <tr>
-                            <th>제목</th>
-                            <th>작성자</th>
+                            <th>닉네임</th>
                             <th>신고일</th>
                             <th>신고횟수</th>
                             <th>관리</th>
@@ -61,7 +58,7 @@
 
 </div>
 
-<script src="/member/admin/js/board_admin.js"></script>
+<script src="/member/admin/js/admin_member.js"></script>
 
 </body>
 </html>

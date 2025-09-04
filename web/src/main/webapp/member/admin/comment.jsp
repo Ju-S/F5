@@ -1,16 +1,7 @@
 <%@ page import="enums.Authority" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%
-    // 관리자 권한 검사: 반드시 HTML보다 먼저 실행!
-    String loginId = (String) session.getAttribute("loginId");
-    Authority auth = (Authority) session.getAttribute("authority");
 
-    if (loginId == null || auth != Authority.ADMIN) {
-        response.sendRedirect("/member/login/login.jsp");
-        return;
-    }
-%>
 <html>
 <head>
     <jsp:include page="/common/Head.jsp"/>
@@ -39,7 +30,7 @@
                 </div>
             </div>
 
-            <!-- 블랙리스트 게시물 -->
+            <!-- 댓글 신고 게시물 -->
             <div class="table-content">
                 <div class="table-responsive p-3 rounded fixed-height-table">
                     <table class="table table-dark table-hover align-middle">

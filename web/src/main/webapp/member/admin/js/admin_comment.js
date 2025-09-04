@@ -41,7 +41,6 @@ function renderTable(replyList) {
         `;
         tableBody.appendChild(tr);
     }
-
     attachDeleteHandlers();
 }
 
