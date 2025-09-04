@@ -14,7 +14,7 @@
             physics: {
                 default: "arcade",
                 arcade: {
-                    debug: true
+                    // debug: true
                 }
             },
             scene: [first_scene, second_scene, Pmg_game, pmg_Gameover]

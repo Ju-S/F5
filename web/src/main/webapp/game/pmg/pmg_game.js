@@ -192,10 +192,10 @@ class Pmg_game extends Phaser.Scene {
 // 이벤트 시작은 10초(10000ms) 이후부터
         let eventStartTime = 10000;
 
-// === 이벤트는 10초 이후부터 주기적으로 발생 ===
+// === 이벤트는 10초마다 주기적으로 발생 ===
         if (this.currentTime >= eventStartTime) {
-            let eventDuration = 10000;
-            let eventCycle = 20000;
+            let eventDuration = 10000; // 이벤트 지속기간
+            let eventCycle = 20000; // 이벤트 주기
 
             let timeInCycle = (this.currentTime - eventStartTime) % eventCycle;
 

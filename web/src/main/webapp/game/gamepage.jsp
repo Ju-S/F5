@@ -56,7 +56,7 @@
 
                                     case 1 : {
                                         //주성
-
+                                        $(".game_box").load("/game/kjs/kjs_game.jsp");
                                         break;
                                     }
 
@@ -67,7 +67,7 @@
 
                                     case 3 : {
                                         //기준
-                                        $(".game_box").load("/game/kjs/kjs_game.jsp");
+                                        $(".game_box").load("/game/kgj/kgj_game.jsp");
                                         break;
                                     }
 
@@ -123,10 +123,12 @@
                             <c:when test="${sessionScope.loginId == i.writer}"> <%-- 작성자 시점 --%>
 
                                 <div class="reply_bar">
-                                    <div class="reply_profile"><img id="img"
-                                                                    src="/downloadImgFile.member?memberId=${i.writer}"
-                                                                    onerror="this.onerror=null; this.src='/member/my_page/img/profile.svg';"
-                                                                    alt="profile"/></div>
+                                    <div class="reply_profile">
+                                        <img id="img"
+                                             src="/downloadImgFile.member?memberId=${i.writer}"
+                                             onerror="this.onerror=null; this.src='/member/my_page/img/profile.svg';"
+                                             alt="profile"/>
+                                    </div>
                                     <div class="reply_main">
                                         <div class="reply_center"> 작성자 : ${i.writer} <img src="${i.tier}"
                                                                                           alt="tier_icon"
@@ -172,23 +174,6 @@
                                         </button>
                                     </form>
 
-                                        <%--                                <div class="dropdown">--%>
-                                        <%--                                        &lt;%&ndash; 원본 class="btn btn btn-dark dropdown-toggle" &ndash;%&gt;--%>
-                                        <%--                                    <form action="/report_reply.game" method="get">--%>
-                                        <%--                                        <input type = "hidden" name="gameId" value="${i.gameId}">--%>
-                                        <%--                                        <input type = "hidden" name="writer" value="${i.writer}">--%>
-                                        <%--                                        <input type = "hidden" name="reportcount" value="${i.report_count}">--%>
-                                        <%--                                    <button type="button" class="btn btn btn-dark" id="reportPost" data-bs-toggle="dropdown" aria-expanded="false"--%>
-                                        <%--                                            style="background: transparent; border: none; padding: 0;">--%>
-                                        <%--                                        <i class="bi bi-three-dots-vertical"></i>--%>
-                                        <%--                                    </button>--%>
-
-                                        <%--&lt;%&ndash;                                    <ul class="dropdown-menu dropdown-menu-end">&ndash;%&gt;--%>
-                                        <%--&lt;%&ndash;                                        <li><button type="submit" class="dropdown-item text-danger" >신고하기</button></li>&ndash;%&gt;--%>
-                                        <%--&lt;%&ndash;                                    </ul>&ndash;%&gt;--%>
-                                        <%--                                    </form>--%>
-                                        <%--                                </div>--%>
-                                        <%--                                --%>
                                 </div>
 
 

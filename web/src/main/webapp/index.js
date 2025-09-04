@@ -42,10 +42,12 @@ const gameViews = {
     ),
     game4: createGameView(
         "4",
-        "게임 4 타이틀",
-        "게임 4 에 대한 설명 , 게임 4 에 대한 설명 게임 4 에 대한 설명게임 4 에 대한 설명 게임 4 에 대한 설명게임 4 에 대한 설명",
+        "I hate injections!",
+        "어느 날, 벤은 주사를 예약했다는 말과 함께 병원에 갑니다.\n" +
+        "                \"주사 맞기 싫어!! 무섭단 말이야!!!\"<br>\n" +
+        "                벤은 결국 병원에서 난동을 피우게 되는데...",
         "/index_img/desktop_home_mk.svg",
-        "game4"
+        "병원으"
     ),
     game5: createGameView(
         "5",
