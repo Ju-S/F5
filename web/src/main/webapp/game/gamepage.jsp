@@ -77,8 +77,7 @@
                                         break;
                                     }
 
-                                    case 5 : {
-                                        //영서
+                                    case 5: {
                                         $(".game_box").load("/game/jys/jys.jsp");
                                         break;
                                     }
@@ -86,9 +85,7 @@
                                 }
 
                             });
-
                         </script>
-
                     </div>
                     <%-- </div>--%>
 
