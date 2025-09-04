@@ -263,6 +263,14 @@ body {
     float:left;
 }
 
+.tier_icon {
+    width: 45px !important;
+    height: 45px !important;
+    object-fit: contain;
+    vertical-align: middle;
+    margin-left: 4px;
+    border-radius: 4px;
+}
 
 .reply_bar_btn{
     padding: 10px 20px;
