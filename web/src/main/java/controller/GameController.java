@@ -73,6 +73,8 @@ public class GameController extends HttpServlet {
                         gameScoreDAO.updateTierToImg(tier);
                     }
 
+
+
                     response.setContentType("application/json; charset=utf-8"); // json 응답
                     response.getWriter().write("{\"result\":\"success\"}");
 
@@ -89,7 +91,7 @@ public class GameController extends HttpServlet {
 
                     request.setAttribute("list", list);
                     request.setAttribute("listranking", listranking);
-
+                    request.setAttribute("gameId", gameId);
                     request.getRequestDispatcher("/game/gamepage.jsp").forward(request, response);
                     break;
 
@@ -101,6 +103,7 @@ public class GameController extends HttpServlet {
                     //(String)request.getSession().getAttribute("loginId");
                     int gameId = Integer.parseInt(request.getParameter("gameId"));
                     String contents = request.getParameter("contents");
+
 
                     System.out.println("작성자 0903:" + writer);
 

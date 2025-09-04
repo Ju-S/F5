@@ -92,6 +92,11 @@ public class GameReplyDAO {
                     Timestamp write_date = rs.getTimestamp("write_date");
                     int report_count = rs.getInt("report_count");
                     String tier = rs.getString("tier");
+
+                    if (tier == null) { // tier 값이 null 일경우 unraked.png로 대체
+                        tier = "/game/img/unranked.png"; 
+                    }
+
                     GameReplyDTO dto = new GameReplyDTO(id,game_id,writer,contents,write_date, report_count, tier);
                     list.add(dto);
                 }

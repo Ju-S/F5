@@ -56,9 +56,8 @@
 
                             <script>
                                /* 페이지 입장 시 넘어온 파라미터 {game_id}를 변수로 만듬*/
-                                <%--// const GAMEID = Number("${game_id}");--%>
+                                 const GAMEID = ${gameId};
 
-                                const GAMEID = 4; // 예시
 
                                 $(".play_btn").on("click",function (){
                                     $(".game_box").empty(); // title play 버튼 지우기
@@ -193,7 +192,6 @@
 
 
 
-
                         </c:when>
 
                         <c:otherwise> <%--작성자 외 시점--%>
@@ -229,8 +227,6 @@
 
 
 
-
-
                         </c:otherwise>
 
                         </c:choose>
@@ -241,7 +237,7 @@
                         <form action="/write_reply.game" method="post">
                             <div class="text_reply">
                                 <input type="hidden" name="writer" value="${sessionScope.loginId}">
-                                <input type="hidden" name="gameId" value="4">   <%--${game_id}--%>
+                                <input type="hidden" name="gameId" value="${gameId}">   <%--${game_id}--%>
                                 <input type="text" class="reply_area" placeholder="write your comment!" name="contents">
                                 <button id="writing_btn" class="reply_btn"><i class="fa-solid fa-paper-plane" style="color: #ffffff;"></i></button>
                             </div>

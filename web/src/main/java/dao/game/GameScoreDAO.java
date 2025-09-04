@@ -147,8 +147,8 @@ public class GameScoreDAO {
                             break;
                 default:
                     throw new IllegalArgumentException("Unknown tier: " + tier);
-            }
 
+            }
 
         String sql = "update member_game_tier set tier= ? where tier = ?";
         try (Connection con = DataUtil.getConnection();
