@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
+import java.util.*;
 
 public class MemberDAO {
     private static MemberDAO instance;
@@ -168,8 +169,6 @@ public class MemberDAO {
         }
     }
 
-
-
     //===================로그인용
     //로그인 기능
     public boolean isLoginOk(String id, String pw) throws Exception {
@@ -201,33 +200,6 @@ public class MemberDAO {
     //region create
     //TODO: 회원가입
     //endregion
-
-    //회원가입
-    public int inserMember(MemberDTO dto) throws Exception {
-        String sql = "INSERT INTO MEMBER (id, pw, name, nickname, email, authority, birthyear, sex) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-
-        try (Connection con = DataUtil.getConnection();
-             PreparedStatement pstat = con.prepareStatement(sql)) {
-            pstat.setString(1, dto.getId());
-            pstat.setString(2, dto.getPw());
-            pstat.setString(3, dto.getName());
-            pstat.setString(4, dto.getNickname());
-            pstat.setString(5, dto.getEmail());
-            pstat.setString(6, dto.getAuthority().toString());
-            pstat.setInt(7, dto.getBirthyear());
-            pstat.setInt(8, dto.getSex());
-
-            int result = pstat.executeUpdate();
-            // DB 삽입 결과 확인
-            if (result > 0) {
-                System.out.println("회원가입 성공!");
-            } else {
-                System.out.println("회원가입 실패!");
-            }
-
-            return result;
-        }
-    }
 
     //회원가입 - list 저장
     public List<MemberDTO> listMemberDate() throws Exception {
