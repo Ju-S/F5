@@ -10,6 +10,10 @@ body {
     height: 100%;
     overflow: hidden;
 }
+form{
+    margin: 0;
+    padding: 0;
+}
 
 /*왼쪽*/
 #left{
@@ -52,16 +56,6 @@ body {
 
 
 
-#rightBox input[type="text"]:focus,
-#rightBox input[type="password"]:focus
-{
-    border: 1.5px solid var(--danger-color) !important;
-    outline: 0;
-    /* 포커스 링(선택 사항) */
-    box-shadow: 0 0 0 3px rgba(236, 99, 51, .15);
-    transition: border-color .15s ease, box-shadow .15s ease;
-}
-
 /*오른쪽*/
 #right{
     float: left;
@@ -70,11 +64,6 @@ body {
 
     display: flex;
     justify-content: center;
-
-}
-form{
-    margin: 0;
-    padding: 0;
 }
 /*로그인 영역 박스*/
 #rightBox{
@@ -110,6 +99,17 @@ form{
 #loginBox input:nth-child(2) {
     margin-top: 5%;
 }
+#rightBox input[type="text"]:focus,
+#rightBox input[type="password"]:focus
+{
+    border: 1.5px solid var(--danger-color) !important;
+    outline: 0;
+    /* 포커스 링(선택 사항) */
+    box-shadow: 0 0 0 3px rgba(236, 99, 51, .15);
+    transition: border-color .15s ease, box-shadow .15s ease;
+}
+
+
 /*로그인 버튼 박스*/
 #loginBtnBox{
     width: 100%;
@@ -130,28 +130,31 @@ form{
     background-color:var(--btnsecondary-hover-color) !important;
     border: 1px solid var(--btnsecondary-hover-color) !important;
 }
+
+
 /*로그인 푸터 박스*/
 #loginFooter{
+    display: grid;
+    grid-template-columns: 1fr auto 1fr auto 1fr; /* 링크는 동일폭, 세퍼는 내용폭 */
+    align-items: center;
+    column-gap: 16px; /* 좌우 간격 (원하면 조절) */
+    justify-items: center; /* 각 칸 중앙 정렬 */
     width: 100%;
     height: 25%;
-
-    display: flex;
-    justify-content: center;
 }
 #loginFooter a{
-    margin-top: 24px;
-    color: var(--sub-btn-color);
+    margin-top: 0;
     text-decoration: none;
+    color: var(--sub-btn-color);
+    text-align: center;
+    width: 100%;
+}
+#verticalLine{
+    border-left: 1px solid var(--sub-btn-color);
+    height: 22px;
+    margin: 0;
 }
 #loginFooter a:hover,#loginFooter a:active{
     cursor: pointer;
     color: var(--primary-subcolor);
-}
-#verticalLine{
-    border-left: 1px solid var(--sub-btn-color);
-    height: 25%;
-    margin-top: 24px;
-    margin-right: 4%;
-    margin-left: 4%;
-    display: inline;
 }

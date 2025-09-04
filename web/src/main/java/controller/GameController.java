@@ -47,8 +47,8 @@ public class GameController extends HttpServlet {
 
             String cmd = request.getRequestURI();
 
-            switch (cmd) {
 
+            switch (cmd) {
 
                 case "/gameover.game": { // 게임 오버시 발생
 
@@ -145,7 +145,10 @@ public class GameController extends HttpServlet {
 
                     response.sendRedirect("/go_gamepage.game?gameId=" + gameId);
                     break;
+
+
                 }
+
 
                 case "/toGamePage.game": {
                     String gameId = request.getParameter("gameId");

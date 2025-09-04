@@ -44,3 +44,9 @@ buildNumber.properties
 .classpath
 
 .idea/
+
+# IntelliJ user-specific + run configs deleteHere
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/**/httpRequests/
+.idea/runConfigurations/

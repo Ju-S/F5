@@ -32,25 +32,64 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Map;
 import java.util.Properties;
+import java.sql.Timestamp;
 
 @WebServlet("*.member")
 public class MemberController extends HttpServlet {
-    private static final long EMAIL_CODE_TTL = 10 * 60 * 1000L;  // 10분
     // sendGrid 계정
     private String SMTP_USER;   // ← web.xml에서 주입
     private String SMTP_PASS;   // ← web.xml에서 주입
     private String SMTP_FROM;   // ← web.xml에서 주입
 
+    private static final long EMAIL_CODE_TTL = 10 * 60 * 1000L;  // 10분
+
     @Override
     public void init() throws ServletException {
+        // 1차: web.xml 또는 Tomcat <Context><Parameter> 값
         SMTP_USER = getServletContext().getInitParameter("SMTP_USER");
         SMTP_PASS = getServletContext().getInitParameter("SMTP_PASS");
         SMTP_FROM = getServletContext().getInitParameter("SMTP_FROM");
 
-        if (SMTP_USER == null || SMTP_PASS == null || SMTP_FROM == null) {
-            throw new ServletException("SMTP config missing: check web.xml (SMTP_USER/SMTP_PASS/SMTP_FROM)");
+        // 2차: OS 환경변수 / JVM -D 옵션
+        if (isBlank(SMTP_USER)) SMTP_USER = firstNonBlank(System.getenv("SMTP_USER"), System.getProperty("SMTP_USER"));
+        if (isBlank(SMTP_PASS)) SMTP_PASS = firstNonBlank(System.getenv("SMTP_PASS"), System.getProperty("SMTP_PASS"));
+        if (isBlank(SMTP_FROM)) SMTP_FROM = firstNonBlank(System.getenv("SMTP_FROM"), System.getProperty("SMTP_FROM"));
+
+        // 3차: JNDI(java:comp/env) 환경값
+        if (isBlank(SMTP_USER) || isBlank(SMTP_PASS) || isBlank(SMTP_FROM)) {
+            try {
+                javax.naming.Context env = (javax.naming.Context) new javax.naming.InitialContext().lookup("java:comp/env");
+                if (isBlank(SMTP_USER)) SMTP_USER = (String) env.lookup("SMTP_USER");
+                if (isBlank(SMTP_PASS)) SMTP_PASS = (String) env.lookup("SMTP_PASS");
+                if (isBlank(SMTP_FROM)) SMTP_FROM = (String) env.lookup("SMTP_FROM");
+            } catch (Exception ignore) { /* JNDI 미구성 시 무시 */ }
         }
+
+        // 4차: SendGrid 전용 기본값 보정 (USERNAME은 'apikey' 고정)
+        if (isBlank(SMTP_USER)) {
+            SMTP_USER = "apikey";
+        }
+
+        // 최종 검증 (PASS/FROM은 반드시 필요)
+        if (isBlank(SMTP_PASS) || isBlank(SMTP_FROM)) {
+            throw new ServletException("SMTP config missing: need SMTP_PASS & SMTP_FROM (env/VM options/Tomcat <Parameter>).");
+        }
+
+        // 확인 로그(비밀값 마스킹)
+        String passSig = (SMTP_PASS.length() >= 6) ? SMTP_PASS.substring(0, 6) + "****" : SMTP_PASS;
+        getServletContext().log("[SMTP] init ok - USER=" + SMTP_USER + ", FROM=" + SMTP_FROM + ", PASS(sig)=" + passSig);
     }
+    private static boolean isBlank(String s) {
+        return s == null || s.trim().isEmpty();
+    }
+    private static String firstNonBlank(String... vals) {
+        if (vals == null) return null;
+        for (String v : vals) {
+            if (!isBlank(v)) return v;
+        }
+        return null;
+    }
+
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
@@ -76,34 +115,174 @@ public class MemberController extends HttpServlet {
                 // 행위 + 자원 (e.g, /get_memberList.member로 작성 요망)
                 //TODO: 회원 관련 기능
 
-                case "/toLoginPage.member": {
+                //페이지 이동
+                case "/toLoginPage.member":{
+                    getServletContext().log("[SMTP] toLoginPage - USER=" + SMTP_USER + ", FROM=" + SMTP_FROM + ", PASS(sig)=" + passSig);
+                    System.out.println("[SMTP] toLoginPage - USER=" + SMTP_USER + ", FROM=" + SMTP_FROM + ", PASS(sig)=" + passSig);
+
+
+
                     //로그인 페이지로 이동
                     response.sendRedirect("/member/login/login.jsp");
                     return; //리다이렉트 후에 리턴넣어야 작동되네
                 }
-
-
-                case "/toSigninPage.member": {
+                case "/toSigninPage.member":{
                     //회원가입 페이지로 이동
                     response.sendRedirect("/member/signin/signin.jsp");
                     return;//리다이렉트 후에 리턴넣어야 작동되네
                 }
+                case "/toFindPwPage.member": {
+                    HttpSession s = request.getSession();
+                    boolean codeVerified = Boolean.TRUE.equals(s.getAttribute("codeVerified"));
+                    request.setAttribute("codeVerified", codeVerified);
+                    request.setAttribute("verifiedEmail", (String) s.getAttribute("verifiedEmail"));
+                    request.setAttribute("verifiedId", (String) s.getAttribute("verifiedId")); // ★ 추가
+                    request.getRequestDispatcher("/member/findPw/findPw.jsp").forward(request, response);
+                    return;
+                }
+                case "/toFindIdPage.member":{
+                    //아이디 찾기 페이지로 이동
+                    response.sendRedirect("/member/findId/findId.jsp");
+                    return;//리다이렉트 후에 리턴넣어야 작동되네
+                }
 
+                //아이디 찾기용
+                case "/isNameEmailExist.member":{
+                    String name =request.getParameter("name");
+                    String email = request.getParameter("email");
 
-                case "/isLoginOk.member": {
-                    //로그인 해도 되는지?
-                    String id = request.getParameter("id");
+                    boolean isNameEmailExist = memberDAO.isNameEmailExist(name,email);
+                    PrintWriter pw = response.getWriter();
+                    pw.print(isNameEmailExist);
+                    pw.flush();
+                    pw.close();
+                    return;
+                }
+                case "/findIdByNameEmail.member": {
+                    String name = request.getParameter("name");
+                    String email = request.getParameter("email");
+                    String foundId = memberDAO.findIdByNameEmail(name, email); // 직접 구현
+
+                    response.setContentType("application/json;charset=UTF-8");
+                    try (PrintWriter pw = response.getWriter()) {
+                        if (foundId != null) {
+                            pw.print("{\"ok\":true,\"id\":\"" + foundId + "\"}"); //true면 아이디값 반환 + true
+                        } else {
+                            pw.print("{\"ok\":false}"); //false면 아이디값 반환 안함
+                        }
+                        pw.flush();
+                    }
+                    return;
+                }
+
+                // 비밀번호 찾기용
+                case "/changePw.member":{
+                    //비밀번호 변경
                     String pw = request.getParameter("pw");
-                    System.out.println(id + ":" + pw);
+                    String id = request.getParameter("id");
+                    memberDAO.changePw(pw, id);
 
-                    boolean isLoginOk = memberDAO.isLoginOk(id, pw);
-                    System.out.println("로그인성공 여부:" + isLoginOk);
+                    response.sendRedirect("/index.jsp");
+                }
+                case "/isIdEmailExist.member" :{
+                    //비밀번호 찾기 전 아이디 비번 있는지 찾기
+                    response.setContentType("text/plain; charset=UTF-8"); // text/plain 권장
+                    String email = request.getParameter("email");
+                    String id = request.getParameter("id");
 
-                    if (isLoginOk) {
+                    boolean isIdEmailExist = memberDAO.isIdEmailExist(id,email);
+                    System.out.println("after dao"+id+email+isIdEmailExist);
+
+                    PrintWriter pw = response.getWriter();
+                    pw.print(isIdEmailExist);
+                    pw.flush();
+                    pw.close();
+                    return;
+                }
+                case "/IdEmailCode.member": {
+                    // 이메일 코드 인증 여부 폼태그로 보내주기
+                    String vEmail = request.getParameter("email");
+                    String inputCode = request.getParameter("code");
+                    String vId    = request.getParameter("id");
+
+                    HttpSession vSession = request.getSession();
+                    boolean ok = false;
+
+                    if (vEmail != null && inputCode != null) {
+                        vEmail = vEmail.trim();
+                        inputCode = inputCode.trim();
+
+                        Object savedObj = vSession.getAttribute("emailCode:" + vEmail);
+                        Object tsObj    = vSession.getAttribute("emailCode:" + vEmail + ":ts");
+
+                        if (savedObj != null && tsObj != null) {
+                            String saved = savedObj.toString();
+                            long ts = (long) tsObj;
+                            ok = (System.currentTimeMillis() - ts) <= EMAIL_CODE_TTL && saved.equals(inputCode);
+                            if (ok) {
+                                vSession.removeAttribute("emailCode:" + vEmail);
+                                vSession.removeAttribute("emailCode:" + vEmail + ":ts");
+                                vSession.setAttribute("codeVerified", true);
+                                vSession.setAttribute("verifiedEmail", vEmail);
+                                vSession.setAttribute("verifiedId", vId); // ★ 추가
+                            }
+                        }
+                    }
+
+                    if (!ok) vSession.setAttribute("codeVerified", false);
+
+
+                    // PRG
+                    response.sendRedirect("/toFindPwPage.member");
+                    return;
+                }
+                case "/cancelFindPw.member": {
+                    HttpSession session = request.getSession(false);
+                    if (session != null) {
+
+                        // 1) verifiedEmail을 우선 가져와서 세션에 저장된 키 값 지움
+                        String vEmail = (String) session.getAttribute("verifiedEmail");
+                        if (vEmail != null && !vEmail.isEmpty()) {
+                            session.removeAttribute("emailCode:" + vEmail);
+                            session.removeAttribute("emailCode:" + vEmail + ":ts");
+                        } else {
+                            // 2) verifiedEmail이 없다면 모든걸 지움
+                            java.util.Enumeration<String> names = session.getAttributeNames();
+                            java.util.List<String> toRemove = new java.util.ArrayList<>();
+                            while (names.hasMoreElements()) {
+                                String name = names.nextElement();
+                                if (name.startsWith("emailCode:")) toRemove.add(name);
+                            }
+                            for (String n : toRemove) session.removeAttribute(n);
+                        }
+
+                        // 3) 세션에서 지움(강화코드)
+                        session.removeAttribute("codeVerified");
+                        session.removeAttribute("verifiedEmail");
+                        session.removeAttribute("verifiedId");
+                    }
+
+                    // 내용 없이 OK
+                    response.setStatus(204);
+                    return;
+                }
+
+
+                //로그인용
+                case "/isLoginOk.member":{
+                    //로그인 해도 되는지?
+                    String id =request.getParameter("id");
+                    String pw = request.getParameter("pw");
+                    System.out.println(id+":"+pw);
+
+                    boolean isLoginOk =memberDAO.isLoginOk(id,pw);
+                    System.out.println("로그인성공 여부:"+isLoginOk);
+
+                    if(isLoginOk){
                         request.getSession().setAttribute("loginId", id); // 로그인 인증 정보를 세션에다 담음
                         response.sendRedirect("/index.jsp");
                         return;
-                    } else {
+                    }else {
                         // 실패 시에도 반드시 응답을 보냄(로그인 페이지로 보내면서 alert 뜨게 만들기)
                         response.sendRedirect("/member/login/login.jsp?msg=loginfail");
                         return;
@@ -111,21 +290,22 @@ public class MemberController extends HttpServlet {
                 }
 
 
-                case "/toFindIdPage.member": {
+                case"/toFindIdPage.member":{
                     // 아이디 찾기 페이지로 이동 (forward)
                     response.sendRedirect("/member/findId/findId.jsp");
                     return;
                 }
 
 
-                case "/toFindPwPage.member": {
+                case"/toFindPwPage.member":{
                     // 비번 찾기 페이지로 이동 (forward)
                     response.sendRedirect("/member/findPw/findPw.jsp");
                     return;
                 }
 
 
-                case "/dupliIdCheck.member": {
+                //회원가입용
+                case "/dupliIdCheck.member" : {
                     //아이디 중복검사
                     response.setContentType("text/plain; charset=UTF-8"); // text/plain 권장
                     String id = request.getParameter("id");
@@ -134,18 +314,14 @@ public class MemberController extends HttpServlet {
                     boolean exists = memberDAO.isIdExist(id);
                     System.out.println("아이디중복검사 컨트롤러 id=\"" + id + "\", exists=" + exists);
 
-                    PrintWriter out = response.getWriter();
-                    out.append("false");
-                    out.close();
-
                     PrintWriter pw = response.getWriter();
                     pw.print(exists);   // println/append 대신 print
                     pw.flush();
                     pw.close();
-                    break;
+                    return;
                 }
+                case "/dupliNicknameCheck.member" : {
 
-                case "/dupliNicknameCheck.member": {
                     //닉네임 중복검사
                     response.setContentType("text/html; charset=UTF-8");
                     String nickname = request.getParameter("nickname");
@@ -155,11 +331,9 @@ public class MemberController extends HttpServlet {
                     pw.print(isNicknameExist);
                     pw.flush();
                     pw.close();
-                    break;
+                    return;
                 }
-
-                // 이메일 확인
-                case "/mailCheck.member": {
+                case "/mailCheck.member"  : {
 
                     //이메일 인증: 코드 발송
                     response.setContentType("application/json; charset=UTF-8");
@@ -168,7 +342,7 @@ public class MemberController extends HttpServlet {
                     String emailParam = request.getParameter("email");
                     if (emailParam == null || emailParam.trim().isEmpty()) {
                         response.getWriter().write("{\"ok\":false,\"msg\":\"email required\"}");
-                        break;
+                        return;
                     }
                     String email = emailParam.trim();
 
@@ -211,12 +385,10 @@ public class MemberController extends HttpServlet {
                         e.printStackTrace();
                         response.getWriter().write("{\"ok\":false,\"msg\":\"send fail\"}"); // 실패하면 okr객체에 false 담기
                     }
-                    break;
+                    return;
 
                 }
-
-                // 이메일 인증
-                case "/verifyEmailCode.member": {
+                case "/verifyEmailCode.member" : {
                     //이메일 인증: 코드 발송
                     response.setContentType("application/json; charset=UTF-8");
                     //request에 담긴 email과 code를 받기
@@ -226,7 +398,7 @@ public class MemberController extends HttpServlet {
                     //이메일이나 코드가 null이면 종료후 공백 trim으로 지우기
                     if (vEmail == null || inputCode == null) {
                         response.getWriter().write("{\"ok\":false}");
-                        break;
+                        return;
                     }
                     vEmail = vEmail.trim();
                     inputCode = inputCode.trim();
@@ -252,19 +424,17 @@ public class MemberController extends HttpServlet {
 
                     //성공하면 ok true 담고 실패하면 false담기
                     response.getWriter().write(ok ? "{\"ok\":true}" : "{\"ok\":false}");
-                    break;
+                    return;
 
                 }
-
-                // 회원 정보
-                case "/signin.member": {
+                case "/signin.member" : {
                     request.setCharacterEncoding("UTF-8");
 
                     String id = request.getParameter("id");
-                    String pw = request.getParameter("pw");
-                    String name = request.getParameter("name");
-                    String nickname = request.getParameter("nickname");
-                    String email = request.getParameter("email");
+                    String pw =request.getParameter("pw");
+                    String name =request.getParameter("name");
+                    String nickname =request.getParameter("nickname");
+                    String email =request.getParameter("email");
                     /*authority member*/
                     int birthyear = Integer.parseInt(request.getParameter("targetYear"));
                     int sex = Integer.parseInt(request.getParameter("sex"));
@@ -282,12 +452,14 @@ public class MemberController extends HttpServlet {
                             .joinDate(null)
                             .build();
 
-                    memberDAO.inserMember(temp); //dao 에 넣기
+                    memberDAO.insertMember(temp); //dao 에 넣기
                     //region read
                     //TODO: 여기서 그냥 response 바로 index.jsp로 가도 되는지
                     //endregion
                     response.sendRedirect("/index.jsp");
+                    return;
                 }
+
 
 
                 default: {
@@ -483,6 +655,12 @@ public class MemberController extends HttpServlet {
                             ? new File(defaultImgPath)
                             : new File(basePath, sysName);
 
+                        FileUtil.streamFile(request, response, targetFile);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        response.sendRedirect("/error.jsp");
+                    }
+                    return;
                     FileUtil.streamFile(request, response, targetFile);
                     break;
                 }
@@ -492,6 +670,13 @@ public class MemberController extends HttpServlet {
                     Map<String, Integer> genderStats = memberDAO.getGenderStats();
                     Map<String, Integer> yearStats = memberDAO.getYearStats();
 
+                    return;
+
+
+                default: {
+                    response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                    response.setContentType("application/json; charset=UTF-8");
+                    response.getWriter().write("{\"ok\":false,\"msg\":\"unknown endpoint\"}");
                     request.setAttribute("maleCount", genderStats.getOrDefault("male", 0));
                     request.setAttribute("femaleCount", genderStats.getOrDefault("female", 0));
                     request.setAttribute("yearStats", yearStats);
@@ -500,7 +685,7 @@ public class MemberController extends HttpServlet {
                     break;
                 }
             }
-        } catch (Exception e) {
+        } catch(Exception e) {
             e.printStackTrace();
             response.sendRedirect("/error.jsp");
         }

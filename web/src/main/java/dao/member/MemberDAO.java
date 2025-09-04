@@ -8,14 +8,10 @@ import util.SecurityUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.*;
+import java.sql.Timestamp;
 
 public class MemberDAO {
     private static MemberDAO instance;
-
-    private MemberDAO() throws Exception {
-    }
-
     public static synchronized MemberDAO getInstance() throws Exception {
         if (instance == null) {
             instance = new MemberDAO();
@@ -50,7 +46,77 @@ public class MemberDAO {
         }
         return null;
     }
+    //===================아이디 찾기용
+    public boolean isNameEmailExist(String name,String email)throws Exception{
+        String sql = "SELECT COUNT(*) FROM member WHERE name = ? and email = ?";
 
+        try (Connection conn = DataUtil.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, name);
+            ps.setString(2, email);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    int count = rs.getInt(1);
+                    System.out.println("EMAIL: " + count);
+                    return count > 0;
+                }
+                return false;
+            }
+        }
+    }
+    public String findIdByNameEmail(String name, String email)throws Exception{
+        String sql = "select * from member where name=? and email=?";
+        try( Connection conn = DataUtil.getConnection();
+        PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, name);
+            ps.setString(2, email);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                String foundId=null;
+                if (rs.next()) {
+                    foundId = rs.getString("id");
+                }
+                return foundId;
+            }
+        }
+    }
+
+
+    //===================비밀번호 변경용
+    //비밀번호 변경
+    public int changePw(String pw, String id) throws Exception {
+        String sql = "UPDATE member SET pw=? WHERE id=?";
+        try(Connection con = DataUtil.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+        ){
+
+            ps.setString(1, SecurityUtil.encrypt(pw));
+            ps.setString(2, id);
+            return ps.executeUpdate();
+        }
+    }
+    //아이디+이메일 여부 검사 : 비밀번호 찾기용
+    public boolean isIdEmailExist(String id, String email) throws Exception {
+        String sql = "SELECT COUNT(*) FROM member WHERE id = ? and email = ?";
+
+        try (Connection conn = DataUtil.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, id);
+            ps.setString(2, email);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    int count = rs.getInt(1);
+                    System.out.println("EMAIL: " + count);
+                    return count > 0;
+                }
+                return false;
+            }
+        }
+    }
+
+
+
+    //===================회원가입용
     //아이디 중복 검사
     public boolean isIdExist(String id) throws Exception {
         String sql = "SELECT COUNT(*) FROM member WHERE id = ?";
@@ -73,7 +139,7 @@ public class MemberDAO {
     public boolean isNicknameExist(String nickname) throws Exception {
         String sql = "SELECT COUNT(*) FROM member WHERE nickname = ?";
         try (Connection conn = DataUtil.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql);) {
+             PreparedStatement ps = conn.prepareStatement(sql);){
             ps.setString(1, nickname);
             try (ResultSet rs = ps.executeQuery();) {
                 if (rs.next()) {
@@ -85,7 +151,26 @@ public class MemberDAO {
             }
         }
     }
+    //회원가입
+    public int insertMember(MemberDTO dto) throws Exception {
+        String sql= "insert into member values(?,?,?,?,?,?,?,?,sysdate)";
+        try(Connection conn = DataUtil.getConnection();
+            PreparedStatement pstat = conn.prepareStatement(sql);){
+            pstat.setString(1, dto.getId());
+            pstat.setString(2, dto.getEmail());
+            pstat.setString(3, SecurityUtil.encrypt(dto.getPw()));
+            pstat.setString(4, dto.getName());
+            pstat.setString(5, dto.getNickname());
+            pstat.setString(6, dto.getAuthority().name());
+            pstat.setInt(7,dto.getBirthyear());
+            pstat.setInt(8,dto.getSex());
+            return pstat.executeUpdate();
+        }
+    }
 
+
+
+    //===================로그인용
     //로그인 기능
     public boolean isLoginOk(String id, String pw) throws Exception {
         String sql = "select * from member where id = ? and pw = ?";
@@ -111,6 +196,11 @@ public class MemberDAO {
         }
     }
 
+
+
+    //region create
+    //TODO: 회원가입
+    //endregion
 
     //회원가입
     public int inserMember(MemberDTO dto) throws Exception {
@@ -175,6 +265,7 @@ public class MemberDAO {
                 if (rs.next()) {
                     return MemberDTO.builder()
                             .id(rs.getString("id"))
+                            .pw(rs.getString("pw"))
                             .name(rs.getString("name"))
                             .nickname(rs.getString("nickname"))
                             .email(rs.getString("email"))
@@ -205,6 +296,7 @@ public class MemberDAO {
             return pstat.executeUpdate(); // 0 = 실패, 1 = 성공
         }
     }
+    //endregion
 
     //회원 탈퇴
     public int deleteDateMember(String id) throws Exception {
