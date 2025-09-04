@@ -73,7 +73,6 @@ public class GameController extends HttpServlet {
                         gameScoreDAO.updateTierToImg(tier);
                     }
 
-
                     response.setContentType("application/json; charset=utf-8"); // json 응답
                     response.getWriter().write("{\"result\":\"success\"}");
 
@@ -92,25 +91,23 @@ public class GameController extends HttpServlet {
                     request.setAttribute("listranking", listranking);
                     request.setAttribute("gameId", gameId);
                     request.getRequestDispatcher("/game/gamepage.jsp").forward(request, response);
+
                     break;
 
-                }
+            }
 
-                case "/write_reply.game": { // 댓글 작성 (작성자)
+
+                case "/write_reply.game" : { // 댓글 작성 (작성자)
 
                      String writer = request.getParameter("writer");
                     //(String)request.getSession().getAttribute("loginId");
                     int gameId = Integer.parseInt(request.getParameter("gameId"));
                     String contents = request.getParameter("contents");
 
-
-                    System.out.println("작성자 0903:" + writer);
-
                     gameReplyDAO.insertReply(gameId, writer, contents);
                     response.sendRedirect("/go_gamepage.game?gameId=" + gameId);
 
                     break;
-
                 }
 
                 case "/delete_reply.game": { // 댓글 삭제 (작성날짜)
@@ -120,7 +117,7 @@ public class GameController extends HttpServlet {
                     //(String)request.getSession().getAttribute("loginId");
                     int id = Integer.parseInt(request.getParameter("id"));
 
-                    gameReplyDAO.deleteReply(writer, id);
+                    gameReplyDAO.deleteReply(writer , id);
                     response.sendRedirect("/go_gamepage.game?gameId=" + gameId);
 
                     break;
@@ -149,15 +146,33 @@ public class GameController extends HttpServlet {
                     break;
                 }
 
-
-                case "/toGamePage.game" :{
+                case "/toGamePage.game": {
                     String gameId = request.getParameter("gameId");
                     request.setAttribute("gameId", gameId);
                     //request.getRequestDispatcher().forward(request, response); 어디로 보내야 하는지 논의 필요~
+                    break;
                 }
+
+                // 마이페이지에 랭킹 정보 전달
+                case "/allGameRankings.game":
+                    try {
+                        // DAO 인스턴스 가져오기
+                        gameScoreDAO = GameScoreDAO.getInstance();
+
+                        // 모든 게임 랭킹 Map 받아오기
+                        Map<Integer, List<GameScoreDTO>> gameRankings = memberGameTierDAO.selectAllGameRankings();
+                        request.setAttribute("gameRankings", gameRankings);
+
+                        // JSP로 forward
+                        request.getRequestDispatcher("/member/my_page/mypage.jsp").forward(request, response);
+                        break;
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        response.sendRedirect("/error.jsp");
+                    }
             }
 
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             response.sendRedirect("/error.jsp");
         }

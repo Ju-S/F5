@@ -44,17 +44,6 @@ body {
     color: white;
 }
 
-/* Filter 버튼 스타일 개선 (선택사항) */
-.filter-btn {
-    background-color: var(--secondary-color);
-    border-color: var(--secondary-color);
-    color: white;
-}
-.filter-btn:hover {
-    background-color: var(--btnsecondary-hover-color);
-    border-color: var(--btnsecondary-hover-color);
-}
-
 /* 체크박스 */
 .form-check-input {
     margin-right: 4px;

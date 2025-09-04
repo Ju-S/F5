@@ -26,33 +26,24 @@ public class GameReplyDAO {
 
     //region create
     public int insertReply(int game_id, String writer , String contents) throws Exception{ // 댓글 입력
-
         //TODO: 댓글 작성 : sql에 데이터값 옮기기 완료
-
-
-
       String sql = "insert into game_reply (id, game_id,writer, contents, write_date) values (GAME_REPLY_SEQ.nextval, ?, ?, ?, sysdate)";
-
 
         try( Connection con = DataUtil.getConnection();
              PreparedStatement pstat = con.prepareStatement(sql);
         ){
-
             pstat.setInt(1, game_id);
             pstat.setString(2, writer);
             pstat.setString(3, contents);
 
             return pstat.executeUpdate();
         }
-
     }
 //endregion
 
     //region read
     public List<GameReplyDTO> selectAll(int GAME_ID) throws Exception{ // 댓글 목록 출력
-
         //TODO: 댓글 목록 조회
-
         String sql = "SELECT gr.*, t.tier\n" +
                 "FROM game_reply gr\n" +
                 "LEFT JOIN (\n" +
@@ -94,7 +85,7 @@ public class GameReplyDAO {
                     String tier = rs.getString("tier");
 
                     if (tier == null) { // tier 값이 null 일경우 unraked.png로 대체
-                        tier = "/game/img/unranked.png"; 
+                        tier = "/game/img/unranked.png";
                     }
 
                     GameReplyDTO dto = new GameReplyDTO(id,game_id,writer,contents,write_date, report_count, tier);

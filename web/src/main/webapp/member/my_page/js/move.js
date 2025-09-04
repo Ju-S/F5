@@ -84,3 +84,27 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 });
+
+// 수정 버튼 클릭 시
+document.querySelector("#edit .button-primary").addEventListener("click", function () {
+    // text / email input 활성화
+    document.querySelectorAll("#name, #nickname, #email").forEach(el => el.removeAttribute("readonly"));
+
+    // select / radio 활성화
+    document.querySelector("#birthYear").disabled = false;
+    document.querySelectorAll('input[name="sex"]').forEach(el => el.disabled = false);
+
+    // 버튼 토글
+    document.getElementById("edit").style.display = "none";
+    document.getElementById("edit_check").style.display = "flex";
+});
+
+// 수정 완료 버튼 클릭 시
+document.querySelector("#edit_check .button-primary").addEventListener("click", function() {
+    document.getElementById("profileForm").submit();
+});
+
+// 취소 버튼 클릭 시
+document.querySelector("#edit_check .button-secondary").addEventListener("click", function() {
+    location.reload(); // 그냥 새로고침해서 이전 값 복원
+});
