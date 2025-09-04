@@ -47,21 +47,21 @@
 
                 <!-- 버튼 -->
                 <div class="btn">
-                    <button class="menu-button active" data-target="profile" data-img-default="img/mypage_color.svg"
-                            data-img-active="img/mypage.svg" type="button">
-                        <img src="img/mypage.svg" alt="mypage" class="menu-img">
+                    <button class="menu-button active" data-target="profile" data-img-default="/member/my_page/img/mypage_color.svg"
+                            data-img-active="/member/my_page/img/mypage.svg" type="button">
+                        <img src="/member/my_page/img/mypage.svg" alt="mypage" class="menu-img">
                         개인 정보 수정
                     </button>
 
-                    <button class="menu-button" data-target="ranking" data-img-default="img/ranking_color.svg"
-                            data-img-active="img/ranking.svg" type="button">
-                        <img src="img/ranking.svg" alt="ranking" class="menu-img">
+                    <button class="menu-button" data-target="ranking" data-img-default="/member/my_page/img/ranking_color.svg"
+                            data-img-active="/member/my_page/img/ranking.svg" type="button">
+                        <img src="/member/my_page/img/ranking.svg" alt="ranking" class="menu-img">
                         게임 랭킹
                     </button>
 
-                    <button class="menu-button" data-target="logout" data-img-default="img/logout_color.svg"
-                            data-img-active="img/logout.svg" type="button">
-                        <img src="img/logout.svg" alt="logout" class="menu-img">
+                    <button class="menu-button" data-target="logout" data-img-default="/member/my_page/img/logout_color.svg"
+                            data-img-active="/member/my_page/img/logout.svg" type="button">
+                        <img src="/member/my_page/img/logout.svg" alt="logout" class="menu-img">
                         회원탈퇴
                     </button>
                 </div>
@@ -143,7 +143,7 @@
 
                         <div class="button-group" id="edit_check" style="display: none;">
                             <button class="button-primary">수정완료</button>
-                            <button type="button" class="button-secondary">취소</button>
+                            <a type="button" class="button-secondary">취소</a>
                         </div>
                     </form>
                 </div>

@@ -110,6 +110,7 @@ public class BoardController extends HttpServlet {
                     response.getWriter().write(gson.toJson(data));
                     break;
                 }
+
                 // 행위 + 자원 (e.g, /get_memberList.member로 작성 요망)
                 //TODO: 게임 관련 기능
                 case "/write.board": {

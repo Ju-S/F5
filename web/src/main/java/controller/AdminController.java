@@ -52,31 +52,7 @@ public class AdminController extends HttpServlet {
             // 이후 처리 계속
 
             switch (cmd) {
-                case "/login.admin": {
-                    String id = request.getParameter("id");
-                    String pw = request.getParameter("pw");
 
-                    memberDAO = MemberDAO.getInstance();
-                    MemberDTO user = memberDAO.login(id, pw);
-                    HttpSession session = request.getSession();
-
-                    if (user != null) {
-                        if (user.getAuthority() == Authority.ADMIN) {
-                            // 관리자 로그인 성공
-                            session.setAttribute("loginId", id);
-                            session.setAttribute("isAdmin", true);
-                            response.sendRedirect("/member/admin/chart.jsp"); //로그인 시 대시보드 페이지로 이동
-                        } else {
-                            // 일반 회원 로그인
-                            session.setAttribute("loginId", id);
-                            response.sendRedirect("/index.jsp");
-                        }
-                    } else {
-                        // 로그인 실패
-                        response.sendRedirect("/member/login/login.jsp?msg=fail");
-                    }
-                    return;
-                }
                 // 게시글용..
                 // JSP 페이지 렌더링용
                 case "/reportedPosts.admin": {
@@ -99,7 +75,6 @@ public class AdminController extends HttpServlet {
 
                 // AJAX JSON 데이터 응답용
                 case "/getReportedPosts.admin": {
-
                     int page = Integer.parseInt(request.getParameter("page") == null ? "1" : request.getParameter("page"));
                     int rowsPerPage = 10;
                     int offset = (page - 1) * rowsPerPage + 1;
@@ -198,8 +173,6 @@ public class AdminController extends HttpServlet {
                     }
                     break;
                 }
-
-
 
                 // 위 댓글 삭제 JSON 응답 처리 코드 삽입
                 case "/deleteReply.admin": {
