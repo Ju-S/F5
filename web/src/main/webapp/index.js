@@ -21,10 +21,10 @@ function createGameView(gameId, titleText, contentText, imgSrc, buttonText) {
 const gameViews = {
     game1: createGameView(
         "1",
-        "Mr.Penguin",
+        "Penguin",
         "펭귄의 남극기지 순례 대모험..<br>장애물로 등장하는 얼음구멍을 피해 더 오래 모험을 즐기세요!",
         "/index_img/desktop_home_js.svg",
-        "Mr.Penguin"
+        "Penguin"
     ),
     game2: createGameView(
         "2",

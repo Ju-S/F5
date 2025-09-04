@@ -9,19 +9,19 @@ $(document).ready(function () {
 
 //아이콘 이미지 배열로 넘기기
     let gameIcons = [
-        {src: "/common/sidenavi/sideNaviIcon/nav-1.svg", link: "/game1"},
-        {src: "/common/sidenavi/sideNaviIcon/nav-2.svg", link: "/game2"},
-        {src: "/common/sidenavi/sideNaviIcon/nav-3.svg", link: "/game3"},
-        {src: "/common/sidenavi/sideNaviIcon/nav-4.svg", link: "/game4"},
-        {src: "/common/sidenavi/sideNaviIcon/nav-5.svg", link: "/game5"}
+        {src: "/common/sidenavi/sideNaviIcon/nav-1.svg", link: "/go_gamepage.game?gameId=1"},
+        {src: "/common/sidenavi/sideNaviIcon/nav-2.svg", link: "/go_gamepage.game?gameId=2"},
+        {src: "/common/sidenavi/sideNaviIcon/nav-3.svg", link: "/go_gamepage.game?gameId=3"},
+        {src: "/common/sidenavi/sideNaviIcon/nav-4.svg", link: "/go_gamepage.game?gameId=4"},
+        {src: "/common/sidenavi/sideNaviIcon/nav-5.svg", link: "/go_gamepage.game?gameId=5"}
     ];
     let boardIcons = [
-        {src: "/common/sidenavi/sideNaviIcon/Group_32.svg", link: "/game/allList.jsp"},
-        {src: "/common/sidenavi/sideNaviIcon/nav-1.svg", link: "/game/game1List.jsp"},
-        {src: "/common/sidenavi/sideNaviIcon/nav-2.svg", link: "/game/game2List.jsp"},
-        {src: "/common/sidenavi/sideNaviIcon/nav-3.svg", link: "/game/game3List.jsp"},
-        {src: "/common/sidenavi/sideNaviIcon/nav-4.svg", link: "/game/game3List.jsp"},
-        {src: "/common/sidenavi/sideNaviIcon/nav-5.svg", link: "/game/game4List.jsp"}
+        {src: "/common/sidenavi/sideNaviIcon/Group_32.svg", link: "/board_list.board"},
+        {src: "/common/sidenavi/sideNaviIcon/nav-1.svg", link: "/board_list.board?gameId=1"},
+        {src: "/common/sidenavi/sideNaviIcon/nav-2.svg", link: "/board_list.board?gameId=2"},
+        {src: "/common/sidenavi/sideNaviIcon/nav-3.svg", link: "/board_list.board?gameId=3"},
+        {src: "/common/sidenavi/sideNaviIcon/nav-4.svg", link: "/board_list.board?gameId=4"},
+        {src: "/common/sidenavi/sideNaviIcon/nav-5.svg", link: "/board_list.board?gameId=5"}
     ];
 
 

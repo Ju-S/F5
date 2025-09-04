@@ -237,7 +237,6 @@ public class MemberDAO {
                 if (rs.next()) {
                     return MemberDTO.builder()
                             .id(rs.getString("id"))
-                            .pw(rs.getString("pw"))
                             .name(rs.getString("name"))
                             .nickname(rs.getString("nickname"))
                             .email(rs.getString("email"))

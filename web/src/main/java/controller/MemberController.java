@@ -13,6 +13,7 @@ import dao.member.BlackListDAO;
 import dao.member.MemberDAO;
 import dao.member.MemberGameTierDAO;
 import dao.member.MemberProfileFileDAO;
+import dto.game.GameScoreDTO;
 import dto.member.MemberDTO;
 import dto.member.MemberProfileFileDTO;
 import enums.Authority;
@@ -30,6 +31,7 @@ import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.sql.Timestamp;
@@ -471,17 +473,17 @@ public class MemberController extends HttpServlet {
 
                 // 회원 아이디 확인 과정 - 마이페이지
                 case "/mypage.member": {
-                    HttpSession session = request.getSession();
-                    String memberId = (String) session.getAttribute("loginId");
+                    String memberId = (String) request.getSession().getAttribute("loginId");
 
-                    if (memberId != null) {
-                        MemberDTO memberDAOMemberById = memberDAO.getMemberById(memberId);
-                        response.setContentType("application/json; charset=UTF-8");
-                        PrintWriter out = response.getWriter();
+                    // 모든 게임 랭킹 Map 받아오기
+                    Map<Integer, List<GameScoreDTO>> gameRankings = memberGameTierDAO.selectAllGameRankings();
 
-                        String json = g.toJson(memberDAOMemberById);
-                        out.println(json);
-                    }
+                    MemberDTO member = memberDAO.getMemberById(memberId);
+
+                    request.setAttribute("gameRankings", gameRankings);
+                    request.setAttribute("member", member);
+
+                    request.getRequestDispatcher("/member/my_page/mypage.jsp").forward(request, response);
                     break;
                 }
                 // 회원 정보 수정 - update
@@ -601,6 +603,7 @@ public class MemberController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
         doGet(request, response);
     }
 }

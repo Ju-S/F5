@@ -56,21 +56,21 @@ public class GameController extends HttpServlet {
                     //게임오버 시 sql game_score 테이블에 스코어 insert 점수를 받아서 알맞는 tier 구분 sql 값 score만 넣은상태
                     int gameId = Integer.parseInt(request.getParameter("gameId")); // 이후
                     int score = Integer.parseInt(request.getParameter("score"));
-                    String memberId =(String) request.getSession().getAttribute("loginId");
-                    int result = gameScoreDAO.insertScore(gameId,memberId ,score);
+                    String memberId = (String) request.getSession().getAttribute("loginId");
+                    int result = gameScoreDAO.insertScore(gameId, memberId, score);
 
 
                     if (0 < score && score < 1000) {
                         String tier = "BRONZE";
-                        gameScoreDAO.insertTier(memberId,gameId, tier);
+                        gameScoreDAO.insertTier(memberId, gameId, tier);
                         gameScoreDAO.updateTierToImg(tier);
                     } else if (1000 < score && score < 2000) {
                         String tier = "SILVER";
-                        gameScoreDAO.insertTier(memberId,gameId, tier);
+                        gameScoreDAO.insertTier(memberId, gameId, tier);
                         gameScoreDAO.updateTierToImg(tier);
                     } else if (2000 < score) {
                         String tier = "GOLD";
-                        gameScoreDAO.insertTier(memberId,gameId, tier);
+                        gameScoreDAO.insertTier(memberId, gameId, tier);
                         gameScoreDAO.updateTierToImg(tier);
                     }
 
@@ -95,12 +95,12 @@ public class GameController extends HttpServlet {
 
                     break;
 
-            }
+                }
 
 
-                case "/write_reply.game" : { // 댓글 작성 (작성자)
+                case "/write_reply.game": { // 댓글 작성 (작성자)
 
-                     String writer = request.getParameter("writer");
+                    String writer = request.getParameter("writer");
                     //(String)request.getSession().getAttribute("loginId");
                     int gameId = Integer.parseInt(request.getParameter("gameId"));
                     String contents = request.getParameter("contents");
@@ -118,7 +118,7 @@ public class GameController extends HttpServlet {
                     //(String)request.getSession().getAttribute("loginId");
                     int id = Integer.parseInt(request.getParameter("id"));
 
-                    gameReplyDAO.deleteReply(writer , id);
+                    gameReplyDAO.deleteReply(writer, id);
                     response.sendRedirect("/go_gamepage.game?gameId=" + gameId);
 
                     break;
@@ -149,31 +149,15 @@ public class GameController extends HttpServlet {
 
                 }
 
-
-                case "/toGamePage.game": {
-                    String gameId = request.getParameter("gameId");
-                    request.setAttribute("gameId", gameId);
-                    //request.getRequestDispatcher().forward(request, response); 어디로 보내야 하는지 논의 필요~
-                    break;
-                }
-
                 // 마이페이지에 랭킹 정보 전달
                 case "/allGameRankings.game":
-                    try {
-                        // DAO 인스턴스 가져오기
-                        gameScoreDAO = GameScoreDAO.getInstance();
+                    // 모든 게임 랭킹 Map 받아오기
+                    Map<Integer, List<GameScoreDTO>> gameRankings = memberGameTierDAO.selectAllGameRankings();
+                    request.setAttribute("gameRankings", gameRankings);
 
-                        // 모든 게임 랭킹 Map 받아오기
-                        Map<Integer, List<GameScoreDTO>> gameRankings = memberGameTierDAO.selectAllGameRankings();
-                        request.setAttribute("gameRankings", gameRankings);
-
-                        // JSP로 forward
-                        request.getRequestDispatcher("/member/my_page/mypage.jsp").forward(request, response);
-                        break;
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        response.sendRedirect("/error.jsp");
-                    }
+                    // JSP로 forward
+                    request.getRequestDispatcher("/member/my_page/mypage.jsp").forward(request, response);
+                    break;
             }
 
         } catch (Exception e) {

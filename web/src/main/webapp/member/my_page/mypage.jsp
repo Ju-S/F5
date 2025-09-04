@@ -3,9 +3,9 @@
 <html>
 <head>
     <jsp:include page="/common/Head.jsp"/>
-    <link rel="stylesheet" href="css/main-style.css">
-    <link rel="stylesheet" href="css/edit-content.css">
-    <link rel="stylesheet" href="css/ranking-content.css">
+    <link rel="stylesheet" href="/member/my_page/css/main-style.css">
+    <link rel="stylesheet" href="/member/my_page/css/edit-content.css">
+    <link rel="stylesheet" href="/member/my_page/css/ranking-content.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <%-- 파일 업로드 관련 링크 --%>
 </head>
@@ -28,7 +28,7 @@
                         <%-- 이미지 들어갈 부분 --%>
                         <div class="profile-image">
                             <img id="img"
-                                 src="/downloadImgFile.member"
+                                 src="/downloadImgFile.member?memberId=${sessionScope.loginId}"
                                  onerror="this.onerror=null; this.src='/member/my_page/img/profile.svg';"
                                  alt="profile"/>
                         </div>
@@ -41,8 +41,8 @@
                     </form>
                 </div>
                 <div class="textMember">
-                    <h4>Nickname</h4>
-                    <p>ID number</p>
+                    <h4>${member.nickname}</h4>
+                    <p>${member.id}</p>
                 </div>
 
                 <!-- 버튼 -->
@@ -77,21 +77,21 @@
                     <form id="profileForm" action="/updateMember.member" method="post">
                         <!-- ID -->
                         <div class="form-group">
-                            <label class="col-form-label col-sm-2 pt-0" for="email">아이디</label>
-                            <input type="text" id="id" class="form-input" placeholder="id" name="id" readonly/>
-                        </div>
+                            <label class="col-form-label col-sm-2 pt-0" for="id">아이디</label>
+                            <input type="text" id="id" class="form-input" placeholder="id" name="id" value="${member.id}" readonly/>
+                        </div>s
 
                         <!-- name -->
                         <div class="form-group">
-                            <label class="col-form-label col-sm-2 pt-0" for="email">이름</label>
-                            <input type="text" id="name" class="form-input" placeholder="name" name="name" readonly/>
+                            <label class="col-form-label col-sm-2 pt-0" for="name">이름</label>
+                            <input type="text" id="name" class="form-input" placeholder="name" name="name" value="${member.name}" readonly/>
                         </div>
 
                         <!-- Nickname -->
                         <div class="form-group row align-items-end nickname-group">
                             <div class="input-label-group nickname-input">
                                 <label class="col-form-label col-sm-2 pt-0" for="nickname">닉네임</label>
-                                <input type="text" id="nickname" class="form-input" placeholder="Nickname"
+                                <input type="text" id="nickname" class="form-input" placeholder="Nickname" value="${member.nickname}"
                                        name="nickname" readonly/>
                             </div>
                             <button class="check-button">중복확인</button>
@@ -100,8 +100,8 @@
                         <!-- Email -->
                         <div class="form-group row align-items-end nickname-group">
                             <div class="input-label-group nickname-input">
-                                <label class="col-form-label col-sm-2 pt-0" for="nickname">이메일</label>
-                                <input type="email" id="email" class="form-input" placeholder="email" name="email"
+                                <label class="col-form-label col-sm-2 pt-0" for="email">이메일</label>
+                                <input type="email" id="email" class="form-input" placeholder="email" name="email" value="${member.email}"
                                        readonly/>
                             </div>
                             <button class="check-button">인증확인</button>
@@ -117,7 +117,6 @@
                                     <option value="1990">1990년</option>
                                     <option value="1991">1991년</option>
                                     <option value="1992">1992년</option>
-                                    <!-- 추가 -->
                                 </select>
                             </div>
 
@@ -128,12 +127,12 @@
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="sex" id="male"
                                                value="male"
-                                               disabled checked>
+                                               disabled ${member.sex == "0" ? "checked" : ""}>
                                         <label class="form-check-label" for="male">남자</label>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="sex" id="female"
-                                               value="female" disabled>
+                                               value="female" disabled ${member.sex == "1" ? "checked" : ""}>
                                         <label class="form-check-label" for="female">여자</label>
                                     </div>
                                 </div>
@@ -188,6 +187,11 @@
 </div>
 
 <!-- 스크립트 연결 -->
+<script>
+    const memberInfo = ${member};
+</script>
+
+<script src="/member/my_page/js/mypage.js"></script>
 <script src="/member/my_page/js/move.js"></script>
 
 </body>

@@ -2,11 +2,11 @@
 
 /* 랭킹 */
 #content-ranking {
+    display: none;
     width: 100%;
     max-width: 1000px;
     box-sizing: border-box;
     padding: 20px;
-    display: flex;
     flex-wrap: wrap;
     gap: 20px;
 }

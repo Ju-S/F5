@@ -40,7 +40,7 @@
         <div id="mypagebox" class="naviContent">
 
                 <div id="mypage">
-                    <a href="#" id="mypagebtn"><img src="/common/sidenavi/sideNaviIcon/main_mypage_color.svg" alt="mypageIcon"></a>
+                    <a href="/mypage.member" id="mypagebtn"><img src="/common/sidenavi/sideNaviIcon/main_mypage_color.svg" alt="mypageIcon"></a>
                 </div>
 
 
