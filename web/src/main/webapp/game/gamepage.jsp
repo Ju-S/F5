@@ -133,8 +133,10 @@
                             <c:when test="${sessionScope.loginId == i.writer}"> <%-- 작성자 시점 --%>
 
                             <div class="reply_bar">
-                                <div class="reply_profile"><i class="fa-solid fa-user"></i></div>
-
+                                <div class="reply_profile"> <img id="img"
+                                                                    src="/downloadImgFile.member?memberId=${i.writer}"
+                                                                    onerror="this.onerror=null; this.src='/member/my_page/img/profile.svg';"
+                                                                    alt="profile"/></div>
                                 <div class="reply_main">
                                     <div class="reply_center"> 작성자 : ${i.writer} <img src="${i.tier}" alt="tier_icon" class="tier_icon"></div>
 
@@ -173,22 +175,23 @@
                                     <button class = "btn-delete" style="background-color:#3E459D; color:#fff; font-size:15px; border-radius:10px; border:none; padding: 5px 5px;">삭제</button>
                                 </form>
 
-                                <div class="dropdown">
-                                        <%-- 원본 class="btn btn btn-dark dropdown-toggle" --%>
-                                    <form action="/report_reply.game" method="get">
-                                        <input type = "hidden" name="gameId" value="${i.gameId}">
-                                        <input type = "hidden" name="writer" value="${i.writer}">
-                                        <input type = "hidden" name="reportcount" value="${i.report_count}">
-                                    <button type="button" class="btn btn btn-dark" id="reportPost" data-bs-toggle="dropdown" aria-expanded="false"
-                                            style="background: transparent; border: none; padding: 0;">
-                                        <i class="bi bi-three-dots-vertical"></i>
-                                    </button>
+<%--                                <div class="dropdown">--%>
+<%--                                        &lt;%&ndash; 원본 class="btn btn btn-dark dropdown-toggle" &ndash;%&gt;--%>
+<%--                                    <form action="/report_reply.game" method="get">--%>
+<%--                                        <input type = "hidden" name="gameId" value="${i.gameId}">--%>
+<%--                                        <input type = "hidden" name="writer" value="${i.writer}">--%>
+<%--                                        <input type = "hidden" name="reportcount" value="${i.report_count}">--%>
+<%--                                    <button type="button" class="btn btn btn-dark" id="reportPost" data-bs-toggle="dropdown" aria-expanded="false"--%>
+<%--                                            style="background: transparent; border: none; padding: 0;">--%>
+<%--                                        <i class="bi bi-three-dots-vertical"></i>--%>
+<%--                                    </button>--%>
 
-<%--                                    <ul class="dropdown-menu dropdown-menu-end">--%>
-<%--                                        <li><button type="submit" class="dropdown-item text-danger" >신고하기</button></li>--%>
-<%--                                    </ul>--%>
-                                    </form>
-                                </div>
+<%--&lt;%&ndash;                                    <ul class="dropdown-menu dropdown-menu-end">&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                        <li><button type="submit" class="dropdown-item text-danger" >신고하기</button></li>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                    </ul>&ndash;%&gt;--%>
+<%--                                    </form>--%>
+<%--                                </div>--%>
+<%--                                --%>
                             </div>
 
 
