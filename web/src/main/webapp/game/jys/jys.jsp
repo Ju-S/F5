@@ -12,15 +12,16 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
             rity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/phaser@3/dist/phaser.js"></script>
-    <script src="/game/Geometry_Dash_Lite/js/geometry_gameScene.js"></script>
+    <script src="/game/jys/js/Jys_gamesene.js"></script>
     <style>
         body {
             margin: 0;
         }
 
         canvas {
+            width: 600px !important;
+            height: 400px !important;
             display: block;
-            margin: 0 auto;
         }
     </style>
 </head>
@@ -35,10 +36,12 @@
             default: 'arcade',
             arcade: {gravity: {y: 0}, debug: false}
         },
-        scene: [GameScene],
+        scene: [Jys_gamesene],
         scale: {
-            mode: Phaser.Scale.FIT,             // 비율 유지하며 맞춤
-            autoCenter: Phaser.Scale.CENTER_BOTH
+            mode: Phaser.Scale.NONE,
+            autoCenter: Phaser.Scale.CENTER_BOTH,
+            width: 600,
+            height: 400
         }
     };
 

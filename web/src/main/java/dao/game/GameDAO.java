@@ -26,10 +26,7 @@ public class GameDAO {
 
     //region read
     public List<GameDTO> sellectGame() throws Exception {
-
-
        String sql = "select * from GAME";
-
 
         //TODO: 등록된 게임 정보 조회
         try( Connection con = DataUtil.getConnection();

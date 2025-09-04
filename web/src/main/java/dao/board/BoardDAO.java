@@ -1,5 +1,6 @@
 package dao.board;
 
+import dto.admin.ReportedPostDTO;
 import dto.board.BoardDTO;
 import util.DataUtil;
 
@@ -163,4 +164,63 @@ public class BoardDAO {
     //region delete
     //TODO: 게시글 삭제
     //endregion
+
+    // 관리자 - 신고 게시글 목록 조회
+    public List<ReportedPostDTO> getReportedPosts(int offset, int limit) throws Exception {
+        String sql = "SELECT * FROM (" +
+                "  SELECT ROWNUM rn, sub.* FROM (" +
+                "    SELECT id, title, writer, write_date, report_count " +
+                "    FROM board " +
+                "    WHERE report_count > 0 " +
+                "    ORDER BY report_count DESC, write_date DESC" +
+                "  ) sub" +
+                ") WHERE rn BETWEEN ? AND ?";
+
+        List<ReportedPostDTO> list = new ArrayList<>();
+
+        try (Connection con = DataUtil.getConnection();
+             PreparedStatement pstat = con.prepareStatement(sql)) {
+            pstat.setInt(1, offset); // 예: 1, 11, 21 ...
+            pstat.setInt(2, limit);  // 예: 10, 20, 30 ...
+
+            try (ResultSet rs = pstat.executeQuery()) {
+                while (rs.next()) {
+                    ReportedPostDTO dto = new ReportedPostDTO();
+                    dto.setId(rs.getLong("id"));
+                    dto.setTitle(rs.getString("title"));
+                    dto.setNickname(rs.getString("writer"));
+                    dto.setReportDate(rs.getTimestamp("write_date").toString());
+                    dto.setReportCount(rs.getInt("report_count"));
+                    list.add(dto);
+                }
+            }
+        }
+        return list;
+    }
+
+    // 관리자 - 신고 게시글 조회
+    public int getReportedPostsCount() throws Exception {
+        String sql = "SELECT COUNT(*) FROM board WHERE report_count > 0";
+
+        try (Connection con = DataUtil.getConnection();
+             PreparedStatement pstat = con.prepareStatement(sql);
+             ResultSet rs = pstat.executeQuery()) {
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        }
+
+        return 0;
+    }
+
+    // 관리자 - 삭제할 아이디
+    public void deletePost(long id) throws Exception {
+        String sql = "DELETE FROM board WHERE id = ?";
+        try (Connection con = DataUtil.getConnection();
+             PreparedStatement pstat = con.prepareStatement(sql)) {
+            pstat.setLong(1, id);
+            pstat.executeUpdate();
+        }
+    }
+
 }

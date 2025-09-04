@@ -1,6 +1,6 @@
-class GameScene extends Phaser.Scene {
+class Jys_gamesene extends Phaser.Scene {
     constructor() {
-        super('GameScene');
+        super('Jys_gamesene');
         this.baseBPM = 120;
         this.spawnLeadTime = 2000;
     }

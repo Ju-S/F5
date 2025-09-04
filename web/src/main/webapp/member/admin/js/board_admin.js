@@ -1,59 +1,62 @@
-const reports = [
-    { title: '#1번 게임 #', nickname: 'Nickname', date: '2025/08/28', count: 20 },
-    { title: '#1번 게임 #', nickname: 'Nickname', date: '2025/08/28', count: 10 },
-    { title: '#1번 게임 #', nickname: 'Nickname', date: '2025/08/28', count: 10 },
-    { title: '#1번 게임 #', nickname: 'Nickname', date: '2025/08/28', count: 8 },
-    { title: '#1번 게임 #', nickname: 'Nickname', date: '2025/08/28', count: 5 },
-    { title: '#1번 게임 #', nickname: 'Nickname', date: '2025/08/28', count: 2 },
-];
-
-// 게시물 예시
 const rowsPerPage = 10;
 let currentPage = 1;
 
-function renderTable() {
-    const tbody = document.getElementById('table-body');
-    tbody.innerHTML = '';
-    const start = (currentPage - 1) * rowsPerPage;
-    const end = start + rowsPerPage;
-    const pageData = reports.slice(start, end);
-
-    for (const report of pageData) {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td>${report.title}</td>
-          <td>${report.nickname}</td>
-          <td>${report.date}</td>
-          <td>${report.count}</td>
-          <td><button class="btn btn-sm btn-delete text-white">삭제</button></td>
-        `;
-        tbody.appendChild(tr);
-    }
+function fetchReportedPosts(page) {
+    fetch(`/getReportedPosts.admin?page=${page}`)
+        .then(response => response.json())
+        .then(data => {
+            currentPage = page;
+            renderTable(data.reportList);
+            renderPagination(data.totalPage);
+        })
+        .catch(err => console.error('Error fetching reports:', err));
 }
 
+function renderTable(reportList) {
+    const tbody = document.getElementById('table-body');
+    tbody.innerHTML = '';
+    reportList.forEach(report => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+      <td><a href="/post/view?id=${report.id}" class="text-white text-decoration-none">${report.title}</a></td>
+      <td>${report.nickname}</td>
+      <td>${report.reportDate}</td>
+      <td>${report.reportCount}</td>
+      <td><button class="btn btn-sm btn-delete text-white" data-id="${report.id}">삭제</button></td>
+    `;
+        tbody.appendChild(tr);
+    });
+    attachDeleteHandlers();
+}
 
-function renderPagination() {
+function renderPagination(totalPage) {
     const pagination = document.getElementById('pagination');
     pagination.innerHTML = '';
-    const pageCount = Math.ceil(reports.length / rowsPerPage);
 
-    for (let i = 1; i <= pageCount; i++) {
+    for (let i = 1; i <= totalPage; i++) {
         const li = document.createElement('li');
         li.className = `page-item ${i === currentPage ? 'active' : ''}`;
         const btn = document.createElement('button');
         btn.className = 'page-link';
         btn.textContent = i;
-
-        btn.addEventListener('click', () => {
-            currentPage = i;
-            renderTable();
-            renderPagination();
-        });
+        btn.addEventListener('click', () => fetchReportedPosts(i));
         li.appendChild(btn);
         pagination.appendChild(li);
     }
 }
 
-// 초기 렌더링
-renderTable();
-renderPagination();
+function attachDeleteHandlers() {
+    document.querySelectorAll('.btn-delete').forEach(btn => {
+        btn.onclick = () => {
+            if(confirm('정말 삭제하시겠습니까?')) {
+                const id = btn.getAttribute('data-id');
+                fetch(`/deletePost.admin?id=${id}`)
+                    .then(() => fetchReportedPosts(currentPage))
+                    .catch(err => alert('삭제 실패'));
+            }
+        };
+    });
+}
+
+// 초기 로드
+fetchReportedPosts(1);

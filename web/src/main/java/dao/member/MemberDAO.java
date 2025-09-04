@@ -8,7 +8,6 @@ import util.SecurityUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Timestamp;
 import java.util.*;
 
 public class MemberDAO {
@@ -22,6 +21,34 @@ public class MemberDAO {
             instance = new MemberDAO();
         }
         return instance;
+    }
+
+    // 로그인 후 사용자 정보 반환 - 관리자용 때 필요
+    public MemberDTO login(String id, String pw) throws Exception {
+        String sql = "SELECT * FROM member WHERE id = ? AND pw = ?";
+        try (Connection conn = DataUtil.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, id);
+            ps.setString(2, SecurityUtil.encrypt(pw));
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return MemberDTO.builder()
+                            .id(rs.getString("id"))
+                            .pw(rs.getString("pw"))
+                            .name(rs.getString("name"))
+                            .nickname(rs.getString("nickname"))
+                            .email(rs.getString("email"))
+                            .authority(Authority.valueOf(rs.getString("authority")))
+                            .birthyear(rs.getInt("birthyear"))
+                            .sex(rs.getInt("sex"))
+                            .joinDate(rs.getTimestamp("join_date"))
+                            .build();
+                }
+            }
+        }
+        return null;
     }
 
     //아이디 중복 검사
@@ -46,7 +73,7 @@ public class MemberDAO {
     public boolean isNicknameExist(String nickname) throws Exception {
         String sql = "SELECT COUNT(*) FROM member WHERE nickname = ?";
         try (Connection conn = DataUtil.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql);){
+             PreparedStatement ps = conn.prepareStatement(sql);) {
             ps.setString(1, nickname);
             try (ResultSet rs = ps.executeQuery();) {
                 if (rs.next()) {
@@ -60,24 +87,29 @@ public class MemberDAO {
     }
 
     //로그인 기능
-    public boolean isLoginOk(String id,String pw) throws Exception {
+    public boolean isLoginOk(String id, String pw) throws Exception {
         String sql = "select * from member where id = ? and pw = ?";
         try (Connection conn = DataUtil.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql);){
+             PreparedStatement ps = conn.prepareStatement(sql);) {
 
             ps.setString(1, id);
             ps.setString(2, SecurityUtil.encrypt(pw));
-            System.out.println("inDAO"+SecurityUtil.encrypt(pw));
+            System.out.println("inDAO" + SecurityUtil.encrypt(pw));
 
-            try (ResultSet rs = ps.executeQuery();) {
+            try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
+                    // 블랙리스트 체크
+                    boolean isBlacklisted = BlackListDAO.getInstance().isBlacklisted(id);
+                    if (isBlacklisted) {
+                        System.out.println("Login denied: User is blacklisted.");
+                        return false; // 로그인 차단
+                    }
                     return true;
                 }
                 return false;
             }
         }
     }
-
 
 
     //회원가입

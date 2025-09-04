@@ -155,79 +155,24 @@
                 <!-- 콘텐츠: 게임 랭킹 -->
                 <div class="content-box" id="content-ranking" data-content="ranking">
                     <!-- 게임1 랭킹 -->
-                    <div class="ranking-list-wrapper">
+                    <c:forEach var="gameEntry" items="${gameRankings}">
                         <div class="ranking-card">
-                            <h5 style="color: var(--danger-color)">Antarctic Adventure</h5>
+                            <h5>게임ID: ${gameEntry.key}</h5> <!-- 게임 이름 대신 gameId -->
                             <ol class="list-group list-group-numbered">
-                                <li class="list-group-item d-flex justify-content-between align-items-start">
-                                    <div class="ms-2 me-auto">
-                                        <div class="fw-bold">
-                                            게임 랭킹 들어갈 자리(등수 / 스코어 / 티어)
+                                <c:forEach var="rank" items="${gameEntry.value}">
+                                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                                        <div class="ms-2 me-auto">
+                                            <div class="fw-bold">
+                                                    ${rank.rank}등 / ${rank.score}점 / ${rank.tier}
+                                            </div>
                                         </div>
-                                    </div>
-                                    <span class="badge text-bg-primary rounded-pill">랭킹</span>
-                                </li>
+                                        <span class="badge text-bg-primary rounded-pill">${rank.rank}위</span>
+                                    </li>
+                                </c:forEach>
                             </ol>
                         </div>
-
-                        <div class="ranking-card">
-                            <h5 style="color: var(--danger-color)">Packman</h5>
-                            <ol class="list-group list-group-numbered">
-                                <li class="list-group-item d-flex justify-content-between align-items-start">
-                                    <div class="ms-2 me-auto">
-                                        <div class="fw-bold">
-                                            게임 랭킹 들어갈 자리
-                                        </div>
-                                    </div>
-                                    <span class="badge text-bg-primary rounded-pill">랭킹</span>
-                                </li>
-                            </ol>
-                        </div>
-
-                        <div class="ranking-card">
-                            <h5 style="color: var(--danger-color)">Bubble Shooter</h5>
-                            <ol class="list-group list-group-numbered">
-                                <li class="list-group-item d-flex justify-content-between align-items-start">
-                                    <div class="ms-2 me-auto">
-                                        <div class="fw-bold">
-                                            게임 랭킹 들어갈 자리
-                                        </div>
-                                    </div>
-                                    <span class="badge text-bg-primary rounded-pill">랭킹</span>
-                                </li>
-                            </ol>
-                        </div>
-
-                        <div class="ranking-card">
-                            <h5 style="color: var(--danger-color)">I hate injections!</h5>
-                            <ol class="list-group list-group-numbered">
-                                <li class="list-group-item d-flex justify-content-between align-items-start">
-                                    <div class="ms-2 me-auto">
-                                        <div class="fw-bold">
-                                            게임 랭킹 들어갈 자리
-                                        </div>
-                                    </div>
-                                    <span class="badge text-bg-primary rounded-pill">랭킹</span>
-                                </li>
-                            </ol>
-                        </div>
-                    </div>
-
-                    <div class="ranking-card">
-                        <h5 style="color: var(--danger-color)">Geometry Dash</h5>
-                        <ol class="list-group list-group-numbered">
-                            <li class="list-group-item d-flex justify-content-between align-items-start">
-                                <div class="ms-2 me-auto">
-                                    <div class="fw-bold">
-                                        게임 랭킹 들어갈 자리
-                                    </div>
-                                </div>
-                                <span class="badge text-bg-primary rounded-pill">랭킹</span>
-                            </li>
-                        </ol>
-                    </div>
+                    </c:forEach>
                 </div>
-
             </div>
 
 

@@ -1,6 +1,7 @@
 package dao.game;
 
 import dto.game.GameReplyDTO;
+import dto.game.GameScoreDTO;
 import util.DataUtil;
 
 import java.sql.Connection;
@@ -9,7 +10,9 @@ import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class GameReplyDAO {
     private static GameReplyDAO instance;
@@ -26,13 +29,8 @@ public class GameReplyDAO {
 
     //region create
     public int insertReply(int game_id, String writer , String contents) throws Exception{ // 댓글 입력
-
         //TODO: 댓글 작성 : sql에 데이터값 옮기기 완료
-
-
-
       String sql = "insert into game_reply (id, game_id,writer, contents, write_date) values (GAME_REPLY_SEQ.nextval, ?, ?, ?, sysdate)";
-
 
         try( Connection con = DataUtil.getConnection();
              PreparedStatement pstat = con.prepareStatement(sql);
@@ -50,9 +48,7 @@ public class GameReplyDAO {
 
     //region read
     public List<GameReplyDTO> selectAll(int GAME_ID) throws Exception{ // 댓글 목록 출력
-
         //TODO: 댓글 목록 조회
-
         String sql = "select gr.*, mgt.tier\n" +
                 "from game_reply gr\n" +
                 "left join member_game_tier mgt\n" +
@@ -126,7 +122,6 @@ public class GameReplyDAO {
             return pstat.executeUpdate();
         }
     }
-
     //endregion
 
 

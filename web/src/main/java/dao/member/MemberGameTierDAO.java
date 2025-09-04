@@ -1,8 +1,15 @@
 package dao.member;
 
+import dto.game.GameScoreDTO;
 import util.DataUtil;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 public class MemberGameTierDAO {
     private static MemberGameTierDAO instance;
@@ -30,6 +37,48 @@ public class MemberGameTierDAO {
     //endregion
 
     //region delete
+    // 모든 게임의 랭킹
+    public Map<Integer, List<GameScoreDTO>> selectAllGameRankings() throws Exception {
+        String sql = "SELECT * FROM (" +
+                "  SELECT gs.game_id, gs.member_id, gs.score, mgt.tier, " +
+                "         DENSE_RANK() OVER (PARTITION BY gs.game_id ORDER BY gs.score DESC) AS ranking " +
+                "  FROM (" +
+                "    SELECT member_id, game_id, score, " +
+                "           ROW_NUMBER() OVER (PARTITION BY member_id, game_id ORDER BY score DESC) AS rn " +
+                "    FROM game_score" +
+                "  ) gs " +
+                "  JOIN (" +
+                "    SELECT member_id, game_id, tier, " +
+                "           ROW_NUMBER() OVER (PARTITION BY member_id, game_id ORDER BY " +
+                "             CASE tier WHEN 'GOLD' THEN 3 WHEN 'SILVER' THEN 2 WHEN 'BRONZE' THEN 1 ELSE 0 END DESC) AS rn " +
+                "    FROM member_game_tier" +
+                "  ) mgt " +
+                "  ON gs.member_id = mgt.member_id AND gs.game_id = mgt.game_id " +
+                "  WHERE gs.rn = 1 AND mgt.rn = 1" +
+                ") " +
+                "WHERE ranking <= 20 " +
+                "ORDER BY game_id, ranking";
 
+        Map<Integer, List<GameScoreDTO>> gameRankings = new LinkedHashMap<>();
+
+        try (Connection con = DataUtil.getConnection();
+             PreparedStatement pstat = con.prepareStatement(sql);
+             ResultSet rs = pstat.executeQuery()) {
+
+            while (rs.next()) {
+                GameScoreDTO dto = GameScoreDTO.builder()
+                        .gameId(rs.getInt("game_id"))
+                        .memberId( rs.getString("member_id"))
+                        .score(rs.getLong("score"))
+                        .tier(rs.getString("tier"))
+                        .rank( rs.getInt("ranking"))
+                        .build();
+
+                gameRankings.computeIfAbsent((int)dto.getGameId(), k -> new ArrayList<>()).add(dto);
+            }
+        }
+
+        return gameRankings;
+    }
     //endregion
 }
