@@ -450,16 +450,14 @@ public class MemberController extends HttpServlet {
 
                 // 회원 탈퇴
                 case "/deleteMember.member": {
-                    String id = request.getParameter("id");
-                    HttpSession session = request.getSession();
-                    String memberId = (String) session.getAttribute("loginId");
+                    String memberId = (String) request.getSession().getAttribute("loginId");
 
-                    if (memberId != null && memberId.equals(id)) {
-                        int result = memberDAO.deleteDateMember(id);
+                    if (memberId != null) {
+                        int result = memberDAO.deleteDateMember(memberId);
 
                         if (result > 0) {
                             System.out.println("탈퇴성공");
-                            session.removeAttribute("loginId");
+                            request.getSession().removeAttribute("loginId");
                             response.sendRedirect("/index.jsp"); // 홈 페이지로 이동
                         } else {
                             response.sendRedirect("/error.jsp"); // 에러 페이지로 이동
