@@ -3,7 +3,7 @@
 <head>
     <jsp:include page="/common/Head.jsp"/>
     <link rel="stylesheet" href="/common/common.css"> <!-- common css 링크 -->
-    <link rel="stylesheet" href="/board/writeBoard/writeBoard.css"> <!-- css 링크  -->
+    <link rel="stylesheet" href="/board/updateBoard/updateBoard.css"> <!-- css 링크  -->
 
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.js"></script>
@@ -14,7 +14,7 @@
 <body>
 <jsp:include page="/common/header/Header.jsp"/>
 
-<form action="/write.board" method="post" accept-charset="UTF-8">
+    <form action="/update.board" method="post">
     <div class="container">
         <div class="row">
             <div class="col-1">
@@ -23,8 +23,9 @@
             <div class="col-11 mainContents">
                 <div class="titleBox">
                     <div class="title">제목</div>
-                    <div class="titleText"><input type="text" placeholder="Title" name="title" required></div>
+                    <div class="titleText"><input type="text" placeholder="Title" name="title" value="${boardDetail.title}" required></div>
                     <input type="hidden" name="writer" value="${sessionScope.loginId}">
+                    <input type="hidden" name="boardId" value="${boardDetail.id}">
                 </div>
                 <div class="tagsBox d-flex">
                     <div class="gameId-box">
@@ -54,23 +55,30 @@
                         </select>
                     </div>
                 </div>
+                <script>
+                    $(function(){
+                        $("#gameId").val(${boardDetail.gameId}).prop("selected", true);
+                        $("#board_category").val(${boardDetail.boardCategory}).prop("selected", true);
+                    })
+                </script>
                 <div class="editorBox">
-                    <textarea id="summernote" name="contents"></textarea>
+                    <textarea id="summernote" name="contents">${boardDetail.contents}</textarea>
                 </div>
                 <div class="button-box">
                     <div class="empty-box"></div>
                     <div class="cancelBtn-box">
-                        <button type="submit" class="btn btn-primary" id="cancel">취소</button>
+                        <button class="btn btn-primary" id="cancel">취소</button>
                     </div>
                     <div class="completeBtn-box">
-                        <button type="submit" class="btn btn-primary" id="complete">작성완료</button>
+                        <button type="submit" class="btn btn-primary" id="complete">수정완료</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</form>
+    </form>
 
-<script src="/board/writeBoard/writeBoard.js"></script><!-- js 링크 -->
+
+<script src="/board/updateBoard/updateBoard.js"></script><!-- js 링크 -->
 </body>
 </html>

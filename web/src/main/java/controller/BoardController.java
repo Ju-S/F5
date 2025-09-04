@@ -99,15 +99,17 @@ public class BoardController extends HttpServlet {
                 // 행위 + 자원 (e.g, /get_memberList.member로 작성 요망)
                 //TODO: 게임 관련 기능
                 case "/write.board": {
+                    // 세션에서 꺼내서 writer로 사용
+                    String writer = (String) request.getSession().getAttribute("loginId");
+
                     long boardCategory = Long.parseLong(request.getParameter("boardCategory"));
-                    String writer = request.getParameter("writer");
                     long gameId = Long.parseLong(request.getParameter("gameId"));
                     String title = request.getParameter("title");
                     String contents = request.getParameter("contents");
-
+                    System.out.println(writer);
                     BoardDTO boardDTO = BoardDTO.builder()
                             .boardCategory(boardCategory)
-                            .writer("test")
+                            .writer(writer)
                             .gameId(gameId)
                             .title(title)
                             .contents(contents)
@@ -138,9 +140,41 @@ public class BoardController extends HttpServlet {
                     //TODO: 댓글 정보
 
                     //TODO: 작성자 프로필사진 정보
-
                     request.setAttribute("boardDetail", detail);
                     request.getRequestDispatcher("/board/detailBoard/detailBoard.jsp").forward(request, response);
+                    break;
+                }
+                // 게시글 수정
+                case "/update_form.board":{
+                    long boardId = Long.parseLong(request.getParameter("boardId"));
+
+                    // 게시글 정보
+                    BoardDTO detail = boardDAO.getBoardDetail(boardId);
+                    request.setAttribute("boardDetail", detail);
+                    request.getRequestDispatcher("/board/updateBoard/updateBoard.jsp").forward(request, response);
+                    break;
+                }
+                case "/update.board":{
+                    Long boardId = Long.parseLong(request.getParameter("boardId"));
+                    Long boardCategory = Long.parseLong(request.getParameter("boardCategory"));
+                    Long gameId = Long.parseLong(request.getParameter("gameId"));
+                    String title = request.getParameter("title");
+                    String contents = request.getParameter("contents");
+
+                    boardDAO.updateBoard(BoardDTO.builder()
+                            .id(boardId)
+                            .boardCategory(boardCategory)
+                            .gameId(gameId)
+                            .title(title)
+                            .contents(contents)
+                            .build());
+                    response.sendRedirect("/get_board_detail.board?boardId=" + boardId);
+                    break;
+                }
+                case "/delete.board":{
+                    String boardId = request.getParameter("boardId");
+                    boardDAO.deleteBoard(Long.parseLong(boardId));
+                    response.sendRedirect("/board/list/boardListPage.jsp");
                     break;
                 }
             }
