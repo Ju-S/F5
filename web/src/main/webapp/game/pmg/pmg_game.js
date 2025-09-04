@@ -101,7 +101,7 @@ class Pmg_game extends Phaser.Scene {
         this.physics.add.overlap(this.me, this.boxes, (me, box) => {  // 충돌시 , 점수보내기 + gameover
 
             this.isGameOver = true;
-            this.me.disableBody(true, true); // 충돌 후 플레이어 비활성화
+            this.me.disableBody(true, true); // 충돌 후 this.me ( 플레이어 ) 비활성화
 
             $.ajax({
 
@@ -109,7 +109,7 @@ class Pmg_game extends Phaser.Scene {
                 type: "post",
                 data: {
                     gameId: 4, /*본인 game_id 값 넣기*/
-                    score: Math.floor(this.currentTime / 10) // 본인 score 값 넣기
+                    score: Math.floor(this.currentTime / 10) // 점수계산 값을 score 에 넣기
 
                 },
 
@@ -117,14 +117,14 @@ class Pmg_game extends Phaser.Scene {
                     console.log("서버 응답:", response);
 
                     this.scene.start("pmg_Gameover", {score: Math.floor(this.currentTime / 10)});
-                    // 게임오버신 출력 ,  게임오버시 score 값 보내기
+                    // 성공 시 게임 오버신 출력 ,  게임오버시 score 값 보내기
 
 
                 },
                 error: (err) => {
                     console.error("점수 전송 실패", err);
                     this.scene.start("pmg_Gameover");
-
+                    // 실패 시  게임 오버신 출력
                 }
             });
 
@@ -145,8 +145,8 @@ class Pmg_game extends Phaser.Scene {
         if (!this.isGameOver) { // 게임오버가 아니라면
             this.currentTime += delta; // 점수값 초기화
         }
-        this.time_text.setText('시간: ' + (this.currentTime / 1000).toFixed(2));
-        this.score_text.setText('점수: ' + Math.floor(this.currentTime / 10));
+        this.time_text.setText('시간: ' + Math.floor((this.currentTime / 1000).toFixed(2)) + "초");
+        this.score_text.setText('점수: ' + Math.floor(this.currentTime / 10) + "점");
 
 
         // 상자 주기적 생성
@@ -189,187 +189,273 @@ class Pmg_game extends Phaser.Scene {
         }
 
         //---  이벤트 발생지점
+// 이벤트 시작은 10초(10000ms) 이후부터
+        let eventStartTime = 10000;
 
-        if (this.currentTime >= 10000 && this.currentTime <= 19999 && !this.event) { //점수기준 1000점~2000점
+// === 이벤트는 10초 이후부터 주기적으로 발생 ===
+        if (this.currentTime >= eventStartTime) {
+            let eventDuration = 10000;
+            let eventCycle = 20000;
 
-            this.event = true; // 이벤트 시작!
-            this.speed = 300;
+            let timeInCycle = (this.currentTime - eventStartTime) % eventCycle;
 
+            // === 이벤트 발생 구간 ===
+            if (timeInCycle < eventDuration && !this.event) {
+                this.event = true;
+                this.speed = 300;
 
-            let dice = Math.floor(Math.random() * 4) + 1;
+                let dice = Math.floor(Math.random() * 4) + 1;
 
-            switch (dice) {
-
-                case 1 :
-                    this.spade = this.physics.add.sprite(265, 50, 'spade');
-                    this.spade.setScale(0.1);
-                    this.spade.setOrigin(0, 0);
-
-                    this.me.setScale(1); // 메인
-                    break;
-
-                case 2 :
-
-                    this.diamond = this.physics.add.sprite(265, 50, 'diamond');
-                    this.diamond.setScale(0.1);
-                    this.diamond.setOrigin(0, 0);
-
-                    this.me.setScale(0.2); // 메인
-                    break;
-
-                case 3 :
-                    this.heart = this.physics.add.sprite(265, 50, 'heart');
-                    this.heart.setScale(0.1);
-                    this.heart.setOrigin(0, 0);
-
-                    this.player_speed = 1000; // 메인
-                    break;
-
-                case 4 :
-                    this.clover = this.physics.add.sprite(265, 50, 'clover');
-                    this.clover.setScale(0.1);
-                    this.clover.setOrigin(0, 0);
-
-                    this.player_speed = 100; // 메인
-                    break;
-
-
-                default:
-                    console.log("예상치 못한 dice 값:", dice);
+                switch (dice) {
+                    case 1:
+                        this.spade = this.physics.add.sprite(265, 50, 'spade');
+                        this.spade.setScale(0.1).setOrigin(0, 0);
+                        this.me.setScale(1);
+                        break;
+                    case 2:
+                        this.diamond = this.physics.add.sprite(265, 50, 'diamond');
+                        this.diamond.setScale(0.1).setOrigin(0, 0);
+                        this.me.setScale(0.2);
+                        break;
+                    case 3:
+                        this.heart = this.physics.add.sprite(265, 50, 'heart');
+                        this.heart.setScale(0.1).setOrigin(0, 0);
+                        this.player_speed = 1000;
+                        break;
+                    case 4:
+                        this.clover = this.physics.add.sprite(265, 50, 'clover');
+                        this.clover.setScale(0.1).setOrigin(0, 0);
+                        this.player_speed = 100;
+                        break;
+                    default:
+                        console.log("예상치 못한 dice 값:", dice);
+                }
             }
 
-        }  // 첫번째 이벤트
+            // === 이벤트 종료 구간 ===
+            else if (timeInCycle >= eventDuration && this.event) {
+                if (this.event_text) {
+                    this.event_text.destroy();
+                    this.event_text = null;
+                }
 
-        else if (this.currentTime >= 20000 && this.currentTime <= 29999) {
+                [this.spade, this.diamond, this.heart, this.clover].forEach((sprite, index) => {
+                    if (sprite) {
+                        sprite.destroy();
+                        if (index === 0) this.spade = null;
+                        if (index === 1) this.diamond = null;
+                        if (index === 2) this.heart = null;
+                        if (index === 3) this.clover = null;
+                    }
+                });
 
-            if (this.event_text) {
-                this.event_text.destroy();
-                this.event_text = null;
+                this.me.setScale(0.5);
+                this.player_speed = 300;
+                this.event = false;
             }
-
-            if(this.spade){
-                this.spade.destroy();
-                this.spade = null;
-            }else if(this.diamond){
-                this.diamond.destroy();
-                this.diamond = null;
-            }else if(this.heart){
-                this.heart.destroy();
-                this.heart = null;
-            }else if(this.clover){
-                this.clover.destroy();
-                this.clover = null;
-            }
-
-
-            this.me.setScale(0.5);
-            this.player_speed = 300;
-            this.event = false; // 이벤트 종료
         }
 
-        else if(this.currentTime >= 35000 && this.frame % 60 == 0){
-
-            let crutch = this.physics.add.sprite(0 , Math.random() * 250, 'crutch');
-
-            crutch.setDisplaySize(50, 50);
-            crutch.setOrigin(0, 0);
+        // crutch 등장 - 주기적
+        if (this.currentTime >= 35000 && this.frame % 60 == 0) {
+            let crutch = this.physics.add.sprite(0, Math.random() * 250, 'crutch');
+            crutch.setDisplaySize(50, 50).setOrigin(0, 0);
             crutch.setVelocityX(100);
             this.crutches.push(crutch);
 
-
-            crutch.body.setSize(1000,1000);
+            crutch.body.setSize(1000, 1000);
             crutch.body.setOffset(-500, 0);
 
             this.crutches.forEach((crutch, index) => {
-                crutch.rotation += 80 * delta/2 ; // 회전 속도 조절
-
-                if (crutch.x > 600) { // 화면 밖 제거
+                crutch.rotation += 80 * delta / 2;
+                if (crutch.x > 600) {
                     crutch.destroy();
                     this.crutches.splice(index, 1);
                 }
             });
-
-
-
-        } // x축  crutch 등장
-
-
-
-
-
-        else if (this.currentTime >= 30000 && this.currentTime <= 39999 && !this.event) {
-
-            this.event = true; // 이벤트 시작!
-            this.speed = 350;
-
-
-
-
-            let dice = Math.floor(Math.random() * 3) + 1;
-
-            switch (dice) {
-
-                case 1 :
-                    this.spade = this.physics.add.sprite(265, 50, 'spade');
-                    this.spade.setScale(0.1);
-                    this.spade.setOrigin(0, 0);
-
-                    this.me.setScale(1);
-                    break;
-
-                case 2 :
-
-                    this.diamond = this.physics.add.sprite(265, 50, 'diamond');
-                    this.diamond.setScale(0.1);
-                    this.diamond.setOrigin(0, 0);
-
-                    this.me.setScale(0.2);
-                    break;
-
-                case 3 :
-                    this.heart = this.physics.add.sprite(265, 50, 'heart');
-                    this.heart.setScale(0.1);
-                    this.heart.setOrigin(0, 0);
-
-                    this.player_speed = 1000;
-                    break;
-
-                case 4 :
-                    this.clover = this.physics.add.sprite(265, 50, 'clover');
-                    this.clover.setScale(0.1);
-                    this.clover.setOrigin(0, 0);
-                    this.player_speed = 100;
-                    break;
-
-            }
-        }// 두번째 이벤트
-
-        else if (this.currentTime >= 40000 && this.currentTime <= 49999) {
-            if (this.event_text) {
-                this.event_text.destroy();
-                this.event_text = null;
-            }
-
-            if(this.spade){
-                this.spade.destroy();
-                this.spade = null;
-            }else if(this.diamond){
-                this.diamond.destroy();
-                this.diamond = null;
-            }else if(this.heart){
-                this.heart.destroy();
-                this.heart = null;
-            }else if(this.clover){
-                this.clover.destroy();
-                this.clover = null;
-            }
-
-
-            this.me.setScale(0.5);
-            this.player_speed = 300;
-
-
         }
+
+
+        //
+        // if (this.currentTime >= 10000 && this.currentTime <= 19999 && !this.event) { //점수기준 1000점~2000점
+        //
+        //     this.event = true; // 이벤트 시작!
+        //     this.speed = 300;
+        //
+        //
+        //     let dice = Math.floor(Math.random() * 4) + 1;
+        //
+        //     switch (dice) {
+        //
+        //         case 1 :
+        //             this.spade = this.physics.add.sprite(265, 50, 'spade');
+        //             this.spade.setScale(0.1);
+        //             this.spade.setOrigin(0, 0);
+        //
+        //             this.me.setScale(1); // 메인
+        //             break;
+        //
+        //         case 2 :
+        //
+        //             this.diamond = this.physics.add.sprite(265, 50, 'diamond');
+        //             this.diamond.setScale(0.1);
+        //             this.diamond.setOrigin(0, 0);
+        //
+        //             this.me.setScale(0.2); // 메인
+        //             break;
+        //
+        //         case 3 :
+        //             this.heart = this.physics.add.sprite(265, 50, 'heart');
+        //             this.heart.setScale(0.1);
+        //             this.heart.setOrigin(0, 0);
+        //
+        //             this.player_speed = 1000; // 메인
+        //             break;
+        //
+        //         case 4 :
+        //             this.clover = this.physics.add.sprite(265, 50, 'clover');
+        //             this.clover.setScale(0.1);
+        //             this.clover.setOrigin(0, 0);
+        //
+        //             this.player_speed = 100; // 메인
+        //             break;
+        //
+        //
+        //         default:
+        //             console.log("예상치 못한 dice 값:", dice);
+        //     }
+        //
+        // }  // 첫번째 이벤트
+        //
+        // else if (this.currentTime >= 20000 && this.currentTime <= 29999) {
+        //
+        //     if (this.event_text) {
+        //         this.event_text.destroy();
+        //         this.event_text = null;
+        //     }
+        //
+        //     if(this.spade){
+        //         this.spade.destroy();
+        //         this.spade = null;
+        //     }else if(this.diamond){
+        //         this.diamond.destroy();
+        //         this.diamond = null;
+        //     }else if(this.heart){
+        //         this.heart.destroy();
+        //         this.heart = null;
+        //     }else if(this.clover){
+        //         this.clover.destroy();
+        //         this.clover = null;
+        //     }
+        //
+        //
+        //     this.me.setScale(0.5);
+        //     this.player_speed = 300;
+        //     this.event = false; // 이벤트 종료
+        // }
+        //
+        // else if(this.currentTime >= 35000 && this.frame % 60 == 0){
+        //
+        //     let crutch = this.physics.add.sprite(0 , Math.random() * 250, 'crutch');
+        //
+        //     crutch.setDisplaySize(50, 50);
+        //     crutch.setOrigin(0, 0);
+        //     crutch.setVelocityX(100);
+        //     this.crutches.push(crutch);
+        //
+        //
+        //     crutch.body.setSize(1000,1000);
+        //     crutch.body.setOffset(-500, 0);
+        //
+        //     this.crutches.forEach((crutch, index) => {
+        //         crutch.rotation += 80 * delta/2 ; // 회전 속도 조절
+        //
+        //         if (crutch.x > 600) { // 화면 밖 제거
+        //             crutch.destroy();
+        //             this.crutches.splice(index, 1);
+        //         }
+        //     });
+        //
+        //
+        //
+        // } // x축  crutch 등장
+        //
+        //
+        //
+        //
+        //
+        // else if (this.currentTime >= 30000 && this.currentTime <= 39999 && !this.event) {
+        //
+        //     this.event = true; // 이벤트 시작!
+        //     this.speed = 350;
+        //
+        //
+        //
+        //
+        //     let dice = Math.floor(Math.random() * 3) + 1;
+        //
+        //     switch (dice) {
+        //
+        //         case 1 :
+        //             this.spade = this.physics.add.sprite(265, 50, 'spade');
+        //             this.spade.setScale(0.1);
+        //             this.spade.setOrigin(0, 0);
+        //
+        //             this.me.setScale(1);
+        //             break;
+        //
+        //         case 2 :
+        //
+        //             this.diamond = this.physics.add.sprite(265, 50, 'diamond');
+        //             this.diamond.setScale(0.1);
+        //             this.diamond.setOrigin(0, 0);
+        //
+        //             this.me.setScale(0.2);
+        //             break;
+        //
+        //         case 3 :
+        //             this.heart = this.physics.add.sprite(265, 50, 'heart');
+        //             this.heart.setScale(0.1);
+        //             this.heart.setOrigin(0, 0);
+        //
+        //             this.player_speed = 1000;
+        //             break;
+        //
+        //         case 4 :
+        //             this.clover = this.physics.add.sprite(265, 50, 'clover');
+        //             this.clover.setScale(0.1);
+        //             this.clover.setOrigin(0, 0);
+        //             this.player_speed = 100;
+        //             break;
+        //
+        //     }
+        // }// 두번째 이벤트
+        //
+        // else if (this.currentTime >= 40000 && this.currentTime <= 49999) {
+        //     if (this.event_text) {
+        //         this.event_text.destroy();
+        //         this.event_text = null;
+        //     }
+        //
+        //     if(this.spade){
+        //         this.spade.destroy();
+        //         this.spade = null;
+        //     }else if(this.diamond){
+        //         this.diamond.destroy();
+        //         this.diamond = null;
+        //     }else if(this.heart){
+        //         this.heart.destroy();
+        //         this.heart = null;
+        //     }else if(this.clover){
+        //         this.clover.destroy();
+        //         this.clover = null;
+        //     }
+        //
+        //
+        //     this.me.setScale(0.5);
+        //     this.player_speed = 300;
+        //
+        //
+        // }
 
     } // update
 } // all
