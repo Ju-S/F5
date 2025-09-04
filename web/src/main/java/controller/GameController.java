@@ -74,7 +74,6 @@ public class GameController extends HttpServlet {
                     }
 
 
-
                     response.setContentType("application/json; charset=utf-8"); // json 응답
                     response.getWriter().write("{\"result\":\"success\"}");
 

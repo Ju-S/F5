@@ -118,12 +118,12 @@ class Pmg_game extends Phaser.Scene {
                 success: (response) => {
                     console.log("서버 응답:", response);
 
-                    this.scene.start("Gameover", {score: Math.floor(this.currentTime / 10)}); // 게임오버시 score 보내기
+                    this.scene.start("pmg_Gameover", {score: Math.floor(this.currentTime / 10)}); // 게임오버시 score 보내기
 
                 },
                 error: (err) => {
                     console.error("점수 전송 실패", err);
-                    this.scene.start("Gameover");
+                    this.scene.start("pmg_Gameover");
 
                 }
             });
