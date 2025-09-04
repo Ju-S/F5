@@ -32,9 +32,9 @@
     <div id="right">
         <div class="mainGame game1 default">
             <img class src="/index_img/desktop_home_js.svg"/>
-            <div class="mainGameTitle slide-right">게임 1 타이틀</div>
-            <div class="mainGameContent slide-right">게임 1에 대한 설명, 게임 1에 대한 설명 게임1에대한 설명 게임 1에대한 설명</div>
-            <button class="mainGameBtn btn btn-primary slide-right">game1로 이동</button>
+            <div class="mainGameTitle slide-right">Mr.Penguin</div>
+            <div class="mainGameContent slide-right">펭귄의 남극기지 순례 대모험..<br>장애물로 등장하는 얼음구멍을 피해 더 오래 모험을 즐기세요!</div>
+            <button class="mainGameBtn btn btn-primary slide-right">Mr.Penguin로 이동</button>
         </div>
     </div>
 </div>

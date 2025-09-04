@@ -1,6 +1,4 @@
 
-
-
 class Pmg_game extends Phaser.Scene {
 
 
@@ -106,21 +104,26 @@ class Pmg_game extends Phaser.Scene {
             this.me.disableBody(true, true); // 충돌 후 플레이어 비활성화
 
             $.ajax({
+
                 url: "/gameover.game",
                 type: "post",
                 data: {
+                    gameId: 4, /*본인 game_id 값 넣기*/
+                    score: Math.floor(this.currentTime / 10) // 본인 score 값 넣기
 
-                    score: Math.floor(this.currentTime / 10)
                 },
+
                 success: (response) => {
                     console.log("서버 응답:", response);
 
-                    this.scene.start("Gameover", {score: Math.floor(this.currentTime / 10)});
+                    this.scene.start("pmg_Gameover", {score: Math.floor(this.currentTime / 10)});
+                    // 게임오버신 출력 ,  게임오버시 score 값 보내기
+
 
                 },
                 error: (err) => {
                     console.error("점수 전송 실패", err);
-                    this.scene.start("Gameover");
+                    this.scene.start("pmg_Gameover");
 
                 }
             });

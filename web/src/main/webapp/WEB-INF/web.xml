@@ -21,8 +21,4 @@
         <param-value>jaann20914@gmail.com</param-value> <!-- SendGrid에서 'Verified'된 From 주소 -->
     </context-param>
 
-
-
-
-
 </web-app>

@@ -1,6 +1,6 @@
-class Gameover extends Phaser.Scene {
+class pmg_Gameover extends Phaser.Scene {
     constructor() {
-        super({key:"Gameover"}); // 키 값 = Gameover
+        super({key:"pmg_Gameover"}); // 키 값 = Gameover
     }
 
     preload(){

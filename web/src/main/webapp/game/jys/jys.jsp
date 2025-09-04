@@ -12,7 +12,7 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
             rity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/phaser@3/dist/phaser.js"></script>
-    <script src="../geometry_gameScene.js"></script>
+    <script src="/game/Geometry_Dash_Lite/geometry_gameScene.js"></script>
     <style>
         body {
             margin: 0;

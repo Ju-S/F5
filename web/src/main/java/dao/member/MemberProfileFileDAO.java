@@ -28,8 +28,8 @@ public class MemberProfileFileDAO {
     public int insertProfileImage(MemberProfileFileDTO dto) throws Exception {
         String sql = "INSERT INTO member_profile_file(id, member_id, ori_name, sys_name, upload_date) VALUES(member_profile_file_seq.nextval, ?, ?, ?, sysdate)";
 
-        try (Connection con = DataUtil.getConnection();
-             PreparedStatement pstat = con.prepareStatement(sql)) {
+        try (Connection con = DataUtil.getConnection(); PreparedStatement pstat = con.prepareStatement(sql))
+        {
             pstat.setString(1, dto.getMemberId());
             pstat.setString(2, dto.getOriName());
             pstat.setString(3, dto.getSysName());
@@ -41,14 +41,13 @@ public class MemberProfileFileDAO {
     //endregion
 
     //region read
-    //프로필 사진 경로 저장
+    //프로필 사진 경로 DTO 저장
     public List<MemberProfileFileDTO> listDateProfileImg() throws Exception {
         String sql = "SELECT * FROM member_profile_file ORDER BY upload_date DESC";
         List<MemberProfileFileDTO> list = new ArrayList<>();
 
-        try (Connection con = DataUtil.getConnection();
-             PreparedStatement pstat = con.prepareStatement(sql);
-             ResultSet rs = pstat.executeQuery()) {
+        try (Connection con = DataUtil.getConnection(); PreparedStatement pstat = con.prepareStatement(sql); ResultSet rs = pstat.executeQuery())
+        {
 
             while (rs.next()) {
                 long id = rs.getLong("id");
@@ -77,7 +76,8 @@ public class MemberProfileFileDAO {
     //프로필 사진 경로 조회
     public MemberProfileFileDTO getProfileImagePath(String memberId) throws Exception {
         String sql = "SELECT id, ori_name, sys_name, upload_date FROM member_profile_file WHERE member_id = ?";
-        try (Connection con = DataUtil.getConnection(); PreparedStatement pstat = con.prepareStatement(sql)) {
+        try (Connection con = DataUtil.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);)
+        {
             pstat.setString(1, memberId);
             try (ResultSet rs = pstat.executeQuery()) {
                 if (rs.next()) {
@@ -107,8 +107,8 @@ public class MemberProfileFileDAO {
     public int updateProfileImage(MemberProfileFileDTO dto) throws Exception {
         String sql = "UPDATE member_profile_file SET ori_name = ?, sys_name = ?, upload_date = sysdate WHERE member_id = ?";
 
-        try (Connection con = DataUtil.getConnection();
-             PreparedStatement pstat = con.prepareStatement(sql)) {
+        try (Connection con = DataUtil.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);)
+        {
             pstat.setString(1, dto.getOriName());
             pstat.setString(2, dto.getSysName());
             pstat.setString(3, dto.getMemberId());
@@ -122,8 +122,8 @@ public class MemberProfileFileDAO {
     //프로필 사진 삭제(이 경우에는 null을 삽입하여 기본 이미지로 노출하면 될듯함.)
     public int deleteProfileImage(String memberId) throws Exception {
         String sql = "DELETE FROM member_profile_file WHERE member_id = ?";
-        try (Connection con = DataUtil.getConnection();
-             PreparedStatement pstat = con.prepareStatement(sql)) {
+        try (Connection con = DataUtil.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);)
+        {
             pstat.setString(1, memberId);
             return pstat.executeUpdate();
         }

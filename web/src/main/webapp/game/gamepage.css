@@ -46,14 +46,17 @@ body {
 }
 
 .top {
-    width: 1200px;
+
     height: 100px;
     border: 1px solid black;
+
+
 }
 
 .logo {
     width: 50px;
     height: 50px;
+    margin: auto;
 
 }
 
@@ -61,6 +64,7 @@ body {
     width: 100%;
     height: 100%;
     object-fit: contain;
+
 }
 
 .left_Navi{
@@ -248,6 +252,7 @@ body {
 
 .reply_main{
     width:70%;
+    height: 100%;
     text-align: center;
 }
 
@@ -258,7 +263,14 @@ body {
     float:left;
 }
 
-
+.tier_icon {
+    width: 45px !important;
+    height: 45px !important;
+    object-fit: contain;
+    vertical-align: middle;
+    margin-left: 4px;
+    border-radius: 4px;
+}
 
 .reply_bar_btn{
     padding: 10px 20px;
@@ -275,6 +287,10 @@ body {
     cursor: pointer;
 }
 
+
+
+
 .dropdown-toggle::after {
     display: none;
 }
+
