@@ -16,7 +16,7 @@
 <head>
     <jsp:include page="/common/Head.jsp"/>
     <link rel="stylesheet" href="/common/common.css">
-    <link rel="stylesheet" href="css/board_admin.css">
+    <link rel="stylesheet" href="/member/admin/css/board_admin.css">
 </head>
 <body>
 
@@ -71,7 +71,7 @@
 
 </div>
 
-<script src="js/board_admin.js"></script>
+<script src="/member/admin/js/board_admin.js"></script>
 
 </body>
 </html>

@@ -199,8 +199,6 @@ public class AdminController extends HttpServlet {
                     break;
                 }
 
-
-
                 // 위 댓글 삭제 JSON 응답 처리 코드 삽입
                 case "/deleteReply.admin": {
                     long id = Long.parseLong(request.getParameter("id"));

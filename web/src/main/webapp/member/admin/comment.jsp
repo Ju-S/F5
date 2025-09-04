@@ -7,7 +7,7 @@
     Authority auth = (Authority) session.getAttribute("authority");
 
     if (loginId == null || auth != Authority.ADMIN) {
-        response.sendRedirect("/admin/login.jsp");
+        response.sendRedirect("/member/login/login.jsp");
         return;
     }
 %>
@@ -15,7 +15,7 @@
 <head>
     <jsp:include page="/common/Head.jsp"/>
     <link rel="stylesheet" href="/common/common.css">
-    <link rel="stylesheet" href="css/board_admin.css">
+    <link rel="stylesheet" href="/member/admin/css/board_admin.css">
 </head>
 <body>
 
@@ -70,7 +70,7 @@
 
 </div>
 
-<script src="js/comment_admin.js"></script>
+<script src="/member/admin/js/comment_admin.js"></script>
 
 </body>
 </html>

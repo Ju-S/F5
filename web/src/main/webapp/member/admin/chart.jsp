@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="/common/common.css">
     <!-- 1. Google Chart API 로드 -->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <link rel="stylesheet" href="css/chart-style.css">
+    <link rel="stylesheet" href="/member/admin/css/chart-style.css">
 </head>
 <body>
 <!-- Header -->
@@ -67,7 +67,7 @@
 </script>
 
 <!-- 외부 js 불러오기 -->
-<script src="/js/chart-api.js"></script>
+<script src="/member/admin//js/chart-api.js"></script>
 
 </body>
 </html>
