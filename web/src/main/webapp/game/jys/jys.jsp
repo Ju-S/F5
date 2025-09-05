@@ -15,7 +15,7 @@
         physics: {
             default: "arcade",
             arcade: {
-                debug: true
+                debug: felse
             }
         },
         scene: [gamescene]

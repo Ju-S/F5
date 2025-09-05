@@ -239,7 +239,7 @@ function loadComments(boardId, loginId) {
 
 
                 // 구분선
-                let hr = $("<hr>").css({"margin-top": "8px", "margin-bottom": "8px"});
+                let hr = $("<hr>").css({"margin-top": "24px", "margin-bottom": "24px"});
 
                 let reportCol;
                 let reportColSub;

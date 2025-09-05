@@ -12,15 +12,15 @@
 <body>
 <jsp:include page="/common/header/Header.jsp"/>
 <div class="container">
-    <div class="row">
+    <div class="row  g-0">
         <div class="col-1 navi">
             <!-- 네비게이션 -->
             <jsp:include page="/common/sidenavi/SideNavi.jsp"/>
         </div>
         <div class="col-11">
-            <div class="row  total-card">
+            <div class="row g-0  total-card">
                 <div class="col-5 post-card "><!-- 게시글 영역 -->
-                    <div class="row profile-row"><!-- 프로필 제목 영역 -->
+                    <div class="row g-0 profile-row"><!-- 프로필 제목 영역 -->
                         <div class="col-1 profile">
                             <!-- 이미지를 그냥 넣으면 경로때문에 지정이안됨. 경로지정해서 넣었음 -->
                             <img id="img"
@@ -45,7 +45,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row"> <!-- 게시글 컨텐츠 영역 -->
+                    <div class="row g-0"> <!-- 게시글 컨텐츠 영역 -->
                         <div class="col-12 post-contents">
                             ${boardDetail.contents}
                         </div>

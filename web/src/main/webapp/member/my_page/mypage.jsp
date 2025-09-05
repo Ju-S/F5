@@ -156,23 +156,17 @@
                 </div>
 
                 <!-- 콘텐츠: 게임 랭킹 -->
-                <div class="row" id="content-ranking" data-content="ranking">
+                <div id="content-ranking" class="content-box" data-content="ranking">
                     <c:forEach var="gameEntry" items="${gameRankings}">
-                        <div class="col-md-4">
-                            <div class="ranking-card">
-                                <h5>게임ID: ${gameEntry.key}</h5>
-                                <c:if test="${not empty gameEntry.value}">
-                                    <!-- 첫 번째 값만 출력 (1등) -->
-                                    <c:set var="topRank" value="${gameEntry.value[0]}"/>
-                                    <div class="list-group-item d-flex justify-content-between align-items-start">
-                                        <div class="ms-2 me-auto">
-                                            <div class="fw-bold">
-                                                    ${topRank.rank}등 <br> ${topRank.score}점 <br> ${topRank.tier}
-                                            </div>
-                                        </div>
-                                        <span class="badge text-bg-primary rounded-pill">최고점</span>
-                                    </div>
-                                </c:if>
+                        <c:set var="gameId" value="${gameEntry.key}"/>
+                        <c:set var="topRank" value="${gameEntry.value[0]}"/>
+
+                        <div class="ranking-card">
+                            <h5>${gameIdToName[gameId]}</h5>
+                            <div class="rank">${topRank.rank}등</div>
+                            <div class="info">
+                                스코어 ${topRank.score}<br/>
+                                    ${topRank.tier}
                             </div>
                         </div>
                     </c:forEach>
