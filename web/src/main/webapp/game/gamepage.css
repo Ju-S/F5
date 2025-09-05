@@ -81,7 +81,7 @@ body {
 #row1 .col-7, #row1 .col-5 {
     height: 100%;
 }
-#gamebox {
+#gamedbox {
     background-color: var(--primary-subcolor);
     border-radius: 22px;
     /*margin-left: 10px;*/
