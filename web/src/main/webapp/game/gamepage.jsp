@@ -5,7 +5,7 @@
 <html>
 <head>
     <jsp:include page="/game/pmg/GameHead.jsp"/>
-    <jsp:include page="/game/kjs/kjsGameHead.jsp" />
+
     <meta charset="UTF-8">
     <title>Insert title here</title>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -49,7 +49,6 @@
                             <script>
                                 /* 페이지 입장 시 넘어온 파라미터 {game_id}를 변수로 만듬*/
 
-
                                 const GAMEID = parseInt("${gameId}", 10);
 
                                 $(".play_btn").on("click", function () {
@@ -85,7 +84,10 @@
                                             break;
                                         }
 
+                                    }
+
                                 });
+
                             </script>
                         </div>
                     </div>
@@ -157,35 +159,36 @@
                                             <%--reply_main--%>
 
                                         <div id="reply_last">
-                                        <form action="/update_reply.game" method="post" id="update_form" >
+                                        <form action="/update_reply.game" method="post" class="update_form" >
                                             <input type="hidden" name="contents" class="hidden_contents">
                                             <input type="hidden" name="gameId" value="${i.gameId}">
                                             <input type="hidden" name="writer" value="${i.writer}">
                                             <input type="hidden" name="id" value="${i.id}">
 
                                             <button type="button" class="btn-edit"
-                                                    style="background-color:#3E459D; color:#fff; font-size:15px; border-radius:10px; border:none; padding: 5px 10px;"
-                                                    id="update">
+                                                    style="background-color:#3E459D; color:#fff; font-size:15px; border-radius:10px; border:none; padding: 5px 5px;"
+                                                   >
                                                 수정
                                             </button>
                                             <button type="submit" class="btn-update d-none"
-                                                    style="background-color:#3E459D; color:#fff; font-size:15px; border-radius:10px; border:none; padding: 5px 10px;"
-                                                    id="update_complete">
-                                                수정 완료
+                                                    style="background-color:#3E459D; color:#fff; font-size:15px; border-radius:10px; border:none; padding: 5px 5px;"
+                                                 >
+                                                완료
                                             </button>
+
                                             <button type="button" class="btn-cancel d-none"
-                                                    style="background-color:#dc3545; color:#fff; font-size:15px; border-radius:10px; border:none; padding: 5px 10px;">
+                                                    style="background-color:#dc3545; color:#fff; font-size:15px; border-radius:10px; border:none; padding: 5px 5px;">
                                                 취소
                                             </button>
 
                                         </form>
 
-                                        <form action="/delete_reply.game" method="post" id="delete_form">
+                                        <form action="/delete_reply.game" method="post" class="delete_form">
                                             <input type="hidden" name="gameId" value="${i.gameId}">
                                             <input type="hidden" name="writer" value="${i.writer}">
                                             <input type="hidden" name="id" value="${i.id}">
                                             <button class="btn-delete"
-                                                    style="background-color:#3E459D; color:#fff; font-size:15px; border-radius:10px; border:none; padding: 5px 10px;">
+                                                    style="background-color:#3E459D; color:#fff; font-size:15px; border-radius:10px; border:none; padding: 5px 5px;">
                                                 삭제
                                             </button>
                                         </form>

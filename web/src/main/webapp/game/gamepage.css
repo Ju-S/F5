@@ -394,20 +394,27 @@ body {
     display: flex;
 }
 
-#update_form {
-    width: 50%;
-    float: left;
-    height: 50%;
+.update_form {
+    width: 100%;
+    display: flex;
+    gap: 6px; /* 버튼 사이 간격 */
+    justify-content: flex-end; /* 오른쪽 정렬 */
+    align-items: center;
+    flex-wrap: wrap; /* 버튼이 넘칠 경우 줄바꿈 */
+    height: auto;
 }
 
 
 
-#delete_form {
-    width: 50%;
-    float: left;
-    height: 50%;
+.delete_form {
+    width: 100%;
+    display: flex;
+    gap: 6px; /* 버튼 사이 간격 */
+    justify-content: flex-end; /* 오른쪽 정렬 */
+    align-items: center;
+    flex-wrap: wrap; /* 버튼이 넘칠 경우 줄바꿈 */
+    height: auto;
 }
-
 #report_form{
 
     display: flex;
