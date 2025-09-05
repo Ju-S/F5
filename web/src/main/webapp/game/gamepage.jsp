@@ -78,6 +78,7 @@
                                         }
                                     }
                                 });
+
                             </script>
                         </div>
                     </div>
@@ -131,6 +132,44 @@
                                                      onerror="this.onerror=null; this.src='/member/my_page/img/profile.svg';"
                                                      alt="profile"/>
                                             </div>
+                                        </div>
+                                            <%--reply_main--%>
+
+                                        <div id="reply_last">
+                                        <form action="/update_reply.game" method="post" class="update_form" >
+                                            <input type="hidden" name="contents" class="hidden_contents">
+                                            <input type="hidden" name="gameId" value="${i.gameId}">
+                                            <input type="hidden" name="writer" value="${i.writer}">
+                                            <input type="hidden" name="id" value="${i.id}">
+
+                                            <button type="button" class="btn-edit"
+                                                    style="background-color:#3E459D; color:#fff; font-size:15px; border-radius:10px; border:none; padding: 5px 5px;"
+                                                   >
+                                                수정
+                                            </button>
+                                            <button type="submit" class="btn-update d-none"
+                                                    style="background-color:#3E459D; color:#fff; font-size:15px; border-radius:10px; border:none; padding: 5px 5px;"
+                                                 >
+                                                완료
+                                            </button>
+
+                                            <button type="button" class="btn-cancel d-none"
+                                                    style="background-color:#dc3545; color:#fff; font-size:15px; border-radius:10px; border:none; padding: 5px 5px;">
+                                                취소
+                                            </button>
+
+                                        </form>
+
+                                        <form action="/delete_reply.game" method="post" class="delete_form">
+                                            <input type="hidden" name="gameId" value="${i.gameId}">
+                                            <input type="hidden" name="writer" value="${i.writer}">
+                                            <input type="hidden" name="id" value="${i.id}">
+                                            <button class="btn-delete"
+                                                    style="background-color:#3E459D; color:#fff; font-size:15px; border-radius:10px; border:none; padding: 5px 5px;">
+                                                삭제
+                                            </button>
+                                        </form>
+                                        </div>
 
                                             <div class="reply_main">
                                                 <div class="reply_center"> 작성자 : ${i.writer} <img src="${i.tier}"
@@ -249,11 +288,12 @@
                                 <input type="hidden" name="writer" value="${sessionScope.loginId}">
                                 <input type="hidden" name="gameId" value="${gameId}"> <%--${game_id}--%>
                                 <input type="text" class="reply_area" placeholder="reply .. (35자)" name="contents"
-                                       id="replyInput">
+                                       id="replyInput" maxlength="35" oninput="checkLength()">
                                 <button id="writing_btn" class="reply_btn"><i class="fa-solid fa-paper-plane"
                                                                               style="color: #ffffff;"></i></button>
                             </div>
                         </form>
+
                     </div>
                 </div>
             </div>
@@ -312,6 +352,12 @@
         $form.submit(); // 직접 submit 실행
     });
 
+        function checkLength() { // 글자수 제한
+        const input = document.getElementById("replyInput");
+        if (input.value.length === input.maxLength) {
+        alert("최대 35자까지 입력할 수 있습니다!");
+    }
+    }
 
 </script>
 
