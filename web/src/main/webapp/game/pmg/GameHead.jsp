@@ -7,15 +7,8 @@
 
 <!-- Bootstrap 5 CSS -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="/game/kgj/BubbleShooterScene.js"></script>
 
-<script src="/game/kjs/MainScene.js"></script>
-
-<script src = "/game/pmg/first_scene.js"></script>
-<script src = "/game/pmg/second_scene.js"></script>
-<script src = "/game/pmg/pmg_game.js"></script>
-<script src = "/game/pmg/pmg_Gameover.js"></script>
-
-<script src="/game/Geometry_Dash_Lite/geometry_gameScene.js"></script>
 
 <style>
     #gamebox{
