@@ -52,13 +52,13 @@
                                 const GAMEID = parseInt("${gameId}", 10);
 
                                 $(".play_btn").on("click", function () {
-                                    $(".game_box").empty(); // title play 버튼 지우기
+                                    $("#gamebox").empty(); // title play 버튼 지우기
 
                                     switch (GAMEID) {
 
                                         case 1 : {
                                             //주성
-                                            $(".game_box").load("/game/kjs/kjs_game.jsp");
+                                            $("#gamebox").load("/game/kjs/kjs_game.jsp");
                                             break;
                                         }
 
@@ -69,19 +69,19 @@
 
                                         case 3 : {
                                             //기준
-                                            $(".game_box").load("/game/kgj/kgj_game.jsp");
+                                            $("#gamebox").load("/game/kgj/kgj_game.jsp");
                                             break;
                                         }
 
                                         case 4 : {
                                             //민규
-                                            $(".game_box").load("/game/pmg/game.jsp"); //링크게임 내용실행
+                                            $("#gamebox").load("/game/pmg/game.jsp"); //링크게임 내용실행
                                             break;
                                         }
 
                                         case 5 : {
                                             //영서
-                                            $(".game_box").load("/game/jys/jys.jsp");
+                                            $("#gamebox").load("/game/jys/jys.jsp");
                                             break;
                                         }
 
@@ -137,19 +137,21 @@
                             <c:choose>
                                 <c:when test="${sessionScope.loginId == i.writer}"> <%-- 작성자 시점 --%>
 
-                                    <div class="reply_bar eachReplyRow">
+                                    <div class="reply_bar">
                                         <div class="reply_profile">
+
                                             <img id="img"
                                                  src="/downloadImgFile.member?memberId=${i.writer}"
                                                  onerror="this.onerror=null; this.src='/member/my_page/img/profile.svg';"
-                                                 alt="profile"/>
+                                                 alt="profile" />
                                         </div>
+
                                         <div class="reply_main">
                                             <div class="reply_center"> 작성자 : ${i.writer} <img src="${i.tier}"
                                                                                               alt="tier_icon"
                                                                                               class="tier_icon"></div>
 
-                                            <div class="reply_center reply_content" name="contents"
+                                            <div class="reply_content" name="contents"
                                                  value="${i.contents}" contenteditable="false"
                                                  data-original="${i.contents}">
                                                     ${i.contents}
@@ -157,37 +159,42 @@
                                         </div>
                                             <%--reply_main--%>
 
-
-                                        <form action="/update_reply.game" method="post" class="update_form">
+                                        <div id="reply_last">
+                                        <form action="/update_reply.game" method="post" id="update_form" >
                                             <input type="hidden" name="contents" class="hidden_contents">
                                             <input type="hidden" name="gameId" value="${i.gameId}">
                                             <input type="hidden" name="writer" value="${i.writer}">
                                             <input type="hidden" name="id" value="${i.id}">
 
                                             <button type="button" class="btn-edit"
-                                                    style="background-color:#3E459D; color:#fff; font-size:15px; border-radius:10px; border:none; padding: 5px 5px;">
+                                                    style="background-color:#3E459D; color:#fff; font-size:15px; border-radius:10px; border:none; padding: 5px 10px;"
+                                                    id="update">
                                                 수정
                                             </button>
                                             <button type="submit" class="btn-update d-none"
-                                                    style="background-color:#3E459D; color:#fff; font-size:15px; border-radius:10px; border:none; padding: 5px 5px;">
+                                                    style="background-color:#3E459D; color:#fff; font-size:15px; border-radius:10px; border:none; padding: 5px 10px;"
+                                                    id="update_complete">
                                                 수정 완료
                                             </button>
                                             <button type="button" class="btn-cancel d-none"
-                                                    style="background-color:#dc3545; color:#fff; font-size:15px; border-radius:10px; border:none; padding: 5px 5px;">
+                                                    style="background-color:#dc3545; color:#fff; font-size:15px; border-radius:10px; border:none; padding: 5px 10px;">
                                                 취소
                                             </button>
 
                                         </form>
 
-                                        <form action="/delete_reply.game" method="post">
+                                        <form action="/delete_reply.game" method="post" id="delete_form">
                                             <input type="hidden" name="gameId" value="${i.gameId}">
                                             <input type="hidden" name="writer" value="${i.writer}">
                                             <input type="hidden" name="id" value="${i.id}">
                                             <button class="btn-delete"
-                                                    style="background-color:#3E459D; color:#fff; font-size:15px; border-radius:10px; border:none; padding: 5px 5px;">
+                                                    style="background-color:#3E459D; color:#fff; font-size:15px; border-radius:10px; border:none; padding: 5px 10px;">
                                                 삭제
                                             </button>
                                         </form>
+                                        </div>
+
+
 
                                     </div>
 
@@ -196,7 +203,7 @@
 
                                 <c:otherwise> <%--작성자 외 시점--%>
 
-                                    <div class="reply_bar eachReplyRow">
+                                    <div class="reply_bar">
                                         <div class="reply_profile">
                                             <img id="img"
                                                  src="/downloadImgFile.member?memberId=${i.writer}"
@@ -209,15 +216,16 @@
                                                                                               alt="tier_icon"
                                                                                               class="tier_icon"></div>
 
-                                            <div class="reply_center reply_content" name="contents"
+                                            <div class="reply_content" name="contents"
                                                  value="${i.contents}" contenteditable="false"
                                                  data-original="${i.contents}">
                                                     ${i.contents}
                                             </div>
                                         </div>
+                                        <div id="reply_last">
                                         <div class="dropdown">
                                                 <%-- 원본 class="btn btn btn-dark dropdown-toggle" --%>
-                                            <form action="/report_reply.game" method="get">
+                                            <form action="/report_reply.game" method="get" id="report_form">
                                                 <input type="hidden" name="gameId" value="${i.gameId}">
                                                 <input type="hidden" name="writer" value="${i.writer}">
                                                 <input type="hidden" name="reportcount" value="${i.report_count}">
@@ -235,6 +243,7 @@
                                                 </ul>
                                             </form>
                                         </div>
+                                        </div>
                                     </div>
 
 
@@ -250,7 +259,7 @@
                             <div class="text_reply" id="inputrow">
                                 <input type="hidden" name="writer" value="${sessionScope.loginId}">
                                 <input type="hidden" name="gameId" value="${gameId}"> <%--${game_id}--%>
-                                <input type="text" class="reply_area" placeholder="write your comment!" name="contents"
+                                <input type="text" class="reply_area" placeholder="reply .. (35자)" name="contents"
                                        id="replyInput">
                                 <button id="writing_btn" class="reply_btn"><i class="fa-solid fa-paper-plane"
                                                                               style="color: #ffffff;"></i></button>

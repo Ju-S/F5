@@ -150,7 +150,6 @@
             width: 100%;
             height: 52%;
             /*gap: 10px;*/
-
         }
 
         #inputrowCol-12 {
@@ -159,8 +158,6 @@
 
             margin-top: 24px;
             margin-left: 10px;
-
-
         }
 
         #inputbox {
