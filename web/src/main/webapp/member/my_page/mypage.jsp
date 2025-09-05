@@ -47,19 +47,22 @@
 
                 <!-- 버튼 -->
                 <div class="btn">
-                    <button class="menu-button active" data-target="profile" data-img-default="/member/my_page/img/mypage_color.svg"
+                    <button class="menu-button active" data-target="profile"
+                            data-img-default="/member/my_page/img/mypage_color.svg"
                             data-img-active="/member/my_page/img/mypage.svg" type="button">
                         <img src="/member/my_page/img/mypage.svg" alt="mypage" class="menu-img">
                         개인 정보 수정
                     </button>
 
-                    <button class="menu-button" data-target="ranking" data-img-default="/member/my_page/img/ranking_color.svg"
+                    <button class="menu-button" data-target="ranking"
+                            data-img-default="/member/my_page/img/ranking_color.svg"
                             data-img-active="/member/my_page/img/ranking.svg" type="button">
                         <img src="/member/my_page/img/ranking.svg" alt="ranking" class="menu-img">
                         게임 랭킹
                     </button>
 
-                    <button class="menu-button" data-target="logout" data-img-default="/member/my_page/img/logout_color.svg"
+                    <button class="menu-button" data-target="logout"
+                            data-img-default="/member/my_page/img/logout_color.svg"
                             data-img-active="/member/my_page/img/logout.svg" type="button">
                         <img src="/member/my_page/img/logout.svg" alt="logout" class="menu-img">
                         회원탈퇴
@@ -78,20 +81,23 @@
                         <!-- ID -->
                         <div class="form-group">
                             <label class="col-form-label col-sm-2 pt-0" for="id">아이디</label>
-                            <input type="text" id="id" class="form-input" placeholder="id" name="id" value="${member.id}" readonly/>
+                            <input type="text" id="id" class="form-input" placeholder="id" name="id"
+                                   value="${member.id}" readonly/>
                         </div>
 
                         <!-- name -->
                         <div class="form-group">
                             <label class="col-form-label col-sm-2 pt-0" for="name">이름</label>
-                            <input type="text" id="name" class="form-input" placeholder="name" name="name" value="${member.name}" readonly/>
+                            <input type="text" id="name" class="form-input" placeholder="name" name="name"
+                                   value="${member.name}" readonly/>
                         </div>
 
                         <!-- Nickname -->
                         <div class="form-group row align-items-end nickname-group">
                             <div class="input-label-group nickname-input">
                                 <label class="col-form-label col-sm-2 pt-0" for="nickname">닉네임</label>
-                                <input type="text" id="nickname" class="form-input" placeholder="Nickname" value="${member.nickname}"
+                                <input type="text" id="nickname" class="form-input" placeholder="Nickname"
+                                       value="${member.nickname}"
                                        name="nickname" readonly/>
                             </div>
                             <button class="check-button">중복확인</button>
@@ -101,7 +107,8 @@
                         <div class="form-group row align-items-end nickname-group">
                             <div class="input-label-group nickname-input">
                                 <label class="col-form-label col-sm-2 pt-0" for="email">이메일</label>
-                                <input type="email" id="email" class="form-input" placeholder="email" name="email" value="${member.email}"
+                                <input type="email" id="email" class="form-input" placeholder="email" name="email"
+                                       value="${member.email}"
                                        readonly/>
                             </div>
                             <button class="check-button">인증확인</button>
@@ -138,45 +145,47 @@
 
                         <!-- Buttons -->
                         <div class="button-group" id="edit">
-                            <button type="button" class="button-primary w-50">수정</button>
+                            <button type="button" class="button-primary">수정</button>
                         </div>
 
                         <div class="button-group" id="edit_check" style="display: none;">
-                            <button class="button-primary">수정완료</button>
-                            <a type="button" class="button-secondary">취소</a>
+                            <button class="button-primary">완료</button>
+                            <button type="button" class="button-secondary">취소</button>
                         </div>
                     </form>
                 </div>
 
                 <!-- 콘텐츠: 게임 랭킹 -->
-                <div class="content-box" id="content-ranking" data-content="ranking">
-                    <!-- 게임1 랭킹 -->
+                <div class="row" id="content-ranking" data-content="ranking">
                     <c:forEach var="gameEntry" items="${gameRankings}">
-                        <div class="ranking-card">
-                            <h5>게임ID: ${gameEntry.key}</h5> <!-- 게임 이름 대신 gameId -->
-                            <ol class="list-group list-group-numbered">
-                                <c:forEach var="rank" items="${gameEntry.value}">
-                                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                        <div class="col-md-4">
+                            <div class="ranking-card">
+                                <h5>게임ID: ${gameEntry.key}</h5>
+                                <c:if test="${not empty gameEntry.value}">
+                                    <!-- 첫 번째 값만 출력 (1등) -->
+                                    <c:set var="topRank" value="${gameEntry.value[0]}"/>
+                                    <div class="list-group-item d-flex justify-content-between align-items-start">
                                         <div class="ms-2 me-auto">
                                             <div class="fw-bold">
-                                                    ${rank.rank}등 / ${rank.score}점 / ${rank.tier}
+                                                    ${topRank.rank}등 <br> ${topRank.score}점 <br> ${topRank.tier}
                                             </div>
                                         </div>
-                                        <span class="badge text-bg-primary rounded-pill">${rank.rank}위</span>
-                                    </li>
-                                </c:forEach>
-                            </ol>
+                                        <span class="badge text-bg-primary rounded-pill">최고점</span>
+                                    </div>
+                                </c:if>
+                            </div>
                         </div>
                     </c:forEach>
                 </div>
-            </div>
 
-
-            <!-- 콘텐츠 3 -->
-            <div class="content-box" id="content-logout" data-content="logout">
-                <h2>회원탈퇴</h2><br>
-                <p>회원탈퇴를 하시겠습니까?</p>
-                <a href="/deleteMember.member" class="btn button-primary">회원탈퇴</a>
+                <!-- 콘텐츠 3 -->
+                <div class="content-box row" id="content-logout" data-content="logout">
+                    <div class="col-12">
+                        <h2>회원탈퇴</h2><br>
+                        <p>회원탈퇴를 하시겠습니까?</p>
+                        <a href="/deleteMember.member" class="btn button-primary">회원탈퇴</a>
+                    </div>
+                </div>
             </div>
 
         </div>

@@ -116,6 +116,13 @@ public class MemberController extends HttpServlet {
                 // 행위 + 자원 (e.g, /get_memberList.member로 작성 요망)
                 //TODO: 회원 관련 기능
 
+                case "/logout.member": {
+                    request.getSession().removeAttribute("loginId");
+                    request.getSession().removeAttribute("authority");
+                    response.sendRedirect("/");
+                    break;
+                }
+
                 //페이지 이동
                 case "/toLoginPage.member": {
                     //로그인 페이지로 이동
@@ -129,10 +136,19 @@ public class MemberController extends HttpServlet {
                 }
                 case "/toFindPwPage.member": {
                     HttpSession s = request.getSession();
+                    boolean keep = "1".equals(request.getParameter("keep")); // ← 인증완료 리다이렉트일 때만 유지
+
+                    if (!keep) { // ← 새로 들어온 경우: 지난 인증 흔적 제거
+                        s.removeAttribute("codeVerified");
+                        s.removeAttribute("verifiedEmail");
+                        s.removeAttribute("verifiedId");
+                    }
+
                     boolean codeVerified = Boolean.TRUE.equals(s.getAttribute("codeVerified"));
                     request.setAttribute("codeVerified", codeVerified);
                     request.setAttribute("verifiedEmail", s.getAttribute("verifiedEmail"));
-                    request.setAttribute("verifiedId", s.getAttribute("verifiedId")); // ★ 추가
+                    request.setAttribute("verifiedId", s.getAttribute("verifiedId"));
+
                     request.getRequestDispatcher("/member/findPw/findPw.jsp").forward(request, response);
                     return;
                 }
@@ -178,7 +194,15 @@ public class MemberController extends HttpServlet {
                     String id = request.getParameter("id");
                     memberDAO.changePw(pw, id);
 
-                    response.sendRedirect("/index.jsp");
+                    HttpSession s = request.getSession(false); // 인증내역 세션에 저장한것 지우기
+                    if (s != null) {
+                        s.removeAttribute("codeVerified");
+                        s.removeAttribute("verifiedEmail");
+                        s.removeAttribute("verifiedId");
+                    }
+
+                    response.sendRedirect("/");
+                    return;
                 }
                 case "/isIdEmailExist.member": {
                     //비밀번호 찾기 전 아이디 비번 있는지 찾기
@@ -226,10 +250,10 @@ public class MemberController extends HttpServlet {
                     }
 
                     if (!ok) vSession.setAttribute("codeVerified", false);
-
+                    
 
                     // PRG
-                    response.sendRedirect("/toFindPwPage.member");
+                    response.sendRedirect("/toFindPwPage.member?keep=1");
                     return;
                 }
                 case "/cancelFindPw.member": {
@@ -270,15 +294,24 @@ public class MemberController extends HttpServlet {
                     String pw = request.getParameter("pw");
                     System.out.println(id + ":" + pw);
 
-                    boolean isLoginOk = memberDAO.isLoginOk(id, pw);
-                    System.out.println("로그인성공 여부:" + isLoginOk);
-
-                    if (isLoginOk) {
+                    MemberDTO member = memberDAO.login(id, pw); // 성공하면 dto 실패하면 null
+                    if (member != null) {//로그인 성공하면
                         request.getSession().setAttribute("loginId", id); // 로그인 인증 정보를 세션에다 담음
-                        response.sendRedirect("/index.jsp");
-                        return;
-                    } else {
-                        // 실패 시에도 반드시 응답을 보냄(로그인 페이지로 보내면서 alert 뜨게 만들기)
+
+                        String loginId=(String)request.getSession().getAttribute("loginId");//권한확인
+                        String authority = memberDAO.getAuthority(loginId);
+
+                        if(authority.equals("ADMIN")){//관리자 권한이면
+                            request.getSession().setAttribute("authority", authority);
+                            response.sendRedirect("/dashboard.admin");// 관리자 페이지로 이동시킴
+
+                        }else if(authority.equals("MEMBER")){//유저 계정이면
+                            request.getSession().setAttribute("authority", authority);
+                            response.sendRedirect("/");//인덱스 페이지로 이동시킴
+                            return;
+                        }
+
+                    } else {// 로그인 실패시
                         response.sendRedirect("/member/login/login.jsp?msg=loginfail");
                         return;
                     }
@@ -436,7 +469,7 @@ public class MemberController extends HttpServlet {
                     //region read
                     //TODO: 여기서 그냥 response 바로 index.jsp로 가도 되는지
                     //endregion
-                    response.sendRedirect("/index.jsp");
+                    response.sendRedirect("/");
                     return;
                 }
 
@@ -458,7 +491,7 @@ public class MemberController extends HttpServlet {
                         if (result > 0) {
                             System.out.println("탈퇴성공");
                             request.getSession().removeAttribute("loginId");
-                            response.sendRedirect("/index.jsp"); // 홈 페이지로 이동
+                            response.sendRedirect("/"); // 홈 페이지로 이동
                         } else {
                             response.sendRedirect("/error.jsp"); // 에러 페이지로 이동
                         }

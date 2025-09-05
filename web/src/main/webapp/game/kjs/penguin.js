@@ -1,27 +1,27 @@
-class MainScene extends Phaser.Scene {
+class Penguin extends Phaser.Scene {
     constructor() {
-        super({key: "MainScene"});
+        super({key: "Penguin"});
     }
 
     preload() {
         this.cameras.main.setBackgroundColor("#ffffff");
 
-        this.load.image('gameover', 'Assets/gameover.jpg');
+        this.load.image('gameover', '/game/kjs/Assets/gameover.jpg');
 
-        this.load.image('background', 'Assets/background.png');
-        this.load.image('backgroundTile', 'Assets/backgroundTile.png');
+        this.load.image('background', '/game/kjs/Assets/background.png');
+        this.load.image('backgroundTile', '/game/kjs/Assets/backgroundTile.png');
 
-        this.load.spritesheet('player', 'Assets/spritesheet.png', {
+        this.load.spritesheet('player', '/game/kjs/Assets/spritesheet.png', {
             frameWidth: 68,
             frameHeight: 102
         })
 
-        this.load.spritesheet('playerJump', 'Assets/spritesheet_jump.png', {
+        this.load.spritesheet('playerJump', '/game/kjs/Assets/spritesheet_jump.png', {
             frameWidth: 67,
             frameHeight: 102
         })
 
-        this.load.image('obstacle', 'Assets/Obstacle.png');
+        this.load.image('obstacle', '/game/kjs/Assets/Obstacle.png');
     }
 
     create() {
@@ -103,8 +103,8 @@ class MainScene extends Phaser.Scene {
 
         // 충돌 처리
         this.physics.add.overlap(this.me, this.obstacles, (me, obstacles) => {
-            if (this.me.getData('state') === 'run') {
-                this.showGameOverUI();
+            if (this.me.getData('state') === 'run' && !this.isGameOver) {
+                this.showGameOverUI(this.score);
             }
         });
 
@@ -190,6 +190,19 @@ class MainScene extends Phaser.Scene {
     }
 
     showGameOverUI(score = 0) {
+        $.ajax({
+            url: "/gameover.game",
+            type: "post",
+            async: true, // 비동기 명시
+            data: {
+                gameId: 1, /*본인 game_id 값 넣기*/
+                score: this.score // 점수계산 값을 score 에 넣기
+            },
+            success: (response) => {
+                console.log("서버 응답:", response);
+            },
+        });
+
         this.isGameOver = true;
         // 반투명 배경 오버레이
         const overlay = this.add.rectangle(300, 200, 600, 400, 0x000000, 0.5);

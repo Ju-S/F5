@@ -1,0 +1,87 @@
+/* 왼쪽 네비 */
+#sideNavi { height: 100%; }
+
+/* 홈버튼 */
+#homebox {
+    height: 9vh;
+    display: flex;
+    justify-content: center;
+}
+#home {
+    width: 75%;
+    height: 75%;
+    border-radius: 20px;
+    background-color: var(--primary-subcolor);
+}
+#homebtn{
+    height: 100%;
+    width: 100%;
+    display: flex; justify-content: center; align-items: center;
+}
+#home:hover, #home:active { background-color:var(--secondary-color); }
+
+/*네비*/
+#navibox{ height: 60vh; overflow: hidden; }
+.naviContent { display:flex; justify-content:center; align-items:center; margin-bottom:1vh; }
+
+/* 버튼 기본 스타일 */
+#admin1btn,
+#mypagebtn {
+    width: 6vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--primary-subcolor);
+    border-radius: 50px;
+    overflow: hidden;
+    transition: all 0.4s ease;
+}
+
+.icon {
+    width: 6vh; height: 6vh;
+    display:flex; align-items:center; justify-content:center;
+    border-radius: 50%;
+    background-color: var(--primary-subcolor);
+    cursor: pointer;
+}
+.icon:hover { background-color:var(--secondary-color); }
+.icon img { width: 24px; height: 24px; }
+
+/* 서브메뉴 */
+.submenu {
+    display:flex; flex-direction:column; align-items:center; gap:1px;
+    max-height:0; overflow:hidden; transition:max-height 0.4s ease;
+}
+.submenu.open { max-height:500px; }
+
+
+#admin2box{
+    margin-bottom: 1vh;
+    display:flex; justify-content:center;
+}
+#admin2{
+    width: 6vh; height: 6vh; border-radius: 50%; margin-top:auto;
+    background-color: var(--primary-subcolor);
+}
+#mypagebtn{
+    height:100%; width:100%;
+    display:flex; justify-content:center; align-items:center;
+}
+#admin2:hover, #admin2:active {
+    background-color:var(--secondary-color);
+}
+
+/* 로그아웃 */
+#logoutbox {
+    height: 10vh;
+    display:flex; justify-content:center;
+}
+#logout {
+    width:6vh; height:6vh; border-radius:50%; margin-top:auto;
+    background-color: var(--primary-subcolor);
+}
+#logoutbtn{
+    height:100%; width:100%;
+    display:flex; justify-content:center; align-items:center;
+}
+#logout:hover, #logout:active { background-color:var(--secondary-color); }

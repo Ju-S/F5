@@ -5,6 +5,7 @@
 <html>
 <head>
     <jsp:include page="/game/pmg/GameHead.jsp"/>
+    <jsp:include page="/game/kjs/kjsGameHead.jsp" />
     <meta charset="UTF-8">
     <title>Insert title here</title>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -55,7 +56,6 @@
                                     $("#gamebox").empty(); // title play 버튼 지우기
 
                                     switch (GAMEID) {
-
                                         case 1 : {
                                             //주성
                                             $("#gamebox").load("/game/kjs/kjs_game.jsp");
@@ -85,10 +85,7 @@
                                             break;
                                         }
 
-                                    }
-
                                 });
-
                             </script>
                         </div>
                     </div>

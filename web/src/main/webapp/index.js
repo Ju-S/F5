@@ -28,8 +28,8 @@ const gameViews = {
     ),
     game2: createGameView(
         "2",
-        "게임 2 타이틀",
-        "게임 2 에 대한 설명 , 게임 2 에 대한 설명 게임 2 에 대한 설명게임 2 에 대한 설명 게임 2 에 대한 설명게임 2 에 대한 설명",
+        "Pac-Man !",
+        "심플한 룰, 강렬한 몰입 팩맨이 보여주는 아케이드의 정수!",
         "/index_img/desktop_home_jw.svg",
         "game2"
     ),

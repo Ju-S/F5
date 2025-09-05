@@ -1,0 +1,25 @@
+@charset "UTF-8";
+/* 관리자 페이지 */
+
+html,
+body {
+    font-family: var(--sub-font); /* 폰트 서브 */
+    color: #fff;
+}
+
+/* view_post.css */
+.card {
+    border: 1px solid #444;
+    background-color: #222;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.card label {
+    font-weight: bold;
+    color: #aaa;
+}
+
+.card p {
+    color: #fff;
+}

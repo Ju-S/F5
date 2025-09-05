@@ -11,8 +11,12 @@
     --bs-btn-active-border-color: #a14323;
     --bs-btn-active-shadow: #fff;
 
-    width: 50%;
-    height: 100%;
+    /* 수정 */
+    padding: 6px 16px;
+    white-space: nowrap;
+
+    font-size: 14px;
+    border-radius: 4px;
 }
 
 .pagination {
@@ -41,6 +45,17 @@
     list-style: none;
 }
 
+.col-11{
+  padding: 0 24px;
+}
+/* 추가 */
+.toolbar > div {
+    height: 40px;
+}
+.left-group {
+    gap: 12px; /* filter와 search 사이에 적당한 간격 */
+}
+
 .page-item {
     padding: 3px;
 }
@@ -60,8 +75,6 @@
 }
 
 .write,
-.filter,
-.search,
 .filter select,
 .arrow {
     display: flex;
@@ -69,10 +82,24 @@
     align-items: center;
 }
 
+/* 수정 */
 .filter {
-    padding-left: 32px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 0;
 }
 
+.search{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 400px;
+}
+.search input {
+    width: 100%;
+    height: 100%;
+}
 .search input:focus {
     box-shadow: none;
     border-color: var(--sub-btn-color);
@@ -107,7 +134,7 @@
     align-items: center;
 }
 
-.item-list-view .item-div{
+.item-list-view .item-div {
     height: 60px;
     border-bottom: 1px solid var(--primary-color);
 
@@ -119,13 +146,13 @@
     width: 100%;
 }
 
-.board-summary{
+.board-summary {
     display: flex;
     justify-content: right;
     align-items: center;
 }
 
-.item-list-view .writer-title{
+.item-list-view .writer-title {
     display: flex;
     justify-content: left;
     align-items: center;
@@ -145,7 +172,7 @@
     color: #fff;
 }
 
-.item-list-view .modify{
+.item-list-view .modify {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -160,7 +187,7 @@
     height: 40px;
 }
 
-.profile-img img{
+.profile-img img {
     width: 40px;
     height: 40px;
 

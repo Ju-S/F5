@@ -107,6 +107,7 @@ class Pmg_game extends Phaser.Scene {
 
                 url: "/gameover.game",
                 type: "post",
+                async: true, // 비동기 명시
                 data: {
                     gameId: 4, /*본인 game_id 값 넣기*/
                     score: Math.floor(this.currentTime / 20) // 점수계산 값을 score 에 넣기
