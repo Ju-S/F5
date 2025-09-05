@@ -51,8 +51,21 @@ public class AdminController extends HttpServlet {
             Gson gson = new Gson();
             // 이후 처리 계속
 
-            switch (cmd) {
+            //TODO: session loginId 권한 체크 -> 확인ㄱㄱ
+            //관리자 권한 아니면 튕기기 ->dao 안통하고 로그인할때 세션에 저장해놓은거 가져올 수 있는지?
+            /*String loginId = (String) request.getSession().getAttribute("loginId");
+            String authority = memberDAO.getAuthority(loginId);*/
+            String authority = (String) request.getSession().getAttribute("authority");
+            if(authority.equals("Member")){//member 권한이면
+                return;
+            }
 
+            switch (cmd) {
+                case "/dashboard.admin": {
+
+                    response.sendRedirect("/member/admin/chart.jsp"); //로그인 시 대시보드 페이지로 이동
+                    return;
+                }
                 // 게시글용..
                 // JSP 페이지 렌더링용
                 case "/reportedPosts.admin": {
@@ -75,6 +88,7 @@ public class AdminController extends HttpServlet {
 
                 // AJAX JSON 데이터 응답용
                 case "/getReportedPosts.admin": {
+
                     int page = Integer.parseInt(request.getParameter("page") == null ? "1" : request.getParameter("page"));
                     int rowsPerPage = 10;
                     int offset = (page - 1) * rowsPerPage + 1;
@@ -173,6 +187,8 @@ public class AdminController extends HttpServlet {
                     }
                     break;
                 }
+
+
 
                 // 위 댓글 삭제 JSON 응답 처리 코드 삽입
                 case "/deleteReply.admin": {

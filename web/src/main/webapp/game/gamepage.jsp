@@ -62,6 +62,7 @@
 
                                     case 2 : {
                                         //지원
+                                        $(".game_box").load("/game/pjw/pjw_game.jsp"); //링크게임 내용실행
                                         break;
                                     }
 
