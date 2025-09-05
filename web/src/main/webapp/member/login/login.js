@@ -6,4 +6,7 @@ if (msg === "loginfail") {
 }
 
 
-//수정중
+//index.jsp로 이동
+$("#goout").on("click", function(){
+    window.location.href = "/index.jsp";
+})
