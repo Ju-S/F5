@@ -53,7 +53,7 @@ body {
 
 }
 
-.main{
+.main{/*이전것*/
     /*width: 1000px;*/
     height: 800px;
     float: left;
@@ -106,7 +106,7 @@ body {
     cursor: pointer;
 }
 
-.ranking_box{
+.ranking_box{/*이전것*/
 
     width : 35%;
     height: 90%;
@@ -114,11 +114,11 @@ body {
     margin-top: 20px;
     background-color:  #2a2a2a;
     /*var(--primary-subcolor);*/
-    overflow-y: auto;
+ /*   overflow-y: auto;*/ /*이전것 */
     border-radius: 30px;
 }
 
-.ranking_title{
+.ranking_title{ /*이전 ranking head*/
     font: var(--title-font);
     width: 100%;
     height: 10%;
@@ -149,7 +149,7 @@ body {
 .ranking_score{ width: 30%; }
 .ranking_tier{ width: 20%; }
 
-.main_bottom{
+.main_bottom{ /*이전 것*/
     width: 100%;
     height: 40%;
     float: left;
@@ -162,7 +162,7 @@ body {
 
 .text_reply{
     width: 100%;
-    height: 20%;
+    height: 40%;
     display: flex;
     border-radius: 15px;
     border-color: #fff;
@@ -172,14 +172,14 @@ body {
 .reply_area {
     width: 80%;
     height: 100%;
-    font-size: 40px;
+    font-size: 30px;
     border-radius: 15px;
     font: var(--sub-font);
 }
 
 .reply_area::placeholder {
     font: var(--title-font);
-    font-size: 40px;
+    font-size: 30px;
     text-align: center;
 }
 
@@ -215,6 +215,11 @@ body {
     width: 15%;
     text-align: center;
     font-size: 20px;
+}
+
+.reply_profile>img{
+
+    width: 50%
 }
 
 .reply_main{
