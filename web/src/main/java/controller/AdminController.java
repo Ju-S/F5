@@ -1,6 +1,7 @@
 package controller;
 
 import com.google.gson.Gson;
+import dao.admin.AdminBoardDAO;
 import dao.board.BoardCategoryDAO;
 import dao.board.BoardDAO;
 import dao.board.BoardFileDAO;
@@ -14,6 +15,7 @@ import dao.member.MemberGameTierDAO;
 import dao.member.MemberProfileFileDAO;
 import dto.admin.ReportedPostDTO;
 import dto.board.ReplyDTO;
+import dto.member.BlackListDTO;
 import dto.member.MemberDTO;
 import enums.Authority;
 
@@ -34,6 +36,7 @@ public class AdminController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
+            AdminBoardDAO adminBoardDAO = AdminBoardDAO.getInstance();
             BoardCategoryDAO boardCategoryDAO = BoardCategoryDAO.getInstance();
             BoardDAO boardDAO = BoardDAO.getInstance();
             BoardFileDAO boardFileDAO = BoardFileDAO.getInstance();
@@ -46,6 +49,7 @@ public class AdminController extends HttpServlet {
             MemberGameTierDAO memberGameTierDAO = MemberGameTierDAO.getInstance();
             MemberProfileFileDAO memberProfileFileDAO = MemberProfileFileDAO.getInstance();
             //endregion
+
 
             String cmd = request.getRequestURI();
             Gson gson = new Gson();
@@ -125,7 +129,20 @@ public class AdminController extends HttpServlet {
                     out.close();
                     break;
                 }
+                // 게시물 내용보기
+                case "/viewReportedPost.admin": {
+                    long id = Long.parseLong(request.getParameter("id"));
+                    ReportedPostDTO post = adminBoardDAO.getReportedPostById(id); // 호출
 
+                    if (post == null) {
+                        response.sendRedirect("/error.jsp"); // 게시물 없음
+                        return;
+                    }
+
+                    request.setAttribute("post", post);
+                    request.getRequestDispatcher("/member/admin/view_post.jsp").forward(request, response);
+                    break;
+                }
                 // 게시글 삭제 처리
                 case "/deletePost.admin": {
                     long id = Long.parseLong(request.getParameter("id"));
@@ -199,6 +216,63 @@ public class AdminController extends HttpServlet {
                     response.setContentType("application/json;charset=UTF-8");
                     PrintWriter out = response.getWriter();
                     out.print("{\"success\":" + success + "}");
+                    out.close();
+                    break;
+                }
+                
+                // 블랙리스트 - 회원
+                case "/getBlackList.admin": {
+                    int page = Integer.parseInt(request.getParameter("page") == null ? "1" : request.getParameter("page"));
+                    int rowsPerPage = 10;
+                    int offset = (page - 1) * rowsPerPage;
+
+                    // 전체 리스트 가져와서 페이징 처리 (DB에서 직접 페이징 지원하면 더 좋아요)
+                    List<BlackListDTO> fullList = blackListDAO.getAllBlacklist();
+                    int total = fullList.size();
+                    int totalPage = (int) Math.ceil((double) total / rowsPerPage);
+
+                    // 간단하게 메모리에서 페이징 처리
+                    int toIndex = Math.min(offset + rowsPerPage, total);
+                    List<BlackListDTO> pageList = fullList.subList(offset, toIndex);
+
+                    response.setContentType("application/json;charset=UTF-8");
+                    PrintWriter out = response.getWriter();
+
+                    StringBuilder json = new StringBuilder();
+                    json.append("{");
+                    json.append("\"blackList\": [");
+
+                    for (int i = 0; i < pageList.size(); i++) {
+                        BlackListDTO b = pageList.get(i);
+                        json.append("{");
+                        json.append("\"id\":").append(b.getId()).append(",");
+                        json.append("\"memberId\":\"").append(escapeJson(b.getMemberId())).append("\",");
+                        json.append("\"startDate\":\"").append(b.getStartDate()).append("\",");
+                        json.append("\"endDate\":\"").append(b.getEndDate()).append("\"");
+                        json.append("}");
+                        if (i < pageList.size() - 1) json.append(",");
+                    }
+
+                    json.append("],");
+                    json.append("\"totalPage\":").append(totalPage);
+                    json.append("}");
+
+                    out.print(json.toString());
+                    out.close();
+                    break;
+                }
+
+                //회원 삭제
+                case "/deleteBlacklist.admin": {
+                    String memberId = request.getParameter("memberId");
+                    if (memberId == null || memberId.isEmpty()) {
+                        response.sendError(HttpServletResponse.SC_BAD_REQUEST, "memberId가 필요합니다.");
+                        return;
+                    }
+                    int result = blackListDAO.deleteByMemberId(memberId);
+                    response.setContentType("application/json;charset=UTF-8");
+                    PrintWriter out = response.getWriter();
+                    out.print("{\"success\":" + (result > 0) + "}");
                     out.close();
                     break;
                 }

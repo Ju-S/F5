@@ -1,28 +1,21 @@
 @charset "UTF-8";
 
-/* 랭킹 */
+/* 랭킹 컨테이너 */
 #content-ranking {
-    display: none;
+    display: flex;
+    flex-wrap: wrap;
     width: 100%;
     max-width: 1000px;
     box-sizing: border-box;
-    padding: 20px;
-    flex-wrap: wrap;
     gap: 20px;
 }
-.ranking-list-wrapper {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;  /* 카드들이 세로로 고르게 배치 */
-    padding-bottom: 32px;            /* 아래 여백 */
-}
 
+/* 카드 */
 .ranking-card {
     background-color: var(--primary-subcolor);
     border-radius: 12px;
     padding: 24px;
-    width: calc(33.333% - 13.33px);  /* 3개씩 한 줄 */
+    flex: 1 1 calc(33.333% - 20px);  /* 3개씩 */
     min-width: 280px;
     box-sizing: border-box;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
@@ -37,36 +30,23 @@
     color: var(--danger-color);
 }
 
-.list-group {
-    background-color: transparent; /* 부모 배경 유지 */
-    color: #fff;
-    padding-left: 0; /* 기본 올리스트 스타일 제거 */
-    margin-bottom: 0;
-}
-
-ol.list-group-numbered > li::before {
-    display: none;
-}
-
-.list-group {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
+/* 리스트 스타일 제거 */
 .list-group-item {
     background-color: var(--primary-subcolor);
     border-radius: 10px;
-    margin-bottom: 10px;
     padding: 16px;
-    color: white;
+    margin-bottom: 10px;
+    color: #fff;
     display: flex;
     justify-content: space-between;
     align-items: center;
     border: none;
 }
 
+/* 뱃지 (순위 표시) */
 .badge {
     font-size: 14px;
     padding: 6px 12px;
+    background-color: var(--danger-color); /* 강조 배경 */
+    color: #fff;
 }

@@ -14,69 +14,72 @@
 <body>
 <jsp:include page="/common/header/Header.jsp"/>
 
-    <form action="/update.board" method="post">
+<form action="/update.board" method="post">
     <div class="container">
         <div class="row">
             <div class="col-1">
                 <jsp:include page="/common/sidenavi/SideNavi.jsp"/>
             </div>
-            <div class="col-11 mainContents">
-                <div class="titleBox">
-                    <div class="title">제목</div>
-                    <div class="titleText"><input type="text" placeholder="Title" name="title" value="${boardDetail.title}" required></div>
-                    <input type="hidden" name="writer" value="${sessionScope.loginId}">
-                    <input type="hidden" name="boardId" value="${boardDetail.id}">
-                </div>
-                <div class="tagsBox d-flex">
-                    <div class="gameId-box">
-                        게임태그
-                        <label for="gameId"></label>
-                        <select class="form-select custom-size" id="gameId" name="gameId"
-                                aria-label="Default select example" required>
-                            <!-- gameId -->
-                            <option value="" disabled selected>Game Tag</option>
-                            <option value="1">Game1</option>
-                            <option value="2">Game2</option>
-                            <option value="3">Game3</option>
-                            <option value="4">Game4</option>
-                            <option value="5">Game5</option>
-                        </select>
+            <div class="col-11">
+                <div class="mainContents">
+                    <div class="titleBox">
+                        <div class="title">제목</div>
+                        <div class="titleText"><input type="text" placeholder="Title" name="title"
+                                                      value="${boardDetail.title}" required></div>
+                        <input type="hidden" name="writer" value="${sessionScope.loginId}">
+                        <input type="hidden" name="boardId" value="${boardDetail.id}">
                     </div>
-                    <div class="board_category-box">
-                        태그
-                        <label for="board_category"></label>
-                        <select class="form-select custom-size" id="board_category" name="boardCategory"
-                                aria-label="Default select example" required>
-                            <!-- board_category -->
-                            <option value="" disabled selected>Filter</option>
-                            <option value="1">정보/공략</option>
-                            <option value="2">질문</option>
-                            <option value="3">후기</option>
-                        </select>
+                    <div class="tagsBox d-flex">
+                        <div class="gameId-box">
+                            게임태그
+                            <label for="gameId"></label>
+                            <select class="form-select custom-size" id="gameId" name="gameId"
+                                    aria-label="Default select example" required>
+                                <!-- gameId -->
+                                <option value="" disabled selected>Game Tag</option>
+                                <option value="1">Game1</option>
+                                <option value="2">Game2</option>
+                                <option value="3">Game3</option>
+                                <option value="4">Game4</option>
+                                <option value="5">Game5</option>
+                            </select>
+                        </div>
+                        <div class="board_category-box">
+                            태그
+                            <label for="board_category"></label>
+                            <select class="form-select custom-size" id="board_category" name="boardCategory"
+                                    aria-label="Default select example" required>
+                                <!-- board_category -->
+                                <option value="" disabled selected>Filter</option>
+                                <option value="1">정보/공략</option>
+                                <option value="2">질문</option>
+                                <option value="3">후기</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
-                <script>
-                    $(function(){
-                        $("#gameId").val(${boardDetail.gameId}).prop("selected", true);
-                        $("#board_category").val(${boardDetail.boardCategory}).prop("selected", true);
-                    })
-                </script>
-                <div class="editorBox">
-                    <textarea id="summernote" name="contents">${boardDetail.contents}</textarea>
-                </div>
-                <div class="button-box">
-                    <div class="empty-box"></div>
-                    <div class="cancelBtn-box">
-                        <button class="btn btn-primary" id="cancel">취소</button>
+                    <script>
+                        $(function () {
+                            $("#gameId").val(${boardDetail.gameId}).prop("selected", true);
+                            $("#board_category").val(${boardDetail.boardCategory}).prop("selected", true);
+                        })
+                    </script>
+                    <div class="editorBox">
+                        <textarea id="summernote" name="contents">${boardDetail.contents}</textarea>
                     </div>
-                    <div class="completeBtn-box">
-                        <button type="submit" class="btn btn-primary" id="complete">수정완료</button>
+                    <div class="button-box">
+                        <div class="empty-box"></div>
+                        <div class="cancelBtn-box">
+                            <button class="btn btn-primary" id="cancel">취소</button>
+                        </div>
+                        <div class="completeBtn-box">
+                            <button type="submit" class="btn btn-primary" id="complete">수정완료</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    </form>
+</form>
 
 
 <script src="/board/updateBoard/updateBoard.js"></script><!-- js 링크 -->
