@@ -1,27 +1,27 @@
-class MainScene extends Phaser.Scene {
+class Penguin extends Phaser.Scene {
     constructor() {
-        super({key: "MainScene"});
+        super({key: "Penguin"});
     }
 
     preload() {
         this.cameras.main.setBackgroundColor("#ffffff");
 
-        this.load.image('gameover', 'Assets/gameover.jpg');
+        this.load.image('gameover', '/game/kjs/Assets/gameover.jpg');
 
-        this.load.image('background', 'Assets/background.png');
-        this.load.image('backgroundTile', 'Assets/backgroundTile.png');
+        this.load.image('background', '/game/kjs/Assets/background.png');
+        this.load.image('backgroundTile', '/game/kjs/Assets/backgroundTile.png');
 
-        this.load.spritesheet('player', 'Assets/spritesheet.png', {
+        this.load.spritesheet('player', '/game/kjs/Assets/spritesheet.png', {
             frameWidth: 68,
             frameHeight: 102
         })
 
-        this.load.spritesheet('playerJump', 'Assets/spritesheet_jump.png', {
+        this.load.spritesheet('playerJump', '/game/kjs/Assets/spritesheet_jump.png', {
             frameWidth: 67,
             frameHeight: 102
         })
 
-        this.load.image('obstacle', 'Assets/Obstacle.png');
+        this.load.image('obstacle', '/game/kjs/Assets/Obstacle.png');
     }
 
     create() {

@@ -56,7 +56,7 @@
 
                                     case 1 : {
                                         //주성
-
+                                        $(".game_box").load("/game/kjs/kjs_game.jsp");
                                         break;
                                     }
 
@@ -67,7 +67,6 @@
 
                                     case 3 : {
                                         //기준
-                                        $(".game_box").load("/game/kjs/kjs_game.jsp");
                                         break;
                                     }
 
