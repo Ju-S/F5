@@ -110,14 +110,14 @@ class Pmg_game extends Phaser.Scene {
                 async: true, // 비동기 명시
                 data: {
                     gameId: 4, /*본인 game_id 값 넣기*/
-                    score: Math.floor(this.currentTime / 10) // 점수계산 값을 score 에 넣기
+                    score: Math.floor(this.currentTime / 20) // 점수계산 값을 score 에 넣기
 
                 },
 
                 success: (response) => {
                     console.log("서버 응답:", response);
 
-                    this.scene.start("pmg_Gameover", {score: Math.floor(this.currentTime / 10)});
+                    this.scene.start("pmg_Gameover", {score: Math.floor(this.currentTime / 20)});
                     // 성공 시 게임 오버신 출력 ,  게임오버시 score 값 보내기
 
 
@@ -147,7 +147,7 @@ class Pmg_game extends Phaser.Scene {
             this.currentTime += delta; // 점수값 초기화
         }
         this.time_text.setText('시간: ' + Math.floor((this.currentTime / 1000).toFixed(2)) + "초");
-        this.score_text.setText('점수: ' + Math.floor(this.currentTime / 10) + "점");
+        this.score_text.setText('점수: ' + Math.floor(this.currentTime / 20) + "점");
 
 
         // 상자 주기적 생성
@@ -193,10 +193,10 @@ class Pmg_game extends Phaser.Scene {
 // 이벤트 시작은 10초(10000ms) 이후부터
         let eventStartTime = 10000;
 
-// === 이벤트는 10초 이후부터 주기적으로 발생 ===
+// === 이벤트는 10초마다 주기적으로 발생 ===
         if (this.currentTime >= eventStartTime) {
-            let eventDuration = 10000;
-            let eventCycle = 20000;
+            let eventDuration = 10000; // 이벤트 지속기간
+            let eventCycle = 20000; // 이벤트 주기
 
             let timeInCycle = (this.currentTime - eventStartTime) % eventCycle;
 

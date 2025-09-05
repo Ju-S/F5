@@ -25,239 +25,249 @@
 <!-- Header -->
 <jsp:include page="/common/header/Header.jsp"/>
 
-<div class="container">
-    <div class="row">
+<div class="container g-0">
+    <div class="row g-0" id="row0">
+
+        <%--네비게이션--%>
         <div class="col-1">
-
             <jsp:include page="/common/sidenavi/SideNavi.jsp"/>
-
         </div>
 
-
+        <%--오른쪽 부분--%>
         <div class="col-11">
-            <div class="main">
+            <%--<div class="main">--%>
 
-                <div class="main_top row">
-                    <%-- <div class="row">--%>
-                    <%--  <div class="col-md-6">--%>
-                    <div class="game_box col-8">
-                        Play Game! <br>
-                        <button class="play_btn"> play</button>
+            <div class="main_top row g-0" id="row1">
 
-                        <script>
-                            /* 페이지 입장 시 넘어온 파라미터 {game_id}를 변수로 만듬*/
+                <%-- <div class="row">--%>
+                <%--  <div class="col-md-6">--%>
+                <div class="col-7" id="gamecontainer">
+                    <div id="gamebox">
+                        <div id="gameboxContent" class="game_box">
+                            Play Game! <br>
+                            <button class="play_btn"> play</button>
+                            <script>
+                                /* 페이지 입장 시 넘어온 파라미터 {game_id}를 변수로 만듬*/
 
 
-                            const GAMEID = parseInt("${gameId}", 10);
+                                const GAMEID = parseInt("${gameId}", 10);
 
-                            $(".play_btn").on("click", function () {
-                                $(".game_box").empty(); // title play 버튼 지우기
+                                $(".play_btn").on("click", function () {
+                                    $("#gamebox").empty(); // title play 버튼 지우기
 
-                                switch (GAMEID) {
+                                    switch (GAMEID) {
+                                        case 1 : {
+                                            //주성
+                                            $("#gamebox").load("/game/kjs/kjs_game.jsp");
+                                            break;
+                                        }
 
-                                    case 1 : {
-                                        //주성
-                                        $(".game_box").load("/game/kjs/kjs_game.jsp");
-                                        break;
-                                    }
+                                        case 2 : {
+                                            //지원
+                                            break;
+                                        }
 
-                                    case 2 : {
-                                        //지원
-                                        $(".game_box").load("/game/pjw/pjw_game.jsp"); //링크게임 내용실행
-                                        break;
-                                    }
+                                        case 3 : {
+                                            //기준
+                                            $("#gamebox").load("/game/kgj/kgj_game.jsp");
+                                            break;
+                                        }
 
-                                    case 3 : {
-                                        //기준
-                                        $(".game_box").load("/game/kgj/kgj_game.jsp");
-                                        break;
-                                    }
+                                        case 4 : {
+                                            //민규
+                                            $("#gamebox").load("/game/pmg/game.jsp"); //링크게임 내용실행
+                                            break;
+                                        }
 
-                                    case 4 : {
-                                        //민규
-                                        $(".game_box").load("/game/pmg/game.jsp"); //링크게임 내용실행
-                                        break;
-                                    }
+                                        case 5 : {
+                                            //영서
+                                            $("#gamebox").load("/game/jys/jys.jsp");
+                                            break;
+                                        }
 
-                                    case 5: {
-                                        $(".game_box").load("/game/jys/jys.jsp");
-                                        break;
-                                    }
-
-                                }
-
-                            });
-                        </script>
+                                });
+                            </script>
+                        </div>
                     </div>
-                    <%-- </div>--%>
-
-
-                    <%--  <div class="col-md-6">--%>
-
-                    <div class="ranking_box col-4">
-                        <div class="ranking_title">Ranking</div>
-
-                        <c:forEach var="j" items="${listranking}">
-                            <div class="ranking_bar">
-                                <div class="ranking_number">${j.rank}</div>
-                                <div class="ranking_name">${j.memberId}</div>
-                                <div class="ranking_score">${j.score}</div>
-                                <div class="ranking_tier"><img src="${j.tier}" alt="tier_icon" class="tier_icon"></div>
-                            </div>
-                        </c:forEach>
-
-
-                    </div>
-                    <%-- ranking_box--%>
-
                 </div>
-                <%-- main top--%>
+                <%-- </div>--%>
 
 
-                <div class="main_bottom row">
+                <%--  <div class="col-md-6">--%>
+                <%--랭킹창--%>
+                <div class="col-5" id="gamerankbox">
+                    <div id="gamerank">
 
-                    <c:forEach var="i" items="${list}">
-
-                        <c:choose>
-                            <c:when test="${sessionScope.loginId == i.writer}"> <%-- 작성자 시점 --%>
-
-                                <div class="reply_bar">
-                                    <div class="reply_profile"><img id="img"
-                                                                    src="/downloadImgFile.member?memberId=${i.writer}"
-                                                                    onerror="this.onerror=null; this.src='/member/my_page/img/profile.svg';"
-                                                                    alt="profile"/></div>
-                                    <div class="reply_main">
-                                        <div class="reply_center"> 작성자 : ${i.writer} <img src="${i.tier}"
-                                                                                          alt="tier_icon"
-                                                                                          class="tier_icon"></div>
-
-                                        <div class="reply_center reply_content" name="contents"
-                                             value="${i.contents}" contenteditable="false"
-                                             data-original="${i.contents}">
-                                                ${i.contents}
-                                        </div>
+                        <%--헤더--%>
+                        <div id="gamerankHeader">Ranking</div>
+                        <%--바디--%>
+                        <div id="gamerankBody">
+                            <c:forEach var="j" items="${listranking}">
+                                <div class="ranking_bar">
+                                    <div class="ranking_number">${j.rank}</div>
+                                    <div class="ranking_name">${j.memberId}</div>
+                                    <div class="ranking_score">${j.score}</div>
+                                    <div class="ranking_tier"><img src="${j.tier}" alt="tier_icon" class="tier_icon">
                                     </div>
-                                        <%--reply_main--%>
-
-
-                                    <form action="/update_reply.game" method="post" class="update_form">
-                                        <input type="hidden" name="contents" class="hidden_contents">
-                                        <input type="hidden" name="gameId" value="${i.gameId}">
-                                        <input type="hidden" name="writer" value="${i.writer}">
-                                        <input type="hidden" name="id" value="${i.id}">
-
-                                        <button type="button" class="btn-edit"
-                                                style="background-color:#3E459D; color:#fff; font-size:15px; border-radius:10px; border:none; padding: 5px 5px;">
-                                            수정
-                                        </button>
-                                        <button type="submit" class="btn-update d-none"
-                                                style="background-color:#3E459D; color:#fff; font-size:15px; border-radius:10px; border:none; padding: 5px 5px;">
-                                            수정 완료
-                                        </button>
-                                        <button type="button" class="btn-cancel d-none"
-                                                style="background-color:#dc3545; color:#fff; font-size:15px; border-radius:10px; border:none; padding: 5px 5px;">
-                                            취소
-                                        </button>
-
-                                    </form>
-
-                                    <form action="/delete_reply.game" method="post">
-                                        <input type="hidden" name="gameId" value="${i.gameId}">
-                                        <input type="hidden" name="writer" value="${i.writer}">
-                                        <input type="hidden" name="id" value="${i.id}">
-                                        <button class="btn-delete"
-                                                style="background-color:#3E459D; color:#fff; font-size:15px; border-radius:10px; border:none; padding: 5px 5px;">
-                                            삭제
-                                        </button>
-                                    </form>
-
-                                        <%--                                <div class="dropdown">--%>
-                                        <%--                                        &lt;%&ndash; 원본 class="btn btn btn-dark dropdown-toggle" &ndash;%&gt;--%>
-                                        <%--                                    <form action="/report_reply.game" method="get">--%>
-                                        <%--                                        <input type = "hidden" name="gameId" value="${i.gameId}">--%>
-                                        <%--                                        <input type = "hidden" name="writer" value="${i.writer}">--%>
-                                        <%--                                        <input type = "hidden" name="reportcount" value="${i.report_count}">--%>
-                                        <%--                                    <button type="button" class="btn btn btn-dark" id="reportPost" data-bs-toggle="dropdown" aria-expanded="false"--%>
-                                        <%--                                            style="background: transparent; border: none; padding: 0;">--%>
-                                        <%--                                        <i class="bi bi-three-dots-vertical"></i>--%>
-                                        <%--                                    </button>--%>
-
-                                        <%--&lt;%&ndash;                                    <ul class="dropdown-menu dropdown-menu-end">&ndash;%&gt;--%>
-                                        <%--&lt;%&ndash;                                        <li><button type="submit" class="dropdown-item text-danger" >신고하기</button></li>&ndash;%&gt;--%>
-                                        <%--&lt;%&ndash;                                    </ul>&ndash;%&gt;--%>
-                                        <%--                                    </form>--%>
-                                        <%--                                </div>--%>
-                                        <%--                                --%>
                                 </div>
+                            </c:forEach>
+                        </div>
+                        <%--푸터--%>
+                        <div id="gamerankFooter"></div>
+                    </div>
+                </div>
+                <%-- ranking_box--%>
+            </div>
+            <%-- main top--%>
 
 
-                            </c:when>
+            <%--<div class="main_bottom row">--%>
+            <%--2층--%>
+            <div class="row g-0" id="row2">
+                <div class="col-12" id="inputrowCol-12">
+                    <div id="inputbox">
 
-                            <c:otherwise> <%--작성자 외 시점--%>
+                        <%--댓글영역--%>
+                        <div id="replyrow">
+                        <c:forEach var="i" items="${list}">
 
-                                <div class="reply_bar">
-                                    <div class="reply_profile">
-                                        <img id="img"
-                                             src="/downloadImgFile.member?memberId=${i.writer}"
-                                             onerror="this.onerror=null; this.src='/member/my_page/img/profile.svg';"
-                                             alt="profile"/>
-                                    </div>
+                            <c:choose>
+                                <c:when test="${sessionScope.loginId == i.writer}"> <%-- 작성자 시점 --%>
 
-                                    <div class="reply_main">
-                                        <div class="reply_center"> 작성자 : ${i.writer} <img src="${i.tier}"
-                                                                                          alt="tier_icon"
-                                                                                          class="tier_icon"></div>
+                                    <div class="reply_bar">
+                                        <div class="reply_profile">
 
-                                        <div class="reply_center reply_content" name="contents"
-                                             value="${i.contents}" contenteditable="false"
-                                             data-original="${i.contents}">
-                                                ${i.contents}
+                                            <img id="img"
+                                                 src="/downloadImgFile.member?memberId=${i.writer}"
+                                                 onerror="this.onerror=null; this.src='/member/my_page/img/profile.svg';"
+                                                 alt="profile" />
                                         </div>
-                                    </div>
-                                    <div class="dropdown">
-                                            <%-- 원본 class="btn btn btn-dark dropdown-toggle" --%>
-                                        <form action="/report_reply.game" method="get">
+
+                                        <div class="reply_main">
+                                            <div class="reply_center"> 작성자 : ${i.writer} <img src="${i.tier}"
+                                                                                              alt="tier_icon"
+                                                                                              class="tier_icon"></div>
+
+                                            <div class="reply_content" name="contents"
+                                                 value="${i.contents}" contenteditable="false"
+                                                 data-original="${i.contents}">
+                                                    ${i.contents}
+                                            </div>
+                                        </div>
+                                            <%--reply_main--%>
+
+                                        <div id="reply_last">
+                                        <form action="/update_reply.game" method="post" id="update_form" >
+                                            <input type="hidden" name="contents" class="hidden_contents">
                                             <input type="hidden" name="gameId" value="${i.gameId}">
                                             <input type="hidden" name="writer" value="${i.writer}">
-                                            <input type="hidden" name="reportcount" value="${i.report_count}">
-                                            <button type="button" class="btn btn btn-dark" id="reportPost"
-                                                    data-bs-toggle="dropdown" aria-expanded="false"
-                                                    style="background: transparent; border: none; padding: 0;">
-                                                <i class="bi bi-three-dots-vertical"></i>
+                                            <input type="hidden" name="id" value="${i.id}">
+
+                                            <button type="button" class="btn-edit"
+                                                    style="background-color:#3E459D; color:#fff; font-size:15px; border-radius:10px; border:none; padding: 5px 10px;"
+                                                    id="update">
+                                                수정
+                                            </button>
+                                            <button type="submit" class="btn-update d-none"
+                                                    style="background-color:#3E459D; color:#fff; font-size:15px; border-radius:10px; border:none; padding: 5px 10px;"
+                                                    id="update_complete">
+                                                수정 완료
+                                            </button>
+                                            <button type="button" class="btn-cancel d-none"
+                                                    style="background-color:#dc3545; color:#fff; font-size:15px; border-radius:10px; border:none; padding: 5px 10px;">
+                                                취소
                                             </button>
 
-                                            <ul class="dropdown-menu dropdown-menu-end">
-                                                <li>
-                                                    <button type="submit" class="dropdown-item text-danger">신고하기
-                                                    </button>
-                                                </li>
-                                            </ul>
                                         </form>
+
+                                        <form action="/delete_reply.game" method="post" id="delete_form">
+                                            <input type="hidden" name="gameId" value="${i.gameId}">
+                                            <input type="hidden" name="writer" value="${i.writer}">
+                                            <input type="hidden" name="id" value="${i.id}">
+                                            <button class="btn-delete"
+                                                    style="background-color:#3E459D; color:#fff; font-size:15px; border-radius:10px; border:none; padding: 5px 10px;">
+                                                삭제
+                                            </button>
+                                        </form>
+                                        </div>
+
+
+
                                     </div>
-                                </div>
 
 
-                            </c:otherwise>
+                                </c:when>
 
-                        </c:choose>
+                                <c:otherwise> <%--작성자 외 시점--%>
 
-                    </c:forEach>
+                                    <div class="reply_bar">
+                                        <div class="reply_profile">
+                                            <img id="img"
+                                                 src="/downloadImgFile.member?memberId=${i.writer}"
+                                                 onerror="this.onerror=null; this.src='/member/my_page/img/profile.svg';"
+                                                 alt="profile"/>
+                                        </div>
+
+                                        <div class="reply_main">
+                                            <div class="reply_center"> 작성자 : ${i.writer} <img src="${i.tier}"
+                                                                                              alt="tier_icon"
+                                                                                              class="tier_icon"></div>
+
+                                            <div class="reply_content" name="contents"
+                                                 value="${i.contents}" contenteditable="false"
+                                                 data-original="${i.contents}">
+                                                    ${i.contents}
+                                            </div>
+                                        </div>
+                                        <div id="reply_last">
+                                        <div class="dropdown">
+                                                <%-- 원본 class="btn btn btn-dark dropdown-toggle" --%>
+                                            <form action="/report_reply.game" method="get" id="report_form">
+                                                <input type="hidden" name="gameId" value="${i.gameId}">
+                                                <input type="hidden" name="writer" value="${i.writer}">
+                                                <input type="hidden" name="reportcount" value="${i.report_count}">
+                                                <button type="button" class="btn btn btn-dark" id="reportPost"
+                                                        data-bs-toggle="dropdown" aria-expanded="false"
+                                                        style="background: transparent; border: none; padding: 0;">
+                                                    <i class="bi bi-three-dots-vertical"></i>
+                                                </button>
+
+                                                <ul class="dropdown-menu dropdown-menu-end">
+                                                    <li>
+                                                        <button type="submit" class="dropdown-item text-danger">신고하기
+                                                        </button>
+                                                    </li>
+                                                </ul>
+                                            </form>
+                                        </div>
+                                        </div>
+                                    </div>
 
 
-                    <form action="/write_reply.game" method="post">
-                        <div class="text_reply">
-                            <input type="hidden" name="writer" value="${sessionScope.loginId}">
-                            <input type="hidden" name="gameId" value="${gameId}"> <%--${game_id}--%>
-                            <input type="text" class="reply_area" placeholder="write your comment!" name="contents">
-                            <button id="writing_btn" class="reply_btn"><i class="fa-solid fa-paper-plane"
-                                                                          style="color: #ffffff;"></i></button>
+                                </c:otherwise>
+
+                            </c:choose>
+
+                        </c:forEach>
                         </div>
-                    </form>
 
-
-                </div> <!-- main_bottom -->
+                        <%--입력창 부분--%>
+                        <form action="/write_reply.game" method="post">
+                            <div class="text_reply" id="inputrow">
+                                <input type="hidden" name="writer" value="${sessionScope.loginId}">
+                                <input type="hidden" name="gameId" value="${gameId}"> <%--${game_id}--%>
+                                <input type="text" class="reply_area" placeholder="reply .. (35자)" name="contents"
+                                       id="replyInput">
+                                <button id="writing_btn" class="reply_btn"><i class="fa-solid fa-paper-plane"
+                                                                              style="color: #ffffff;"></i></button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
-            <%-- main --%>
+            <%--</div> <!-- main_bottom -->--%>
+            <%--</div>
+            &lt;%&ndash; main &ndash;%&gt;--%>
         </div> <!-- col-11 -->
     </div> <!-- row-->
 </div>  <!-- container -->
