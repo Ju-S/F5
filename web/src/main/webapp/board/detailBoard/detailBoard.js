@@ -235,6 +235,10 @@ function loadComments(boardId, loginId) {
                     });
                 });
 
+                deleteBtn.on("click",function(){
+                    location.reload();
+                })
+
                 let reportBox = $("<div>").addClass("reportBox").append(reportButton);
 
 
