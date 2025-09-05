@@ -69,6 +69,7 @@
 
                                     case 3 : {
                                         //기준
+                                        $(".game_box").load("/game/kgj/kgj_game.jsp");
                                         break;
                                     }
 
