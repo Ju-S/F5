@@ -176,6 +176,22 @@ class gamescene extends Phaser.Scene {
             this.bestTimeText.setText('Best: ' + this.bestTime.toFixed(1) + 's');
         }
 
+        // 서버에 점수 전송 (gameId는 본인 게임 번호로 수정)
+        $.ajax({
+            url: "/gameover.game",
+            type: "post",
+            data: {
+                gameId: 5,  // 본인 게임 ID
+                score: Math.floor(this.score * 10) // 1/10 단위로 변환 (원래 코드대로)
+            },
+            success: function (res) {
+                console.log("점수 저장 성공:", res);
+            },
+            error: function (xhr, status, error) {
+                console.error("점수 저장 실패:", error);
+            }
+        });
+
         this.input.keyboard.once('keydown-SPACE', () => {
             this.scene.restart();
         });

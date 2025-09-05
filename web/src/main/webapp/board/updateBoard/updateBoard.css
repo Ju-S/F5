@@ -5,14 +5,14 @@
 
 .container {
     /*width: 800px;*/
-
     color: white;
 }
 
 .mainContents {
     background-color: var(--primary-subcolor);
     border-radius: 15px;
-    margin-bottom: 50px;
+    padding-left: 10px;
+    margin-left: 12px;
 }
 
 .titleBox {

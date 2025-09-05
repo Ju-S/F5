@@ -20,23 +20,25 @@
             <jsp:include page="/common/sidenavi/SideNavi.jsp"/>
         </div>
         <div class="col-11 vh-100">
-            <div class="row toolbar">
-                <div class="col-2 filter">
-                    <!-- 필터 -->
-                    <jsp:include page="/board/list/components/FilterSelect.jsp"/>
+            <div class="row toolbar d-flex justify-content-between align-items-center">
+                <!-- 왼쪽: 필터 + 검색창 -->
+                <div class="col d-flex align-items-center gap-2 left-group">
+                    <div class="filter">
+                        <jsp:include page="/board/list/components/FilterSelect.jsp"/>
+                    </div>
+                    <div class="search">
+                        <jsp:include page="/board/list/components/SearchBar.jsp"/>
+                    </div>
                 </div>
-                <div class="col-4 search">
-                    <!-- 검색어 -->
-                    <jsp:include page="/board/list/components/SearchBar.jsp"/>
-                </div>
-                <div class="col-4"></div>
-                <div class="col-2 write">
-                    <!-- 글 작성 버튼 -->
-                    <button id="writeBtn" onClick="location.href = '/write_board.board'" class="btn"
-                            type="button">글 작성
+
+                <!-- 오른쪽: 글 작성 버튼 -->
+                <div class="col-auto d-flex justify-content-end align-items-center write">
+                    <button id="writeBtn" onClick="location.href = '/write_board.board'" class="btn" type="button">
+                        글 작성
                     </button>
                 </div>
             </div>
+
             <div class="boardList">
                 <div class="row">
                     <div class="col p-0">

@@ -58,7 +58,7 @@
 
 </div>
 
-<script src="/member/admin/js/admin_member.js"></script>
+<script src="/member/admin/js/member_admin.js"></script>
 
 </body>
 </html>
