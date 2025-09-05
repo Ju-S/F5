@@ -4,7 +4,7 @@ class pmg_Gameover extends Phaser.Scene {
     }
 
     preload(){
-
+        this.load.image('sad' , '/game/pmg/img/sad.png')
     }
 
     init(data){//스코어 data를 받아옴
@@ -14,13 +14,17 @@ class pmg_Gameover extends Phaser.Scene {
 
     create() {
 
+        this.sad = this.add.image(0, 0, 'sad') // 배경
+        this.sad.setOrigin(0, 0);
+        this.sad.setDisplaySize(600, 400);
+
         this.add.text(
             this.cameras.main.width/2 ,
-            this.cameras.main.height/2- 80,
+            this.cameras.main.height/2- 100,
             "SCORE: " + this.end_score, // init에서 받은 점수값을 출력
             {
                 fontSize:"50px",
-                fill: "#34ce42"
+                fill: "#9300f8"
             }
         ).setOrigin(0.5);
 

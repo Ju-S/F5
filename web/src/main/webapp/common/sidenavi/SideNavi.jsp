@@ -5,7 +5,7 @@
     <%--홈버튼--%>
     <div id="homebox" class="col-12">
         <div id="home">
-            <a href="/index.jsp" id="homebtn"><img src="/common/sidenavi/sideNaviIcon/home_color.svg" alt="homeIcon"></a>
+            <a href="/" id="homebtn"><img src="/common/sidenavi/sideNaviIcon/home_color.svg" alt="homeIcon"></a>
         </div>
     </div>
 
@@ -51,7 +51,7 @@
         <%--로그아웃 버튼--%>
         <div id="logoutbox" class="col-12">
             <div id="logout">
-                <a href="#" id="logoutbtn"><img src="/common/sidenavi/sideNaviIcon/logout_color.svg" alt="logout"></a>
+                <a href="/logout.member" id="logoutbtn"><img src="/common/sidenavi/sideNaviIcon/logout_color.svg" alt="logout"></a>
             </div>
         </div>
 
