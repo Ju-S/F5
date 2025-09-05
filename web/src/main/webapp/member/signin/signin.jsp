@@ -27,7 +27,7 @@
 
                 <div id="idRow">
                     <div id="idRowBox">
-                        <input type="text" placeholder="id(영어 대소문자,숫자 4~16자)" id="id" name="id">
+                        <input type="text" placeholder="id (영어 대소문자,숫자 4~16자)" id="id" name="id">
 
                         <button class="btn btn-primary btns" id="idBtn" type="button">중복확인</button>
                         <%--모달 창--%>
@@ -66,7 +66,7 @@
 
                 <div id="nicknameRow">
                     <div id="nicknameRowBox">
-                        <input type="text" placeholder="nickname(영어 대소문자, 숫자, 한글 1~12자)" id="nickname" name="nickname">
+                        <input type="text" placeholder="nickname (영어 대소문자, 숫자, 한글 1~12자)" id="nickname" name="nickname">
                         <button class="btn btn-primary btns" id="nicknameBtn" type="button">중복확인</button>
 
                         <%--모달 창--%>
@@ -104,8 +104,8 @@
 
                 <div id="pwRow">
                     <div id="pwRowBox">
-                        <input type="text" name="pw" placeholder="pw (영어 대소문자, 숫자, 특수문자 + 숫자,특수문자는 1개이상 필수 사용 4~12자)" id="pw">
-                        <input type="text" placeholder="pw check" id="pwCheck">
+                        <input type="password" name="pw" placeholder="pw (영어대소문자, 숫자, 특수문자 필수 포함 4~12자)" id="pw">
+                        <input type="password" placeholder="pw check" id="pwCheck">
                     </div>
                     <div id="pwRowText"></div>
                 </div>
@@ -121,7 +121,7 @@
 
                 <div id="emailRow">
                     <div id="emailRowBox">
-                        <input type="text" placeholder="email(.com이나 .co.kr)" id="email" name="email">
+                        <input type="text" placeholder="email (.com이나 .co.kr)" id="email" name="email">
                         <button class="btn btn-primary btns" id="emailBtn" type="button">email인증</button>
                     </div>
                     <div id="emailRowText"></div>

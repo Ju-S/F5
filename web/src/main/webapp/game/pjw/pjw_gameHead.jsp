@@ -1,3 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<script src="/game/kjs/penguin.js"></script>
+
+<script src="/game/pjw/pjw_game.js"></script>

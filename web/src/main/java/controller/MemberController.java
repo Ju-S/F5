@@ -384,7 +384,7 @@ public class MemberController extends HttpServlet {
                         MimeMessage msg = new MimeMessage(mailSession);
                         msg.setFrom(new InternetAddress(SMTP_FROM)); // SendGrid에서 'Verified'된 주소와 정확히 일치해야 함
                         msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));
-                        msg.setSubject("회원가입 이메일 인증번호");
+                        msg.setSubject("이메일 인증번호");
                         msg.setContent("<p>인증 번호는 <b>" + code + "</b> 입니다. 10분 이내에 입력해주세요.</p>", "text/html; charset=utf-8");
 
                         Transport.send(msg);
