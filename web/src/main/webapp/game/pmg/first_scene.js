@@ -7,13 +7,13 @@ class first_scene extends Phaser.Scene {
 
     preload(){
 
-    this.load.image('first','/game/pmg/img/first.png')
+    this.load.image('first','/game/pmg/img/first.png');
 
     }
 
     create(){
 
-        this.sad = this.add.image(0,0,'first')
+        this.sad = this.add.image(0,0,'first');
         this.sad.setOrigin(0, 0);
         this.sad.setDisplaySize(600, 400);
 

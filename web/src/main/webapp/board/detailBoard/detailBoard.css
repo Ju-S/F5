@@ -9,19 +9,12 @@
 
 .container{
     min-height: calc(100vh - 60px);
-
 }
 
 .dropdown-toggle::after {
     display: none;
 }
 
-.full{
-
-}
-.navi{
-    margin-top: 80px;
-}
 .post-card{
 
 }
@@ -31,16 +24,16 @@
 
 .total-card{
     display: flex;
-
 }
 
 /*게시글 카드 영역*/
 .post-card {
     background-color: var(--primary-subcolor); /* 다크 배경 */
     color: white;
-    border-radius: 15px;
+    border-radius: 22px;
+    padding: 24px;
     margin-left: 20px;
-    margin-bottom: 50px;
+    margin-bottom: 32px;
 }
 
 /* 댓글 카드 영역 */
@@ -48,10 +41,11 @@
     background-color: var(--primary-subcolor);
     color: white;
     border-radius: 15px;
-    margin-left: 20px;
+    padding: 24px;
+    margin-left: 24px;
     display:flex;
     flex-direction: column;
-    margin-bottom: 50px;
+    margin-bottom: 32px;
 }
 #comment-box{
     height:750px;
@@ -93,7 +87,7 @@
 /* 삭제 수정 버튼 row */
 .post-btn-row{
     margin-top: auto;
-    padding-bottom: 10px;
+    /*padding-bottom: 24px;*/
 }
 .post-contents{
     height:670px;
@@ -139,7 +133,7 @@
 
 .send-btn-row{
     margin-top: auto;
-    padding-bottom: 10px;
+    /*padding-bottom: 24px;*/
 }
 
 /*댓글보내는 버튼*/

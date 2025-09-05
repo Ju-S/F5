@@ -22,6 +22,7 @@ public class AdminBoardDAO {
         return instance;
     }
 
+    // 신고된 게시글 목록
     public List<ReportedPostDTO> getReportedPosts(int offset, int limit) throws Exception {
         List<ReportedPostDTO> list = new ArrayList<>();
 
@@ -66,5 +67,33 @@ public class AdminBoardDAO {
         }
         return 0;
     }
+
+    // 신고된 게시글 단건 조회 (상세 보기용)
+    public ReportedPostDTO getReportedPostById(long id) throws Exception {
+        String sql = "SELECT id, title, writer, write_date, report_count, contents " +
+                "FROM board WHERE id = ? AND report_count > 0";
+
+        try (Connection con = DataUtil.getConnection();
+             PreparedStatement pstat = con.prepareStatement(sql)) {
+
+            pstat.setLong(1, id);
+
+            try (ResultSet rs = pstat.executeQuery()) {
+                if (rs.next()) {
+                    ReportedPostDTO dto = new ReportedPostDTO();
+                    dto.setId(rs.getLong("id"));
+                    dto.setTitle(rs.getString("title"));
+                    dto.setNickname(rs.getString("writer"));
+                    dto.setReportDate(rs.getTimestamp("write_date").toString());
+                    dto.setReportCount(rs.getInt("report_count"));
+                    dto.setContents(rs.getString("contents"));
+                    return dto;
+                }
+            }
+        }
+
+        return null; // 게시글 없거나 신고된 상태 아니면 null
+    }
+
 
 }

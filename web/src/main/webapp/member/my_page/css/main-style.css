@@ -4,21 +4,10 @@ html,
 body {
     font-family: var(--sub-font); /* 폰트 서브 */
 }
-/* 회원정보 전체 박스 */
-.container {
-    width: 100vw;
-    height: calc(100vh - 64px); /* padding 위아래 32px*2 제외 */
-    padding: 32px;
-    box-sizing: border-box;
-    background-color: var(--primary-color);
-    gap: 38px;
-    border: none;
-}
 
 /* ----- Main Content ----- */
 .main-content {
     flex: 1;
-    padding: 32px;
     display: flex;
     justify-content: flex-start; /* 수정됨 */
     align-items: flex-start;
@@ -30,23 +19,23 @@ body {
 }
 
 /* ----- Sidebar ----- */
-.main {
-    width: 100%;
-    height: 100%;
-    padding: 0;
-}
-
 .sidebar {
     width: 250px; /* ✅ 고정 너비 부여 */
     background-color: var(--primary-color);
-    padding-left: 16px;
-    padding-right: 32px;
+    padding-right: 24px;
+    padding-left: 12px;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 32px;
     height: 100%;
     flex-shrink: 0;
+}
+
+.main {
+    width: 100%;
+    height: 100%;
+    padding: 0;
 }
 
 /* 회원 이미지 */
@@ -199,6 +188,7 @@ p {
     flex: 1;
 }
 
+/* 수정버튼 */
 .button-primary.active {
     background-color: var(--danger-color);
 }
@@ -206,6 +196,7 @@ p {
     background-color: var(--mainbtn-hover-color);
 }
 
+/* 취소버튼 */
 .button-secondary {
     background-color: var(--sub-btn-color);
     color: white;
@@ -214,21 +205,69 @@ p {
     border-radius: 6px;
     flex: 1;
 }
-.button-primary.active {
+
+.button-secondary.active{
     background-color: var(--sub-btn-color);
 }
-.button-primary:hover:not(.active){
+.button-secondary:hover:not(.active){
     background-color: var(--btnsub-hover-color);
 }
 
-/* 로그아웃 */
-#content-logout {
-    background-color: var(--primary-subcolor);
-    border-radius: 16px;
-    padding: 40px;
-    width: 100%;
-    max-width: 1000px;
-    color: white;
+/* 인증 & 중복 확인 버튼 */
+.check-button.active {
+    background-color: var(--sub-btn-color);
 }
+.check-button:hover:not(.active){
+    background-color: var(--btnsub-hover-color);
+}
+
+/* 회원 탈퇴 */
+/* 회원 탈퇴 */
+#content-logout {
+    background: linear-gradient(135deg, #2b2b2b, var(--primary-subcolor));
+    border-radius: 20px;
+    padding: 50px 40px;
+    width: 100%;
+    max-width: 800px;
+    color: white;
+    text-align: center;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+/* 제목 */
+#content-logout h2 {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 16px;
+    color: var(--danger-color); /* 경고 느낌 빨간색 */
+}
+
+/* 설명 텍스트 */
+#content-logout p {
+    font-size: 18px;
+    margin-bottom: 32px;
+    color: #f5f5f5;
+}
+
+/* 버튼 */
+#content-logout .btn.button-primary {
+    background-color: var(--danger-color);
+    border: none;
+    padding: 14px 28px;
+    font-size: 18px;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+#content-logout .btn.button-primary:hover {
+    background-color: var(--mainbtn-hover-color);
+    transform: scale(1.05);
+}
+
+/*!* 등장 애니메이션 *!
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}*/
 
 

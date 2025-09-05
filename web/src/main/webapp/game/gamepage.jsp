@@ -62,6 +62,7 @@
 
                                     case 2 : {
                                         //지원
+                                        $(".game_box").load("/game/pjw/pjw_game.jsp"); //링크게임 내용실행
                                         break;
                                     }
 
@@ -77,8 +78,7 @@
                                         break;
                                     }
 
-                                    case 5 : {
-                                        //영서
+                                    case 5: {
                                         $(".game_box").load("/game/jys/jys.jsp");
                                         break;
                                     }
@@ -86,9 +86,7 @@
                                 }
 
                             });
-
                         </script>
-
                     </div>
                     <%-- </div>--%>
 
