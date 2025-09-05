@@ -34,11 +34,11 @@
                                 aria-label="Default select example" required>
                             <!-- gameId -->
                             <option value="" disabled selected>Game Tag</option>
-                            <option value="1">Game1</option>
-                            <option value="2">Game2</option>
-                            <option value="3">Game3</option>
-                            <option value="4">Game4</option>
-                            <option value="5">Game5</option>
+                            <option value="1">Penguin</option>
+                            <option value="2">Pac-man</option>
+                            <option value="3">Bubble Shooter</option>
+                            <option value="4">I hate injections!</option>
+                            <option value="5">Geometry Dash</option>
                         </select>
                     </div>
                     <div class="board_category-box">

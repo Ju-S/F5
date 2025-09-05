@@ -132,7 +132,7 @@ public class BoardController extends HttpServlet {
 
                     int write = boardDAO.write(boardDTO);
 
-                    response.sendRedirect("/board_list.page");
+                    response.sendRedirect("/board_list.board");
                     break;
                 }
                 case "/upload_image.board": {

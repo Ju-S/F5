@@ -1,9 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!--  Phaser.js 게임엔진  -->
-
-<div id="gamebox">
-
-</div>
 <div id="time"></div>
 <script>
     let config = {
