@@ -149,16 +149,6 @@ public class GameController extends HttpServlet {
 
 
                 }
-
-                // 마이페이지에 랭킹 정보 전달
-                case "/allGameRankings.game":
-                    // 모든 게임 랭킹 Map 받아오기
-                    Map<Integer, List<GameScoreDTO>> gameRankings = memberGameTierDAO.selectAllGameRankings();
-                    request.setAttribute("gameRankings", gameRankings);
-
-                    // JSP로 forward
-                    request.getRequestDispatcher("/member/my_page/mypage.jsp").forward(request, response);
-                    break;
             }
 
         } catch (Exception e) {

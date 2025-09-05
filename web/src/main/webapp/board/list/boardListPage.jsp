@@ -14,13 +14,13 @@
 <jsp:include page="/common/header/Header.jsp"/>
 
 <div class="container">
-    <div class="row">
+    <div class="row g-0">
         <div class="col-1">
             <!-- 네비게이션 -->
             <jsp:include page="/common/sidenavi/SideNavi.jsp"/>
         </div>
         <div class="col-11 vh-100">
-            <div class="row toolbar d-flex justify-content-between align-items-center">
+            <div class="row g-0 toolbar d-flex justify-content-between align-items-center">
                 <!-- 왼쪽: 필터 + 검색창 -->
                 <div class="col d-flex align-items-center gap-2 left-group">
                     <div class="filter">
@@ -40,12 +40,12 @@
             </div>
 
             <div class="boardList">
-                <div class="row">
+                <div class="row g-0">
                     <div class="col p-0">
                         <table class="item-list-view"><!-- 게시글 목록 --></table>
                     </div>
                 </div>
-                <div class="row mt-4">
+                <div class="row g-0 mt-4">
                     <div id="navPos" class="col"><!-- 게시글 페이지 네비게이션 --></div>
                 </div>
             </div>

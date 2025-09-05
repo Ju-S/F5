@@ -9,18 +9,18 @@ body {
 .main-content {
     flex: 1;
     display: flex;
-    justify-content: flex-start; /* 수정됨 */
+    justify-content: flex-start;
     align-items: flex-start;
-    width: 100%; /* 추가 가능 */
+    width: 100%;
     height: calc(100vh - 64px); /* padding 위아래 32px*2 제외 */
     position: relative;
     overflow: hidden;
-    /* 스크롤 차단 */
+
 }
 
 /* ----- Sidebar ----- */
 .sidebar {
-    width: 250px; /* ✅ 고정 너비 부여 */
+    width: 250px; /* 고정 너비 부여 */
     background-color: var(--primary-color);
     padding-right: 24px;
     padding-left: 12px;
@@ -32,10 +32,13 @@ body {
     flex-shrink: 0;
 }
 
+.main-content {
+    display: flex;
+    gap: 20px;
+}
+
 .main {
-    width: 100%;
-    height: 100%;
-    padding: 0;
+    flex-grow: 1;
 }
 
 /* 회원 이미지 */
