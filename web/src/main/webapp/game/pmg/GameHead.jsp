@@ -15,18 +15,16 @@
 <script src = "/game/pmg/pmg_game.js"></script>
 <script src = "/game/pmg/pmg_Gameover.js"></script>
 
-<script src="/game/kgj/BubbleShooterScene.js"></script>
 
-<script src="/game/Geometry_Dash_Lite/geometry_gameScene.js"></script>
 
 <style>
-    /*#gamebox{
+    #gamebox{
         width: 600px;
         height: 400px;
         border: 1px solid black;
         margin: auto;
 
-    }*/
+    }
 
 </style>
 

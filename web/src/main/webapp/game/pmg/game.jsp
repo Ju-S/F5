@@ -2,7 +2,7 @@
          pageEncoding="UTF-8" %>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
-<%--<div id="gamebox"></div>--%>
+<div id="gamebox"></div>
 
 <script>
 
