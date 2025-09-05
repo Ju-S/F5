@@ -1,4 +1,9 @@
 /*공용 버튼에 대하여*/
+input::placeholder {
+    font-size: 0.6em; /* 원하는 크기로 조절 */
+}
+
+
 .btns{
     margin-left: 5%;
     width: 30%;
@@ -170,7 +175,7 @@ form{
         height: 100%;
 
         border-radius: 11px;
-        padding-left: 4%;
+        padding-left: 2%;
         border: 1.5px solid var(--sub-btn-color);
     }
 
@@ -200,7 +205,7 @@ form{
         height: 100%;
 
         border-radius: 11px;
-        padding-left: 4%;
+        padding-left: 2%;
         border: 1.5px solid var(--sub-btn-color);
     }
 
@@ -229,7 +234,7 @@ form{
         height: 100%;
 
         border-radius: 11px;
-        padding-left: 4%;
+        padding-left: 2%;
         border: 1.5px solid var(--sub-btn-color);
     }
 
@@ -256,7 +261,7 @@ form{
         height: 100%;
 
         border-radius: 11px;
-        padding-left: 4%;
+        padding-left: 2%;
         border: 1.5px solid var(--sub-btn-color);
     }
 
@@ -286,7 +291,7 @@ form{
         height: 100%;
 
         border-radius: 11px;
-        padding-left: 4%;
+        padding-left: 2%;
         border: 1.5px solid var(--sub-btn-color);
     }
 
@@ -313,7 +318,7 @@ form{
         width: 65%;
         height: 100%;
         border-radius: 11px;
-        padding-left: 4%;
+        padding-left: 2%;
         border: 1.5px solid var(--sub-btn-color);
     }
 
