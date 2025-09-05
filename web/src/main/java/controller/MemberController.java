@@ -506,19 +506,15 @@ public class MemberController extends HttpServlet {
                 // 회원 아이디 확인 과정 - 마이페이지
                 case "/mypage.member": {
                     String memberId = (String) request.getSession().getAttribute("loginId");
-                    if (memberId == null) {
-                        response.sendRedirect("/login.member");
-                        return;
-                    }
 
                     // DAO에서 사용자 게임 랭킹 정보 조회 (Map<Integer, List<GameScoreDTO>> 형태 가정)
                     Map<Integer, List<GameScoreDTO>> gameRankings = memberGameTierDAO.selectAllGameRankings(memberId);
-                    Map<Integer, String> gameIdToName = new HashMap<>();
-                    gameIdToName.put(1, "리그 오브 레전드");
-                    gameIdToName.put(2, "배틀그라운드");
-                    gameIdToName.put(3, "발로란트");
-                    gameIdToName.put(4, "피파 온라인 4");
-                    gameIdToName.put(5, "스타크래프트");
+                    Map<String, String> gameIdToName = new HashMap<>();
+                    gameIdToName.put("game01", "리그 오브 레전드");
+                    gameIdToName.put("game02", "배틀그라운드");
+                    gameIdToName.put("game03", "발로란트");
+                    gameIdToName.put("game04", "피파 온라인 4");
+                    gameIdToName.put("game05", "스타크래프트");
 
                     MemberDTO member = memberDAO.getMemberById(memberId);
                     g = new Gson();
