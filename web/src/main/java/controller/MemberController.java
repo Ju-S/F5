@@ -116,6 +116,13 @@ public class MemberController extends HttpServlet {
                 // 행위 + 자원 (e.g, /get_memberList.member로 작성 요망)
                 //TODO: 회원 관련 기능
 
+                case "/logout.member": {
+                    request.getSession().removeAttribute("loginId");
+                    request.getSession().removeAttribute("authority");
+                    response.sendRedirect("/");
+                    break;
+                }
+
                 //페이지 이동
                 case "/toLoginPage.member": {
                     //로그인 페이지로 이동
@@ -194,7 +201,7 @@ public class MemberController extends HttpServlet {
                         s.removeAttribute("verifiedId");
                     }
 
-                    response.sendRedirect("/index.jsp");
+                    response.sendRedirect("/");
                     return;
                 }
                 case "/isIdEmailExist.member": {
@@ -300,7 +307,7 @@ public class MemberController extends HttpServlet {
 
                         }else if(authority.equals("MEMBER")){//유저 계정이면
                             request.getSession().setAttribute("authority", authority);
-                            response.sendRedirect("/index.jsp");//인덱스 페이지로 이동시킴
+                            response.sendRedirect("/");//인덱스 페이지로 이동시킴
                             return;
                         }
 
@@ -462,7 +469,7 @@ public class MemberController extends HttpServlet {
                     //region read
                     //TODO: 여기서 그냥 response 바로 index.jsp로 가도 되는지
                     //endregion
-                    response.sendRedirect("/index.jsp");
+                    response.sendRedirect("/");
                     return;
                 }
 
@@ -484,7 +491,7 @@ public class MemberController extends HttpServlet {
                         if (result > 0) {
                             System.out.println("탈퇴성공");
                             request.getSession().removeAttribute("loginId");
-                            response.sendRedirect("/index.jsp"); // 홈 페이지로 이동
+                            response.sendRedirect("/"); // 홈 페이지로 이동
                         } else {
                             response.sendRedirect("/error.jsp"); // 에러 페이지로 이동
                         }

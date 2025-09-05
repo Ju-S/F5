@@ -11,14 +11,24 @@
         <param-value>apikey</param-value> <!-- SendGrid는 고정값 'apikey' -->
     </context-param>
 
-    <context-param>
-        <param-name>SMTP_PASS</param-name>
-        <param-value>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</param-value> <!-- SendGrid API Key -->
-    </context-param>
+<!--    <context-param>-->
+<!--        <param-name>SMTP_PASS</param-name>-->
+<!--        <param-value>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</param-value> &lt;!&ndash; SendGrid API Key &ndash;&gt;-->
+<!--    </context-param>-->
 
-    <context-param>
-        <param-name>SMTP_FROM</param-name>
-        <param-value>jaann20914@gmail.com</param-value> <!-- SendGrid에서 'Verified'된 From 주소 -->
-    </context-param>
+<!--    <context-param>-->
+<!--        <param-name>SMTP_FROM</param-name>-->
+<!--        <param-value>jaann20914@gmail.com</param-value> &lt;!&ndash; SendGrid에서 'Verified'된 From 주소 &ndash;&gt;-->
+<!--    </context-param>-->
+
+    <filter>
+        <filter-name>commonAuthFilter</filter-name>
+        <filter-class>filter.CommonAuthFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>commonAuthFilter</filter-name>
+        <url-pattern>*</url-pattern>
+    </filter-mapping>
 
 </web-app>
