@@ -260,11 +260,12 @@
                                 <input type="hidden" name="writer" value="${sessionScope.loginId}">
                                 <input type="hidden" name="gameId" value="${gameId}"> <%--${game_id}--%>
                                 <input type="text" class="reply_area" placeholder="reply .. (35자)" name="contents"
-                                       id="replyInput">
+                                       id="replyInput" maxlength="35" oninput="checkLength()">
                                 <button id="writing_btn" class="reply_btn"><i class="fa-solid fa-paper-plane"
                                                                               style="color: #ffffff;"></i></button>
                             </div>
                         </form>
+
                     </div>
                 </div>
             </div>
@@ -323,6 +324,12 @@
         $form.submit(); // 직접 submit 실행
     });
 
+        function checkLength() { // 글자수 제한
+        const input = document.getElementById("replyInput");
+        if (input.value.length === input.maxLength) {
+        alert("최대 35자까지 입력할 수 있습니다!");
+    }
+    }
 
 </script>
 
