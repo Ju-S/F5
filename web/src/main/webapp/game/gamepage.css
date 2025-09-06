@@ -385,14 +385,15 @@ body {
     border-radius: 4px;
 }
 
-
-#reply_last{ /*수정 버튼라인*/
-
-    width: 10%;
-    height: 100%;
-    align-items: end;
+.reply_last {
     display: flex;
+    flex-direction: row;   /* 가로 배치 */
+    gap: 8px;              /* 버튼 사이 간격 */
+    align-items: center;   /* 세로 중앙 정렬 */
 }
+
+
+
 
 .update_form {
     width: 100%;
@@ -415,6 +416,9 @@ body {
     flex-wrap: wrap; /* 버튼이 넘칠 경우 줄바꿈 */
     height: auto;
 }
+
+
+
 #report_form{
 
     display: flex;
@@ -444,4 +448,5 @@ body {
 .dropdown-toggle::after {
     display: none;
 }
+
 
