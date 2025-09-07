@@ -93,6 +93,8 @@ public class BoardDAO {
         List<BoardListDTO> posts = new ArrayList<>();
         while (rs.next()) {
             int id = rs.getInt("id");
+            long boardCategory = rs.getLong("board_category");
+            long gameId = rs.getLong("game_id");
             String writer = rs.getString("writer");
             String title = rs.getString("title");
             String contents = rs.getString("contents");
@@ -100,6 +102,8 @@ public class BoardDAO {
             int viewCount = rs.getInt("view_count");
             posts.add(BoardListDTO.builder()
                     .id(id)
+                    .boardCategory(boardCategory)
+                    .gameId(gameId)
                     .writer(writer)
                     .title(title)
                     .contents(contents)

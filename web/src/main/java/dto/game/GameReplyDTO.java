@@ -17,7 +17,7 @@ public class GameReplyDTO {
     private Timestamp writeDate;
     private int report_count;
     private String tier; // 추가
-
+    private String nickname; // 추가
 }
 
 

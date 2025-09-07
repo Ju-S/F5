@@ -64,7 +64,7 @@
                             <c:forEach var="j" items="${listranking}">
                                 <div class="ranking_bar">
                                     <div class="ranking_number">${j.rank}</div>
-                                    <div class="ranking_name">${j.memberId}</div>
+                                    <div class="ranking_name">${j.nickname}</div>
                                     <div class="ranking_score">${j.score}</div>
                                     <div class="ranking_tier">
                                         <img src="${j.tier}" alt="tier_icon" class="tier_icon">
@@ -94,7 +94,7 @@
 
                                     <div class="reply_main">
                                         <div class="reply_center">
-                                            작성자 : ${i.writer}
+                                            ${i.nickname}
                                             <img src="${i.tier}" alt="tier_icon" class="tier_icon">
                                         </div>
 

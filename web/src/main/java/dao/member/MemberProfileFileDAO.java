@@ -75,7 +75,7 @@ public class MemberProfileFileDAO {
     //region read
     //프로필 사진 경로 조회
     public MemberProfileFileDTO getProfileImagePath(String memberId) throws Exception {
-        String sql = "SELECT id, ori_name, sys_name, upload_date FROM member_profile_file WHERE member_id = ?";
+        String sql = "SELECT id, ori_name, sys_name, upload_date FROM member_profile_file WHERE member_id = ? ORDER BY upload_date DESC";
         try (Connection con = DataUtil.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);)
         {
             pstat.setString(1, memberId);

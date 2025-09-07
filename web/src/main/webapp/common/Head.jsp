@@ -10,6 +10,8 @@
 <link rel="stylesheet" href="/common/common.css">
 <script src="/common/sidenavi/SideNavi.js"></script>
 <link rel="stylesheet" href="/common/sidenavi/SideNavi.css">
+<script src="/common/sidenaviadmin/sideNaviAdmin.js"></script>
+<link rel="stylesheet" href="/common/sidenaviadmin/sideNaviAdmin.css">
 <link rel="stylesheet" href="/common/header/Header.css">
 
 

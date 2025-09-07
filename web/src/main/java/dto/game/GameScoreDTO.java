@@ -18,4 +18,5 @@ public class GameScoreDTO {
 
     private String tier; // 추가
     private int rank; // 추가
+    private String nickname; // 추가
 }

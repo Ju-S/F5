@@ -342,7 +342,8 @@ body {
 .reply_profile #img{
     object-fit: cover;   /* 이미지가 찌그러지지 않게 자름 */
     border-radius: 50%;
-    width: 40%
+    width: 50px;
+    height: 50px;
 }
 
 .reply_profile{

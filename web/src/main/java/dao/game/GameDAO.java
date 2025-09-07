@@ -25,25 +25,18 @@ public class GameDAO {
 
 
     //region read
-    public List<GameDTO> sellectGame() throws Exception {
-       String sql = "select * from GAME";
+    public String getGameName(long id) throws Exception {
+       String sql = "SELECT name FROM game WHERE id=?";
 
-        //TODO: 등록된 게임 정보 조회
         try( Connection con = DataUtil.getConnection();
-             PreparedStatement pstat = con.prepareStatement(sql);
-
-             ResultSet rs = pstat.executeQuery();){
-            List<GameDTO> gameList = new ArrayList<>();
-
-            while(rs.next()){
-
-               int id  = rs.getInt(rs.getInt("id"));
-               String name = rs.getString("name");
-               String description = rs.getString("description");
-                GameDTO dto = new GameDTO(id,name,description);
-                gameList.add(dto);
+             PreparedStatement pstat = con.prepareStatement(sql);){
+            pstat.setLong(1, id);
+            try(ResultSet rs = pstat.executeQuery();) {
+                if(rs.next()) {
+                    return rs.getString("name");
+                }
+                return "";
             }
-           return (gameList);
         }
     }
     //endregion

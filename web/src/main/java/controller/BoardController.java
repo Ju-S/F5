@@ -91,6 +91,8 @@ public class BoardController extends HttpServlet {
                         try {
                             item.setNickname(memberDAO.getMemberById(item.getWriter()).getNickname());
                             item.setReplyCount(replyDAO.getReplyCountByBoardId(item.getId()));
+                            item.setBoardCategoryName(boardCategoryDAO.getBoardCategoryNameById(item.getBoardCategory()));
+                            item.setGameName(gameDAO.getGameName(item.getGameId()));
                         } catch (Exception e) {
                         }
                     });

@@ -14,6 +14,9 @@ import java.util.List;
 public class GameReplyDAO {
     private static GameReplyDAO instance;
 
+    private GameReplyDAO() throws Exception {
+    }
+
     public static synchronized GameReplyDAO getInstance() throws Exception {
         if (instance == null) {
             instance = new GameReplyDAO();
@@ -21,17 +24,14 @@ public class GameReplyDAO {
         return instance;
     }
 
-    private GameReplyDAO() throws Exception {
-    }
-
     //region create
-    public int insertReply(int game_id, String writer , String contents) throws Exception{ // 댓글 입력
+    public int insertReply(int game_id, String writer, String contents) throws Exception { // 댓글 입력
         //TODO: 댓글 작성 : sql에 데이터값 옮기기 완료
-      String sql = "insert into game_reply (id, game_id,writer, contents, write_date) values (GAME_REPLY_SEQ.nextval, ?, ?, ?, sysdate)";
+        String sql = "insert into game_reply (id, game_id,writer, contents, write_date) values (GAME_REPLY_SEQ.nextval, ?, ?, ?, sysdate)";
 
-        try( Connection con = DataUtil.getConnection();
-             PreparedStatement pstat = con.prepareStatement(sql);
-        ){
+        try (Connection con = DataUtil.getConnection();
+             PreparedStatement pstat = con.prepareStatement(sql)
+        ) {
             pstat.setInt(1, game_id);
             pstat.setString(2, writer);
             pstat.setString(3, contents);
@@ -42,7 +42,7 @@ public class GameReplyDAO {
 //endregion
 
     //region read
-    public List<GameReplyDTO> selectAll(int GAME_ID) throws Exception{ // 댓글 목록 출력
+    public List<GameReplyDTO> selectAll(int GAME_ID) throws Exception { // 댓글 목록 출력
         //TODO: 댓글 목록 조회
         String sql = "SELECT gr.*, t.tier\n" +
                 "FROM game_reply gr\n" +
@@ -67,15 +67,15 @@ public class GameReplyDAO {
                 "WHERE gr.game_id = ?\n" +
                 "ORDER BY gr.id DESC\n";
 
-        try(Connection con = DataUtil.getConnection();
-            PreparedStatement pstat = con.prepareStatement(sql)){
+        try (Connection con = DataUtil.getConnection();
+             PreparedStatement pstat = con.prepareStatement(sql)) {
 
             pstat.setInt(1, GAME_ID); // for GAME_REPLY
 
 
-            try(ResultSet rs = pstat.executeQuery()){
+            try (ResultSet rs = pstat.executeQuery()) {
                 List<GameReplyDTO> list = new ArrayList<>();
-                while(rs.next()){
+                while (rs.next()) {
                     int id = rs.getInt("id");
                     int game_id = rs.getInt("game_id");
                     String writer = rs.getString("writer");
@@ -88,17 +88,25 @@ public class GameReplyDAO {
                         tier = "/game/img/unranked.png";
                     }
 
-                    GameReplyDTO dto = new GameReplyDTO(id,game_id,writer,contents,write_date, report_count, tier);
+                    GameReplyDTO dto = GameReplyDTO.builder()
+                            .id(id)
+                            .gameId(game_id)
+                            .writer(writer)
+                            .contents(contents)
+                            .writeDate(write_date)
+                            .report_count(report_count)
+                            .tier(tier)
+                            .build();
                     list.add(dto);
                 }
-                return(list);
+                return (list);
             }
         }
     }
 //endregion
 
     //region update
-    public int updateReply(String contents,String writer , int id) throws Exception {
+    public int updateReply(String contents, String writer, int id) throws Exception {
         //loginId를 받아서 writer 버튼 보이게 코드 수정할 이후에는 writer 빼도 무방
         //TODO: 댓글 내용 수정
         String sql = "update game_reply set contents = ?  where writer = ? and id = ? ";
@@ -114,10 +122,10 @@ public class GameReplyDAO {
 
 
     //region delete
-    public int deleteReply(String writer , int id) throws Exception {
+    public int deleteReply(String writer, int id) throws Exception {
         //loginId를 받아서 writer 버튼 보이게 코드 수정할 이후에는 writer 빼도 무방
         //TODO: 댓글 삭제
-        
+
         String sql = "delete from game_reply  where writer = ? and id = ?";
         try (Connection con = DataUtil.getConnection();
              PreparedStatement pstat = con.prepareStatement(sql)) {
@@ -126,9 +134,9 @@ public class GameReplyDAO {
             return pstat.executeUpdate();
         }
     }
-    
+
     //region delete
-    public int insertReportCount(String writer , int report_count) throws Exception {
+    public int insertReportCount(String writer, int report_count) throws Exception {
         //TODO: 신고카운트 증가 (작성자기준)
         String sql = "update game_reply set report_count = report_count + 1 where writer = ? and report_count = ?";
         try (Connection con = DataUtil.getConnection();

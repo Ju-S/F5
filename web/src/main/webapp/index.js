@@ -35,10 +35,10 @@ const gameViews = {
     ),
     game3: createGameView(
         "3",
-        "게임 3 타이틀",
-        "게임 3 에 대한 설명 , 게임 3 에 대한 설명 게임 3 에 대한 설명 게임 3 에 대한 설명 게임 3 에 대한 설명 게임 3 에 대한 설명",
+        "Bubble Shooter",
+        "같은 색의 구슬을 모아 점수를 기록하세요!",
         "/index_img/desktop_home_kj.svg",
-        "game3"
+        "Bubble Shooter"
     ),
     game4: createGameView(
         "4",
@@ -51,10 +51,10 @@ const gameViews = {
     ),
     game5: createGameView(
         "5",
-        "게임 5 타이틀",
-        "게임 5 에 대한 설명 , 게임 5 에 대한 설명 게임 5 에 대한 설명게임 5 에 대한 설명 게임 5 에 대한 설명게임 5 에 대한 설명",
+        "Geometry Dash",
+        "장애물을 피해 최고점수를 기록해보세요!",
         "/index_img/desktop_home_ys.svg",
-        "game5"
+        "Geometry Dash"
     )
 };
 

@@ -17,7 +17,7 @@
     <div class="row">
         <!-- Sidebar -->
         <div class="col-1">
-            <jsp:include page="/common/sidenavi/SideNavi.jsp"/>
+            <jsp:include page="/common/sidenaviadmin/sideNaviAdmin.jsp"/>
         </div>
 
         <!-- main 내용 -->

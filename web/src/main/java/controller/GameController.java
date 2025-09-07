@@ -86,8 +86,20 @@ public class GameController extends HttpServlet {
                     int gameId = Integer.parseInt(request.getParameter("gameId"));
 
                     List<GameReplyDTO> list = gameReplyDAO.selectAll(gameId);
+                    list.forEach(item -> {
+                        try {
+                            item.setNickname(memberDAO.getMemberById(item.getWriter()).getNickname());
+                        } catch (Exception e) {
+                        }
+                    });
 
                     List<GameScoreDTO> listranking = gameScoreDAO.selectRanking(gameId);
+                    listranking.forEach(item -> {
+                        try {
+                            item.setNickname(memberDAO.getMemberById(item.getMemberId()).getNickname());
+                        } catch (Exception e) {
+                        }
+                    });
 
                     request.setAttribute("list", list);
                     request.setAttribute("listranking", listranking);

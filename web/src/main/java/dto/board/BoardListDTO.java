@@ -22,4 +22,6 @@ public class BoardListDTO {
     private long reportCount;
     private int replyCount;
     private String nickname;
+    private String gameName;
+    private String boardCategoryName;
 }
