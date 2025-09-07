@@ -11,5 +11,6 @@
 <link rel="stylesheet" href="/common/common.css">
 <link rel="stylesheet" href="/common/Mcommon/MHeader.css">
 
+<link rel="icon" type="images/svg" href="/index_img/Union.svg">
 
 <title>F5</title>

@@ -14,6 +14,7 @@
 <link rel="stylesheet" href="/common/sidenaviadmin/sideNaviAdmin.css">
 <link rel="stylesheet" href="/common/header/Header.css">
 
+<link rel="icon" type="images/svg" href="/index_img/Union.svg">
 
 
 <title>F5</title>
