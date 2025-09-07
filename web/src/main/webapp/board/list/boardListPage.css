@@ -178,6 +178,10 @@
     align-items: center;
 }
 
+.item-list-view .empty-col {
+    height: 60px;
+}
+
 .boardList {
     background-color: #1e1e1e;
     border-radius: 20px;

@@ -45,7 +45,11 @@ public class BoardDAO {
 
     //region read
     //TODO: 게시글 목록 조회(title, writer 등 대표항목)
-    public List<BoardListDTO> getBoardPage(int curPage, int itemPerPage, int filter, String searchQuery, int gameId) throws Exception {
+    public List<BoardListDTO> getBoardPage(int curPage,
+                                           int itemPerPage,
+                                           int filter,
+                                           String searchQuery,
+                                           int gameId) throws Exception {
         String sql = "SELECT * FROM (SELECT board.*, ROW_NUMBER() OVER(ORDER BY id DESC) rn FROM board";
         if (filter != -1) {
             sql += " WHERE board_category = ?";

@@ -1,16 +1,17 @@
 function createBoardList(postList, itemPerPage) {
     $(".item-list-view").html("");
     if (postList.length === 0) {
-        let emptyAlert = $("<td>").attr({
-            "colspan": "5",
-            "align": "center"
-        }).html("표시할 내용이 없습니다.");
+        let tr = $("<div>").addClass("row item-div");
+        let emptyAlert = $("<div>")
+            .addClass("col col-12 empty-col")
+            .css({"display":"flex", "justify-content":"center", "align-items":"center"})
+            .html("표시할 내용이 없습니다.");
 
-        $(".item-list-view").append($("<tr>").append(emptyAlert));
+        $(".item-list-view").append(tr.append(emptyAlert));
         for (let i = 0; i < itemPerPage - 1; i++) {
-            let emptyItem = $("<p>").css("color", "transparent");
-            let emptyItemTd = $("<td>").attr("colspan", "5");
-            $(".item-list-view").append($("<tr>").append(emptyItemTd.append(emptyItem)));
+            let emptyTr = $("<div>").addClass("row item-div");
+            let emptyItemTd = $("<div>").addClass("col col-12 empty-col");
+            $(".item-list-view").append(emptyTr.append(emptyItemTd));
         }
     } else {
         for (let post of postList) {
@@ -18,9 +19,12 @@ function createBoardList(postList, itemPerPage) {
         }
         if (postList.length % itemPerPage !== 0) {
             for (let i = 0; i < itemPerPage - postList.length % itemPerPage; i++) {
-                let emptyItem = $("<p>").css("color", "transparent");
-                let emptyItemTd = $("<td>").attr("colspan", "5");
-                $(".item-list-view").append($("<tr>").append(emptyItemTd.append(emptyItem)));
+                // let emptyItem = $("<p>").css("color", "transparent");
+                // let emptyItemTd = $("<td>").attr("colspan", "5");
+                // $(".item-list-view").append($("<tr>").append(emptyItemTd.append(emptyItem)));
+                let tr = $("<div>").addClass("row item-div");
+                let emptyItemTd = $("<div>").addClass("col col-12 empty-col");
+                $(".item-list-view").append(tr.append(emptyItemTd));
             }
         }
     }

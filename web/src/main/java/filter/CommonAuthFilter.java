@@ -12,14 +12,16 @@ public class CommonAuthFilter implements Filter {
     }
 
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+    public void doFilter(ServletRequest servletRequest,
+                         ServletResponse servletResponse,
+                         FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
         String uri = request.getRequestURI();
 
         String[] excludeUris = {
-                "/index.jsp", "/",
+                "/index.jsp",
                 "/signin.member",
                 "/verifyEmailCode.member",
                 "/mailCheck.member",
@@ -38,7 +40,12 @@ public class CommonAuthFilter implements Filter {
                 "/"
         };
 
-        if (uri.endsWith(".js") || uri.endsWith(".css") || uri.endsWith(".svg") || uri.endsWith(".png") || uri.endsWith(".jpg") || uri.endsWith(".mp3") || uri.endsWith(".jsp")) {
+        if (uri.endsWith(".js") ||
+                uri.endsWith(".css") ||
+                uri.endsWith(".svg") ||
+                uri.endsWith(".png") ||
+                uri.endsWith(".jpg") ||
+                uri.endsWith(".jsp")) {
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }
